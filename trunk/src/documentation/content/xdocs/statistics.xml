@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Statistics</title>
+	</header>
+	<body>
+		<p><code>DingsBums?!</code> can display statistics about the entries in the learning stack. Most of the statistics are static and show the current distribution of entries for a criteria. E.g. the following screenshot shows the distribution of entries over the scores. The more you learn the better your score should become.</p>
+		<figure src="images/stats_scores.png" alt="screenshot of DingsBums?! showing statistics over the distribution of scores" />
+		<p>To be able to see the evolution of the number of entries and the average score over the learning period a chart with time series statistics can be shown (see below). There are two possibilities to save the current statistics for later comparision in a time series:</p>
+		<ul>
+			<li>Save the current statistics whenever you want: use menu <code>Tools -&gt; Save current Learning Statistics</code>.</li>
+			<li>Save the statistics whenever you quit the program: configure this in the <a href="site:preferences">Preferences</a>.</li>
+		</ul>
+		<figure src="images/stats_timeseries.png" alt="screenshot of DingsBums?! showing timeseries statistics" />
+	</body>
+</document>

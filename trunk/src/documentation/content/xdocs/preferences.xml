@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Preferences and Properties</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>As is the case with most document oriented programs you have to distinguish two ways of influencing an application:</p>
+			<ul>
+				<li>Preferences: influence the way the application behaves no matter wich document you are working on</li>
+				<li>Properties: define the properties of the current document -&gt; different behaviour fo different documents (or learning stacks in the case of <code>dingsBums?!</code></li>
+			</ul>
+		</section>
+		<section id="preferences">
+			<title>Preferences</title>
+			<p>Access Preferences by using the <code>Edit -&gt; Preferences</code> menu item.</p>
+			<p>The preferences allows you to change the behaviour of <code>DingsBums?!</code> in quite a few ways. The following screenshots show:</p>
+			<ul>
+				<li>Learn hints: when learning the application can present hints. You can amongst others influence how long a hint should be visible.</li>
+				<li>Locale: changing the locale of the application changes amonst others the layout orientation. E.g. the Arabic locales will flip everything to right-to-left. In the future this can be used to change the language of the graphical userinterface, too (if someone has provided a translation for the selected locale).</li>
+				<li>Selection: if you have a large learning stack you might not wnat to work / learn with all the entries at a time. These preferences define under which circumstances changes to an entry should be reflected in the selection (see also <a href="site:selection">Selection</a>).</li>
+				<li>Statistics: you can tell the application to save a set of indicators each time you exit (see also <a href="site:statistics">Statistics</a>.</li>
+			</ul>
+			<figure src="images/preferences_locale.png" alt="screenshot of DingsBums?! showing the preferences for the locale" />
+			<figure src="images/preferences_selection.png" alt="screenshot of DingsBums?! showing the preferences for selection" />
+			<figure src="images/preferences_statistics.png" alt="screenshot of DingsBums?! showing the preferences for statistics" />
+		</section>
+		<section id="editing">
+			<title>Editing the Learning Stack Properties and Information</title>
+			<p>The first screen, which appears after loading a learning stack shows its properties and information. You get to this screen  using the <code>Edit -&gt; Edit Learning Stack Properties</code> menu item.</p>
+			<p>Amongst others you can influence the visibility of certain fields and define labels for the most important fields to adapt the user interface to your learning stack. Future versions will include the possibility to have bi-directional text for a mixture of languages like Arabic - English.</p>
+			<figure src="images/properties_info.png" alt="screenshot of DingsBums?! showing the information screen" />
+			<figure src="images/properties_labels.png" alt="screenshot of DingsBums?! showing the labels properties" />
+			<figure src="images/properties_visibility.png" alt="screenshot of DingsBums?! showing the visibility properties" />
+		</section>
+	</body>
+</document>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Learning</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>All learning is done in menu <code>Learn</code>. At the moment you can only learn one entry at a time. In the future learning games will allow to make learning more fun and give a better start. E.g.:</p>
+			<ul>
+				<li>Choose the right solution among 4 possible solutions</li>
+				<li>Memory (the pattern card game)</li>
+				<li>Matching words: two rows of words where you drag lines between the original and the translation</li>
+			</ul>
+			<p>When starting learning a dialog is presented to allow you to choose the learning direction. E.g. in a vocabulary you do not want to learn always from German to Danish, but also from Danish to German (however the entry type details will alway be of the target.</p>
+			<figure src="images/learn_direction.png" alt="screenshot of DingsBums?! showing the dialog for choosing the direction of learning" />
+
+		</section>
+		<section id="learning">
+			<title>Learning One Entry at a Time</title>
+			<p>The application shows the entries one by one without showing the solution. A set of different hints can be used, if the solution cannot be remembered. To activate the hints choose a method in the dropdown box at the buttom of the screen and press once or several times the <code>Hint</code> button.</p>
+			<p>The letters of the solution shuffled (the solution is <code>lyntog</code>):</p>
+			<figure src="images/learn_one_shuffle.png" alt="screenshot of DingsBums?! showing learning hint shuffle" />
+			<p>The first letters of the solution (press several times the <code>Hint</code> button to see more letters):</p>
+			<figure src="images/learn_one_letter.png" alt="screenshot of DingsBums?! showing learning hint letter" />
+			<p>Flash shows the solution in a short amount of time, which can be influenced in the <a href="site:preferences">preferences</a> screen:</p>
+			<figure src="images/preferences_hints.png" alt="screenshot of DingsBums?! showing preferences for learning hint flash" />
+			<p>Pressing the <code>Show</code> button prints the solution of the current entry . The contents of some fields is shown in query mode and of others only when showing the solution. This is defined in the <a href="site:preferences">learning stack properties</a>.</p>
+			<figure src="images/learn_one_show.png" alt="screenshot of DingsBums?! showing preferences for learning hint flash" />
+		</section>
+	</body>
+</document>

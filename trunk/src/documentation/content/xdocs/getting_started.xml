@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Getting Started</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>This page and the following pages under &quot;Documentation&quot; are not a comprehensive manual for the <code>DingsBums?!</code> application. However it should contain all you need to get started. The details should be pretty much selfexplanatory - otherwise feel free to <a href="site:contact">contact</a> the author.</p>
+			<p>Additionally some of your questions might already be answered in the <a href="site:faq">Frequently Asked Questions</a>.</p>
+		</section>
+		<section id="install">
+			<title>Downloading, Installing and Running</title>
+			<p>Please refer to the <a href="site:download">Download</a> page for instructiona about downloading, installing and running the application.</p>
+		</section>
+		<section id="opening">
+			<title>Opening a Learning Stack</title>
+			<p>Opening an existing learning stack or vocabulary can be done in two ways:</p>
+			<ul>
+				<li>Use the dynamic menu items with recently opened files at the buttom of the <code>File</code> menu.</li>
+				<li>Get a file dialog by using either the &quot;Open&quot; button atg the buttom or the <code>file -&gt; Open</code> menu.</li>
+			</ul>
+			<p>The screenshots in the documentation are all taken from the following example files, which can be found in the samples directory of the downloaded zip-file containing the code.</p>
+			<ul>
+				<li><code>eucapitals.xml</code>: the countries of the European Union as of the 1st of April 2004. although the focus lies in learning the capital of the respective countries, this learning stack shows how you can configure the different fileds to provide additional information.</li>
+				<li><code>german_danish.xml</code>: a classic vocabulary to learn Danish for Germans. This learning stack exemplifies how the software can be adapted to a specific need, in this example the Danish grammar. Also the level of detail chosen is for a highschool student. The same vocabulary for undergraduates or to prepare for a single trip to Denmark would use much less details - probably only the actual German words with the Dansih translation and no grammatical details.</li>
+			</ul>
+			<figure src="images/open.png" alt="screenshot of DingsBums?! showing the file menu with recent files" />
+		</section>
+		<section id="new">
+			<title>Starting with a New Learning Stack</title>
+			<p>To start with a new learning stack just use menu <code>file -&gt; New</code> or the button at the bottom right. You can leave everything as defaults and go directly to <code>Edit -&gt; Edit Entries</code> to add a few entries to the learning stack. Only the fields &quot;Base&quot; and &quot;Target&quot; are required. &quot;Target&quot; is what you want to memorize by using the <a href="site:learning">learning</a> features.</p>
+			<note>If &quot;Base&quot; and &quot;Target&quot; is all you are interested in the you can hide the other fields in the &quot;Visibility&quot; tab in the learning stack properties (see <a href="site:preferences">Preferences and Properties</a>).</note>
+			<p>See <a href="site:editing">editing</a> for more information about how to add contents to your learning stack and the terminology used.</p>
+		</section>
+	</body>
+</document>
