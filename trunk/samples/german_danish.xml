@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vocabulary version="3">
-<info><title>Deutsch-Dänisch Vokabular</title><author>Rick Gruber, rick@vanosten.net</author><notes></notes><blabel>Tysk</blabel><tlabel>Dansk</tlabel><alabel>Grammatik</alabel><ulabel>Lektion</ulabel><clabel>Kategori</clabel><olabel>Andre</olabel><explabel>Forklaring</explabel><exlabel>Eksempel</exlabel><bor>en_UK</bor><tor>en_UK</tor><aor>en_UK</aor><uor>en_UK</uor><cor>en_UK</cor><expor>en_UK</expor><exor>en_UK</exor><por>en_UK</por><ror>en_UK</ror><visa>0</visa><visu>0</visu><viscat>0</viscat><visexp>0</visexp><visex>4</visex><vispro>0</vispro><visrel>0</visrel></info>
+<info><title>Deutsch-Dänisch Vokabular</title><author>Rick Gruber, rick@vanosten.net</author><notes></notes><copyright></copyright><licence></licence><blabel>Tysk</blabel><tlabel>Dansk</tlabel><alabel>Grammatik</alabel><ulabel>Lektion</ulabel><clabel>Kategori</clabel><olabel>Andre</olabel><explabel>Forklaring</explabel><exlabel>Eksempel</exlabel><bor>en_UK</bor><tor>en_UK</tor><aor>en_UK</aor><uor>en_UK</uor><cor>en_UK</cor><expor>en_UK</expor><exor>en_UK</exor><por>en_UK</por><ror>en_UK</ror><visa>0</visa><visu>0</visu><viscat>0</viscat><visexp>0</visexp><visex>4</visex><vispro>0</vispro><visrel>0</visrel></info>
 <etattributes>
-<eta eid="ETA1" n="Konjugation" di="ETAI21" lu="20040219 08:43:41 CET"><etai eid="ETAI21" ir="false">ikke definieret</etai><etai eid="ETAI5" ir="false">ede</etai><etai eid="ETAI6" ir="false">te</etai><etai eid="ETAI7" ir="false">ede eller te</etai><etai eid="ETAI8" ir="true">uregelmæssig</etai></eta>
 <eta eid="ETA4" n="Pluralis" di="ETAI24" lu="20040219 08:43:41 CET"><etai eid="ETAI24" ir="false">ikke definieret</etai><etai eid="ETAI14" ir="false">ingen</etai><etai eid="ETAI15" ir="false">kun flertal</etai><etai eid="ETAI16" ir="false">-</etai><etai eid="ETAI17" ir="false">r</etai><etai eid="ETAI18" ir="false">e</etai><etai eid="ETAI19" ir="true">uregelmæssig</etai></eta>
-<eta eid="ETA2" n="Komparation" di="ETAI22" lu="20040219 08:43:41 CET"><etai eid="ETAI22" ir="false">ikke definieret</etai><etai eid="ETAI9" ir="false">regelmæssig</etai><etai eid="ETAI10" ir="true">uregelmæssig</etai></eta>
-<eta eid="ETA3" n="Genus" di="ETAI23" lu="20040219 08:43:41 CET"><etai eid="ETAI23" ir="false">ikke definieret</etai><etai eid="ETAI11" ir="false">fælleskøn</etai><etai eid="ETAI12" ir="false">neutrum</etai><etai eid="ETAI13" ir="false">fælleskøn eller neutrum</etai></eta>
+<eta eid="ETA1" n="Konjugation" di="ETAI21" lu="20040219 08:43:41 CET"><etai eid="ETAI21" ir="false">ikke definieret</etai><etai eid="ETAI5" ir="false">ede</etai><etai eid="ETAI6" ir="false">te</etai><etai eid="ETAI7" ir="false">ede eller te</etai><etai eid="ETAI8" ir="true">uregelmæssig</etai></eta>
 <eta eid="ETA5" n="Type" di="ETAI20" lu="20040219 08:43:41 CET"><etai eid="ETAI20" ir="false">ikke definieret</etai><etai eid="ETAI1" ir="false">andet</etai><etai eid="ETAI2" ir="false">sætning</etai><etai eid="ETAI3" ir="false">ordsprog</etai><etai eid="ETAI4" ir="false">talemåde</etai></eta>
+<eta eid="ETA3" n="Genus" di="ETAI23" lu="20040219 08:43:41 CET"><etai eid="ETAI23" ir="false">ikke definieret</etai><etai eid="ETAI11" ir="false">fælleskøn</etai><etai eid="ETAI12" ir="false">neutrum</etai><etai eid="ETAI13" ir="false">fælleskøn eller neutrum</etai></eta>
+<eta eid="ETA2" n="Komparation" di="ETAI22" lu="20040219 08:43:41 CET"><etai eid="ETAI22" ir="false">ikke definieret</etai><etai eid="ETAI9" ir="false">regelmæssig</etai><etai eid="ETAI10" ir="true">uregelmæssig</etai></eta>
 </etattributes>
 <entrytypes>
 <entrytype eid="ET4" n="Expression" a1="ETA5" lu="20040219 08:43:41 CET"></entrytype>
@@ -28,7 +28,7 @@
 <entries>
 <e et="ET3" eid="E424" u="U3" c="C1" lv="1" st="false" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdm etw vorenthalden</o><d>forholde ngn ngt</d><ea>forholde ministeren vigtige oplysninger -- forholde arbejderne deres løn</ea></e>
 <e et="ET5" eid="E126" u="U1" c="C1" lv="1" st="true" lu="20040426 17:47:27 CEST" ll="19700101 00:00:00 CET"><o>noch</o><d>endnu</d></e>
-<e et="ET1" eid="E183" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Unordnung, Durcheinander</o><d>roderi</d></e>
+<e et="ET1" eid="E183" u="U1" c="C1" lv="4" st="true" lu="20050129 09:46:08 CET" ll="20050129 09:46:08 CET" a1="ETAI12" a2="ETAI17"><o>Unordnung, Durcheinander</o><d>roderi</d></e>
 <e et="ET5" eid="E56" u="U1" c="C1" lv="1" st="true" lu="20040426 17:48:21 CEST" ll="19700101 00:00:00 CET"><o>sogar</o><d>endog, endda, sågar</d></e>
 <e et="ET5" eid="E105" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>dann und wann, von Zeit zu Zeit</o><d>ind imellem</d></e>
 <e et="ET1" eid="E111" u="U1" c="C1" lv="1" st="true" lu="20040806 10:24:25 CEST" ll="20040416 18:34:38 CEST" a1="ETAI12" a2="ETAI16"><o>Nebenbeschäftigung</o><d>bierhverv</d></e>
@@ -58,8 +58,8 @@
 <e et="ET3" eid="E343" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich mit etw abmühen</o><d>bakse med ngt</d><ea>de baksede med klaveret for at få det op ad trappen -- det bord er ikke sådan at bakse med</ea></e>
 <e et="ET2" eid="E21" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>voraltet, überholt; verjährt</o><d>forældet</d></e>
 <e et="ET3" eid="E245" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>zu Gute haben</o><d>have til gode</d></e>
-<e et="ET4" eid="E48" u="U1" c="C1" lv="2" st="true" lu="20040426 18:34:30 CEST" ll="20040426 18:34:30 CEST" a1="ETAI2"><o>darf ich um Ruhe bitten?</o><d>kan jeg så få ørenlyd?</d></e>
-<e et="ET1" eid="E201" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Steckdose</o><d>stikkontakt</d></e>
+<e et="ET4" eid="E48" u="U1" c="C1" lv="2" st="true" lu="20041216 01:28:19 CET" ll="20041216 01:28:19 CET" a1="ETAI2"><o>darf ich um Ruhe bitten?</o><d>kan jeg så få ørenlyd?</d></e>
+<e et="ET1" eid="E201" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:10 CET" ll="20050129 09:46:10 CET" a1="ETAI11" a2="ETAI17"><o>Steckdose</o><d>stikkontakt</d></e>
 <e et="ET3" eid="E173" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw im Griff haben</o><d>have tjek på ngt</d></e>
 <e et="ET2" eid="E370" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>prüde; zimperlich; pingelig; pedantisch</o><d>sippet</d><ea>en sippet ung dame der blev meget forarget over de unge mænds tilnærmelser</ea></e>
 <e et="ET1" eid="E72" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Nachteil, Missstand; Unannehmlichkeit</o><d>ulempe</d></e>
@@ -83,7 +83,7 @@
 <e et="ET1" eid="E307" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Ärger, Verdruss</o><d>ærgrelse</d><ea>han gav sin ærgrelse luft</ea></e>
 <e et="ET4" eid="E39" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>es klopft!</o><d>det banker!</d></e>
 <e et="ET2" eid="E29" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>faul, träge; abgestanden</o><d>doven</d></e>
-<e et="ET1" eid="E113" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Abkürzung</o><d>forkortelse</d></e>
+<e et="ET1" eid="E113" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:13 CET" ll="20050129 09:46:13 CET" a1="ETAI12" a2="ETAI17"><o>Abkürzung</o><d>forkortelse</d></e>
 <e et="ET2" eid="E334" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>genügend, ausreichend, hinreichend, zur Genüge</o><d>tilstrækkelig</d></e>
 <e et="ET3" eid="E236" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>vernichten, zerstören</o><d>tilintetgøre</d></e>
 <e et="ET3" eid="E309" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw (bewusst) aus-, fort-, weglassen</o><d>udelade ngt</d><ea>udelade vigtige detaljer i sin beretning</ea><r>!=undlade</r></e>
@@ -115,19 +115,19 @@
 <e et="ET1" eid="E195" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Vortrag</o><d>fordrag, oplæg</d></e>
 <e et="ET5" eid="E52" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>zu Zeiten und Unzeiten</o><d>i tide og utide</d></e>
 <e et="ET2" eid="E4" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>geneigt (zu)</o><d>tilbøjelig (til)</d></e>
-<e et="ET4" eid="E366" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>Spass beiseite!</o><d>Spøg frabedes!</d></e>
+<e et="ET4" eid="E366" u="U2" c="C1" lv="2" st="true" lu="20050129 10:58:56 CET" ll="20050129 10:58:56 CET" a1="ETAI2"><o>Spass beiseite!</o><d>Spøg frabedes!</d></e>
 <e et="ET1" eid="E109" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Urteil, Meinung</o><d>omdømme</d></e>
-<e et="ET1" eid="E187" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Bogen, Blatt</o><d>ark</d><ep>Papier etc.</ep></e>
+<e et="ET1" eid="E187" u="U1" c="C1" lv="5" st="true" lu="20050129 09:46:14 CET" ll="20050129 09:46:14 CET" a1="ETAI12" a2="ETAI17"><o>Bogen, Blatt</o><d>ark</d><ep>Papier etc.</ep></e>
 <e et="ET3" eid="E412" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>ungelegen kommen</o><d>komme utilpas</d></e>
-<e et="ET1" eid="E191" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI18"><o>Brauch, Sitte</o><d>skik</d></e>
+<e et="ET1" eid="E191" u="U1" c="C1" lv="3" st="true" lu="20050129 09:46:16 CET" ll="20050129 09:46:16 CET" a1="ETAI11" a2="ETAI18"><o>Brauch, Sitte</o><d>skik</d></e>
 <e et="ET1" eid="E305" u="U2" c="C1" lv="1" st="true" lu="20040416 18:34:49 CEST" ll="20040416 18:34:49 CEST" a1="ETAI11" a2="ETAI18"><o>Behauptung</o><d>påstand</d><ea>fremsætte en påstand</ea></e>
 <e et="ET5" eid="E61" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>selbst wenn</o><d>selv om</d></e>
-<e et="ET3" eid="E177" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI6"><o>messen</o><d>måle</d></e>
 <e et="ET2" eid="E313" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>ulkig</o><d>skæg</d></e>
-<e et="ET3" eid="E341" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw auf etw (auf)laden</o><d>læsse ngt på ngt</d><ea>læsse roer på en vogn</ea></e>
+<e et="ET3" eid="E177" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI6"><o>messen</o><d>måle</d></e>
 <e et="ET5" eid="E404" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>beziehungsweise; sowohl ... als auch ...</o><d>henholdsvis ... og ...</d><ep>udtryk for at noget nævnes i en rækkefølge, evt. svarende til en tidligere nævnt rækkefølge</ep><ea>det henholdsvis regnede og sneede -- firmaet har afdelinger i henholdsvis Flensburg og Hamburg</ea></e>
-<e et="ET1" eid="E185" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Süssigkeiten, Nascherei</o><d>slik</d></e>
+<e et="ET3" eid="E341" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw auf etw (auf)laden</o><d>læsse ngt på ngt</d><ea>læsse roer på en vogn</ea></e>
 <e et="ET2" eid="E362" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>träge, faul, schläfrig</o><d>dvask</d><ea>man bliver dvask i varmen -- han er for dvask til nogensinde at få det gjort</ea><r>= dorsk</r></e>
+<e et="ET1" eid="E185" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Süssigkeiten, Nascherei</o><d>slik</d></e>
 <e et="ET3" eid="E152" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI6"><o>giessen</o><d>støbe</d><ep>Metall</ep></e>
 <e et="ET3" eid="E270" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw einengen</o><d>indsnævre ngt</d></e>
 <e et="ET3" eid="E393" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI6"><o>durchlesen, Korrektur lesen, studieren (Text)</o><d>nærlæse ngt</d><ea>nærlæse et manuskript med henblik på meningsforstyrrende fejl -- nærlæse litterære tekster for at finde dybere lag af menin</ea></e>
@@ -143,22 +143,22 @@
 <e et="ET3" eid="E389" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>den Tisch abrümen</o><d>tage af bordet</d></e>
 <e et="ET2" eid="E271" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>sinnlich</o><d>sanselig</d></e>
 <e et="ET3" eid="E266" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>wegen etw den Kopf schütteln</o><d>ryste på hovedet af ngt</d></e>
-<e et="ET3" eid="E158" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>blaues Blut haben</o><d>have blått blod i årene</d></e>
 <e et="ET3" eid="E378" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>grunzen</o><d>grynte</d></e>
+<e et="ET3" eid="E158" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>blaues Blut haben</o><d>have blått blod i årene</d></e>
 <e et="ET3" eid="E394" u="U2" c="C1" lv="1" st="true" lu="20040426 18:33:37 CEST" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw zu Grunde liegen</o><d>ligge til grund for ngt</d><ea>der ligger en forbrydelse til grund for sagen</ea></e>
 <e et="ET5" eid="E119" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>eigentlich</o><d>egentlig</d><p>enlig</p></e>
 <e et="ET1" eid="E355" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Vortrag</o><d>foredrag</d><r>!= oplæg</r></e>
 <e et="ET3" eid="E268" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>aufgelegt sein etw zu tun</o><d>være frisk på at gøre ngt</d></e>
-<e et="ET4" eid="E64" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>ich kenne ihn persönlich</o><d>jeg kender ham selv</d></e>
-<e et="ET3" eid="E145" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw in Betracht ziehen</o><d>tage højde for ngt</d></e>
 <e et="ET3" eid="E376" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>grübeln über etw</o><d>gruble over ngt</d><ea>hun går og grubler over alt hvad jeg sige</ea></e>
+<e et="ET3" eid="E145" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw in Betracht ziehen</o><d>tage højde for ngt</d></e>
+<e et="ET4" eid="E64" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>ich kenne ihn persönlich</o><d>jeg kender ham selv</d></e>
 <e et="ET2" eid="E13" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>schwierig, schwer; schwerlich</o><d>vanskelig</d></e>
 <e et="ET1" eid="E396" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Entzücken, Verzückung, Begeisterung</o><d>henrykkelse</d><ea>de kunne slet ikke skjule deres henrykkelse over sejren -- hun var ude af sig selv af henrykkelse</ea><r>begejstring</r></e>
+<e et="ET1" eid="E193" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:15 CET" ll="20050129 09:46:15 CET" a1="ETAI11" a2="ETAI17"><o>Unordnung, Durcheinander</o><d>(ge)vinst</d></e>
 <e et="ET3" eid="E273" u="U2" c="C3" lv="1" st="true" lu="20040426 18:32:10 CEST" ll="19700101 00:00:00 CET" a1="ETAI8"><o>eine Hand geben, mithelfen</o><d>tage et nap med</d><ea>han top et nap med opvasken</ea><r>hjælpe til</r></e>
-<e et="ET1" eid="E193" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Unordnung, Durcheinander</o><d>(ge)vinst</d></e>
 <e et="ET3" eid="E259" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw absichtlich tun</o><d>gøre ngt med forsæt</d></e>
 <e et="ET3" eid="E204" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>wegschleichen, sich drücken</o><d>liste af, liste sig bort</d></e>
-<e et="ET1" eid="E209" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Benutzeroberfläche, Benutzerschnittstelle</o><d>brugergrænseflade</d><ep>GUI</ep></e>
+<e et="ET1" eid="E209" u="U1" c="C1" lv="3" st="true" lu="20050129 09:46:15 CET" ll="20050129 09:46:15 CET" a1="ETAI11" a2="ETAI17"><o>Benutzeroberfläche, Benutzerschnittstelle</o><d>brugergrænseflade</d><ep>GUI</ep></e>
 <e et="ET2" eid="E418" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>abgedroschen, abgegriffen</o><d>fortærsket</d><ep>som er gentaget så mange gange at det er blevet kedeligt</ep><ea>emnet er noget fortærsket ·  det lidt fortærskede ord &apos;livskvalitet&apos;</ea></e>
 <e et="ET3" eid="E238" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>liebkosen, streicheln, knutschen</o><d>kærtegne</d></e>
 <e et="ET5" eid="E93" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>trotz, ungeachtet</o><d>på trods af | til trods for</d></e>
@@ -169,12 +169,12 @@
 <e et="ET3" eid="E264" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich schützen gegen etw</o><d>værge sig (i)mod ngt</d></e>
 <e et="ET1" eid="E360" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI18"><o>Teig</o><d>dej</d><ea>lægge dej til brød -- ælte dej -- stille dej til hævning</ea></e>
 <e et="ET5" eid="E134" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>überall</o><d>alle vegne</d></e>
-<e et="ET1" eid="E87" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Ruf</o><d>rygte</d><ep>meist negativ</ep></e>
-<e et="ET3" eid="E422" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw in etw hineinstecken ´hineintun</o><d>putte ngt i ngt</d><ep>anbringe noget på et sted hvor det ikke længere er synlig</ep><ea>hun puttede tingene ned i skuffen -- putte chokoladen i munden -- putte hænderne i lommen --putte pengene i sparegrisen</ea></e>
+<e et="ET1" eid="E87" u="U1" c="C1" lv="3" st="true" lu="20050129 09:46:08 CET" ll="20050129 09:46:08 CET" a1="ETAI12" a2="ETAI14"><o>Ruf</o><d>rygte</d><ep>meist negativ</ep></e>
 <e et="ET1" eid="E277" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Pickel</o><d>bums</d><r>filipens (en, er)</r></e>
+<e et="ET3" eid="E422" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw in etw hineinstecken ´hineintun</o><d>putte ngt i ngt</d><ep>anbringe noget på et sted hvor det ikke længere er synlig</ep><ea>hun puttede tingene ned i skuffen -- putte chokoladen i munden -- putte hænderne i lommen --putte pengene i sparegrisen</ea></e>
 <e et="ET3" eid="E243" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>im Sinn haben</o><d>have i sinde</d></e>
-<e et="ET3" eid="E156" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>angehen, betreffen</o><d>vedkomme</d></e>
 <e et="ET3" eid="E255" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>jn etw auferlagen, beauftragen</o><d>pålægge ngn ngt</d></e>
+<e et="ET3" eid="E156" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>angehen, betreffen</o><d>vedkomme</d></e>
 <e et="ET1" eid="E211" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Flugzeug</o><d>fly</d></e>
 <e et="ET3" eid="E430" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich verlassen auf etw</o><d>stole på ngt</d><ep>have tillid til nogen el. noget</ep></e>
 <e et="ET1" eid="E179" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Kälte, Frost</o><d>kulde</d></e>
@@ -186,16 +186,16 @@
 <e et="ET4" eid="E432" u="U3" c="C1" lv="1" st="false" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI1"><o>ungelegen kommen</o><d>komme til ulejlighed</d><ea>jeg kommer vel ikke til ulejlighed?</ea></e>
 <e et="ET3" eid="E294" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>stibitzen, klauen</o><d>negle ngt</d><ea>han neglede en bil</ea></e>
 <e et="ET3" eid="E160" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>vergleichen</o><d>sammenligne</d></e>
-<e et="ET4" eid="E292" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI3"><o>wer kein Kopf hat, der hat Beine!</o><d>det som man ikke har mellem ørene, må man have i benene</d></e>
+<e et="ET4" eid="E292" u="U2" c="C1" lv="3" st="true" lu="20050129 10:58:51 CET" ll="20050129 10:58:51 CET" a1="ETAI3"><o>wer kein Kopf hat, der hat Beine!</o><d>det som man ikke har mellem ørene, må man have i benene</d></e>
 <e et="ET5" eid="E338" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>dafür, andererseits</o><d>til gengæld</d></e>
-<e et="ET4" eid="E47" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>wie schreibt man das?</o><d>hvordan staver men til det?</d></e>
 <e et="ET4" eid="E41" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>willst du oder soll ich?</o><d>vil du eller skal jeg?</d></e>
+<e et="ET4" eid="E47" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI2"><o>wie schreibt man das?</o><d>hvordan staver men til det?</d></e>
 <e et="ET5" eid="E62" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>auch wenn</o><d>selv om også</d></e>
 <e et="ET1" eid="E262" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Vormund</o><d>værge</d></e>
 <e et="ET3" eid="E385" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>strömen; gissen (Regen)</o><d>fosse</d><ep>strømme voldsomt frem el. ned</ep><ea>floden fossede ud i havet -- regnen fossede ned</ea></e>
 <e et="ET2" eid="E275" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>selbstgefällig</o><d>selvglad</d></e>
 <e et="ET1" eid="E85" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Unterhaltung, Erhaltung, Pflege</o><d>vedligeholdelse</d></e>
-<e et="ET4" eid="E336" u="U1" c="C1" lv="1" st="true" lu="20040416 18:35:07 CEST" ll="20040416 18:35:07 CEST" a1="ETAI2"><o>das genügt vollauf</o><d>det er fuldt ud tilstrækkeligt</d></e>
+<e et="ET4" eid="E336" u="U1" c="C1" lv="2" st="true" lu="20050129 10:58:47 CET" ll="20050129 10:58:47 CET" a1="ETAI2"><o>das genügt vollauf</o><d>det er fuldt ud tilstrækkeligt</d></e>
 <e et="ET1" eid="E420" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Leckerei</o><d>guf</d><ep>søde sager og andet lækkert, fx slik, chips el. kager</ep></e>
 <e et="ET1" eid="E398" u="U3" c="C1" lv="1" st="true" lu="20040416 18:33:58 CEST" ll="20040416 18:33:58 CEST" a1="ETAI12" a2="ETAI16"><o>Schuhlöffel, Schuhanzieher</o><d>skohorn</d></e>
 <e et="ET3" eid="E372" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw vermuten</o><d>gisne om ngt</d><ea>fremtiden kan vi kun gisne om</ea><r>= gætte</r></e>
@@ -205,20 +205,20 @@
 <e et="ET3" eid="E324" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw entbehren, missen</o><d>undvære ngt</d><ea>jeg vil nødig undvære min daglige avis --  jeg ville ikke have undværet den oplevelse for alt i verden</ea></e>
 <e et="ET5" eid="E103" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>vor allem</o><d>frem for alt</d></e>
 <e et="ET3" eid="E234" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw hoffen</o><d>gøre sig håb om ngt</d></e>
-<e et="ET1" eid="E319" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Tat, Werk; (häusliche oder fachliche) Arbeit</o><d>gerning</d><ea>gøre en god gerning -- stå til ansvar for sine gerninger -- gjort gerning står ikke til at ændre -- tage en gerning op som flygtningelærer</ea></e>
-<e et="ET1" eid="E70" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Hang, Neigung (zu)</o><d>hang (til)</d></e>
 <e et="ET1" eid="E213" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Katalog</o><d>katalog</d></e>
+<e et="ET1" eid="E70" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Hang, Neigung (zu)</o><d>hang (til)</d></e>
+<e et="ET1" eid="E319" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Tat, Werk; (häusliche oder fachliche) Arbeit</o><d>gerning</d><ea>gøre en god gerning -- stå til ansvar for sine gerninger -- gjort gerning står ikke til at ændre -- tage en gerning op som flygtningelærer</ea></e>
 <e et="ET1" eid="E222" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Wiederholung</o><d>gentagelse</d></e>
-<e et="ET1" eid="E296" u="U2" c="C1" lv="1" st="true" lu="20040416 18:35:00 CEST" ll="20040416 18:35:00 CEST" a1="ETAI11" a2="ETAI17"><o>Vorgehensweise, Arbeitsweise, Verfahren, Methode,</o><d>fremgangsmåde</d></e>
+<e et="ET1" eid="E296" u="U2" c="C1" lv="6" st="true" lu="20050129 09:46:15 CET" ll="20050129 09:46:15 CET" a1="ETAI11" a2="ETAI17"><o>Vorgehensweise, Arbeitsweise, Verfahren, Methode,</o><d>fremgangsmåde</d></e>
 <e et="ET2" eid="E9" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>fachlich, beruflich</o><d>faglig</d><p>fauvli</p></e>
 <e et="ET3" eid="E166" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdn heiraten</o><d>gifte sig med en</d></e>
 <e et="ET5" eid="E122" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>sowohl ... als auch</o><d>både ... og</d><ep>Umgangssprache</ep></e>
 <e et="ET3" eid="E322" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich grämen über etw, , sich aufregen über etw; sich schaudern vor</o><d>græmme sig over ngt | græmmes ved/over ngt</d><ea>hun græmmede sig over hans opførsel under middagen -- jeg græmmes ved tanken om hvad du har gjort</ea></e>
-<e et="ET2" eid="E30" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>lustig, spassig; ulkig, drollig</o><d>morsom</d></e>
 <e et="ET2" eid="E36" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>schmutzig, unsauber, dreckig</o><d>snavset</d></e>
+<e et="ET2" eid="E30" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>lustig, spassig; ulkig, drollig</o><d>morsom</d></e>
 <e et="ET3" eid="E224" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw müssen</o><d>være nødt til ngt</d></e>
-<e et="ET3" eid="E168" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>sich jm annehmen, sich um jn kümmern</o><d>tage sig af en</d></e>
 <e et="ET3" eid="E416" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdn an etw gewöhnen</o><d>vænne ngn til ngt</d><ep>blive el. gøre nogen fortrolig med noget</ep><ea>vi havde svært ved at vænne os til de nye omgivelser -- jeg vænnede hunden til at sove i kurven</ea></e>
+<e et="ET3" eid="E168" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>sich jm annehmen, sich um jn kümmern</o><d>tage sig af en</d></e>
 <e et="ET1" eid="E217" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Karteikarte</o><d>kartotekskort</d></e>
 <e et="ET4" eid="E320" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI4"><o>jdn auf frischer Tat ertappen</o><d>tage | gribe ngn på fersk gerning</d></e>
 <e et="ET5" eid="E101" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>anders</o><d>anderledes</d></e>
@@ -250,8 +250,8 @@
 <e et="ET1" eid="E110" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Beruf, Erwerb</o><d>erhverv</d></e>
 <e et="ET1" eid="E219" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Kiste, Kasten; Gehäuse (Uhr)</o><d>kasse</d></e>
 <e et="ET1" eid="E188" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI18"><o>(Polizei)Spitzel</o><d>stikker</d></e>
-<e et="ET1" eid="E367" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Sachbeschädigung, Verheerung, Schändung, Frevel</o><d>hærværk</d><ea>der er øvet hærværk mod ejendommen</ea></e>
-<e et="ET1" eid="E74" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Trauung</o><d>vielse</d></e>
+<e et="ET1" eid="E367" u="U2" c="C1" lv="2" st="true" lu="20050129 09:46:05 CET" ll="20050129 09:46:05 CET" a1="ETAI12" a2="ETAI16"><o>Sachbeschädigung, Verheerung, Schändung, Frevel</o><d>hærværk</d><ea>der er øvet hærværk mod ejendommen</ea></e>
+<e et="ET1" eid="E74" u="U1" c="C1" lv="5" st="true" lu="20050129 09:46:15 CET" ll="20050129 09:46:15 CET" a1="ETAI11" a2="ETAI17"><o>Trauung</o><d>vielse</d></e>
 <e et="ET2" eid="E15" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>wohlwissend</o><d>velvidende</d></e>
 <e et="ET3" eid="E148" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich in etw einmischen</o><d>blande sig i ngt</d></e>
 <e et="ET3" eid="E231" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>auf etw gespannt sein</o><d>være spændt på ngt</d></e>
@@ -260,9 +260,9 @@
 <e et="ET2" eid="E5" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>beträchtlich</o><d>betydelig, anselig</d></e>
 <e et="ET5" eid="E57" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>hinsichtlich, was ... betrifft</o><d>for ... vedkommende</d><ep>for mit vedkommende</ep></e>
 <e et="ET5" eid="E51" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>abwechslungsweise</o><d>på skift</d></e>
-<e et="ET1" eid="E215" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Hoffnung</o><d>håb</d></e>
+<e et="ET1" eid="E215" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:16 CET" ll="20050129 09:46:16 CET" a1="ETAI12" a2="ETAI24"><o>Hoffnung</o><d>håb</d></e>
 <e et="ET3" eid="E248" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>die Erwartungen erfüllen</o><d>leve op til ngt</d></e>
-<e et="ET1" eid="E71" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Vergleich</o><d>sammenligning</d></e>
+<e et="ET1" eid="E71" u="U1" c="C1" lv="2" st="true" lu="20050129 10:58:14 CET" ll="20050129 10:58:14 CET" a1="ETAI11" a2="ETAI17"><o>Vergleich</o><d>sammenligning</d></e>
 <e et="ET3" eid="E371" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>trimmen; stutzen</o><d>trimme</d></e>
 <e et="ET3" eid="E329" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI6"><o>jdn anreden; jdn anklagen; zusagen, gefallen</o><d>tiltale ngn</d><ea>tiltale nogen for drab -- tiltale en fremmed dame på gaden -- det tiltaler mig ikke at skullerejse hjem</ea></e>
 <e et="ET1" eid="E78" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI24"><o>Rat</o><d>råd</d><ep>Menschengruppe</ep></e>
@@ -288,7 +288,7 @@
 <e et="ET5" eid="E260" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>heute Morgen</o><d>her til morgen</d></e>
 <e et="ET3" eid="E252" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>hören, horchen, lauschen</o><d>lytte</d></e>
 <e et="ET3" eid="E246" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>täuschen, enttäuschen; schaufeln</o><d>skuffe</d></e>
-<e et="ET1" eid="E202" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI18"><o>Schnellzug; Stromleiste</o><d>lyntog</d></e>
+<e et="ET1" eid="E202" u="U1" c="C1" lv="4" st="true" lu="20050129 09:45:55 CET" ll="20050129 09:45:55 CET" a1="ETAI12" a2="ETAI18"><o>Schnellzug; Stromleiste</o><d>lyntog</d></e>
 <e et="ET1" eid="E182" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Busse, Sühne</o><d>bod</d></e>
 <e et="ET2" eid="E359" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>starrsinnig</o><d>stivsindet</d><ea>den stivsindede idiot ødelægger samarbejdet</ea></e>
 <e et="ET5" eid="E102" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>jetzig</o><d>nuværende</d></e>
@@ -303,22 +303,22 @@
 <e et="ET4" eid="E335" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI1"><o>genügend Geld haben</o><d>have tilstrækkeligt med penge</d></e>
 <e et="ET1" eid="E308" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Erlebnis</o><d>oplevelse</d></e>
 <e et="ET4" eid="E129" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI1"><o>(Ab)Schluss, Ausgang von etw</o><d>udgangen på ngt</d></e>
-<e et="ET1" eid="E312" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Bart</o><d>skæg</d></e>
+<e et="ET1" eid="E312" u="U1" c="C1" lv="5" st="true" lu="20050129 09:46:12 CET" ll="20050129 09:46:12 CET" a1="ETAI12" a2="ETAI16"><o>Bart</o><d>skæg</d></e>
 <e et="ET5" eid="E59" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>je(mals)</o><d>nogensinde</d></e>
 <e et="ET1" eid="E407" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI18"><o>Anhænger</o><d>påhængsvogn</d><r>trailer</r></e>
 <e et="ET2" eid="E346" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>töricht, albern, sinnlos; unzurechnungsfähig</o><d>tåbelig</d><ea>han bærer sig tåbeligt ad -- tåbelige spørgsmål</ea></e>
-<e et="ET1" eid="E190" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Unterstützung</o><d>opbakning</d></e>
+<e et="ET1" eid="E190" u="U1" c="C1" lv="3" st="true" lu="20050129 09:46:13 CET" ll="20050129 09:46:13 CET" a1="ETAI11" a2="ETAI14"><o>Unterstützung</o><d>opbakning</d></e>
 <e et="ET1" eid="E178" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Dunkel, Dunkelheit, Finsternis</o><d>mørke</d></e>
 <e et="ET3" eid="E306" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>behaupten, geltend machen; bewähren</o><d>hævde</d><ea>han hævdede det modsatte -- hævde sine interesser</ea></e>
 <e et="ET2" eid="E26" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>täglich</o><d>daglig</d><p>dauvli</p></e>
 <e et="ET3" eid="E433" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>abspannen, alle Viere von sich strecken (slang)</o><d>flade ud</d><ep>slappe helt af; især ved at smide sig ned på ryggen</ep><ea>efter strabadserne fladede de totalt ud i sofaen</ea></e>
 <e et="ET2" eid="E403" u="U3" c="C1" lv="1" st="false" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>?!?</o><d>lydhør</d><ep>som er opmærksom og velvilligt indstillet</ep><ea>det var en meget lydhør forsamling statsministeren stod overfor -- han var ikke det mindste lydhør over for mine forslag</ea></e>
 <e et="ET3" eid="E310" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw unterlassen; verfehlen, versäumen</o><d>undlade ngt</d><ea>jeg skal ikke undlade at meddele dig konsekvenserne</ea></e>
-<e et="ET1" eid="E28" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Klugheit</o><d>klogskab</d></e>
+<e et="ET1" eid="E28" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:14 CET" ll="20050129 09:46:14 CET" a1="ETAI11" a2="ETAI14"><o>Klugheit</o><d>klogskab</d></e>
 <e et="ET2" eid="E427" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>gemein, schäbig, anstössig (sexuell)</o><d>sjovel</d><ea>en sjofel tankegang -- fortælle sjofle vittigheder -- n sjofel opførsel -- det er sjofelt at sladre</ea></e>
 <e et="ET5" eid="E114" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>immer noch</o><d>stadig væk</d></e>
 <e et="ET3" eid="E331" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>die Erwartungen erfüllen können</o><d>leve op til ngt</d><ea>hun kunne ikke leve op til hans forventninger</ea></e>
-<e et="ET1" eid="E363" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Vertrauen, Zutrauen; Zuversicht</o><d>tillid</d><ea>nyde almindelig tillid -- pigen var fuld af tillid til de voksne</ea><r>= tilro</r></e>
+<e et="ET1" eid="E363" u="U2" c="C1" lv="2" st="true" lu="20050129 09:46:01 CET" ll="20050129 09:46:01 CET" a1="ETAI11" a2="ETAI14"><o>Vertrauen, Zutrauen; Zuversicht</o><d>tillid</d><ea>nyde almindelig tillid -- pigen var fuld af tillid til de voksne</ea><r>= tilro</r></e>
 <e et="ET2" eid="E19" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>voraussagbar</o><d>forudsigelig</d></e>
 <e et="ET2" eid="E325" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>genügsam, anspruchslos</o><d>nøjsom</d><ea>det er en nøjsom plante som kun kræver lidt vand</ea></e>
 <e et="ET4" eid="E327" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI4"><o>vorbeugen ist besser als heilen</o><d>det er bedre at forebygge end at helbrede</d></e>
@@ -332,14 +332,14 @@
 <e et="ET5" eid="E286" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>betreffend</o><d>hvad ... angår</d></e>
 <e et="ET1" eid="E83" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Totschlag, Tötung</o><d>drab</d></e>
 <e et="ET1" eid="E186" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Feuer, Scheiterhaufen</o><d>bål</d></e>
-<e et="ET4" eid="E127" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI1"><o>aus lauter Neid</o><d>af ren og skær misundelse</d></e>
+<e et="ET4" eid="E127" u="U1" c="C1" lv="2" st="true" lu="20050129 10:58:53 CET" ll="20050129 10:58:53 CET" a1="ETAI1"><o>aus lauter Neid</o><d>af ren og skær misundelse</d></e>
 <e et="ET3" eid="E153" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>begiessen; Strasse: sprengen; Vieh: tränken</o><d>vande</d></e>
 <e et="ET5" eid="E53" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>trotz</o><d>trods, uagted</d></e>
 <e et="ET5" eid="E409" u="U3" c="C3" lv="1" st="true" lu="20040426 18:26:30 CEST" ll="19700101 00:00:00 CET"><o>vollkommen egal | gleichgültig</o><d>fløjtende ligeglad</d></e>
 <e et="ET1" eid="E207" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Vokabular; Wortvorrat</o><d>vokabular</d></e>
 <e et="ET3" eid="E176" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>Witze reissen</o><d>rive vittigheder af sig</d></e>
 <e et="ET1" eid="E76" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Verantwortungsbereich</o><d>ansvarsområde</d></e>
-<e et="ET1" eid="E88" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Ruf, Ruhm</o><d>ry</d><ep>negativ</ep></e>
+<e et="ET1" eid="E88" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:12 CET" ll="20050129 09:46:12 CET" a1="ETAI12" a2="ETAI14"><o>Ruf, Ruhm</o><d>ry</d><ep>negativ</ep></e>
 <e et="ET3" eid="E151" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>(ver)prügeln, verhauen</o><d>banke</d></e>
 <e et="ET1" eid="E361" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Püppchen, aufgetakelte Frau</o><d>dulle</d><ea>hun er majet ud som en dulle -- han ser stadig den dull</ea></e>
 <e et="ET3" eid="E405" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>nützen</o><d>gavne</d><ea>det vil gavne sagen hvis du gav nogle penge -- en rask gåtur gavner helbredet</ea><r>fremme</r></e>
@@ -349,7 +349,7 @@
 <e et="ET3" eid="E342" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdm etw aufbürden</o><d>læsse ngt over på ngn</d><ea>hun læssede hele arbejdet over på mig</ea></e>
 <e et="ET5" eid="E60" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>auf die Gefahr hin, dass ...</o><d>med fare for, at ...</d></e>
 <e et="ET2" eid="E3" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>richtig</o><d>rigtig</d><ep>im Sinne von korrekt</ep></e>
-<e et="ET1" eid="E340" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Steuerrad</o><d>rat</d><ea>sidde bag rattet i en bil</ea></e>
+<e et="ET1" eid="E340" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:16 CET" ll="20050129 09:46:16 CET" a1="ETAI12" a2="ETAI16"><o>Steuerrad</o><d>rat</d><ea>sidde bag rattet i en bil</ea></e>
 <e et="ET3" eid="E174" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw unter Kontrolle haben</o><d>have styr på ngt</d></e>
 <e et="ET5" eid="E137" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>links von</o><d>til venstre for</d></e>
 <e et="ET1" eid="E392" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI13" a2="ETAI17"><o>Kompliment</o><d>kompliment</d></e>
@@ -357,12 +357,12 @@
 <e et="ET2" eid="E12" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>einigermassen, leidlich</o><d>nogenlunde</d></e>
 <e et="ET5" eid="E46" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>nur kurz! einen Augenblick!</o><d>lige et øjeblick!</d></e>
 <e et="ET3" eid="E267" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich freuen etw zu tun</o><d>glæde sig til at gøre ngt</d></e>
-<e et="ET1" eid="E192" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Botschaft, Nachricht; Bote; Schätzung</o><d>bud</d></e>
+<e et="ET1" eid="E192" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:12 CET" ll="20050129 09:46:12 CET" a1="ETAI12" a2="ETAI24"><o>Botschaft, Nachricht; Bote; Schätzung</o><d>bud</d></e>
 <e et="ET5" eid="E258" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>vorsätzlich, absichtlich</o><d>forsætlig</d></e>
 <e et="ET1" eid="E208" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Part, Teil; Partei (in Rechtssache)</o><d>part</d></e>
-<e et="ET1" eid="E302" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Necessaire, Toilettentasche, Kulturbeutel</o><d>toilettaske</d></e>
+<e et="ET1" eid="E302" u="U2" c="C1" lv="2" st="true" lu="20050129 09:45:54 CET" ll="20050129 09:45:54 CET" a1="ETAI11" a2="ETAI17"><o>Necessaire, Toilettentasche, Kulturbeutel</o><d>toilettaske</d></e>
 <e et="ET4" eid="E410" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI4"><o>es ist stinklangweilig</o><d>det er dødens pølse</d></e>
-<e et="ET1" eid="E356" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Arbeitspapier, Ansprache oder Text, der z.B. Diskussion einleitet</o><d>oplæg</d><ea>det var hans oplæg til de allierede -- han har lavet et oplæg til et blodigt tv-drama</ea><r>!= foredrag</r></e>
+<e et="ET1" eid="E356" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:11 CET" ll="20050129 09:46:11 CET" a1="ETAI12" a2="ETAI16"><o>Arbeitspapier, Ansprache oder Text, der z.B. Diskussion einleitet</o><d>oplæg</d><ea>det var hans oplæg til de allierede -- han har lavet et oplæg til et blodigt tv-drama</ea><r>!= foredrag</r></e>
 <e et="ET2" eid="E14" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>gründlich</o><d>grundig</d></e>
 <e et="ET3" eid="E205" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>sich um etwas herumdrücken</o><d>liste sig fra ngt</d></e>
 <e et="ET1" eid="E395" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Namensvetter</o><d>navnefælle</d></e>
@@ -370,10 +370,10 @@
 <e et="ET3" eid="E377" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>schnattern; den Mund laufen lassen</o><d>snadre</d><ea>de sidder der og snadrer dagen lang</ea></e>
 <e et="ET1" eid="E354" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Schmutz; Dreck, Kot; Schund</o><d>snavs</d></e>
 <e et="ET1" eid="E293" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Kritzelschrift; Haken zum Abkreuzen</o><d>flueben</d></e>
-<e et="ET4" eid="E272" u="U2" c="C1" lv="2" st="true" lu="20040426 18:34:45 CEST" ll="20040426 18:34:45 CEST" a1="ETAI4"><o>die Spendierhosen anhaben</o><d>have spenderbukserne på</d></e>
+<e et="ET4" eid="E272" u="U2" c="C1" lv="4" st="true" lu="20050129 10:58:57 CET" ll="20050129 10:58:57 CET" a1="ETAI4"><o>die Spendierhosen anhaben</o><d>have spenderbukserne på</d></e>
 <e et="ET3" eid="E379" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>umherirren, umherstreifen</o><d>flakke om</d><ea>flakke rundt i byen -- flakke nervøst omkring -- flakke om på gaden</ea></e>
 <e et="ET2" eid="E347" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>allerlei</o><d>alskens</d><ea>de morede sig med alskens fjas og pjank -- vi har alskens ukrudt i haven</ea><r>alle hånde</r></e>
-<e et="ET1" eid="E419" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Kniff, Tip, kleine Schiebung</o><d>fidus</d><ep>en smart idé som ofte ikke er helt hæderlig</ep><ea>jeg har fået en fidus -- fidusen er at blive ved</ea></e>
+<e et="ET1" eid="E419" u="U3" c="C1" lv="7" st="true" lu="20050129 09:46:11 CET" ll="20050129 09:46:11 CET" a1="ETAI11" a2="ETAI17"><o>Kniff, Tip, kleine Schiebung</o><d>fidus</d><ep>en smart idé som ofte ikke er helt hæderlig</ep><ea>jeg har fået en fidus -- fidusen er at blive ved</ea></e>
 <e et="ET2" eid="E31" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>witzig</o><d>vittig</d></e>
 <e et="ET3" eid="E237" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>schauen, gucken auf etw</o><d>kigge|kikke på ngt</d></e>
 <e et="ET3" eid="E155" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>einen guten (schlechten) Ruf haben</o><d>have et godt (ondt) rygte</d></e>
@@ -391,7 +391,7 @@
 <e et="ET3" eid="E274" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>durch die Kehle giessen, hinunterleeren</o><d>bælle ngt | bælle ngt i sig</d><ea>Babyen bællede mælken i sig. De bæller tit en hel kasse øl</ea></e>
 <e et="ET5" eid="E135" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>in meinem Namen</o><d>på mine vegne</d></e>
 <e et="ET2" eid="E300" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>morgens übel gelaunt, verdriesslich; Morgenmuffel</o><d>morgensur</d><ea>han er morgensur</ea><r>morgengnaven</r></e>
-<e et="ET4" eid="E118" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI1"><o>über das Wochenende</o><d>i weekenden</d></e>
+<e et="ET4" eid="E118" u="U1" c="C1" lv="2" st="true" lu="20050129 10:58:54 CET" ll="20050129 10:58:54 CET" a1="ETAI1"><o>über das Wochenende</o><d>i weekenden</d></e>
 <e et="ET5" eid="E94" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>im voraus</o><d>på forhånd</d></e>
 <e et="ET3" eid="E423" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>schlafen (slang)</o><d>knalde brikker</d><r>sove</r></e>
 <e et="ET3" eid="E265" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>etw in Obhut haben</o><d>have ngt i værge</d></e>
@@ -399,7 +399,7 @@
 <e et="ET1" eid="E388" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Ausdruck (Computer)</o><d>print</d><r>udskrift</r></e>
 <e et="ET5" eid="E142" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>noch viele Jahre</o><d>i mange år fremover</d></e>
 <e et="ET3" eid="E159" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>herausfordern; (er)fordern</o><d>være vært ved at gøre ngt</d></e>
-<e et="ET1" eid="E86" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI18"><o>Polizeibeamter, Tschugger</o><d>strisser</d><ep>Fam./Slang</ep></e>
+<e et="ET1" eid="E86" u="U1" c="C1" lv="4" st="true" lu="20050129 09:46:14 CET" ll="20050129 09:46:14 CET" a1="ETAI11" a2="ETAI18"><o>Polizeibeamter, Tschugger</o><d>strisser</d><ep>Fam./Slang</ep></e>
 <e et="ET5" eid="E140" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>an (und für) sich</o><d>i og for sig</d></e>
 <e et="ET1" eid="E27" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Laster; Last, Ladung</o><d>last</d></e>
 <e et="ET3" eid="E157" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>es Wert sein etw zu tun</o><d>være vært ved at gøre ngt</d></e>
@@ -412,10 +412,10 @@
 <e et="ET1" eid="E263" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Wehr, Waffe</o><d>værge</d><ep>speziell für Hieb- und Stichwaffen</ep></e>
 <e et="ET3" eid="E386" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw mit etw zupflastern</o><d>plastre ngt til med ndgt</d><ea>butikkerne er plastret til med reklamer -- de plastrer gaden til med flag</ea></e>
 <e et="ET3" eid="E240" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw vor etw schützen, verteidigen</o><d>værne ngt mod ngt</d></e>
-<e et="ET1" eid="E349" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Last, Ladung; (das) Laster</o><d>last</d></e>
 <e et="ET3" eid="E431" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jemanden mit etw belästigen, bemühen</o><d>ulejlige ngn med ngt</d><ep>tage nogens opmærksomhed i en kort periode</ep><ea>må jeg ulejlige dig med et par spørgsmål?</ea></e>
+<e et="ET1" eid="E349" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Last, Ladung; (das) Laster</o><d>last</d></e>
 <e et="ET3" eid="E256" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>tüchtig, geschickt sein in etw</o><d>være skrap til ngt</d></e>
-<e et="ET1" eid="E212" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI18"><o>Nachschlagewerk</o><d>opslagsværk</d></e>
+<e et="ET1" eid="E212" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:14 CET" ll="20050129 09:46:14 CET" a1="ETAI12" a2="ETAI18"><o>Nachschlagewerk</o><d>opslagsværk</d></e>
 <e et="ET3" eid="E254" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>mit jm Schluss machen</o><d>slå op med ngn</d></e>
 <e et="ET5" eid="E63" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>(das ist) selbstverständlich</o><d>det siger sig selv</d></e>
 <e et="ET5" eid="E104" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>mit Rücksicht auf, mit Bezug auf, betreffs</o><d>med hensyn til</d></e>
@@ -423,28 +423,28 @@
 <e et="ET3" eid="E161" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>im Vorteil sein</o><d>være ovenpå</d></e>
 <e et="ET3" eid="E223" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI6"><o>jn von etw. überzeugen</o><d>overbevise ngn om ngt</d></e>
 <e et="ET1" eid="E299" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Nieselregen</o><d>støvregn</d></e>
+<e et="ET1" eid="E218" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:08 CET" ll="20050129 09:46:08 CET" a1="ETAI12" a2="ETAI17"><o>Übung</o><d>øvelse</d></e>
 <e et="ET2" eid="E6" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>herein; drinnen</o><d>indenfor</d></e>
-<e et="ET1" eid="E218" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Übung</o><d>øvelse</d></e>
 <e et="ET1" eid="E323" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI16"><o>Unterschlagung</o><d>underslæb</d><ea>han begik underslæb</ea><r>bedrageri</r></e>
-<e et="ET1" eid="E214" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Datei, File</o><d>fil</d></e>
 <e et="ET3" eid="E233" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>schieben</o><d>skubbe</d></e>
+<e et="ET1" eid="E214" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Datei, File</o><d>fil</d></e>
 <e et="ET3" eid="E373" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdn unterdrücken</o><d>tryne ngn</d><ea>de store drenge trynede de små ·  hun følte sig trynet af sine kolleger</ea><r>= kue</r></e>
 <e et="ET3" eid="E169" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>zur Sprache bringen</o><d>bringe på bane</d></e>
 <e et="ET5" eid="E121" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>weder ... noch</o><d>verken ... eller</d></e>
 <e et="ET3" eid="E435" u="U3" c="C1" lv="1" st="false" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>?!?</o><d>snage i ngt</d><ep>undersøge noget som ikke kommer én ved på en meget nysgerrig måde</ep><ea>snage i andres privatliv -- lad være med at snage! -- han har snaget i mine private papirer</ea></e>
-<e et="ET3" eid="E295" u="U2" c="C3" lv="1" st="true" lu="20040426 18:32:29 CEST" ll="19700101 00:00:00 CET" a1="ETAI8"><o>Haare schneiden, neue Frisur bekommen</o><d>få flyttet ørene</d></e>
 <e et="ET3" eid="E375" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>saufen, zechen, bummeln, kneipen</o><d>svire</d><ea>han har været ude at svire hele natten, så nu har han tømmermæn</ea></e>
+<e et="ET3" eid="E295" u="U2" c="C3" lv="1" st="true" lu="20040426 18:32:29 CEST" ll="19700101 00:00:00 CET" a1="ETAI8"><o>Haare schneiden, neue Frisur bekommen</o><d>få flyttet ørene</d></e>
 <e et="ET2" eid="E413" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>wohl, wohlig</o><d>veltilpas</d><ea>føle sig veltilpas -- de formår at få en til at føle sig veltilpas i deres hjem</ea></e>
 <e et="ET3" eid="E165" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>in die Arme nehmen</o><d>give et knus</d><ep>to give a hugg; ev. mit Kuss)</ep></e>
 <e et="ET1" eid="E69" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI14"><o>Ausdauer</o><d>udholdenhed</d></e>
 <e et="ET2" eid="E278" u="U2" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>schmutzig, schäbig</o><d>snusket</d></e>
-<e et="ET1" eid="E316" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Spektakel, Lärm</o><d>skektakel</d><ea>det kom til spektakler mellem politi og demonstranter</ea><r>!= skuespil (Spekatakel als Schauspiel)</r></e>
+<e et="ET1" eid="E316" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:16 CET" ll="20050129 09:46:16 CET" a1="ETAI12" a2="ETAI17"><o>Spektakel, Lärm</o><d>skektakel</d><ea>det kom til spektakler mellem politi og demonstranter</ea><r>!= skuespil (Spekatakel als Schauspiel)</r></e>
 <e et="ET3" eid="E225" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>von etw betroffen werden</o><d>blive ramt af ngt</d></e>
 <e et="ET5" eid="E90" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>überhaupt</o><d>overhovedet</d></e>
 <e et="ET3" eid="E415" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>schwänzen</o><d>pjække</d><ea>han overvejede at pjække fra mødet</ea></e>
 <e et="ET1" eid="E417" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>bedeutungslose | nutzlose Person</o><d>kransekagefigur</d><ea>kongen skulle blot have været en kransekagefigur</ea></e>
 <e et="ET1" eid="E216" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI17"><o>Schwerpunkt</o><d>tyngdepunkt</d></e>
-<e et="ET1" eid="E350" u="U1" c="C1" lv="1" st="true" lu="20040416 18:34:54 CEST" ll="20040416 18:34:54 CEST" a1="ETAI11" a2="ETAI14"><o>Klugheit</o><d>klogskab</d></e>
+<e et="ET1" eid="E350" u="U1" c="C1" lv="2" st="true" lu="20050129 09:46:12 CET" ll="20050129 09:46:12 CET" a1="ETAI11" a2="ETAI14"><o>Klugheit</o><d>klogskab</d></e>
 <e et="ET5" eid="E92" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>deshalb</o><d>derfor</d></e>
 <e et="ET5" eid="E97" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>ehemalig, vorig</o><d>forhenværende</d></e>
 <e et="ET2" eid="E10" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>gemeinsam; gemeinschaftlich</o><d>fælles</d></e>
@@ -455,14 +455,15 @@
 <e et="ET1" eid="E210" u="U1" c="C1" lv="1" st="true" lu="20040416 18:34:53 CEST" ll="20040416 18:34:53 CEST" a1="ETAI12" a2="ETAI17"><o>Partie; Partei (politisch)</o><d>parti</d></e>
 <e et="ET2" eid="E35" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>gewaltig; gewaltsam; heftig</o><d>voldsom</d></e>
 <e et="ET3" eid="E314" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>etw vervielfachen</o><d>mangedoble ngt</d><ea>antallet af turister er blevet mangedoblet</ea></e>
-<e et="ET1" eid="E352" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Dicke, Stärke</o><d>tykkelse</d><ea>maling af en vis tykkelse -- murens tykkelse</ea></e>
+<e et="ET1" eid="E352" u="U1" c="C1" lv="7" st="true" lu="20050129 09:46:12 CET" ll="20050129 09:46:12 CET" a1="ETAI11" a2="ETAI17"><o>Dicke, Stärke</o><d>tykkelse</d><ea>maling af en vis tykkelse -- murens tykkelse</ea></e>
 <e et="ET5" eid="E95" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>der Name von jm, jes Name</o><d>navnet på ngn</d></e>
 <e et="ET1" eid="E437" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI11" a2="ETAI17"><o>Gesichtswinkel; Standpunkt</o><d>synsvinkel</d><ea>set fra denne synsvinkel ser det lige ud -- fra kommunens synsvinkel var besparelsen en gevinst</ea></e>
 <e et="ET2" eid="E33" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>ausgeprägt, ausgesprochen</o><d>udpræget</d></e>
-<e et="ET3" eid="E163" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>dabei sein etw zu tun</o><d>være ved at gøre ngt</d></e>
 <e et="ET2" eid="E8" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>ausgebildet</o><d>uddannet</d></e>
+<e et="ET3" eid="E163" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>dabei sein etw zu tun</o><d>være ved at gøre ngt</d></e>
 </entries>
 <stats>
+<sset ts="20050128 09:11:30 CET"><sne lv="1">431</sne><sne lv="2">3</sne><sne lv="3">1</sne><sne lv="4">0</sne><sne lv="5">0</sne><sne lv="6">0</sne><sne lv="7">0</sne></sset>
 <sset ts="20040806 10:26:07 CEST"><sne lv="1">431</sne><sne lv="2">3</sne><sne lv="3">1</sne><sne lv="4">0</sne><sne lv="5">0</sne><sne lv="6">0</sne><sne lv="7">0</sne></sset>
 </stats>
 </vocabulary>
