@@ -25,7 +25,7 @@
 			<p>From the list of entries new entries can be added to the training stack by pressing the <code>Add</code> button. In the upcoming dialog you are able to choose one of the defined entry types to be assigned to the new entry. (This dialog does not show up, if only one entry type is defined!).</p>
 			<p>The score of each entry is shown with a different color. The score range is between 1 and 7.</p>
 			<figure src="images/entries_new.png" alt="screenshot of DingsBums?! showing the entries list" />
-			<warning>If some of your entries suddenly are disappeared chances are that you have made a <a href="site:selection">selection</a>. You can see the number of selected entries vs. the total number of entries at the buttom of the screen.</warning>
+			<warning>If some of your entries &quot;suddenly are disappeared&quot; chances are that you have made a <a href="site:selection">selection</a>. You can see the number of selected entries vs. the total number of entries at the buttom of the screen.</warning>
 		</section>
 		<section id="edit_entry">
 			<title>Editing an Entry</title>
@@ -43,6 +43,12 @@
 			<p>The screenshot shows the same set of attributes as was used for editing a Danish noun in a screenshot above. For each entry type attribute an item is chosen as the default.</p>
 			<p>An Entry Type Attribute can be (re)used in different Entry types (see the <code>eucapitals.xml</code> file in the samples directory for an example of how to do this).</p>
 			<figure src="images/entrytypeattribute_edit.png" alt="screenshot of DingsBums?! showing editing entry type attribute items" />
+		</section>
+		<section id="user_feedback">
+			<title>User Feedback</title>
+			<p>While you are editing something the graphical user interface tries to give you as many hints as possible. If the contents has changed, then the buttoms at the bottom indicate this by allowing you to either apply these changes or revert to the previous values. And you can only go back to the list view if the changes are reverted or applied.</p>
+			<p>Some fields are mandatory and shown with a special backgound color (light yellow in the screenshot below). If the text in these fields does not comply with the validation rules, then the background color is changes (light red in the screenshot below) and the changes cannot be applied. The tooltip text of the filed will indicate the validation rule. In the example below the names of two items are the same, which is not valid.</p>
+			<figure src="images/validation.png" alt="screenshot of DingsBums?! showing validation feedback" />
 		</section>
 	</body>
 </document>
