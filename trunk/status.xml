@@ -28,15 +28,25 @@ DingsBums?! A flexible flashcard application written in Java.
 		<person name="Rick Gruber-Riemer" email="rick@vanosten.net" id="vanosten" />
 	</developers>
 
-	<!-- Context: doc, gui, code, refactor, tools, i18n, feature, datamodel, other -->
+	<!-- Context: doc, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
 		<!-- Add new releases here -->
-		<release version="0.3" date="unreleased">
+		<release version="0.3.0" date="unreleased">
 			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
 			<!--<action dev="JB" type="add" context="admin">Initial Import</action> -->
+			<action dev="vanosten" type="fix" context="gui">Change of the look and feel happens immediately.</action>
+			<action dev="vanosten" type="fix" context="gui">Rearranged the menus for better grouping.</action>
+			<action dev="vanosten" type="fix" context="gui">Menu item for editing learning stack information renamed from &quot;Properties&quot; to &quot;Edit Information&quot; and moved to menu &quot;Edit&quot;.</action>
+			<action dev="vanosten" type="update" context="gui">Changed icons from <a href="http://www.gtk.org">GTK</a> stock icons to <a href="http://www.icon-king.com/index.php?p=23">Nuvola</a>.</action>
 			<action dev="vanosten" type="update" context="docs">Change the project website and documentation from pure html to <a href="hhtp://forrest.apache.org">Apache Forrest</a>.</action>
-			<action dev="vanosten" type="update" context="other">Changed the name of the application from Dings?! to DingsBums?!.</action>
+			<action dev="vanosten" type="update" context="other">Changed the name of the application from <code>Dings?!</code> to <code>DingsBums?!</code>.</action>
+			<action dev="vanosten" type="add" context="feature">The direction of learning can now be inversed. E.g. in a French - English learning stack you can test both from French to English and from English to French.</action>
+			<action dev="vanosten" type="add" context="feature">Added possibility to generate graphs with statistical information.</action>
+			<action dev="vanosten" type="add" context="feature">Added possibility to change the color of the hint texts to be able to adabt to different user interface themes.</action>
+			<action dev="vanosten" type="add" context="feature">The locale and language of the application can be set in the preferences.</action>
+			<action dev="vanosten" type="add" context="feature">Copyright and licence information can now be added to the information panel.</action>
+			<action dev="vanosten" type="remove" context="feature">Removed possibility to see part of the text covered as a hint.</action>
 		</release>
 		<release version ="0.2.0" date="2004-05-18">
 			<!-- This is the second release of Dings?!. This release adds some more functionality to the existing feature set (see other changes). If you have made a learning stack using a previous version please contact me to fix some update problems -->
@@ -58,41 +68,51 @@ DingsBums?! A flexible flashcard application written in Java.
 	</changes>
 
 	<todo>
-		<actions priority="current">
-			<action context="feature" dev="vanosten">Learning statistics: multiple axis: average level an # of entries over time.</action>
-			<action context="feature" dev="vanosten">Make ready for Java webstart</action>
-			<action context="feature" dev="vanosten">Add license field to InfoVocab plus add license text as comment in header of xml.</action>
-			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation, local for application</action><!-- * Bidi support:
-	o ComponentOrientation.getOrientation(java.util.Local)
-	o Constainer.applyComponentOrientation() -> for all children
- -->
+		<actions priority="next release">
+			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics.</action>
+			<action context="gui" dev="vanosten">Use configured name for unit and categories (e.g. in stats).</action>
+			<action context="gui" dev="vanosten">Change the icon of the entry type chooser.</action>
+			<action context="gui" dev="vanosten">give immediate feedback per field with regards to validity.</action>
+			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
+			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
 		</actions>
 		<actions priority="high">
-			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings.</action>
-			<action context="gui" dev="vanosten">Use configured name for unit and categories (e.g. in stats).</action>
+			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation</action><!-- ## Enable orientation in EntryEdit and EntryLearn -->
+			<action context="tools" dev="vanosten">Change from CVS to Subversion.</action>
+			<action context="feature" dev="vanosten">Make ready for Java Webstart</action>
+			<action context="feature" dev="vanosten">Show Window with error text instead of Usage on command line</action>
+			<action context="gui" dev="vanosten">Disable menu items when page is shown (e.g. in Go menu).</action>
+			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
 		</actions>
 		<actions priority="medium">
+			<action context="gui" dev="vanosten">Change validation mechanism to check on lost focus for each field and give visual feedback (see eg. Standi2000).</action>
+			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
 			<action context="other" dev="vanosten">Promote application in e.g. SwingSightings, nordicos.org, freshmeat.net, www.jars.com, java.com.</action>
 			<action context="doc" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
 			<action context="doc" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
-			<action context="tools" dev="vanosten">Change from CVS to Subversion.</action>
+			<action context="code" dev="vanosten">Use JDK 5.0 with Generics. Change build.xml to force building with 1.4. See <a href="http://www-106.ibm.com/developerworks/library/j-forin.html?ca=drs-j5004">Enhance looping in Java 5.0</a> amongst others.</action>
 		</actions>
 		<actions priority="low">
 			<!-- GUI -->
 			<action context="gui" dev="vanosten">Decide whether to switch to other widget set. E.g. <a href="http://swingwt.sourceforge.net">SwingWT</a>. Evt. make a parallel GNOME release using <a href="http://java-gnome.sourceforge.net">Java-Gnome</a> and GJC.</action>
 			<action context="gui" dev="vanosten">Use F1 to access help.</action>
+			<action context="gui" dev="vanosten">Show EntryType in EntryEdit or LearnOne only if more than one EntryType.</action>
+			<action context="gui" dev="vanosten">Change the alignment of the column header to match the alignment of the cell contents in ListViews.</action>
 			<action context="gui" dev="vanosten">Adapt Insets to text orientation</action>
 			<action context="gui" dev="vanosten">Editor for pronounciation.</action><!-- Fonts: http://www.joconner.com/javai18n/articles/TextDisplay.html -->
 			<action context="gui" dev="vanosten">Add possibility for Mnemonics to labels.</action>
+			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a>.</action>
 			<!-- FEATURE -->
 			<action context="feature" dev="vanosten">Spell checker: E.g. ASPELL for spell checking (see <a href="http://jedit.org">JEdit</a>, <a href="http://vocabulala.sourceforge.net/deutsch/deutsch.html">Vocabulala</a>, <a href="http://linux.org.mt/projects/jtextcheck/index.html">JTextCheck</a>) or the <a href="http://jazzy.sourceforge.net">Jazzy</a> open source Java spell checker <!-- see also http://www-106.ibm.com/developerworks/library/j-jazzy -->.</action>
 			<action context="feature">If file name postfix is ".gz" then assume GZIPped and use java.util.zip.GZIPxStream.</action>
 			<action context="feature" dev="vanosten">Search of words using Levenshtein-Algorithm allowing for unsharp search strings.</action>
-			<action context="gui" dev="vanosten">Use complete set of icons from http://www.deviantart.com/ or http://clipart.freedesktop.org/.</action>
+			<action context="gui" dev="vanosten">Make properties file for image file names in order to be able to supoport different icon sets without recompiling. Use complete set of icons from http://www.deviantart.com/ or http://clipart.freedesktop.org/.</action>
+			<action context="web" dev="vanosten">Add link to usage statistics of website: http://dings.berlios.de/usage/ (reqires passwd)</action>
 			<!-- REFACTOR -->
+			<action context="refactor" dev="vanosten">Evt. replace IDTableModel, IDEditableTableModel with one, where ID is simply not shown in the table, but there is no need to hold an array of IDs.</action>
 			<action context="refactor" dev="vanosten">Make sure application can be compiled using <a href="http://gcc.gnu.org/java/">GCJ (the GNU compuiler for the Java language)</a>.</action>
 			<!-- gcj - -classpath=/usr/share/gcc-data/i686-pc-linux-gnu/3.3/java:. dings.jar -->
-			<action context="code" dev="vanosten">Try JVM test form Jonas</action>
+			<action context="code" dev="vanosten">Try JVM test from Jonas</action>
 			<!--         try {
             Package p = Package.getPackage("java.lang");
             if (!p.isCompatibleWith("1.4")) {
