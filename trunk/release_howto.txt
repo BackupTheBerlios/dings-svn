@@ -1,0 +1,54 @@
+Account management
+------------------
+# SSH Keys and CVS/SVN/Shell Accounts
+(https://developer.berlios.de/docman/display_doc.php?docid=31&group_id=2)
+# CVS/SSH FAQ
+(https://developer.berlios.de/docman/display_doc.php?docid=34&group_id=2)
+
+Documentation:
+--------------
+# index.xml: update section "released"
+# status.xml: add release tag under changes tag and make sure the right date is
+specified
+# run forrest (0.6 or higher)
+# 
+	$ cd build/site
+	$ tar zcf ../site.tar.gz .
+	$ cd ..
+	$ sc site.tar.gz vanosten@shell.berlios.de:/home/groups/dings/htdocs
+	$ ssh -l vanosten shell.berlios.de
+	vanosten@hornet> cd /home/groups/dings/htdocs
+	vanosten@hornet> \rm -R images
+	vanosten@hornet> \rm -R skin
+	vanosten@hornet> \rm *.html
+	vanosten@hornet> \rm *.pdf
+	vanosten@hornet> tar zxf site.tar.gz
+	vanosten@hornet> exit
+
+Jar-file:
+---------
+$ ant
+$ java -jar dingsbums.jar (to see whether it works and all images are copied)
+
+Release-file
+------------
+# copy dingsbums.jar, CHANGES, README and the folder samples into a
+directory with the name dingsbums-0.x.x
+# make a zip-file with the name dingsbums-0.x.x.zip
+#
+	$ cd temprick
+	$ ftp ftp.berlios.de
+		anonymous
+		rick@vanosten.net
+	ftp> cd incoming
+	ftp> put dingsbums-0.x.x.zip
+	ftp> bye
+	$
+# Login at developer.berlios.de
+	* goto project
+	* goto admin
+	* Edit / release files
+		1. choose the right file in step 2 and press the button
+		2. in step 3 change the processor anf file type and press the button
+just beneath the file type
+	
