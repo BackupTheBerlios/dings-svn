@@ -1,8 +1,24 @@
 <?xml version="1.0"?>
+
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 2005  Rick Gruber-Riemer (rick@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+
 <site label="DingsBums?!" href="" xmlns="http://apache.org/forrest/linkmap/1.0" tab="about">
 	<about label="About">
 		<index label="Introduction" href="index.html" description="Welcome to DingsBums?!"/>
-		<license label="License" href="license.html" description="The License for using DingsBums?!" />
+		<licenses label="Licenses" href="license.html" description="The License for using DingsBums?!" />
 		<screenshots label="Screenshots" href="screenshots.html" description="Various screenshots with explanation of DingsBums?!" />
 		<features label="Features" href="features.html" description="Overview of features of DingsBums?!" />
 		<download label="Download" href="download.html" description="Download and installation instructions" />

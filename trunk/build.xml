@@ -1,8 +1,26 @@
 <?xml version="1.0"?>
+<!--
+DingsBums?! A flexible flashcard application written in Java.
 
+Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
 <project name="Dings" basedir="." default="dist">
 	<property name="src" value="./src"/>
-	<property name="build" value="./build/classes"/>
+	<property name="build" value="./build"/>
 	<property name="dist"  value="./dist"/>
 	<property name="lib" value="./lib" />
 
@@ -10,12 +28,14 @@
 		<!-- Create the time stamp -->
 		<tstamp/>
 		<!-- Create the build directory structure used by compile and dist-->
+		<mkdir dir="${build}/classes"/>
 		<mkdir dir="${dist}"/>
 	</target>
 
 	<target name="compile" depends="init">
-		<!-- Compile the java code from ${src} into ${build} -->
-		<javac srcdir="${src}/java" destdir="${build}" excludes="net/vanosten/dings/gnome/**" >
+		<!-- Compile the java code with version 1.4 compatibility -->
+		<javac srcdir="${src}/java" destdir="${build}/classes" excludes="net/vanosten/dings/gnome/**" 
+			source="1.4" deprecation="on">
 			<classpath>
 				<pathelement path="${classpath}"/>
 				<fileset dir="${lib}">
@@ -24,6 +44,12 @@
 				<pathelement location="external"/>
 			</classpath>
 		</javac>
+		<!-- Change the encoding of the properties files to ascii and copy it to the build files -->
+		<native2ascii encoding="utf-8" src="${src}/conf" dest="${build}/classes" includes="**/*.properties"/>
+		<!-- Copy the image files to prepare for runtime -->
+		<copy todir="${build}">
+			<fileset dir="${src}" includes="images/**" />
+		</copy>
 	</target>
 
 	<target name="dist" depends="compile">
@@ -32,8 +58,12 @@
 		<unjar src="${lib}/jfreechart.jar" dest="${dist}" />
 		<unjar src="${lib}/jcommon.jar" dest="${dist}" />
 		<!-- Make a dings.jar file -->
-		<jar jarfile="./dingsbums.jar" basedir="${build}">
-			<fileset dir="${build}" includes="net/**" />
+		<jar jarfile="./dingsbums.jar" basedir="${build}/classes">
+			<!-- <fileset dir="${build}" includes="net/**" /> -->
+			<fileset dir="${build}/classes">
+				<include name="net/**" />
+				<include name="**/*.properties" />
+			</fileset>
 			<fileset dir="${src}" includes="images/**" />
 			<fileset dir="${dist}" excludes="META-INF/MANIFEST.MF"/>
 			<manifest>
@@ -41,10 +71,32 @@
 			</manifest>
 		</jar>
 	</target>
+	
+	<target name="runjar" depends="dist">
+		<java jar="dingsbums.jar" fork="true" />
+	</target>
 
 	<target name="clean">
 		<!-- Delete the ${build} and ${dist} directory trees -->
-		<delete dir="${build}/net"/>
+		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
+	</target>
+	
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
+
+	<target name="pmd">
+		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
+		<pmd>
+			<ruleset>rulesets/imports.xml</ruleset>
+			<ruleset>rulesets/unusedcode.xml</ruleset>
+			<!--
+			<ruleset>rulesets/favorites.xml</ruleset>
+			<ruleset>rulesets/basic.xml</ruleset>
+			-->
+			<formatter type="html" toFile="pmd_report.html"/>
+			<fileset dir="${src}/java">
+				<include name="**/*.java"/>
+			</fileset>
+		</pmd>
 	</target>
 </project>

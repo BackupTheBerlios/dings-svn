@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 2005  Rick Gruber-Riemer (rick@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
 <document>
 	<header>
 		<title>References</title>
@@ -19,6 +33,14 @@
 				<li>Core Java Technology, Technical Tips: <a href="http://java.sun.com/developer/JDCTechTips/2003/tt0926.html#2">Component Orientation in Swing User Interfaces</a>.</li>
 				<li>IBM developer works: <a href="http://www-128.ibm.com/developerworks/java/library/j-international-text/index.html">International text in JDK 1.2</a> and <a href="http://www-128.ibm.com/developerworks/java/library/j-boundaries/boundaries.html">Finding text boundaries in Java: Overcoming differences in international style</a>.</li>
 				<li><a href="http://www.onjava.com/pub/a/onjava/excerpt/javaexIAN3_chap8/index1.html?page=1">O'Reilly Book Excerpts: Java Examples in a Nutshell, Internationalization, Part 2</a></li>
+			</ul>
+		</section>
+		<section id="opensource">
+			<title>Open Source</title>
+			<ul>
+				<li><a href="http://www.fsf.org/licensing/licenses/index_html">Free Software Foundation Licenses</a></li>
+				<li><a href="http://www.opensource.org/index.php">Open Source Initiative (OSI)</a></li>
+				<li><a href="http://www.gnu.org/prep/maintain/html_node/index.html">Information For Maintainers of GNU Software</a>.</li>
 			</ul>
 		</section>
 		<section id="other">

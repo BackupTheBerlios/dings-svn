@@ -1,10 +1,21 @@
 <?xml version="1.0"?>
+<!DOCTYPE skinconfig PUBLIC "-//APACHE//DTD Skin Configuration V0.6-3//EN" "http://forrest.apache.org/dtd/skinconfig-v06-3.dtd">
+
 <!--
-Skin configuration file. This file contains details of your project,
-which will be used to configure the chosen Forrest skin.
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 2005  Rick Gruber-Riemer (rick@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
 -->
 
-<!DOCTYPE skinconfig PUBLIC "-//APACHE//DTD Skin Configuration V0.6-3//EN" "http://forrest.apache.org/dtd/skinconfig-v06-3.dtd">
 <skinconfig>
 <!-- To enable lucene search add provider="lucene" (default is google).
 	Add box-location="alt" to move the search box to an alternate location

@@ -4,24 +4,14 @@ COPYRIGHT AND WARRANTY
 
 DingsBums?! A flexible flashcard application written in Java.
 
-(C) Copyright 2002-2004 by Rick Gruber <rick@vanosten.net>
+Copyright (c)  2004, 2005  Rick Gruber-Riemer (rick@vanosten.net).
 
- This library is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public
- License as published by the Free Software Foundation; either
- version 2 of the License, or (at your option) any later version.
-
- This library is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- Lesser General Public License for more details.
-
- You should have received a copy of the GNU General Public
- License along with this library; if not, write to the
- Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- Boston, MA 02111-1307, USA.
-
- See COPYING
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
 -->
 <status>
 	<developers>
@@ -34,48 +24,46 @@ DingsBums?! A flexible flashcard application written in Java.
 		<!-- Add new releases here -->
 		<release version="0.3.2" date="TODO: ????">
 			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
-			<!--<action dev="JB" type="add" context="admin">Initial Import</action> -->
-			<action type="update" context="refactor">Use Toolbox singleton for Preferences and ResourceBundles</action>
+			<action type="add" context="doc" dev="vanosten">Uses GNU Free Documentation License, Version 1.2</action>
+			<action type="update" context="refactor" dev="vanosten">Use Toolbox singleton for Preferences and ResourceBundles</action>
 		</release>
 		<release version="0.3.1" date="2005-02-27">
-			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
-			<!--<action dev="JB" type="add" context="admin">Initial Import</action> -->
-			<action type="add" context="feature">Use F1 to get help.</action>
-			<action type="add" context="feature">Give immediate feedback per field with regards to validity.</action>
-			<action type="fix" context="feature">Mnemonic for Edit button in lists changed to &quot;d&quot;.</action>
-			<action type="fix" context="gui">Changed the icon of the entry type chooser dialog for new entries.</action>
-			<action type="update" context="refactor">Code cleanup for static methods and constants that are only Swing related (moved to DingsSwingConstants).</action>
+			<action type="add" context="feature" dev="vanosten">Use F1 to get help.</action>
+			<action type="add" context="feature" dev="vanosten">Give immediate feedback per field with regards to validity.</action>
+			<action type="fix" context="feature" dev="vanosten">Mnemonic for Edit button in lists changed to &quot;d&quot;.</action>
+			<action type="fix" context="gui" dev="vanosten">Changed the icon of the entry type chooser dialog for new entries.</action>
+			<action type="update" context="refactor" dev="vanosten">Code cleanup for static methods and constants that are only Swing related (moved to DingsSwingConstants).</action>
 		</release>
 		<release version="0.3.0" date="2005-01-29">
-			<action type="fix" context="gui">Change of the look and feel happens immediately.</action>
-			<action type="fix" context="gui">Rearranged the menus for better grouping.</action>
-			<action type="fix" context="gui">Menu item for editing learning stack information renamed from &quot;Properties&quot; to &quot;Edit Information&quot; and moved to menu &quot;Edit&quot;.</action>
-			<action type="update" context="gui">Changed icons from <a href="http://www.gtk.org">GTK</a> stock icons to <a href="http://www.icon-king.com/index.php?p=23">Nuvola</a>.</action>
-			<action type="update" context="docs">Change the project website and documentation from pure html to <a href="http://forrest.apache.org">Apache Forrest</a>.</action>
-			<action type="update" context="other">Changed the name of the application from <code>Dings?!</code> to <code>DingsBums?!</code>.</action>
-			<action type="add" context="feature">The direction of learning can now be inversed. E.g. in a French - English learning stack you can test both from French to English and from English to French.</action>
-			<action type="add" context="feature">Added possibility to generate graphs with statistical information.</action>
-			<action type="add" context="feature">Added possibility to change the color of the hint texts to be able to adabt to different user interface themes.</action>
-			<action type="add" context="feature">The locale and language of the application can be set in the preferences.</action>
-			<action type="add" context="feature">Copyright and licence information can now be added to the information panel.</action>
-			<action type="remove" context="feature">Removed possibility to see part of the text covered as a hint.</action>
+			<action type="fix" context="gui" dev="vanosten">Change of the look and feel happens immediately.</action>
+			<action type="fix" context="gui" dev="vanosten">Rearranged the menus for better grouping.</action>
+			<action type="fix" context="gui" dev="vanosten">Menu item for editing learning stack information renamed from &quot;Properties&quot; to &quot;Edit Information&quot; and moved to menu &quot;Edit&quot;.</action>
+			<action type="update" context="gui" dev="vanosten">Changed icons from <a href="http://www.gtk.org">GTK</a> stock icons to <a href="http://www.icon-king.com/index.php?p=23">Nuvola</a>.</action>
+			<action type="update" context="docs" dev="vanosten">Change the project website and documentation from pure html to <a href="http://forrest.apache.org">Apache Forrest</a>.</action>
+			<action type="update" context="other" dev="vanosten">Changed the name of the application from <code>Dings?!</code> to <code>DingsBums?!</code>.</action>
+			<action type="add" context="feature" dev="vanosten">The direction of learning can now be inversed. E.g. in a French - English learning stack you can test both from French to English and from English to French.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to generate graphs with statistical information.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to change the color of the hint texts to be able to adabt to different user interface themes.</action>
+			<action type="add" context="feature" dev="vanosten">The locale and language of the application can be set in the preferences.</action>
+			<action type="add" context="feature" dev="vanosten">Copyright and licence information can now be added to the information panel.</action>
+			<action type="remove" context="feature" dev="vanosten">Removed possibility to see part of the text covered as a hint.</action>
 		</release>
 		<release version ="0.2.0" date="2004-05-18">
 			<!-- This is the second release of Dings?!. This release adds some more functionality to the existing feature set (see other changes). If you have made a learning stack using a previous version please contact me to fix some update problems -->
-			<action type="fix" context="gui">YES_NO_CANCEL and YES_NO dialogs now show the right buttons.</action>
-			<action type="fix" context="code">Corrected NullPointerExceptions for New Learning Stack.</action>
-			<action type="fix" context="code">Show default item in attributes.</action>
-			<action type="update" context="code">Changed "level" to "score" to better reflect the functionality of this feature.</action>
-			<action type="update" context="gui">Changed button label &quot;Reset&quot; to &quot;Revert&quot;.</action>
-			<action type="update" context="gui">InfoVocabView has tabs now.</action>
-			<action type="update" context="gui">Removed dependency on JGoodies forms.</action>
-			<action type="update" context="gui">Added field description to category in order to be fully compatible with unit. Aligned GUI such that UnitEditView is used by both Unit and Category..</action>
-			<action type="update" context="feature">4 attributes instead of 3.</action>
-			<action type="add" context="feature">Added possibility to reset the score to the minimum for either all entries or the selected entries.</action>
-			<action type="add" context="feature">The settings for score influence the way the current selection of entries is applied to updates: immediately or not while editing and learning.</action>
-			<action type="add" context="feature">Added possibility to change the entry type of an existing entry.</action>
-			<action type="add" context="feature">New bidi options.</action>
-			<action type="add" context="gui">Separator for attributes and others can get custom labels.</action>
+			<action type="fix" context="gui" dev="vanosten">YES_NO_CANCEL and YES_NO dialogs now show the right buttons.</action>
+			<action type="fix" context="code" dev="vanosten">Corrected NullPointerExceptions for New Learning Stack.</action>
+			<action type="fix" context="code" dev="vanosten">Show default item in attributes.</action>
+			<action type="update" context="code" dev="vanosten">Changed "level" to "score" to better reflect the functionality of this feature.</action>
+			<action type="update" context="gui" dev="vanosten">Changed button label &quot;Reset&quot; to &quot;Revert&quot;.</action>
+			<action type="update" context="gui" dev="vanosten">InfoVocabView has tabs now.</action>
+			<action type="update" context="gui" dev="vanosten">Removed dependency on JGoodies forms.</action>
+			<action type="update" context="gui" dev="vanosten">Added field description to category in order to be fully compatible with unit. Aligned GUI such that UnitEditView is used by both Unit and Category..</action>
+			<action type="update" context="feature" dev="vanosten">4 attributes instead of 3.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to reset the score to the minimum for either all entries or the selected entries.</action>
+			<action type="add" context="feature" dev="vanosten">The settings for score influence the way the current selection of entries is applied to updates: immediately or not while editing and learning.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to change the entry type of an existing entry.</action>
+			<action type="add" context="feature" dev="vanosten">New bidi options.</action>
+			<action type="add" context="gui" dev="vanosten">Separator for attributes and others can get custom labels.</action>
 		</release>
 	</changes>
 
@@ -95,12 +83,12 @@ DingsBums?! A flexible flashcard application written in Java.
 			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
 		</actions>
 		<actions priority="medium">
-			<action context="gui" dev="vanosten">Change validation mechanism to check on lost focus for each field and give visual feedback (see eg. Standi2000).</action>
 			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
 			<action context="other" dev="vanosten">Promote application in e.g. SwingSightings, nordicos.org, freshmeat.net, www.jars.com, java.com.</action>
 			<action context="doc" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
 			<action context="doc" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
 			<action context="code" dev="vanosten">Use JDK 5.0 with Generics. Change build.xml to force building with 1.4. See <a href="http://www-106.ibm.com/developerworks/library/j-forin.html?ca=drs-j5004">Enhance looping in Java 5.0</a> amongst others.</action>
+			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. E.g. <a href="http://hsqldb.sourceforge.net/">HSQL</a> or <a href="http://incubator.apache.org/derby/">Apache Derby</a></action>
 		</actions>
 		<actions priority="low">
 			<!-- GUI -->
@@ -113,10 +101,10 @@ DingsBums?! A flexible flashcard application written in Java.
 			<action context="gui" dev="vanosten">Preferences for background color of valid/invalid input.</action>
 			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a>.</action>
 			<!-- FEATURE -->
+			<action context="feature" dev="vanosten">Use a codewrapper for Windows executable. See Heise IX 4/2005: <a href="http://www.ucware.com">Jexecreator</a> and <a href="http://www.duckware.com/jexepack/index.html">Jexepack</a>.</action>
 			<action context="feature" dev="vanosten">Spell checker: E.g. ASPELL for spell checking (see <a href="http://jedit.org">JEdit</a>, <a href="http://vocabulala.sourceforge.net/deutsch/deutsch.html">Vocabulala</a>, <a href="http://linux.org.mt/projects/jtextcheck/index.html">JTextCheck</a>) or the <a href="http://jazzy.sourceforge.net">Jazzy</a> open source Java spell checker <!-- see also http://www-106.ibm.com/developerworks/library/j-jazzy -->.</action>
 			<action context="feature">If file name postfix is ".gz" then assume GZIPped and use java.util.zip.GZIPxStream.</action>
 			<action context="feature" dev="vanosten">Search of words using Levenshtein-Algorithm allowing for unsharp search strings.</action>
-			<action context="gui" dev="vanosten">Make properties file for image file names in order to be able to supoport different icon sets without recompiling. Use complete set of icons from http://www.deviantart.com/ or http://clipart.freedesktop.org/.</action>
 			<action context="web" dev="vanosten">Add link to usage statistics of website: http://dings.berlios.de/usage/ (reqires passwd)</action>
 			<!-- REFACTOR -->
 			<action context="refactor" dev="vanosten">Evt. replace IDTableModel, IDEditableTableModel with one, where ID is simply not shown in the table, but there is no need to hold an array of IDs.</action>
