@@ -37,9 +37,8 @@
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="links.xml">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title><code>DingsBums?!</code> 0.3.0 released</title>
-			<p>Version 0.3.0 is the third public release of <code>DingsBums?!</code> <!-- TODO: decribe changes --></p>
-			<p>At the same time the application has been renamed from <code>Dings?!</code> to <code>DingsBums?!</code>, as there is already an astronomy software called <a href="http://virtualskysoft.de/">Dings</a> (without &quot;?!&quot;).</p>
+			<title><code>DingsBums?!</code> 0.3.1 released</title>
+			<p>Version 0.3.1 is a minor update of version 0.3.0, which was the third public release of <code>DingsBums?!</code> See <a href="site:changes">changes</a> for a list over the updates and additions since the last version.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
 	</body>
