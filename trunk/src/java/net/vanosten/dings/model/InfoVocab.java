@@ -506,63 +506,63 @@ public final class InfoVocab extends AItemModel {
 	
 	//---------------------- Getters for display choices in Entry views -----------
 
-	protected String getBaseLabel() {
+	public String getBaseLabel() {
 		return baseLabel;
-	} //END protected String getBaseLabel()
+	} //END public String getBaseLabel()
 	
-	protected String getTargetLabel() {
+	public String getTargetLabel() {
 		return targetLabel;
-	} //END protected String getTargetName()
+	} //END public String getTargetName()
 	
-	protected String getAttributesLabel() {
+	public String getAttributesLabel() {
 		return attributesLabel;
-	} //END protected String getAttributesLabel()
+	} //END public String getAttributesLabel()
 	
-	protected String getUnitLabel() {
+	public String getUnitLabel() {
 		return unitLabel;
-	} //END protected String getUnitLabel()
+	} //END public String getUnitLabel()
 	
-	protected String getCategoryLabel() {
+	public String getCategoryLabel() {
 		return categoryLabel;
-	} //END protected String getCategoryLabel()
+	} //END public String getCategoryLabel()
 	
-	protected String getOthersLabel() {
+	public String getOthersLabel() {
 		return othersLabel;
-	} //END protected String getOthersLabel()
+	} //END public String getOthersLabel()
 	
-	protected String getExplanationLabel() {
+	public String getExplanationLabel() {
 		return explanationLabel;
-	} //END protected String getExplanationLabel()
+	} //END public String getExplanationLabel()
 	
-	protected String getExampleLabel() {
+	public String getExampleLabel() {
 		return exampleLabel;
-	} //END protected String getExampleLabel()
+	} //END public String getExampleLabel()
 	
-	protected int getVisibilityAttributes() {
+	public int getVisibilityAttributes() {
 		return visibilityAttributes;
-	} //END protected int getVisibilityAttributes()
+	} //END public int getVisibilityAttributes()
 	
-	protected int getVisibilityUnit() {
+	public int getVisibilityUnit() {
 		return visibilityUnit;
-	} //END protected int getVisibilityUnit()
+	} //END public int getVisibilityUnit()
 	
-	protected int getVisibilityCategory() {
+	public int getVisibilityCategory() {
 		return visibilityCategory;
-	} //END protected int getVisibilityCategory()
+	} //END public int getVisibilityCategory()
 	
-	protected int getVisibilityExplanation() {
+	public int getVisibilityExplanation() {
 		return visibilityExplanation;
-	} //END protected int getVisibilityExplanation()
+	} //END public int getVisibilityExplanation()
 	
-	protected int getVisibilityExample() {
+	public int getVisibilityExample() {
 		return visibilityExample;
-	} //END protected int getVisibilityExample()
+	} //END public int getVisibilityExample()
 	
-	protected int getVisibilityPronunciation() {
+	public int getVisibilityPronunciation() {
 		return visibilityPronunciation;
-	} //END protected int getVisibilityPronunciation()
+	} //END public int getVisibilityPronunciation()
 	
-	protected int getVisibilityRelation() {
+	public int getVisibilityRelation() {
 		return visibilityRelation;
-	} //END protected int getVisibilityRelation()
+	} //END public int getVisibilityRelation()
 } //END public class InfoVocab extends DingsItem

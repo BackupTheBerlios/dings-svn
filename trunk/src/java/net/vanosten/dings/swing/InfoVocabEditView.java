@@ -40,6 +40,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IInfoVocabEditView;
@@ -70,7 +71,11 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	private JComboBox visibilityExplanationCB, visibilityExampleCB, visibilityPronunciationCB, visibilityRelationCB;
 
 	public InfoVocabEditView(ComponentOrientation aComponentOrientation) {
-		super("Edit Learning Stack Properties and Information", aComponentOrientation, false, false, MessageConstants.N_VIEW_ENTRIES_LIST);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_info_vocab")
+				, aComponentOrientation
+				, false
+				, false
+				, MessageConstants.N_VIEW_ENTRIES_LIST);
 	} //END public InfoVocabEditView(ComponentOrientation)
 	
 	private final void initComponents() {

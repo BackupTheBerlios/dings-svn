@@ -24,13 +24,16 @@ package net.vanosten.dings.swing;
 import java.awt.ComponentOrientation;
 
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.model.Toolbox;
+
 
 public class UnitsListView extends ListView {
 
 	public UnitsListView(ComponentOrientation aComponentOrientation) {
-		super("Units", aComponentOrientation);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_units"), aComponentOrientation);
 	} //END public UnitsListView(ComponentOrientation)
 	
+	//implements ListView
 	protected void setMessages() {
 		msgEdit = MessageConstants.N_VIEW_UNIT_EDIT;
 	} //END protected void setMessages()

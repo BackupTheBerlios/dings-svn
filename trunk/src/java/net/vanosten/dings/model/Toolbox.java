@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.event.IAppEventHandler;
 
 /**
  * Singleton to handle singleton-like access to unique classes in this application.
@@ -48,6 +49,9 @@ public class Toolbox {
 	
 	/** The current locale */
 	private Locale currentLocale;
+	
+	/** The Properties of the current learning stack */
+	private InfoVocab infoVocab;
 
 	/**
 	 * Private constructor to prevent instantiation from outside
@@ -64,6 +68,7 @@ public class Toolbox {
 		}
 		Locale.setDefault(currentLocale);
 		bundle = ResourceBundle.getBundle("labels",currentLocale);
+		infoVocab = new InfoVocab();
 	} //END private Toolbox()
 	
 	/**
@@ -81,6 +86,36 @@ public class Toolbox {
 	public final Preferences getPreferencesPointer() {
 		return preferences;
 	} //END public final Preferences getPreferencesPointer()
+	
+	/**
+	 * Gives access to the (singleton) instance of the properties
+	 * and information of the current learning stack
+	 * @return a pointer to the Preferences of this application
+	 */
+	public final InfoVocab getInfoPointer() {
+		return infoVocab;
+	} //END public final InfoVocab getInfoPointer()
+	
+	/**
+	 * Initialize the information and properties for a new
+	 * learning stack.
+	 *
+	 * @param parentController
+	 */
+	public final void resetInfo(IAppEventHandler parentController) {
+		infoVocab = new InfoVocab();
+		infoVocab.setParentController(parentController);
+	} //END public final void resetInfo(IAppEventHandler)
+	
+	/**
+	 * Set the info learning stack by setting the pointer to an object, which
+	 * has been established by reading the values from a persistent store for
+	 * a learning stack.
+	 */
+	public final void setInfoFromStore(InfoVocab anInfo, IAppEventHandler parentController) {
+		infoVocab = anInfo;
+		infoVocab.setParentController(parentController);
+	} //END public final void setInfoFromStore(InfoVocab, IAppEventHandler)
 	
 	/**
 	 * Gives access to the (singleton) instance of the Locale object

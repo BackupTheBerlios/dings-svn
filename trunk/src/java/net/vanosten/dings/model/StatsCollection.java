@@ -116,11 +116,17 @@ public class StatsCollection implements IAppEventHandler {
 			if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_UNITS)) {
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(UNIT, onlyChosen, units.getChoiceProxy()
-						,"Entries per Unit", "Unit", "Number of Entries", "Entries per Unit");
+						,"Entries per " + Toolbox.getInstance().getInfoPointer().getUnitLabel()
+						, Toolbox.getInstance().getInfoPointer().getUnitLabel()
+						, "Number of Entries"
+						, "Entries per " + Toolbox.getInstance().getInfoPointer().getUnitLabel());
 			} else if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_CATEGORIES)) {
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(CATEGORY, onlyChosen, categories.getChoiceProxy()
-						,"Entries per Category", "Category", "Number of Entries", "Entries per Categories");
+						,"Entries per " + Toolbox.getInstance().getInfoPointer().getCategoryLabel()
+						, Toolbox.getInstance().getInfoPointer().getCategoryLabel()
+						, "Number of Entries"
+						, "Entries per " + Toolbox.getInstance().getInfoPointer().getCategoryLabel());
 			} else if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES)) {
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(ENTRYTYPE, onlyChosen, entryTypes.getChoiceProxy()

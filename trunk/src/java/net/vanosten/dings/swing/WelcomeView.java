@@ -35,14 +35,15 @@ import java.awt.GridBagConstraints;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
-import net.vanosten.dings.model.ADings;
+import net.vanosten.dings.model.Toolbox;
+
 import net.vanosten.dings.uiif.IWelcomeView;
 
 public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 	private JButton newB, openB;
 
 	public WelcomeView(ComponentOrientation aComponentOrientation) {
-		super("Welcome to " + ADings.APP_NAME, aComponentOrientation);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.welcome"), aComponentOrientation);
 		initializeGUI();
 		this.setGUIOrientation();
 	} //END public WelcomeView(ComponentOrientation)
@@ -56,8 +57,8 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		
 		JLabel label = new JLabel("");
 		label.setText(
-			"<html><p>" + ADings.APP_NAME + " is a flashcard (vocabulary) trainer programmed by vanosten using Java.</p>"
-			+ "<p>To start open an existing vocabulary file or create a new one by using one of the buttons below or one of the menu options in the file menu.</p>"
+			"<html><p>DingsBums?! is a flashcard (vocabulary) trainer programmed by vanosten using Java.</p>"
+			+ "<p>To start open an existing learning stack file or create a new one by using one of the buttons below or one of the menu options in the file menu.</p>"
 			+ "<p>Have fun :-)</p></html>"
 		);
 
@@ -86,8 +87,9 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		newB = new JButton("New", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_NEW_BTN, "FIXME"));
-		newB.setMnemonic("N".charAt(0));
+		newB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.new")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_NEW_BTN, "FIXME"));
+		newB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.new").charAt(0));
 		newB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
@@ -96,8 +98,9 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 			}
 		});
 
-		openB = new JButton("Open ...", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_OPEN_BTN, "FIXME"));
-		openB.setMnemonic("O".charAt(0));
+		openB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.open")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_OPEN_BTN, "FIXME"));
+		openB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.open").charAt(0));
 		openB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
@@ -106,5 +109,4 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 			}
 		});
 	} //END protected final void initButtonComponents();
-} //END public class WelcomeView extends AViewWithButtons implements
-IWelcomeView
+} //END public class WelcomeView extends AViewWithButtons implements IWelcomeView

@@ -53,6 +53,7 @@ entitled "GNU Free Documentation License".
 		<section id="released">
 			<title><code>DingsBums?!</code> 0.3.1 released</title>
 			<p>Version 0.3.1 is a minor update of version 0.3.0, which was the third public release of <code>DingsBums?!</code> See <a href="site:changes">changes</a> for a list over the updates and additions since the last version.</p>
+			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then have a look at the <a href="site:todo">todo-list</a> and <a href="site:contact">contact</a> me.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
 	</body>

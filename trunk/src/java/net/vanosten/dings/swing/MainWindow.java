@@ -186,7 +186,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		setBounds(locationX, locationY, windowWidth, windowHeight);
 		
 		//define the icon
-		ImageIcon icon = DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DINGS_32, "logo of the " + ADings.APP_NAME + " application");
+		ImageIcon icon = DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DINGS_32, "logo of DingsBums?!");
 		if (null != icon) {
 			this.setIconImage(icon.getImage());
 		}
@@ -337,14 +337,14 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		Object[] options; //the buttons to be displayed
 		if (Constants.YES_NO_CANCEL_OPTION == anOptionType) {
 			options = new Object[3];
-			options[0] = "Yes";
-			options[1] = "No";
-			options[2] = "Cancel";
+			options[0] = Toolbox.getInstance().getLocalizedString("label.button.yes");
+			options[1] = Toolbox.getInstance().getLocalizedString("label.button.no");
+			options[2] = Toolbox.getInstance().getLocalizedString("label.button.cancel");
 		}
 		else {
 			options = new Object[2];
-			options[0] = "Yes";
-			options[1] = "No";			
+			options[0] = Toolbox.getInstance().getLocalizedString("label.button.yes");
+			options[1] = Toolbox.getInstance().getLocalizedString("label.button.no");			
 		}
 		int answer = JOptionPane.showOptionDialog(this
 						, aMessage
@@ -835,7 +835,8 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		contentsMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.help_contents"));
 		contentsMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_HELP_MI, "FIXME"));
 		contentsMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.help_contents").charAt(0));
-		//contentsMI.setAccelerator(KeyStroke.getKeyStrokeForEvent(KeyEvent.VK_F1));
+		newMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+		contentsMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		contentsMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.HELP_EVENT);

@@ -46,6 +46,7 @@ import java.util.Vector;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.uiif.ISummaryView;
 
 import org.jfree.chart.ChartFactory;
@@ -78,7 +79,7 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 	private JPanel chartPropertiesP;
 	
 	public SummaryView(ComponentOrientation aComponentOrientation) {
-		super("Statistics", aComponentOrientation);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.summary"), aComponentOrientation);
 		initializeGUI();
 		this.setGUIOrientation();
 	} //END public SummaryView(ComponentOrientation)
@@ -101,14 +102,14 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		chartP = new JPanel();
 		chartP.setLayout(new BorderLayout());
 		//to begin with we show an information
-		JLabel infoL = new JLabel("Choose the chart type belwo and press the \"Redraw\" button to show statistics.");
+		JLabel infoL = new JLabel("Choose the chart type belwo and press the \"Update View\" button to show statistics.");
 		infoL.setEnabled(false); //only for display
 		infoL.setHorizontalAlignment(SwingConstants.CENTER);
 		chartP.add(infoL, BorderLayout.CENTER);
 		
 		Vector items = new Vector();
-		items.add("Entries by Unit");
-		items.add("Entries by Category");
+		items.add("Entries by " + Toolbox.getInstance().getInfoPointer().getUnitLabel());
+		items.add("Entries by " + Toolbox.getInstance().getInfoPointer().getCategoryLabel());
 		items.add("Entries by Entry Type");
 		items.add("Entries by Score");
 		items.add("Entry Scores over Time"); //do not change sequence of elements, as showGraph() and checkChosenStattype rely on it
@@ -179,8 +180,9 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		redrawB = new JButton("Redraw", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REDRAW_BTN, "FIXME"));
-		redrawB.setMnemonic("R".charAt(0));
+		redrawB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.update_view")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REDRAW_BTN, "FIXME"));
+		redrawB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.update_view").charAt(0));
 		redrawB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				showChart();

@@ -31,10 +31,11 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.uiif.IEntryTypeEditView;
+import net.vanosten.dings.model.EntryType;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
-import net.vanosten.dings.model.EntryType;
+import net.vanosten.dings.uiif.IEntryTypeEditView;
 
 public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 	private ValidatedTextField nameVTF;
@@ -43,7 +44,11 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 	
 	
 	public EntryTypeEditView(ComponentOrientation aComponentOrientation) {
-		super("Edit Entry Type", aComponentOrientation, true, true, MessageConstants.N_VIEW_ENTRYTYPES_LIST);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry_type")
+				, aComponentOrientation
+				, true
+				, true
+				, MessageConstants.N_VIEW_ENTRYTYPES_LIST);
 	} //END public EntryTypeEditView(ComponentOrientation)
 
 	//Implements AEditView

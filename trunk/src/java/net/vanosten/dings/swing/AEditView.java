@@ -35,8 +35,9 @@ import java.awt.event.KeyListener;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
-import net.vanosten.dings.uiif.IDetailsView;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.DingsSwingConstants;
+import net.vanosten.dings.uiif.IDetailsView;
 
 public abstract class AEditView extends AViewWithScrollPane implements IDetailsView, KeyListener {
 	private JButton applyB, revertB, deleteB, doneB;
@@ -98,16 +99,18 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		applyB = new JButton("Apply", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_APPLY_BTN, "FIXME"));
-		applyB.setMnemonic("A".charAt(0));
+		applyB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.apply")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_APPLY_BTN, "FIXME"));
+		applyB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.apply").charAt(0));
 		applyB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onApply();
 			}
 		});
 
-		revertB = new JButton("Revert", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_RESET_BTN, "FIXME"));
-		revertB.setMnemonic("R".charAt(0));
+		revertB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.revert")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_RESET_BTN, "FIXME"));
+		revertB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.revert").charAt(0));
 		revertB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onRevert();
@@ -115,8 +118,9 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 		});
 
 		if (showDelete) {
-			deleteB = new JButton("Delete", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DELETE_BTN, "FIXME"));
-			deleteB.setMnemonic("D".charAt(0));
+			deleteB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.delete")
+					, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DELETE_BTN, "FIXME"));
+			deleteB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.delete").charAt(0));
 			deleteB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					onDelete();
@@ -124,8 +128,9 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 			});
 		}
 		if (showDone) {
-			doneB = new JButton("Back", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_BACK_BTN, "FIXME"));
-			doneB.setMnemonic("B".charAt(0));
+			doneB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.back")
+					, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_BACK_BTN, "FIXME"));
+			doneB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.back").charAt(0));
 			doneB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					onDone();

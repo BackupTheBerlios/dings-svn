@@ -73,16 +73,16 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 
 	private void initComponents() {
 		//separators
-		attributesLS = new LabeledSeparator("Attributes");
-		othersLS = new LabeledSeparator("Others");
+		attributesLS = new LabeledSeparator(Toolbox.getInstance().getInfoPointer().getAttributesLabel() + ":");
+		othersLS = new LabeledSeparator(Toolbox.getInstance().getInfoPointer().getOthersLabel() + ":");
 		//labels
-		baseL = new JLabel();
-		targetL = new JLabel();
+		baseL = new JLabel(Toolbox.getInstance().getInfoPointer().getBaseLabel() + ":");
+		targetL = new JLabel(Toolbox.getInstance().getInfoPointer().getTargetLabel() + ":");
 		entryTypeSL = new SolutionLabel();
-		unitL = new JLabel();
-		categoryL = new JLabel();
-		explanationL = new JLabel();
-		exampleL = new JLabel();
+		unitL = new JLabel(Toolbox.getInstance().getInfoPointer().getUnitLabel() + ":");
+		categoryL = new JLabel(Toolbox.getInstance().getInfoPointer().getCategoryLabel() + ":");
+		explanationL = new JLabel(Toolbox.getInstance().getInfoPointer().getExplanationLabel() + ":");
+		exampleL = new JLabel(Toolbox.getInstance().getInfoPointer().getExampleLabel() + ":");
 		pronunciationL = new JLabel("Pronunciation:");
 		relationL = new JLabel("Relation:");
 		
@@ -104,8 +104,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		targetVTF.setToolTipText("May not be empty");
 		targetVTF.addKeyListener(this);
 		//entry type
-		changeEntryTypeB = new JButton("Change Entry Type ...");
-		changeEntryTypeB.setMnemonic("C".charAt(0));
+		changeEntryTypeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.change_entry_type"));
+		changeEntryTypeB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.change_entry_type").charAt(0));
 		changeEntryTypeB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onChangeEntryType();
@@ -200,6 +200,9 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		entryTypeP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_G, 0)));
 		entryTypeP.add(changeEntryTypeB);
 		entryTypeP.add(Box.createHorizontalGlue());
+		
+		//set the visibility after everything has been initialized
+		setVisibilities();
 		
 		//layout
 		GridBagLayout gbl = new GridBagLayout();
@@ -471,6 +474,52 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(statusCB);
 	} //END private void initializeEditP()
 	
+	/**
+	 * Convenience method for setting the visibility of labels and fields
+	 * based on the properties of the learning stack info.
+	 */
+	private void setVisibilities() {
+		//attributes
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityAttributes()) {
+			attributesLS.setVisible(false);
+			attributeOneL.setVisible(false);
+			attributeOneCh.setVisible(false);
+			attributeTwoL.setVisible(false);
+			attributeTwoCh.setVisible(false);
+			attributeThreeL.setVisible(false);
+			attributeThreeCh.setVisible(false);
+			attributeFourL.setVisible(false);
+			attributeFourCh.setVisible(false);
+		}
+		//units and category
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityUnit()) {
+			unitL.setVisible(false);
+			unitsCh.setVisible(false);
+		}
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityCategory()) {
+			categoryL.setVisible(false);
+			categoriesCh.setVisible(false);
+		}
+		//others
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityExplanation()) {
+			explanationL.setVisible(false);
+			explanationTF.setVisible(false);
+		}
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityExample()) {
+			exampleL.setVisible(false);
+			exampleTF.setVisible(false);
+		}
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation()) {
+			pronunciationL.setVisible(false);
+			pronunciationTF.setVisible(false);
+		}
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityRelation()) {
+			relationL.setVisible(false);
+			relationTF.setVisible(false);
+		}
+		//others separator is always visible due to status checkbox
+	} //END private void setVisibilities()
+	
 	private void onChangeEntryType() {
 		//make the GUI
 		JPanel dialogP = new JPanel();
@@ -720,64 +769,6 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 		isUpdating = false;
 	} //END public void setAttributeItems(String[][], int)
-	
-	//implements IEntryEditView
-	public void setLabels(String aBaseL, String aTargetL, String anAttributesL, String aUnitL, String aCategoryL
-						  , String anOthersL, String anExplanationL, String anExampleL) {
-		baseL.setText(aBaseL + ":");
-		targetL.setText(aTargetL + ":");
-		attributesLS.setText(anAttributesL + ":");
-		unitL.setText(aUnitL + ":");
-		categoryL.setText(aCategoryL + ":");
-		othersLS.setText(anOthersL + ":");
-		explanationL.setText(anExplanationL + ":");
-		exampleL.setText(anExampleL + ":");
-	} //END public void setLabels(String ...)
-	
-	//implements IEntryEditView
-	public void setVisibilities(int anAttributesVis, int aUnitVis, int aCategoryVis
-								, int anExplanationVis, int anExampleVis
-								, int aPronunciationVis, int aRelationVis) {
-		//attributes
-		if (InfoVocab.VISIBILITY_NEVER == anAttributesVis) {
-			attributesLS.setVisible(false);
-			attributeOneL.setVisible(false);
-			attributeOneCh.setVisible(false);
-			attributeTwoL.setVisible(false);
-			attributeTwoCh.setVisible(false);
-			attributeThreeL.setVisible(false);
-			attributeThreeCh.setVisible(false);
-			attributeFourL.setVisible(false);
-			attributeFourCh.setVisible(false);
-		}
-		//units and category
-		if (InfoVocab.VISIBILITY_NEVER == aUnitVis) {
-			unitL.setVisible(false);
-			unitsCh.setVisible(false);
-		}
-		if (InfoVocab.VISIBILITY_NEVER == aCategoryVis) {
-			categoryL.setVisible(false);
-			categoriesCh.setVisible(false);
-		}
-		//others
-		if (InfoVocab.VISIBILITY_NEVER == anExplanationVis) {
-			explanationL.setVisible(false);
-			explanationTF.setVisible(false);
-		}
-		if (InfoVocab.VISIBILITY_NEVER == anExampleVis) {
-			exampleL.setVisible(false);
-			exampleTF.setVisible(false);
-		}
-		if (InfoVocab.VISIBILITY_NEVER == aPronunciationVis) {
-			pronunciationL.setVisible(false);
-			pronunciationTF.setVisible(false);
-		}
-		if (InfoVocab.VISIBILITY_NEVER == aRelationVis) {
-			relationL.setVisible(false);
-			relationTF.setVisible(false);
-		}
-		//others separator is always visible due to status checkbox
-	} //END public void setVisibilities(int, int, int, int)
 	
 	//implements IEntryEditView
 	public void setBaseIsValueValid(boolean valid) {

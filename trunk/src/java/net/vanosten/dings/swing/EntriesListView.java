@@ -56,7 +56,8 @@ public class EntriesListView extends ListView implements IEntriesListView {
 		//else allow the user to choose the appropriate entry type
 		ChoiceID entryTypesCh = new ChoiceID();
 		entryTypesCh.setItems(entryTypes);
-		Object[] options = {"OK", "Cancel"};
+		Object[] options = {Toolbox.getInstance().getLocalizedString("label.button.ok")
+				, Toolbox.getInstance().getLocalizedString("label.button.cancel")};
 		int answer = JOptionPane.showOptionDialog(this
 				, entryTypesCh
 				, "Please Choose the Entry Type"

@@ -49,6 +49,7 @@ import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.IDTableModel;
 import net.vanosten.dings.swing.helperui.LevelTableCellRenderer;
 import net.vanosten.dings.uiif.IListView;
@@ -146,16 +147,18 @@ public abstract class ListView extends JPanel implements IListView {
 	} //END private void initializeButtonP()
 	
 	private final void initButtonComponents() {
-		newB = new JButton("Add", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
-		newB.setMnemonic("A".charAt(0));
+		newB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.add")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
+		newB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.add").charAt(0));
 		newB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onNew();
 			}
 		});
 		
-		deleteB = new JButton("Remove", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
-		deleteB.setMnemonic("R".charAt(0));
+		deleteB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.remove")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
+		deleteB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.remove").charAt(0));
 		deleteB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				String rowID = getSelectedRowID();
@@ -165,8 +168,9 @@ public abstract class ListView extends JPanel implements IListView {
 			}
 		});
 		
-		editB = new JButton("Edit", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EDIT_BTN, "FIXME"));
-		editB.setMnemonic("d".charAt(0)); //Cannot be "E" due to menu "Edit"
+		editB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.edit")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EDIT_BTN, "FIXME"));
+		editB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.edit").charAt(0));
 		editB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onEdit();         

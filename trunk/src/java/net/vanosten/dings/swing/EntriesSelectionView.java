@@ -39,11 +39,11 @@ import java.awt.event.ActionListener;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.model.Entry;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.ListID;
 import net.vanosten.dings.swing.helperui.ListIDModel;
 import net.vanosten.dings.uiif.IEntriesSelectionView;
-import net.vanosten.dings.model.Entry;
-import net.vanosten.dings.model.Toolbox;
 
 public class EntriesSelectionView extends AViewWithButtons implements IEntriesSelectionView {
 	
@@ -97,14 +97,14 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		
 		//units
 		unitsLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		unitsL = new JLabel("Selected Units:");
-		unitsL.setDisplayedMnemonic(("U").charAt(0));
+		unitsL = new JLabel(Toolbox.getInstance().getInfoPointer().getUnitLabel() + ":");
+		//unitsL.setDisplayedMnemonic(("U").charAt(0));
 		unitsL.setLabelFor(unitsLi);
 		
 		//categories
 		categoriesLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		categoriesL = new JLabel("Selected Categories:");
-		categoriesL.setDisplayedMnemonic(("C").charAt(0));
+		categoriesL = new JLabel(Toolbox.getInstance().getInfoPointer().getCategoryLabel() + ":");
+		//categoriesL.setDisplayedMnemonic(("C").charAt(0));
 		categoriesL.setLabelFor(categoriesL);
 		
 		//EntryTypes
@@ -241,8 +241,9 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		applyB = new JButton("Apply Selection", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_APPLY_BTN, "FIXME"));
-		applyB.setMnemonic("A".charAt(0));
+		applyB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.apply_selection")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_APPLY_BTN, "FIXME"));
+		applyB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.apply_selection").charAt(0));
 		applyB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onApply();
@@ -349,14 +350,4 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		minScoreCB.setSelectedIndex(theScores[0] - 1);
 		maxScoreCB.setSelectedIndex(theScores[1] - 1);
 	} //END public void setMinMaxScore(int[])
-
-	//implements IEntriesSelectionView
-	public void setUnitsLabel(String aUnitsLabel) {
-		unitsL.setText(aUnitsLabel + ":");
-	} //END public void setUnitsLabel(String)
-
-	//implements IEntriesSelectionView
-	public void setCategoriesLabel(String aCategoriesLabel) {
-		categoriesL.setText(aCategoriesLabel + ":");
-	} //END public void setCategoriesLabel(String)
 } //END public class EntriesSelectionView extends JPanel

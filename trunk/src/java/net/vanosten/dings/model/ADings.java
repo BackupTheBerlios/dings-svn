@@ -46,14 +46,8 @@ public abstract class ADings implements IAppEventHandler {
 	/** The version of the dataformat */
 	public final static String dataVersion = "3";
 
-	/** The minimal JVM major number to run the applicaiton */
-	public final static int MIN_JVM_MAJOR = 1;
-
-	/** The minimal JVM minor number to run the applicaiton */
-	public final static int MIN_JVM_MINOR = 4;
-
-	/** The name of the application */
-	public final static String APP_NAME = "DingsBums?!";
+	/** The minimal JVM version to run the application */
+	private final static String MIN_JVM_VERSION = "1.4";
 
 	/** Holds the units */
 	private UnitsCollection units;
@@ -69,9 +63,6 @@ public abstract class ADings implements IAppEventHandler {
 
 	/** Holds the EntryTypeAttributs */
 	private EntryTypeAttributesCollection attributes;
-
-	/** Holds the info about the vocabulary */
-	private InfoVocab info;
 
 	/** Holds the learning statistics */
 	private StatsCollection stats;
@@ -121,7 +112,7 @@ public abstract class ADings implements IAppEventHandler {
 
 
 		this.initializeGUI();
-		mainWindow.setApplicationTitle(APP_NAME);
+		mainWindow.setApplicationTitle("DingsBums?!");
 
 		//add the first view which is always the view GO
 		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -146,27 +137,24 @@ public abstract class ADings implements IAppEventHandler {
 				logger.logp(Level.FINEST, this.getClass().getName(), "checkMainArgs()"
 						, "Arguments: " + args.toString());
 			}
-			//Check for Java 1.4 or later
-			String javaVersion = System.getProperty("java.version").trim();
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "checkMainArgs()"
-						, "Java version: " + javaVersion);
+			//the following code for checking the version is partly taken from JOnAS
+			try {
+				Package p = Package.getPackage("java.lang");
+				String implVer = p.getImplementationVersion();
+				String specVer = p.getSpecificationVersion();
+				if (logger.isLoggable(Level.FINEST)) {
+					logger.logp(Level.FINEST, this.getClass().getName(), "checkMainArgs()"
+							, "Java version: " + implVer + "; spec version: " + specVer);
+				}
+				if (!p.isCompatibleWith(MIN_JVM_VERSION)) {
+					System.err.println("DingsBums?! requires a 1.4 JVM or higher. \n"
+							+ "Current JVM implementation version is '" + implVer + "' with specification '" + specVer + "'");
+					System.exit(0);
+				}
+			} catch (NumberFormatException nfe) {
+				System.err.println("Cannot detect the running JVM version. Note that DingsBums?! requires a 1.4 or higher JVM.");
 			}
-			int major = Integer.parseInt(javaVersion.substring(0,1));
-			int minor = Integer.parseInt(javaVersion.substring(2,3));
-			boolean sufficientJVM = true;
-			if (major < MIN_JVM_MAJOR) {
-				sufficientJVM = false;
-			}
-			else if (MIN_JVM_MAJOR == major && minor < MIN_JVM_MINOR) {
-				sufficientJVM = false;
-			}
-			if(false == sufficientJVM) {
-				System.err.println("You are running Java version "
-					+ javaVersion + ".");
-				System.err.println(ADings.APP_NAME + " requires Java 1.4 or later.");
-				System.exit(1);
-			}
+ 
 			//check arguments
 			boolean overrideLogging = false;
 			if (args.length > 0) {
@@ -277,7 +265,6 @@ public abstract class ADings implements IAppEventHandler {
 			if (evt.getMessage().equals(MessageConstants.N_VIEW_WELCOME)) {
 				IWelcomeView welcomeView = mainWindow.getWelcomeView();
 				welcomeView.init(this);
-				//String[][] myPaths = preferences.getFileHistoryPaths(); TODO: remove
 				mainWindow.showView(MessageConstants.N_VIEW_WELCOME);
 			}
 			if (evt.getMessage().equals(MessageConstants.N_VIEW_STATISTICS)) {
@@ -288,9 +275,9 @@ public abstract class ADings implements IAppEventHandler {
 			}
 			else if (evt.getMessage().equals(MessageConstants.N_VIEW_INFOVOCAB_EDIT)) {
 				IInfoVocabEditView infoVocabEditView = mainWindow.getInfoVocabEditView();
-				info.setEditView(infoVocabEditView);
+				Toolbox.getInstance().getInfoPointer().setEditView(infoVocabEditView);
 				infoVocabEditView.setAvailableLocales(Constants.getSupportedLocales(null));
-				infoVocabEditView.init(info);
+				infoVocabEditView.init(Toolbox.getInstance().getInfoPointer());
 				mainWindow.showView(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
 			}
 			else if (evt.getMessage().equals(MessageConstants.N_VIEW_UNITS_LIST)) {
@@ -328,12 +315,6 @@ public abstract class ADings implements IAppEventHandler {
 			}
 			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_EDIT)) {
 				IEntryEditView entryEditView = mainWindow.getEntryEditView();
-				entryEditView.setLabels(info.getBaseLabel(), info.getTargetLabel(), info.getAttributesLabel()
-										, info.getUnitLabel(), info.getCategoryLabel()
-										, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
-				entryEditView.setVisibilities(info.getVisibilityAttributes(), info.getVisibilityUnit(), info.getVisibilityCategory()
-										, info.getVisibilityExplanation(), info.getVisibilityExample()
-										, info.getVisibilityPronunciation(), info.getVisibilityRelation());
 				entryEditView.setEntryTypes(entryTypes.getChoiceProxy());
 				Entry thisEntry = entries.getCurrentItem();
 				thisEntry.setEditView(entryEditView);
@@ -358,24 +339,17 @@ public abstract class ADings implements IAppEventHandler {
 			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_LEARNONE)) {
 				entryLearnOneView = mainWindow.getEntryLearnOneView();
 				//learning direction
-				if (Constants.YES_OPTION == mainWindow.showOptionDialog("Learning Direction"
+				int answer = mainWindow.showOptionDialog("Learning Direction"
 						, "Do you want to learn in the default direction: "
-						+ info.getBaseLabel() + " -> " + info.getTargetLabel() + "?"
+						+ Toolbox.getInstance().getInfoPointer().getBaseLabel()
+						+ " -> " + Toolbox.getInstance().getInfoPointer().getTargetLabel() + "?"
 						, Constants.QUESTION_MESSAGE
-						, Constants.YES_NO_OPTION)) {
+						, Constants.YES_NO_OPTION);
+				if (Constants.YES_OPTION == answer) {
 					entryLearnOneView.setTargetAsked(true);
-					entryLearnOneView.setLabels(info.getBaseLabel(), info.getTargetLabel(), info.getAttributesLabel()
-							, info.getUnitLabel(), info.getCategoryLabel()
-							, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
 				} else {
 					entryLearnOneView.setTargetAsked(false);
-					entryLearnOneView.setLabels(info.getTargetLabel(), info.getBaseLabel(), info.getAttributesLabel()
-							, info.getUnitLabel(), info.getCategoryLabel()
-							, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
 				}
-				entryLearnOneView.setVisibilities(info.getVisibilityAttributes(), info.getVisibilityUnit(), info.getVisibilityCategory()
-						, info.getVisibilityExplanation(), info.getVisibilityExample()
-						, info.getVisibilityPronunciation(), info.getVisibilityRelation());
 
 				//prepare entries
 				AppEvent initializeEvt = new AppEvent(AppEvent.DATA_EVENT);
@@ -417,8 +391,6 @@ public abstract class ADings implements IAppEventHandler {
 			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRIES_SELECTION)) {
 				IEntriesSelectionView selectionView = mainWindow.getEntriesSelectionView();
 				entries.setSelectionView(selectionView);
-				selectionView.setUnitsLabel("Selected Units (\"" + info.getUnitLabel() + "\")");
-				selectionView.setCategoriesLabel("Selected Categories (\"" + info.getCategoryLabel() + "\")");
 				selectionView.setUnitsList(units.getChoiceProxy());
 				selectionView.setCategoriesList(categories.getChoiceProxy());
 				selectionView.setTypesList(entryTypes.getChoiceProxy());
@@ -544,7 +516,6 @@ public abstract class ADings implements IAppEventHandler {
 		if (writeSuccess) {
 			//reset all entities and fields
 			entries = null;
-			info = null;
 			categories = null;
 			units = null;
 			entryTypes = null;
@@ -553,7 +524,7 @@ public abstract class ADings implements IAppEventHandler {
 			currentVocabFileName = null;
 			vocabOpened = false;
 			setSaveNeeded(false);
-			mainWindow.setApplicationTitle(APP_NAME);
+			mainWindow.setApplicationTitle("DingsBums?!");
 
 			//everything went fine, so retrun true
 			return true;
@@ -589,7 +560,7 @@ public abstract class ADings implements IAppEventHandler {
 		currentVocabFileName = aFileName;
 		Toolbox.getInstance().getPreferencesPointer().updateFileHistory(aFileName, true);
 		mainWindow.setFileHistory(Toolbox.getInstance().getPreferencesPointer().getFileHistoryPaths());
-		mainWindow.setApplicationTitle(aFileName + " - " + APP_NAME);
+		mainWindow.setApplicationTitle(aFileName + " - Dingsbums?!");
 	} //END private void setVocabularyFileName(String)
 
 	/**
@@ -765,9 +736,7 @@ public abstract class ADings implements IAppEventHandler {
 				entryTypes.setEntries(entries);
 
 				//InfoVocab
-				info = reader.getInfo();
-				info.setParentController(this);
-				Entry.setInfoVocab(info);
+				Toolbox.getInstance().setInfoFromStore(reader.getInfo(), this);
 
 				//statistics
 				stats = new StatsCollection(this);
@@ -814,7 +783,7 @@ public abstract class ADings implements IAppEventHandler {
 		entryTypes = new EntryTypesCollection(this);
 		entryTypes.setEntryTypeAttributes(attributes);
 		entryTypes.setDefaultItem();
-		info = new InfoVocab();
+		Toolbox.getInstance().resetInfo(this);
 		//populate entries
 		entries = new EntriesCollection(this);
 		entries.setEntryTypes(entryTypes);
@@ -827,8 +796,6 @@ public abstract class ADings implements IAppEventHandler {
 		entryTypes.setEntryTypeAttributes(attributes);
 		entryTypes.setEntries(entries);
 		attributes.setEntries(entries);
-		info.setParentController(this);
-		Entry.setInfoVocab(info);
 
 		//statistics
 		stats = new StatsCollection(this);
@@ -881,7 +848,7 @@ public abstract class ADings implements IAppEventHandler {
 								, entries.getXMLString()
 								, entryTypes.getXMLString()
 								, attributes.getXMLString()
-								, info.getXMLString()
+								, Toolbox.getInstance().getInfoPointer().getXMLString()
 								, stats.getXMLString());
 				if (writer.readyToExecute()) {
 					writer.execute();

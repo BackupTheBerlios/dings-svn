@@ -47,9 +47,4 @@ public interface IEntryLearnOneView extends IView {
 	public void setScore(int aScore);
 	public boolean isSuccess();
 	public boolean isHintUsed();
-	public void setLabels(String aBaseL, String aTargetL, String anAttributeL, String aUnitL
-			  ,String aCategoryL, String anOthersL, String anExplanationL, String anExampleL);
-	public void setVisibilities(int anAttributesVis, int aUnitVis, int aCategoryVis
-			, int anExplanationVis, int anExampleVis
-			, int aPronunciationVis, int aRelationVis);
 } //END public interface IEntryLearnOneView extends IDetailsView

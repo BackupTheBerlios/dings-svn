@@ -24,13 +24,15 @@ package net.vanosten.dings.swing;
 import java.awt.ComponentOrientation;
 
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.model.Toolbox;
 
 public class EntryTypeAttributesListView extends ListView {
 
 	public EntryTypeAttributesListView(ComponentOrientation aComponentOrientation) {
-		super("Entry Type Attributes", aComponentOrientation);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_entry_type_attributes"), aComponentOrientation);
 	} //END public EntryTypeAttributesListView(ComponentOrientation)
 	
+	//implements Listview
 	protected void setMessages() {
 		msgEdit = MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT;
 	} //END protected void setMessages()

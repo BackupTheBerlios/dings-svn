@@ -23,6 +23,19 @@ package net.vanosten.dings.swing;
 
 import java.awt.Color;
 
+import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
+import java.awt.CardLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -41,25 +54,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
-import java.awt.ComponentOrientation;
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Preferences;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IPreferencesEditView;
 
@@ -257,8 +258,9 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		);
 		buttonP.setBorder(border);
 		buttonP.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton b = new JButton("Close", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_CLOSE_BTN, "FIXME"));
-		b.setMnemonic("C".charAt(0));
+		JButton b = new JButton(Toolbox.getInstance().getLocalizedString("label.button.close")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_CLOSE_BTN, "FIXME"));
+		b.setMnemonic(Toolbox.getInstance().getLocalizedString("label.button.close").charAt(0));
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onClose();
@@ -291,7 +293,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			case 3: //logging
 				titleL.setText("Logging");
 				descriptionL.setText(
-					"<html>Logging in this application can be turned on and off You can also choose to log to the Console or to a File."
+					"<html>Logging in this application can be turned on and off. You can also choose to log to the console or to a file."
 					+ " Under normal conditions you can turn loggin off."
 					+ " If there is a problem with the application it would help me a lot if you would set the logging to Enabled and"
 					+ " and send me the output together with a bug report, so I can find and correct the error.</html>"
@@ -410,8 +412,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagConstraints gbc = new GridBagConstraints();
 		learnHintP.setLayout(gbl);
 
-		JLabel visibleL = new JLabel("Visible time for flash in milli
-seconds:");
+		JLabel visibleL = new JLabel("Visible time for flash in milliseconds:");
 		learnHintFlashTimeSL = new JSlider(SwingConstants.HORIZONTAL, LH_FLASH_TIME_MIN, LH_FLASH_TIME_MAX, LH_FLASH_TIME_DEFAULT);
 		learnHintFlashTimeSL.setMajorTickSpacing(1000);
 		learnHintFlashTimeSL.setMinorTickSpacing(100);
@@ -440,15 +441,15 @@ seconds:");
 		GridLayout gl = new GridLayout(2,0,0,DingsSwingConstants.SP_V_C);
 		JPanel changeP = new JPanel(); //to display the buttons in the same size
 		changeP.setLayout(gl);
-		hintTextChangeB = new JButton("Change hint text color ...");
-		hintTextChangeB.setMnemonic(("H").charAt(0));
+		hintTextChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.hint_text_color"));
+		hintTextChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.hint_text_color")).charAt(0));
 		hintTextChangeB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				showColorChooser(hintTextChangeB);
 			}
 		});
-		resultTextChangeB = new JButton("Change result text color ...");
-		resultTextChangeB.setMnemonic(("R").charAt(0));
+		resultTextChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.result_text_color"));
+		resultTextChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.result_text_color")).charAt(0));
 		resultTextChangeB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				showColorChooser(resultTextChangeB);

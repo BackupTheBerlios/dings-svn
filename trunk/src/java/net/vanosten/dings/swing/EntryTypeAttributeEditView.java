@@ -37,6 +37,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.ListSelectionListener;
@@ -196,34 +197,42 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	private void initializeItemsTableButtonP() {
 		itemsTableButtonP = new JPanel();
 		itemsTableButtonP.setLayout(new GridLayout(4,1,0,DingsSwingConstants.SP_V_C));
-		newItemB = new JButton("Add Item", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
-		newItemB.setMnemonic("A".charAt(0));
+		newItemB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.add_item")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
+		newItemB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.add_item").charAt(0));
 		newItemB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onNewItem();
 			}
 		});
-		deleteItemB = new JButton("Remove Item", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
-		deleteItemB.setMnemonic("R".charAt(0));
+		deleteItemB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.remove_item")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
+		deleteItemB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.remove_item").charAt(0));
 		deleteItemB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onDeleteItem();
 			}
 		});
-		moveItemUpB = new JButton("Move Up", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_UP_BTN, "FIXME"));
-		moveItemUpB.setMnemonic("U".charAt(0));
+		moveItemUpB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.move_up")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_UP_BTN, "FIXME"));
+		moveItemUpB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.move_up").charAt(0));
 		moveItemUpB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onMoveItem(true);
 			}
 		});
-		moveItemDownB = new JButton("Move Down", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DOWN_BTN, "FIXME"));
-		moveItemDownB.setMnemonic("W".charAt(0));
+		moveItemDownB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.move_down")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DOWN_BTN, "FIXME"));
+		moveItemDownB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.move_down").charAt(0));
 		moveItemDownB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onMoveItem(false);
 			}
 		});
+		newItemB.setHorizontalAlignment(SwingConstants.LEADING);
+		deleteItemB.setHorizontalAlignment(SwingConstants.LEADING);
+		moveItemUpB.setHorizontalAlignment(SwingConstants.LEADING);
+		moveItemDownB.setHorizontalAlignment(SwingConstants.LEADING);
 		itemsTableButtonP.add(newItemB);
 		itemsTableButtonP.add(deleteItemB);
 		itemsTableButtonP.add(moveItemUpB);

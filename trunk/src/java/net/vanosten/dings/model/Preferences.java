@@ -43,7 +43,7 @@ public class Preferences extends AModel{
 	public final static String PROP_FILENAME = ".dings.properties";
 
 	/** The comment in the properties file */
-	public final static String PROP_COMMENT = "Properties for the " + ADings.APP_NAME + " application.";
+	public final static String PROP_COMMENT = "Properties for DingsBums?!";
 	
 	/** The history of opened vocabulary files as a delimitted list of paths*/
 	public final static String PROP_FILE_HISTORY = "file_history";

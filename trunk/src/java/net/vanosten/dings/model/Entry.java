@@ -84,9 +84,6 @@ public final class Entry extends AIdItemModel {
 	 * The pointer is for convenience only. */
 	private String entryTypeId;
 
-	/** A static pointer to InfoVocab */
-	private static InfoVocab infoVocab;
-
 	/**
 	 * Whether the view mode is editing or learning.
 	 * This could theoretically be done by quering which view is null. but this is not save,
@@ -215,7 +212,10 @@ public final class Entry extends AIdItemModel {
 
 	//overrides AIdModel with a real implementation
 	protected static String[] getTableDisplayTitles() {
-		String[] titles = {"Status", "Score", infoVocab.getBaseLabel(), infoVocab.getTargetLabel()};
+		String[] titles = {"Status"
+				, "Score"
+				, Toolbox.getInstance().getInfoPointer().getBaseLabel()
+				, Toolbox.getInstance().getInfoPointer().getTargetLabel()};
 		return titles;
 	} //END protected static String[] getTableDisplayTitles()
 
@@ -652,13 +652,6 @@ public final class Entry extends AIdItemModel {
 			attributeFourId = entryType.getAttribute(4).getDefaultItem();
 		}
 	} //END protected void setEntryType(EntryType)
-
-	/**
-	 * Sets the InfoVocab
-	 */
-	protected static void setInfoVocab(InfoVocab anInfoVocab) {
-		infoVocab = anInfoVocab;
-	} //END protected static void setInfoVocab(InfoVocab)
 
 	/**
 	 * Used in EntriesCollection so the entryType can be set in Entry.setEntryType(EntryType)

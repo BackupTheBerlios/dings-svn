@@ -39,17 +39,17 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
-import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.model.InfoVocab;
+import net.vanosten.dings.model.Preferences;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.HintLabel;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
-import net.vanosten.dings.model.Preferences;
-import net.vanosten.dings.model.InfoVocab;
-import net.vanosten.dings.model.Toolbox;
 
 public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView {
 	private ChoiceID attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh, categoriesCh, unitsCh;
@@ -77,28 +77,28 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	
 	private void initComponents() {
 		//separators
-		attributesLS = new LabeledSeparator("Attributes");
-		othersLS = new LabeledSeparator("Others");
-		//base
-		baseL = new JLabel();
+		attributesLS = new LabeledSeparator(Toolbox.getInstance().getInfoPointer().getAttributesLabel() + ":");
+		othersLS = new LabeledSeparator(Toolbox.getInstance().getInfoPointer().getOthersLabel() + ":");
+		//labels
+		entryTypeSL = new SolutionLabel();
+
+		baseL = new JLabel(Toolbox.getInstance().getInfoPointer().getBaseLabel() + ":");
 		baseSL = new SolutionLabel();
 		//hint
 		hintL = new JLabel("Hint:");
 		hintHL = new HintLabel(Color.BLUE, Color.RED);
 		//target
-		targetL = new JLabel();
+		targetL = new JLabel(Toolbox.getInstance().getInfoPointer().getTargetLabel() + ":");
 		targetTF = new JTextField();
-		//entryType
-		entryTypeSL = new SolutionLabel();
 		//status
 		statusCB = new JCheckBox("up-to-date");
 		//score
 		scoreL = new JLabel("?");
 		//units
-		unitL = new JLabel();
+		unitL = new JLabel(Toolbox.getInstance().getInfoPointer().getUnitLabel() + ":");
 		unitsCh = new ChoiceID();
 		//categories
-		categoryL = new JLabel();
+		categoryL = new JLabel(Toolbox.getInstance().getInfoPointer().getCategoryLabel() + ":");
 		categoriesCh = new ChoiceID();
 		//attributeOne
 		attributeOneL = new JLabel("N/A:");
@@ -113,10 +113,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		attributeFourL = new JLabel("N/A:");
 		attributeFourCh = new ChoiceID();
 		//explanation
-		explanationL = new JLabel();
+		explanationL = new JLabel(Toolbox.getInstance().getInfoPointer().getExplanationLabel() + ":");
 		explanationSL = new SolutionLabel();
 		//example
-		exampleL = new JLabel();
+		exampleL = new JLabel(Toolbox.getInstance().getInfoPointer().getExampleLabel() + ":");
 		exampleSL = new SolutionLabel();
 		//pronunciation
 		pronunciationL = new JLabel("Pronunciation:");
@@ -142,6 +142,9 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		Insets ls = new Insets(DingsSwingConstants.SP_V_T, 0, DingsSwingConstants.SP_V_G, 0);
 		Insets vthg = new Insets(DingsSwingConstants.SP_V_T, DingsSwingConstants.SP_H_G, 0, 0);
 		JLabel emptyL = new JLabel(); //an empty label for layout purposes
+		
+		//set the visibility after everything has been initialized
+		setVisibilities();
 		
 		//layout
 		GridBagLayout gbl = new GridBagLayout();
@@ -446,6 +449,98 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbl.setConstraints(scoreL, gbc);
 		editP.add(scoreL);
 	} //END protected void initializeEditP()
+	
+	/**
+	 * Convenience method for setting the visibility of labels and fields
+	 * based on the properties of the learning stack info.
+	 */
+	private void setVisibilities() {
+		//attributes
+		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityAttributes()) {
+			attributesLS.setVisible(false);
+			attributeOneL.setVisible(false);
+			attributeOneCh.setVisible(false);
+			attributeTwoL.setVisible(false);
+			attributeTwoCh.setVisible(false);
+			attributeThreeL.setVisible(false);
+			attributeThreeCh.setVisible(false);
+			attributeFourL.setVisible(false);
+			attributeFourCh.setVisible(false);
+		}
+		
+		//convenience to temporarly store visibility info (and reduce number of calls
+		int visUnit = Toolbox.getInstance().getInfoPointer().getVisibilityUnit();
+		int visCategory = Toolbox.getInstance().getInfoPointer().getVisibilityCategory();
+		int visExplanation = Toolbox.getInstance().getInfoPointer().getVisibilityExplanation();
+		int visExample = Toolbox.getInstance().getInfoPointer().getVisibilityExample();
+		int visPronunciation = Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation();
+		int visRelation = Toolbox.getInstance().getInfoPointer().getVisibilityRelation();
+		//units and categories
+		if (InfoVocab.VISIBILITY_EDITING == visUnit
+				|| InfoVocab.VISIBILITY_NEVER == visUnit) {
+			unitL.setVisible(false);
+			unitsCh.setVisible(false);
+		}
+		if (InfoVocab.VISIBILITY_EDITING == visCategory
+				|| InfoVocab.VISIBILITY_NEVER == visCategory) {
+			categoryL.setVisible(false);
+			categoriesCh.setVisible(false);
+		}
+		//others
+		if (InfoVocab.VISIBILITY_EDITING == visExplanation
+				|| InfoVocab.VISIBILITY_NEVER == visExplanation) {
+			explanationL.setVisible(false);
+			explanationSL.setVisible(false);
+		}
+		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == visExplanation) {
+			explanationSL.setHideable(true);
+		}
+		else {
+			explanationSL.setHideable(false);
+		}
+		if (InfoVocab.VISIBILITY_EDITING == visExample
+				|| InfoVocab.VISIBILITY_NEVER == visExample) {
+			exampleL.setVisible(false);
+			exampleSL.setVisible(false);
+		}
+		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == visExample) {
+			exampleSL.setHideable(true);
+		}
+		else {
+			exampleSL.setHideable(false);
+		}
+		if (InfoVocab.VISIBILITY_EDITING == visPronunciation
+				||InfoVocab.VISIBILITY_NEVER == visPronunciation) {
+			pronunciationL.setVisible(false);
+			pronunciationSL.setVisible(false);
+		}
+		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == visPronunciation) {
+			pronunciationSL.setHideable(true);
+		}
+		else {
+			pronunciationSL.setHideable(false);
+		}
+		if (InfoVocab.VISIBILITY_EDITING == visRelation
+				|| InfoVocab.VISIBILITY_NEVER == visRelation) {
+			relationL.setVisible(false);
+			relationSL.setVisible(false);
+		}
+		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == Toolbox.getInstance().getInfoPointer().getVisibilityRelation()) {
+			relationSL.setHideable(true);
+		}
+		else {
+			relationSL.setHideable(false);
+		}
+		//test whether to hide the others separator, too
+		if ((InfoVocab.VISIBILITY_EDITING == visExplanation || InfoVocab.VISIBILITY_NEVER == visExplanation) &&
+				(InfoVocab.VISIBILITY_EDITING == visExample || InfoVocab.VISIBILITY_NEVER == visExample) &&
+				(InfoVocab.VISIBILITY_EDITING == visPronunciation || InfoVocab.VISIBILITY_NEVER == visPronunciation) &&
+				(InfoVocab.VISIBILITY_EDITING == visRelation || InfoVocab.VISIBILITY_NEVER == visRelation) &&
+				(InfoVocab.VISIBILITY_EDITING == visUnit || InfoVocab.VISIBILITY_NEVER == visUnit) &&
+				(InfoVocab.VISIBILITY_EDITING == visCategory || InfoVocab.VISIBILITY_NEVER == visCategory)) {
+			othersLS.setVisible(false);
+		}
+	} //END private void setVisibilities()
 
 	//implements AViewWithButtons
 	protected final void initializeButtonP() {
@@ -479,22 +574,25 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				}
 			}
 		});
-		hintB = new JButton("Hint", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_HINT_BTN, ""));
-		hintB.setMnemonic("I".charAt(0));
+		hintB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.hint")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_HINT_BTN, ""));
+		hintB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.hint").charAt(0));
 		hintB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doHint();
 			}
 		});
-		showB = new JButton("Show", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_RESULT_BTN, ""));
-		showB.setMnemonic("S".charAt(0));
+		showB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.show")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_RESULT_BTN, ""));
+		showB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.show").charAt(0));
 		showB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doShow();
 			}
 		});
-		knowB = new JButton("Know it", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_KNOWN_BTN, "FIXME"));
-		knowB.setMnemonic("K".charAt(0));
+		knowB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.know")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_KNOWN_BTN, "FIXME"));
+		knowB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.know").charAt(0));
 		knowB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				success = true;
@@ -502,8 +600,9 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				sendNext();
 			}
 		});
-		notKnowB = new JButton("Don't know", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_UNKNOWN_BTN, "FIXME"));
-		notKnowB.setMnemonic("N".charAt(0));
+		notKnowB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.dont_know")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_UNKNOWN_BTN, "FIXME"));
+		notKnowB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.dont_know").charAt(0));
 		notKnowB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				success = false;
@@ -660,6 +759,12 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	//implements IEntrlyLearnOneView
 	public final void setTargetAsked(boolean isTargetAsked) {
 		this.targetAsked = isTargetAsked;
+		if (false == targetAsked) {
+			//change labels
+			String targetLabelText = targetL.getText();
+			targetL.setText(baseL.getText());
+			baseL.setText(targetLabelText);
+		}
 	} //END public final void setTargetAsked(boolean)
 	
 	private final void setRealBase(String aBase) {
@@ -842,94 +947,5 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				break;
 		}
 	} //END public void setAttributeItems(String[][], int)
-	
-	//implements IEntryLearnOneView
-	public void setLabels(String aBaseL, String aTargetL, String anAttributesL, String aUnitL, String aCategoryL
-						  , String anOthersL, String anExplanationL, String anExampleL) {
-		baseL.setText(aBaseL + ":");
-		targetL.setText(aTargetL + ":");
-		attributesLS.setText(anAttributesL + ":");
-		unitL.setText(aUnitL + ":");
-		categoryL.setText(aCategoryL + ":");
-		othersLS.setText(anOthersL + ":");
-		explanationL.setText(anExplanationL + ":");
-		exampleL.setText(anExampleL + ":");
-	} //END public void setLabels(String ...)
-	
-	//implements IEntryEditView
-	public void setVisibilities(int anAttributesVis, int aUnitVis, int aCategoryVis
-			, int anExplanationVis, int anExampleVis
-			, int aPronunciationVis, int aRelationVis) {
-		//attributes
-		if (InfoVocab.VISIBILITY_NEVER == anAttributesVis) {
-			attributesLS.setVisible(false);
-			attributeOneL.setVisible(false);
-			attributeOneCh.setVisible(false);
-			attributeTwoL.setVisible(false);
-			attributeTwoCh.setVisible(false);
-			attributeThreeL.setVisible(false);
-			attributeThreeCh.setVisible(false);
-			attributeFourL.setVisible(false);
-			attributeFourCh.setVisible(false);
-		}
-		//units and categories
-		if (InfoVocab.VISIBILITY_EDITING == aUnitVis || InfoVocab.VISIBILITY_NEVER == aUnitVis) {
-			unitL.setVisible(false);
-			unitsCh.setVisible(false);
-		}
-		if (InfoVocab.VISIBILITY_EDITING == aCategoryVis || InfoVocab.VISIBILITY_NEVER == aCategoryVis) {
-			categoryL.setVisible(false);
-			categoriesCh.setVisible(false);
-		}
-		//others
-		if (InfoVocab.VISIBILITY_EDITING == anExplanationVis || InfoVocab.VISIBILITY_NEVER == anExplanationVis) {
-			explanationL.setVisible(false);
-			explanationSL.setVisible(false);
-		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == anExplanationVis) {
-			explanationSL.setHideable(true);
-		}
-		else {
-			explanationSL.setHideable(false);
-		}
-		if (InfoVocab.VISIBILITY_EDITING == anExampleVis || InfoVocab.VISIBILITY_NEVER == anExampleVis) {
-			exampleL.setVisible(false);
-			exampleSL.setVisible(false);
-		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == anExampleVis) {
-			exampleSL.setHideable(true);
-		}
-		else {
-			exampleSL.setHideable(false);
-		}
-		if (InfoVocab.VISIBILITY_EDITING == aPronunciationVis ||InfoVocab.VISIBILITY_NEVER == aPronunciationVis) {
-			pronunciationL.setVisible(false);
-			pronunciationSL.setVisible(false);
-		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == aPronunciationVis) {
-			pronunciationSL.setHideable(true);
-		}
-		else {
-			pronunciationSL.setHideable(false);
-		}
-		if (InfoVocab.VISIBILITY_EDITING == aRelationVis || InfoVocab.VISIBILITY_NEVER == aRelationVis) {
-			relationL.setVisible(false);
-			relationSL.setVisible(false);
-		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == aRelationVis) {
-			relationSL.setHideable(true);
-		}
-		else {
-			relationSL.setHideable(false);
-		}
-		//test whether to hide the others separator, too
-		if ((InfoVocab.VISIBILITY_NEVER == anExplanationVis || InfoVocab.VISIBILITY_NEVER == anExplanationVis) &&
-				(InfoVocab.VISIBILITY_NEVER == anExampleVis || InfoVocab.VISIBILITY_NEVER == anExampleVis) &&
-				(InfoVocab.VISIBILITY_NEVER == aPronunciationVis || InfoVocab.VISIBILITY_NEVER == aPronunciationVis) &&
-				(InfoVocab.VISIBILITY_NEVER == aRelationVis || InfoVocab.VISIBILITY_NEVER == aRelationVis) &&
-				(InfoVocab.VISIBILITY_NEVER == aUnitVis || InfoVocab.VISIBILITY_NEVER == aUnitVis) &&
-				(InfoVocab.VISIBILITY_NEVER == aCategoryVis || InfoVocab.VISIBILITY_NEVER == aCategoryVis)) {
-			othersLS.setVisible(false);
-		}
-	} //END public void setVisibilities(int, int, int, int)
+		
 } //END public class EntryLearnOneView extends AViewWithScrollPane

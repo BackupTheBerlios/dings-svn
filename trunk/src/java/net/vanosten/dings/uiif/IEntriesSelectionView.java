@@ -37,6 +37,4 @@ public interface IEntriesSelectionView extends IView {
 	public void setLastLearnedBefore(int aNumberOfDays);
 	public int[] getMinMaxScore();
 	public void setMinMaxScore(int[] theLevels);
-	public void setUnitsLabel(String aUnitsLabel);
-	public void setCategoriesLabel(String aCategoriesLabel);
 } //END public interface IEntriesSelectionView extends IView

@@ -48,11 +48,6 @@ public interface IEntryEditView extends IDetailsView {
 	public void setCategories(String theCategories[][]);
 	public boolean getStatus();
 	public void setStatus(boolean aStatus);
-	public void setLabels(String aBaseL, String aTargetL, String anAttributeL, String aUnitL
-						  ,String aCategoryL, String anOthersL, String anExplanationL, String anExampleL);
-	public void setVisibilities(int anAttributesVis, int aUnitVis, int aCategoryVis
-			, int anExplanationVis, int anExampleVis
-			, int aPronunciationVis, int aRelationVis);
 	public void setBaseIsValueValid(boolean valid);
 	public void setTargetIsValueValid(boolean valid);
 } //END public interface IEntryEditView extends IDetailsView
