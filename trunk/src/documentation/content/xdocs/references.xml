@@ -18,6 +18,14 @@
 				<li>Some examples from IBM about globalization of Java applications: <a href="http://www-306.ibm.com/software/globalization/topics/bidijava/features.jsp">GUI</a> and <a href="http://www-306.ibm.com/software/globalization/topics/bidijava/java.jsp">major bidi related classes</a>.</li>
 				<li>Core Java Technology, Technical Tips: <a href="http://java.sun.com/developer/JDCTechTips/2003/tt0926.html#2">Component Orientation in Swing User Interfaces</a>.</li>
 				<li>IBM developer works: <a href="http://www-128.ibm.com/developerworks/java/library/j-international-text/index.html">International text in JDK 1.2</a> and <a href="http://www-128.ibm.com/developerworks/java/library/j-boundaries/boundaries.html">Finding text boundaries in Java: Overcoming differences in international style</a>.</li>
+				<li><a href="http://www.onjava.com/pub/a/onjava/excerpt/javaexIAN3_chap8/index1.html?page=1">O'Reilly Book Excerpts: Java Examples in a Nutshell, Internationalization, Part 2</a></li>
+			</ul>
+		</section>
+		<section id="other">
+			<title>Others</title>
+			<ul>
+				<li><a href="http://java.sun.com/developer/technicalArticles/GUI/swing/wizard/index.html">Creating Wizard Dialogs with Java Swing</a></li>
+				<li><a href="http://weblogs.java.net/blog/kohsuke/archive/2005/02/using_jaxb_20_t.html">Using JAXB 2.0 to persist your own classes to XML</a></li>
 			</ul>
 		</section>
 	</body>
