@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>References</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>This is a collection of reference links to software, documentation and ideas, that are or could be important to the development of DingsBums?!.</p>
+		</section>
+		<section id="internationalization">
+			<title>I18N and L12N</title>
+			<ul>
+				<li>Supported locales in Java: <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/locale.doc.html">1.4.2</a>, <a href="http://java.sun.com/j2se/1.5.0/docs/guide/intl/locale.doc.html">5.0</a>. These pages also include an <a href="http://java.sun.com/j2se/1.4.2/docs/guide/intl/locale.doc.html#orientation">overview</a> of Swing classes supporting <code>java.awt.ComponentOrientation</code>.</li>
+				<li><a href="http://www.loc.gov/standards/iso639-2/englangn.html">ISO 639 language codes</a> and <a href="http://www.iso.ch/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html">ISO 3166 country codes</a>.</li>
+				<li>Java Tutorial: <a href="http://java.sun.com/docs/books/tutorial/i18n/locale/index.html">Setting the Locale</a>.</li>
+				<li>Some examples from IBM about globalization of Java applications: <a href="http://www-306.ibm.com/software/globalization/topics/bidijava/features.jsp">GUI</a> and <a href="http://www-306.ibm.com/software/globalization/topics/bidijava/java.jsp">major bidi related classes</a>.</li>
+				<li>Core Java Technology, Technical Tips: <a href="http://java.sun.com/developer/JDCTechTips/2003/tt0926.html#2">Component Orientation in Swing User Interfaces</a>.</li>
+				<li>IBM developer works: <a href="http://www-128.ibm.com/developerworks/java/library/j-international-text/index.html">International text in JDK 1.2</a> and <a href="http://www-128.ibm.com/developerworks/java/library/j-boundaries/boundaries.html">Finding text boundaries in Java: Overcoming differences in international style</a>.</li>
+			</ul>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,1034 @@
+/*
+ * ADings.java
+ * :tabSize=4:indentSize=4:noTabs=false:
+ *
+ * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+package net.vanosten.dings.model;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Locale;
+import java.text.DateFormat;
+
+import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.event.AppEvent;
+import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.io.VocabularyXMLReader;
+import net.vanosten.dings.io.VocabularyXMLWriter;
+
+import net.vanosten.dings.uiif.*;
+
+//Logging with java.util.logging
+import java.util.logging.Logger; 
+import java.util.logging.Level;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+
+public abstract class ADings implements IAppEventHandler {
+	
+	/** The version of the dataformat */
+	public final static String dataVersion = "3";
+	
+	/** The minimal JVM major number to run the applicaiton */
+	public final static int MIN_JVM_MAJOR = 1;
+	
+	/** The minimal JVM minor number to run the applicaiton */
+	public final static int MIN_JVM_MINOR = 4;
+	
+	/** The name of the application */
+	public final static String APP_NAME = "DingsBums?!";
+
+	/** Holds the units */
+	private UnitsCollection units;
+
+	/** Holds the categroies */
+	private CategoriesCollection categories;
+
+	/** Holds the entries */
+	private EntriesCollection entries;
+
+	/** Holds the entry types */
+	private EntryTypesCollection entryTypes;
+	
+	/** Holds the EntryTypeAttributs */
+	private EntryTypeAttributesCollection attributes;
+
+	/** Holds the info about the vocabulary */
+	private InfoVocab info;
+
+	/** Holds the applications preferences and properties */
+	protected Preferences preferences = null;
+	
+	/** Holds the learning statistics */
+	private StatsCollection stats;
+	
+	/** Holds the current locale, which by default is set by the user's desktop settings */
+	protected Locale locale = Locale.getDefault();
+
+	/** Whether safe is needed */
+	private boolean saveNeeded = false;
+
+	/** Whether a vocabulary file is already open */
+	private boolean vocabOpened = false;
+	
+	/** The file name of the currently open vocabulary*/
+	private String currentVocabFileName = null;
+
+	/** The main window / gui */
+	protected IDingsMainWindow mainWindow;
+
+	/** The learnOneView to be reused */
+	private IEntryLearnOneView entryLearnOneView = null;
+	
+	/** The logging handler */
+	private Handler loggingHandler = null;
+	
+	/** The current view */
+	private String currentView = MessageConstants.N_VIEW_WELCOME;
+
+	/** 
+	 * The logging logger. The base package structure is chosen as name 
+	 * in order to have the other loggers in the divers classes inherit the settings (level).
+	 * */
+	private static Logger logger = Logger.getLogger("net.vanosten.dings");
+
+	/**
+	 * The Constructor. It sets up the frame with a default set of menus and at
+	 * program start the go view is displayed.
+	 */
+	public ADings(String[] args) {
+		//read the preferences needs to be first
+		preferences = new Preferences();
+		preferences.setParentController(this);
+		
+		checkMainArgs(args);
+		//locale
+		if (logger.isLoggable(Level.INFO)) {
+			logger.logp(Level.INFO, this.getClass().getName(), "ADings(String[])"
+					, "Locale: " + locale.toString());
+		}
+		
+		this.initializeGUI();
+		mainWindow.setApplicationTitle(APP_NAME);
+
+		//add the first view which is always the view GO
+		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+		ape.setMessage(MessageConstants.N_VIEW_WELCOME);
+		this.handleAppEvent(ape);
+		
+		//set status information
+		setSaveNeeded(false);
+		vocabOpened = false;
+	} //End public ADings(String[])
+	
+	/**
+	 * Parses and checks the runtime arguments from the main method
+	 * and checks the minimal JVM version.
+	 * If something goes wrong the usage is printed and the program exited.
+	 * 
+	 * @param args The arguments form the main method
+	 */
+	private final void checkMainArgs(String[] args) {
+		try {
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.logp(Level.FINEST, this.getClass().getName(), "checkMainArgs()"
+						, "Arguments: " + args.toString());
+			}
+			//Check for Java 1.4 or later
+			String javaVersion = System.getProperty("java.version").trim();
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.logp(Level.FINEST, this.getClass().getName(), "checkMainArgs()"
+						, "Java version: " + javaVersion);
+			}
+			int major = Integer.parseInt(javaVersion.substring(0,1));
+			int minor = Integer.parseInt(javaVersion.substring(2,3));
+			boolean sufficientJVM = true;
+			if (major < MIN_JVM_MAJOR) {
+				sufficientJVM = false;
+			}
+			else if (MIN_JVM_MAJOR == major && minor < MIN_JVM_MINOR) {
+				sufficientJVM = false;
+			}
+			if(false == sufficientJVM) {
+				System.err.println("You are running Java version "
+					+ javaVersion + ".");
+				System.err.println(ADings.APP_NAME + " requires Java 1.4 or later.");
+				System.exit(1);
+			}
+			//check arguments
+			boolean overrideLogging = false;
+			if (args.length > 0) {
+				for (int i = 0; i < args.length; i++) {
+					if (args[i].equals("--debug")) {
+						//prepare for more advanced logging
+						overrideLogging = true;
+					}
+					else if (args[i].equals("--help")) {
+						printUsage();
+						System.exit(1);
+					}
+					else if (args[i].startsWith("--locale=")) {
+						locale = Constants.parseLocale(args[i].substring(args[i].indexOf('=') + 1));
+						Locale.setDefault(locale);
+					}
+					else {
+						printUsage();
+						System.exit(1);
+					}
+				}
+			}
+			//prepare for more advanced logging
+			changeLogging(overrideLogging);
+		} catch (Exception e) {
+			printUsage();
+			System.err.println(Constants.getThrowableStackTrace(e));
+			System.exit(1);
+		}
+	} //END private final void checkMainArgs(String[])
+
+	/**
+	 * Prints the usage of the programm with the options to System.err
+	 */
+	private final void printUsage() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Usage: java -jar dingsbums.jar [options]");
+		sb.append("\nOptions:");
+		sb.append("\n  --locale=xx_YY   use the xx_YY locale, where xx is a valid language/country combination");
+		sb.append("\n  --debug          force logging messages to console");
+		sb.append("\n  --help           show this help");
+		System.err.println(sb.toString());
+	} //END private final void printUsage()
+	
+	/**
+	 * Entry point for GUI-toolkit to initialize the GUI elements.
+	 */
+	protected abstract void initializeGUI();
+
+	//implements IAppEventHandler
+	public void handleAppEvent(AppEvent evt) {
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent()", evt.getMessage());
+		}
+		if (evt.isStatusEvent()) {
+			if (evt.getMessage().equals(MessageConstants.S_EXIT_APPLICATION)) {
+				//if the closing of the vocabulary is successful then exit
+				if (closeVocabulary()) {
+					exit();
+				}
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_CLOSE_VOCABULARY)) {
+				if (closeVocabulary()) {
+					AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+					ape.setMessage(MessageConstants.N_VIEW_WELCOME);
+					this.handleAppEvent(ape);
+				}
+				else {
+					//nothing has to be done
+				}
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_OPEN_VOCABULARY)) {
+				if (null != evt.getDetails()) {
+					setVocabularyFileName(evt.getDetails());
+					readVocabulary();
+				}
+				else {
+					//read the to be chosen file
+					if (checkOverwriteVocabulary() && fileChoosen(true)) {
+						readVocabulary();
+					}
+				}
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_NEW_VOCABULARY)) {
+				if (checkOverwriteVocabulary()) {
+					makeNewVocabulary();
+				}
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_SAVE_VOCABULARY)) {
+				writeVocabulary(false);
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_SAVE_AS_VOCABULARY)) {
+				writeVocabulary(true);
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_SAVE_NEEDED)) {
+				setSaveNeeded(true);
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_SHOW_VALIDATION_ERROR)) {
+				mainWindow.showMessageDialog("Validation Error", evt.getDetails(), Constants.ERROR_MESSAGE);
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_SHOW_DELETE_ERROR)) {
+				mainWindow.showMessageDialog("Deletion not allowed", evt.getDetails(), Constants.ERROR_MESSAGE);
+			}
+			else if (evt.getMessage().equals(MessageConstants.S_CHANGE_LOGGING)) {
+				changeLogging(false);
+			}
+		}
+		else if (evt.isNavEvent()) {
+			//show the new view
+			if (evt.getMessage().equals(MessageConstants.N_VIEW_WELCOME)) {
+				IWelcomeView welcomeView = mainWindow.getWelcomeView();
+				welcomeView.init(this);
+				//String[][] myPaths = preferences.getFileHistoryPaths(); TODO: remove
+				mainWindow.showView(MessageConstants.N_VIEW_WELCOME);
+			}
+			if (evt.getMessage().equals(MessageConstants.N_VIEW_STATISTICS)) {
+				ISummaryView summaryView = mainWindow.getSummaryView();
+				stats.setStatsView(summaryView);
+				summaryView.init(stats);
+				mainWindow.showView(MessageConstants.N_VIEW_STATISTICS);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_INFOVOCAB_EDIT)) {
+				IInfoVocabEditView infoVocabEditView = mainWindow.getInfoVocabEditView();
+				info.setEditView(infoVocabEditView);
+				infoVocabEditView.setAvailableLocales(Constants.getSupportedLocales(null));
+				infoVocabEditView.init(info);
+				mainWindow.showView(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_UNITS_LIST)) {
+				IListView listView = mainWindow.getUnitsListView();
+				units.setListView(listView);
+				listView.init(units);
+				mainWindow.showView(MessageConstants.N_VIEW_UNITS_LIST);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_UNIT_EDIT)) {
+				Unit thisUnit = units.getCurrentItem();
+				IUnitEditView unitEditView = mainWindow.getUnitEditView();
+				thisUnit.setEditView(unitEditView);
+				unitEditView.init(thisUnit);
+				mainWindow.showView(MessageConstants.N_VIEW_UNIT_EDIT);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_CATEGORIES_LIST)) {
+				IListView listView = mainWindow.getCategoriesListView();
+				categories.setListView(listView);
+				listView.init(categories);
+				mainWindow.showView(MessageConstants.N_VIEW_CATEGORIES_LIST);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_CATEGORY_EDIT)) {
+				Category thisCategory = categories.getCurrentItem();
+				IUnitEditView categoryEditView = mainWindow.getCategoryEditView();
+				thisCategory.setEditView(categoryEditView);
+				categoryEditView.init(thisCategory);
+				mainWindow.showView(MessageConstants.N_VIEW_CATEGORY_EDIT);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRIES_LIST)) {
+				IEntriesListView listView = mainWindow.getEntriesListView();
+				entries.setListView(listView);
+				listView.setEntryTypes(entryTypes.getChoiceProxy());
+				listView.init(entries);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRIES_LIST);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_EDIT)) {
+				IEntryEditView entryEditView = mainWindow.getEntryEditView();
+				entryEditView.setLabels(info.getBaseLabel(), info.getTargetLabel(), info.getAttributesLabel()
+										, info.getUnitLabel(), info.getCategoryLabel()
+										, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
+				entryEditView.setVisibilities(info.getVisibilityAttributes(), info.getVisibilityUnit(), info.getVisibilityCategory()
+										, info.getVisibilityExplanation(), info.getVisibilityExample() 
+										, info.getVisibilityPronunciation(), info.getVisibilityRelation());
+				entryEditView.setEntryTypes(entryTypes.getChoiceProxy());
+				Entry thisEntry = entries.getCurrentItem();
+				thisEntry.setEditView(entryEditView);
+				//set EntryType attributes to choose from
+				EntryTypeAttribute anAttribute;
+				EntryType thisEntryType = entryTypes.getEntryType(thisEntry.getEntryTypeId());
+				for (int i = 0; i < EntryType.NUMBER_OF_ATTRIBUTES; i++) {
+					if (thisEntryType.getNumberOfAttributes() > i) {
+						anAttribute = thisEntryType.getAttribute(i + 1);
+						entryEditView.setAttributeName(anAttribute.getName(), i + 1);
+						entryEditView.setAttributeItems(anAttribute.getItemsChoiceProxy(), i + 1);
+					}
+				}
+				//set Units to choose from
+				entryEditView.setUnits(units.getChoiceProxy());
+				//set Categories to choose from
+				entryEditView.setCategories(categories.getChoiceProxy());
+				//initialize
+				entryEditView.init(thisEntry);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRY_EDIT);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_LEARNONE)) {
+				entryLearnOneView = mainWindow.getEntryLearnOneView();
+				entryLearnOneView.setLabels(info.getBaseLabel(), info.getTargetLabel(), info.getAttributesLabel()
+						, info.getUnitLabel(), info.getCategoryLabel()
+						, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
+				entryLearnOneView.setVisibilities(info.getVisibilityAttributes(), info.getVisibilityUnit(), info.getVisibilityCategory()
+						, info.getVisibilityExplanation(), info.getVisibilityExample() 
+						, info.getVisibilityPronunciation(), info.getVisibilityRelation());
+				
+				entryLearnOneView.setPreferences(preferences);
+				//prepare entries
+				AppEvent initializeEvt = new AppEvent(AppEvent.DATA_EVENT);
+				initializeEvt.setMessage(MessageConstants.D_ENTRIES_INITIALIZE_LEARNING);
+				entries.handleAppEvent(initializeEvt);
+				//set entry relation
+				AppEvent entryEvt = new AppEvent(AppEvent.DATA_EVENT);
+				entryEvt.setMessage(MessageConstants.D_ENTRY_LEARNONE_NEXT);
+				this.handleAppEvent(entryEvt);
+				//add to panel and show
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRY_LEARNONE);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPES_LIST)) {
+				IListView listView = mainWindow.getEntryTypesListView();
+				entryTypes.setListView(listView);
+				listView.init(entryTypes);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPES_LIST);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPE_EDIT)) {
+				EntryType thisEntryType = entryTypes.getCurrentItem();
+				IEntryTypeEditView entryTypeEditView = mainWindow.getEntryTypeEditView();
+				thisEntryType.setEditView(entryTypeEditView);
+				entryTypeEditView.init(thisEntryType);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPE_EDIT);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST)) {
+				IListView listView = mainWindow.getEntryTypeAttributesListView();
+				attributes.setListView(listView);
+				listView.init(attributes);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT)) {
+				EntryTypeAttribute thisAttribute = attributes.getCurrentItem();
+				IEntryTypeAttributeEditView attributeEditView = mainWindow.getEntryTypeAttributeEditView();
+				thisAttribute.setEditView(attributeEditView);
+				attributeEditView.init(thisAttribute);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT);
+			}
+			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRIES_SELECTION)) {
+				IEntriesSelectionView selectionView = mainWindow.getEntriesSelectionView();
+				entries.setSelectionView(selectionView);
+				selectionView.setUnitsLabel("Selected Units (\"" + info.getUnitLabel() + "\")");
+				selectionView.setCategoriesLabel("Selected Categories (\"" + info.getCategoryLabel() + "\")");
+				selectionView.setUnitsList(units.getChoiceProxy());
+				selectionView.setCategoriesList(categories.getChoiceProxy());
+				selectionView.setTypesList(entryTypes.getChoiceProxy());
+				selectionView.init(entries);
+				mainWindow.showView(MessageConstants.N_VIEW_ENTRIES_SELECTION);
+			}
+			//set the current View
+			currentView = evt.getMessage();
+			checkMIsStatus();
+		}
+		else if (evt.isDataEvent()) {
+			if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_NEXT)) {
+				entryLearnOneView.reset();
+				Entry thisEntry = entries.getCurrentItem();
+				thisEntry.setLearnOneView(entryLearnOneView);
+				//set EntryType attributes to choose from
+				EntryTypeAttribute anAttribute;
+				EntryType thisEntryType = entryTypes.getEntryType(thisEntry.getEntryTypeId());
+				for (int i = 0; i < EntryType.NUMBER_OF_ATTRIBUTES; i++) {
+					if (thisEntryType.getNumberOfAttributes() > i) {
+						anAttribute = thisEntryType.getAttribute(i + 1);
+						entryLearnOneView.setAttributeName(anAttribute.getName(), i + 1);
+						entryLearnOneView.setAttributeItems(anAttribute.getItemsChoiceProxy(), i + 1);
+					}
+				}
+				//set Units to choose from
+				entryLearnOneView.setUnits(units.getChoiceProxy());
+				//set Categories to choose from
+				entryLearnOneView.setCategories(categories.getChoiceProxy());
+				entryLearnOneView.init(thisEntry);
+			}
+			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES)) {
+				entries.handleAppEvent(evt);
+			}
+			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_SELECTION_APPLY)) {
+				if (1 > entries.countChosenEntries()) {
+					mainWindow.showMessageDialog("No chosen entries"
+							, "You have made a selection that resulted in an empty set"
+							, Constants.WARNING_MESSAGE);
+				}
+				checkLearningMIsStatus();
+			}
+			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_TOTALS_CHANGED)) {
+				updateStatusBarStatus(null);
+			}		
+			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_ALL)) {
+				if (checkDoReset(true)) {
+					evt.setDetails(currentView);
+					entries.handleAppEvent(evt);
+				}
+			}
+			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_SEL)) {
+				if (checkDoReset(false)) {
+					evt.setDetails(currentView);
+					entries.handleAppEvent(evt);
+				}
+			}
+			else if (evt.getMessage().equals(MessageConstants.D_STATISTICS_SAVE_SET)) {
+				DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
+				Date timestamp = stats.addNewStatisticSet();
+				mainWindow.showMessageDialog("", "Learning statistics saved: " + df.format(timestamp), Constants.INFORMATION_MESSAGE);
+			}		
+		}
+		else if (evt.isHelpEvent()) {
+			mainWindow.showHelp(evt.getMessage());
+		}
+		//else if(evt.isStatusEvent() || evt.isNavEvent()) parentController.handleAppEvent(evt);
+	} //END public void handleAppEvent(AppEvent)
+	
+	/**
+	 * Get a file name to read or write the vocabulary from/to by showing
+	 * a file chooser dialog.
+	 *
+	 * @param boolean isOpen - whether we will read from a file or write to it
+	 */
+	private boolean fileChoosen(boolean showOpen) {
+		//get the initial fileName
+		String fileName = null;
+		if (null != preferences) {
+			String[][] fileNameHist = preferences.getFileHistoryPaths();
+			if (0 < fileNameHist.length) {
+				fileName = fileNameHist[0][0];
+			}
+		}
+		String chosenFileName = mainWindow.showFileChooser(fileName, showOpen);
+
+		if (null != chosenFileName && false == Constants.CANCELLED_INPUT.equals(chosenFileName)) {
+			setVocabularyFileName(chosenFileName);
+			return true;
+		}
+		return false;
+	} //END private boolean fileChoosen()
+
+	/**
+	 * Checks if save needed and closes the vocabulary by resetting all
+	 * entities and fields.
+	 * 
+	 * @param boolean - true if successful close
+	 */
+	private boolean closeVocabulary() {
+		boolean writeSuccess = true;
+		
+		//eventually save the learning statistics
+		if (Boolean.valueOf(preferences.getProperty(Preferences.PROP_STATS_QUIT)).booleanValue()) {
+			stats.addNewStatisticSet();
+		}		
+		
+		//check write of file needed
+		if (saveNeeded) {
+			int answer = mainWindow.showOptionDialog("Unsafed Changes"
+									,"Do you want to save changes before closing the vocabulary?"
+									,Constants.INFORMATION_MESSAGE
+									,Constants.YES_NO_CANCEL_OPTION); //default button title
+			if (Constants.YES_OPTION == answer) {
+				writeSuccess = writeVocabulary(false);
+			}
+			else if (Constants.NO_OPTION == answer) {
+				//nothing needed to be done
+			}
+			else { //CANCEL_OPTION or CLOSED_OPTION
+				//make a break and therefore return false
+				return false;
+			}
+		}
+		if (writeSuccess) {
+			//reset all entities and fields
+			entries = null;
+			info = null;
+			categories = null;
+			units = null;
+			entryTypes = null;
+			stats = null;
+			
+			currentVocabFileName = null;
+			vocabOpened = false;
+			setSaveNeeded(false);
+			mainWindow.setApplicationTitle(APP_NAME);
+			
+			//everything went fine, so retrun true
+			return true;
+		}
+		else { //vocabulary was not written successfully
+			return false;
+		}
+	} //End public void closeVocabulary()
+
+	/**
+	 * does the real exit of the program by calling System.exit(0). Before, the properties are safed.
+	 */
+	private void exit() {
+		//store the application's size
+		mainWindow.saveWindowLocationAndSize();
+		
+		//hide the main window
+		mainWindow.hideMainWindow();
+		
+		//safe preferences
+		preferences.save();
+
+		//exit
+		System.exit(0);
+	} //END private void exit()
+
+	/**
+	 * Sets the file name of the vocabulary and adds it to the list of recent files
+	 *
+	 * @param String fileName
+	 */
+	private void setVocabularyFileName(String aFileName) {
+		currentVocabFileName = aFileName;
+		preferences.updateFileHistory(aFileName, true);
+		mainWindow.setFileHistory(preferences.getFileHistoryPaths());
+		mainWindow.setApplicationTitle(aFileName + " - " + APP_NAME);
+	} //END private void setVocabularyFileName(String)
+	
+	/**
+	 * Removes the current vocabulary file name from the history.
+	 */
+	private void removeVocabularyFileName() {
+		preferences.updateFileHistory(currentVocabFileName, false);
+		mainWindow.setFileHistory(preferences.getFileHistoryPaths());
+	} //END private void removeVocabularyFileName()
+
+	/**
+	 * Changes the status of logging between enabled and disabled.
+	 * The status is taken from the applications preferences. 
+	 * If the property does not exist yet, then Level.OFF is used.
+	 * 
+	 * @param boolean overrideLogging - if set to true logging is turned on no matter what the preferences
+	 *                                  and logs go to Console.
+	 */
+	private void changeLogging(boolean overrideLogging) {
+		boolean isFileLogging = false;
+				
+		//get from preferences, whether logging should be made to file
+		if (false == overrideLogging) {
+			if (preferences.containsKey(Preferences.PROP_LOG_TO_FILE)) {
+				isFileLogging = Boolean.valueOf(preferences.getProperty(Preferences.PROP_LOG_TO_FILE)).booleanValue();
+			}
+		}
+		//else isFileLogging remains false to force logging to console
+		
+		if (isFileLogging) {
+			String userHome = System.getProperty("user.home");
+			if (null == loggingHandler || loggingHandler instanceof ConsoleHandler) {
+				try {
+					FileHandler fileHandler = new FileHandler(userHome + File.separator + Constants.LOGGING_FILE_NAME
+							, 100000
+							, 1
+							, false);
+					fileHandler.setLevel(Level.ALL);
+					if (null == loggingHandler) {
+						loggingHandler = fileHandler;
+						logger.addHandler(loggingHandler);
+					}
+					else {
+						logger.removeHandler(loggingHandler);
+						loggingHandler = fileHandler;
+						logger.addHandler(loggingHandler); //TODO: can't this be done by just reassigning the pointer?
+					}
+				}
+				catch (Exception e) {
+					System.err.println("Logging to File is not possible and Console will be used instead: " + e.toString());
+					isFileLogging = false; //in order to initialize logging to Console below
+				}
+			}
+		}
+		if (false == isFileLogging) { //explicit if needed to take catch argument above into account
+		    ConsoleHandler consoleHandler = new ConsoleHandler();
+		    consoleHandler.setLevel(Level.ALL);
+			if (null == loggingHandler) {
+				loggingHandler = consoleHandler;
+				logger.addHandler(loggingHandler);
+			}
+			else {
+				logger.removeHandler(loggingHandler);
+				loggingHandler = consoleHandler;
+				logger.addHandler(loggingHandler); //TODO: can't this be done by just reassigning the pointer?
+			}
+		}
+		
+		//set the log level
+		if (overrideLogging) {
+			logger.setLevel(Level.FINEST);
+		}
+		else {
+			if (preferences.containsKey(Preferences.PROP_LOGGING_ENABLED)) {
+				boolean logEnabled = Boolean.valueOf(preferences.getProperty(Preferences.PROP_LOGGING_ENABLED)).booleanValue();
+				if (logEnabled) {
+					logger.setLevel(Level.FINEST);
+				}
+				else {
+					logger.setLevel(Level.OFF);
+				}
+			}
+			else {
+				logger.setLevel(Level.OFF);
+			}
+		}
+	} //END private void changeLoggingEnabled()
+
+	/**
+	 * Checks whether a vocabulary is already open.
+	 *
+	 * @return boolean - true, if no open vocabulary or if the user accepts to overwrite it
+	 */
+	private boolean checkOverwriteVocabulary() {
+		//warn user that he might overwrite vocabulary with unsaved changes
+		if (vocabOpened) {
+			StringBuffer message = new StringBuffer("A vocabulary is already open. ");
+			message.append("Opening a new vocabulary will overwrite the vocabulary.\n");
+			if (saveNeeded) {
+				message.append("The current vocabulary has unsaved changes!");
+			}
+			else {
+				message.append("The current vocabulary has no unsafed changes!");
+			}
+			message.append("\n\n");
+			message.append("Do you want to abort?");
+
+			int answer = mainWindow.showOptionDialog("Open Vocabulary File"
+											,message.toString()
+											,Constants.WARNING_MESSAGE
+											,Constants.YES_NO_OPTION);
+			if (Constants.YES_OPTION == answer) {
+				return false;
+			}
+		}
+		return true;
+	} //END private boolean checkOpenVocabulary()
+
+	/**
+	 * Reads the vocabulary data from xml-files and assigns them to the controllers.
+	 */
+	private void readVocabulary() {
+		VocabularyXMLReader reader = new VocabularyXMLReader();
+		boolean goOn = true;
+		try {
+			mainWindow.setWaitCursor(true);
+			this.updateStatusBarStatus("Opening ...");
+			
+			reader.setVocabularyFile(currentVocabFileName, preferences.getProperty(Preferences.FILE_ENCODING));
+			if (reader.readyToExecute()) {
+				//reset the max Ids
+				resetMaxIds();
+				//read the vocabulary
+				reader.execute();
+			}
+		}
+		catch (Exception e) {
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.logp(Level.FINEST, this.getClass().getName(), "readVocabulary()", e.getMessage());
+			}
+			//remove the file name from the history
+			removeVocabularyFileName();
+			//show the error dialog
+			mainWindow.showMessageDialog("Read resulted in error", e.toString(), Constants.ERROR_MESSAGE);
+			goOn = false;
+		}
+		finally {
+			mainWindow.setWaitCursor(false);
+		}
+		if (goOn) {
+			try {
+				//set the data in the controllers
+				units = new UnitsCollection(this);
+				units.setItems(reader.getUnits());
+				categories = new CategoriesCollection(this);
+				categories.setItems(reader.getCategories());
+				attributes = new EntryTypeAttributesCollection(this);
+				attributes.setItems(reader.getAttributes());
+				entryTypes = new EntryTypesCollection(this);
+				entryTypes.setEntryTypeAttributes(attributes);
+				entryTypes.setItems(reader.getEntryTypes());
+				entries = new EntriesCollection(this);
+				//populate entries
+				entries.setEntryTypes(entryTypes);
+				entries.setItems(reader.getEntries());
+				entries.setPreferences(preferences);
+				//set pointer to entries to be able to find entries that use info
+				categories.setEntries(entries);
+				units.setEntries(entries);
+				attributes.setEntries(entries);
+				entryTypes.setEntries(entries);
+
+				//InfoVocab
+				info = reader.getInfo();
+				info.setParentController(this);
+				Entry.setInfoVocab(info);
+				
+				//statistics
+				stats = new StatsCollection(this);
+				stats.setItems(reader.getStats());
+				stats.setEntries(entries);
+				stats.setCategories(categories);
+				stats.setEntryTypes(entryTypes);
+				stats.setUnits(units);
+				
+				//we now have an opened vocabulary
+				vocabOpened = true;
+				setSaveNeeded(false);
+
+				//show the SummaryView
+				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+				ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
+				this.handleAppEvent(ape);
+			}
+			catch (Exception e) {
+				//remove the file name from the history
+				removeVocabularyFileName();
+				//show the error dialog
+				mainWindow.showMessageDialog("Read resulted in error (possibly encoding error)", e.toString(), Constants.ERROR_MESSAGE);
+			}
+		}
+	} //END private void readVocabulary()
+
+	/**
+	 * Make a new vocabulary.
+	 */
+	private void makeNewVocabulary() {
+		//we have an open vocabulary
+		vocabOpened = true;
+
+		//reset the max Ids
+		resetMaxIds();
+
+		units = new UnitsCollection(this);
+		units.setDefaultItem();
+		categories = new CategoriesCollection(this);
+		categories.setDefaultItem();
+		attributes = new EntryTypeAttributesCollection(this);
+		attributes.setDefaultItem();
+		entryTypes = new EntryTypesCollection(this);
+		entryTypes.setEntryTypeAttributes(attributes);
+		entryTypes.setDefaultItem();
+		entries = new EntriesCollection(this);
+		info = new InfoVocab();
+		//set pointers
+		entries.setEntryTypes(entryTypes);
+		categories.setEntries(entries);
+		units.setEntries(entries);
+		entryTypes.setEntryTypeAttributes(attributes);
+		entryTypes.setEntries(entries);
+		attributes.setEntries(entries);
+		info.setParentController(this);
+		Entry.setInfoVocab(info);
+		
+		//statistics
+		stats = new StatsCollection(this);
+		stats.setEntries(entries);
+		stats.setCategories(categories);
+		stats.setEntryTypes(entryTypes);
+		stats.setUnits(units);
+		
+		//show the InfoVocab view
+		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+		ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
+		this.handleAppEvent(ape);
+	} //END private void makeNewVocabulary()
+
+	/**
+	 * Resets all ID's in the items
+	 */
+	private void resetMaxIds() {
+		Unit.resetMaxId();
+		Category.resetMaxId();
+		EntryType.resetMaxId();
+		EntryTypeAttributeItem.resetMaxId();
+		Entry.resetMaxId();
+	} //END private void resetMaxIds()
+
+	/**
+	 * Writes all vocabulary data to a xml-file.
+	 *
+	 * @param boolean - whether a file chooser has to be shown first.
+	 */
+	private boolean writeVocabulary(boolean showFileChooser) {
+		boolean success = true;
+		boolean doWrite = true;
+
+		//if the file chooser is requested or there is no file path show the file chooser
+		if (showFileChooser || null == currentVocabFileName) {
+			doWrite = fileChoosen(false);
+		}
+
+		if (doWrite) {
+			try {
+				mainWindow.setWaitCursor(true);
+				this.updateStatusBarStatus("Saving ...");
+				VocabularyXMLWriter writer = new VocabularyXMLWriter();
+				writer.setVocabularyFile(currentVocabFileName, preferences.getProperty(Preferences.FILE_ENCODING));
+
+				//set the XML strings
+				writer.setXMLElements(dataVersion, units.getXMLString()
+								, categories.getXMLString()
+								, entries.getXMLString()
+								, entryTypes.getXMLString()
+								, attributes.getXMLString()
+								, info.getXMLString()
+								, stats.getXMLString());
+				if (writer.readyToExecute()) {
+					writer.execute();
+				}
+				setSaveNeeded(false);
+			}
+			catch (Exception e) {
+				mainWindow.showMessageDialog("Save result", e.toString(), Constants.ERROR_MESSAGE);
+				success = false;
+				//remove the file name from the history
+				removeVocabularyFileName();
+			}
+			finally {
+				mainWindow.setWaitCursor(false);
+			}
+		}
+		return success;
+	} //END private boolean writeVocabulary(boolean)
+	
+	/**
+	 * Sets the saveNeeded status. At the same time the enabling and disabling
+	 * of the menu items.
+	 * 
+	 * @param boolean status - true if save of the vocabulary is needed
+	 */
+	private void setSaveNeeded(boolean aStatus) {
+		//set the status
+		saveNeeded = aStatus;
+		this.updateStatusBarStatus(null);
+		
+		//set the status of the menu items
+		checkMIsStatus();
+	} //END private void setSaveNeeded(boolean)
+	
+	/**
+	 * Shows a dialog box to the user asking whether he really wnats to reset the scores.
+	 * 
+	 * @param boolean all - true if the request is for all entries, otherwise only for current selection
+	 * @return boolean - true if the user accepts, that the changes really should be made
+	 */
+	private boolean checkDoReset(boolean all) {
+		String message;
+		if (all) {
+			message = "Do you really want to reset the score of all entries to 1?";
+		}
+		else {
+			message = "Do you really want to reset the score of all entries in the current selection to 1?";			
+		}
+		int answer = mainWindow.showOptionDialog(""
+				,message
+				,Constants.WARNING_MESSAGE
+				,Constants.YES_NO_OPTION);
+		if (Constants.YES_OPTION == answer) {
+			return true;
+		}
+		return false;
+	} //END private boolean checkDoReset(boolean)
+	
+	/**
+	 * Changes the status of the menu items based on the status of the model
+	 * and the chosen view
+	 */
+	private void checkMIsStatus() {
+		//set the status of the menu items
+		//quit, new, open, preferences, help, about are always enabled
+		mainWindow.setSaveMIEnabled(saveNeeded);
+		
+		//depending on open vocabulary
+		mainWindow.setOpenVocabEnabled(vocabOpened);
+		
+		//depending on number of categories, units and entry types > 0
+		if ((null != categories && categories.countElements() > 0)
+			&& (null != units && units.countElements() > 0)
+			&& (null != entryTypes && entryTypes.countElements() > 0)
+		) {
+			mainWindow.setEntriesMIEnabled(true);
+		}
+		else {
+			mainWindow.setEntriesMIEnabled(false);
+		}
+		
+		//depending on number of entries > 0
+		if (null != entries && entries.countElements() > 0) {
+			mainWindow.setEntriesOkEnabled(true);
+			if (currentView.equals(MessageConstants.N_VIEW_ENTRY_EDIT) ||
+					currentView.equals(MessageConstants.N_VIEW_ENTRY_LEARNONE)) {
+				mainWindow.setResetScoreMIsEnabled(false);
+			}
+			else {
+				mainWindow.setResetScoreMIsEnabled(true);
+			}
+		}
+		else {
+			mainWindow.setEntriesOkEnabled(false);
+			mainWindow.setResetScoreMIsEnabled(false);
+		}
+		
+		//depending on the number of chosen entries
+		checkLearningMIsStatus();
+	} //END private void checkMIsStatus()
+	
+	/**
+	 * Checks the number of chosen entries and sets the status of the menu items
+	 * for learning accordingly.
+	 */
+	private void checkLearningMIsStatus() {
+		boolean enableLearnOneByOne = false;
+		if (null != entries && entries.countChosenEntries() > 0) {
+			//learn one by one is ok if at least 1 is chosen
+			enableLearnOneByOne = true;
+			//TODO: extend this for learning mulitiple entries (based on numbers in preferences)
+		}
+		mainWindow.setLearningMIsEnabled(enableLearnOneByOne);
+	} //END private void checkLearningMIsStatus()
+	
+	/**
+	 * Updates the texts of the status bar based on the current status of saving
+	 * and selection.
+	 * 
+	 * @param String aStatusText - overrides the text to be displayed based on saving status.
+	 */
+	private void updateStatusBarStatus(String aStatusText) {
+		String theStatus = "";
+		StringBuffer theSelection = new StringBuffer();
+
+		if (null != aStatusText) {
+			theStatus = aStatusText;
+		}
+		else {
+			if (vocabOpened) {
+				//status
+				if (saveNeeded){
+					theStatus = "Save needed";
+				}
+				else {
+					theStatus = "Saved";
+				}
+				//selection only if entries is not null, i.e. it is not a new stack
+				if (null != entries) {
+					theSelection.append("Selection: ");
+					theSelection.append(entries.countChosenEntries());
+					theSelection.append(" / ");
+					theSelection.append(entries.countElements());
+				}
+			}
+			else {
+				theStatus = Constants.EMPTY_STRING;
+				//no change for theSelection
+			}
+		}
+		if (logger.isLoggable(Level.FINEST)) {
+			logger.logp(Level.FINEST, this.getClass().getName(), "updateStatusBarStatus(String)", "aStatusText: " + aStatusText
+					+ ", theStatus: " + theStatus + ", theSelection: " + theSelection.toString());
+		}
+		
+		//set the strings in the status bar
+		mainWindow.setStatusBarStatusText(theStatus, theSelection.toString());
+	} //END private void updateStatusBarStatus(String)
+} //End public abstract class ADings extends IAppEventHandler

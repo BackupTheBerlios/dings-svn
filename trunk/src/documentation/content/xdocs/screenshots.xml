@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Screenshots</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>Everyone likes screenshots :o) This page is meant to give a short introduction into DingsBums?! due to a lacking <a href="manual.html">manual</a>.</p>
+		</section>
+		<section id="opening">
+			<title>Opening a Training Stack</title>
+			<p>Opening an existing training stack or vocabulary can be done in two ways:</p>
+			<ul>
+				<li>Use the dynamic menu items at the buttom of the File menu.</li>
+				<li>Press the "Open Recent ..." button.</li>
+			</ul>
+			<figure src="images/open.png" alt="screenshot of DingsBums?! showing the file menu with recent files" />
+		</section>
+		<section id="editing">
+			<title>Editing the Document Properties</title>
+			<p>The first screen, which appears after loading a training stack shows the document properties. Amongst others you can influence the visibility of certain fields and defining labels for the most important fields to adapt the user interface to your training stack. Future versions will include the possibility to have bi-directional text for languages like Arabic.</p>
+			<figure src="images/info.png" alt="screenshot of DingsBums?! showing the properties screen" />
+		</section>
+		<section id="selecting">
+			<title>Making a Selection</title>
+			<p>You always work with a selection of entries. The selection screen allows to make a selection based on the status, last learned, score, unit, category and entry type of the entries. The selection is made by pressing the <code>Apply Selection</code> button.</p>
+			<p>In the status bar at the buttom of the application window the number of currently chosen entries is shown: 433 out of a total of 436 entries.</p>
+			<figure src="images/selection.png" alt="screenshot of DingsBums?! showing the screen to make selections" />
+		</section>
+		<section id="list">
+			<title>List of all Entries</title>
+			<p>From the list of entries new entries / cards can be added to the training stack by pressing the <code>Add</code> button. In the upcoming dialog you are able to choose one of the defined entry types to be assigned to the new entry / card. (This dialog does not show up, if only one entry type is defined!).</p>
+			<p>The score of each entry is shown with a different color. The score range is between 1 and 7.</p>
+			<figure src="images/entries_new.png" alt="screenshot of DingsBums?! showing the entries list" />
+		</section>
+		<section id="edit_entry">
+			<title>Editing an Entry / Card</title>
+			<p>The screenshot shows the possibilities to edit an entry depending on its type. Elsewhere in the program an entry type for a Danish noun has been defined. The same entry type for English nouns would most certainly have other attributes (e.g. no genus). Or you might just ignore language details and work with one generic type.</p>
+			<p>Some of the labels are in Danish to reflect the training stack as defined in the document properties.</p>
+			<figure src="images/entry_edit.png" alt="screenshot of DingsBums?! showing editing an entry" />
+		</section>
+		<section id="edit_entry_type">
+			<title>Editing an Entry Type</title>
+			<p>The entry types can be defined with a specific name and a set of attributes. The entry type attributes can contain a number of items.</p>
+			<figure src="images/entrytype_edit.png" alt="screenshot of DingBumss?! showing editing an entry type" />
+		</section>
+		<section id="edit_eta_items">
+			<title>Editing the Items of an Entry Type Attribute</title>
+			<p>The screenshot shows the same set of attributes as was used for editing a Danish noun in a screenshot above. For each entry type attribute an item is chosen as the default.</p>
+			<p>An Entry Type Attribute can be (re)used in different Entry types.</p>
+			<figure src="images/entrytypeattribute_edit.png" alt="screenshot of DingsBums?! showing editing entry type attribute items" />
+		</section>
+		<section id="learning">
+			<title>Learning</title>
+			<p>The application shows the entries one by one without showing the solution. A set of different hints can be used, if the solution cannot be remembered. To activate the hints choose a method in the dropdown box at the buttom of the screen and press once or several times <code>Hint</code>.</p>
+			<p>The letters of the solution shuffled (the solution is <code>bidrag</code>):</p>
+			<figure src="images/learn_one_shuffle.png" alt="screenshot of DingsBums?! showing learning hint shuffle" />
+			<p>The top part of the solution:</p>
+			<figure src="images/learn_one_cover.png" alt="screenshot of DingsBums?! showing learning hint cover" />
+			<p>The first letters of the solution (press several times the <code>Hint</code> button to see more letters):</p>
+			<figure src="images/learn_one_letter.png" alt="screenshot of DingsBums?! showing learning hint letter" />
+			<p>Flash shows the solution in a short amount of time, which can be influenced in the preferences screen:</p>
+			<figure src="images/preferences_hints.png" alt="screenshot of DingsBums?! showing preferences for learning hint flash and cover" />
+			<p>Pressing the <code>Show</code> button prints the solution of the current entry / card. The contents of some fields is shown in query mode and of others only when showing the solution. This is defined in the document properties.</p>
+			<p>The <code>Go</code> menu contains the main navigation between the different screens.</p>
+			<figure src="images/learn_one_show.png" alt="screenshot of DingsBums?! showing the solution of a query and the Go menu" />
+		</section>
+	</body>
+</document>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Project</title>
+	</header>
+	<body>
+		<section id="location">
+			<title>Project Homepage</title>
+			<p>The project <a href="http://developer.berlios.de/projects/dings">homepage</a> is hosted by <a href="http://www.berlios.de">www.berlios.de</a>.</p>
+		</section>
+	</body>
+</document>

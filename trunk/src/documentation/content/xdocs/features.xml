@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Features</title>
+	</header>
+	<body>
+		<section id="current">
+			<title>Current Release</title>
+			<p>The program does NOT include predefined learning stacks &#8212; making one is considered part of the learning process.</p>
+			<p>A not comprehensive list of features:</p>
+			<ul>
+				<li>Create new flashcard training stacks (e.g. vocabulary list) from scratch.</li>
+				<li>Use units and categories to organize the entries / cards.</li>
+				<li>The possibility to define your own entry types with grammatical attributes. E.g. gender and plural for nouns in a language like French. Assign an entry type to each entry. Based on the entry type different attributes will be handled.</li>
+				<li>The entry types of existing entries can be changed.</li>
+				<li>Entry type attribute items can be edited and a default assigned to each entry type attribute. The entry type attributes can be freely assigned to entry types.</li>
+				<li>Deletion of units, categories, entry types, entry type attributes and entry type attribute items is not possible, if they are used in an entry.</li>
+				<li>The labels in the GUI can be changed to suite the flash card purpose (e.g. different language for a vocabulary trainer)</li>
+				<li>The visibility of unit, category, and other fields can be influenced.</li>
+				<li>Decide whether changes in an Entry (e.g. the score, the category) while editing or learning are checked immediately against the current selection criteria, and eventually remove the Entry from the current selection.</li>
+				<li>Hints of remembrance for learning. By this I mean help, if you do not quite recall a term, but might remember it, if you could get a hint. The hints are:
+					<ul>
+						<li>Letters: displays more and more letters, starting with the first letter of the word.</li>
+						<li>Flash: displays the entire term for less than a second. You might not be able to read the term, but recognize it.</li>
+						<li>Cover: make only the top part of the letters in the term visible. Can be varied in % according to wish.</li>
+						<li>Shuffle: shuffles the letters within each word</li>
+					</ul>
+				</li>
+				<li>An intelligent learning algorithm that shows those entries, which you do not know that well, most often. The main idea is that you earn a point, whenever you know the word, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</li>
+				<li>The scores can be reset to the minimum for either all entries or the current selection.</li>
+				<li>The time in milliseconds of the flash hint and the coverage in percents can be dynamically be changed in the properties.</li>
+				<li>Window positions and sizes are saved</li>
+				<li>Logging to either the command line or a file can be enabled or disabled in properties.</li>
+			</ul>
+		</section>
+		<section id="future">
+			<title>Future Releases</title>
+			<p>The next releases of DingsBums?! will provide more functionality and stability. Among others:</p>
+			<ul>
+				<li>A comprehensive user guide and a FAQ</li>
+				<li>User interface clean ups.</li>
+				<li>Eventually an alternative user interface based on <a href="http://java-gnome.sourceforge.net/">java-gnome</a> in parallel with a Swing based user interface. The port includes changes to make the application compile with <a href="http://gcc.gnu.org/java/index.html">gcj</a></li>
+				<li>Learning statistics</li>
+				<li>Internationalization including bi-directional text.</li>
+				<li>Search facilities.</li>
+				<li>Learning with Games. E.g.
+					<ul>
+						<li>memory (the pattern card game)</li>
+						<li>&#34;matching words&#34;, two rows of words where you drag lines between the original and the translation</li>
+					</ul>
+				</li>
+				<li>Spell checking</li>
+				<li>An editor for the pronunciation using the international phonetic alphabet.</li>
+			</ul>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Links</title>
+	</header>
+	<body>
+		<section id="flashcard">
+			<title>Links to other flashcard programs</title>
+			<p>The following list is a collection of links to ohter flashcard programs I am a aware of - and which I think are worth mentioning. Some of them have been an inspiration to DingsBums?!.</p>
+			<p>If DingsBums?! cannot provide what you are looking for. Try one of those. Or tell me, what is missing, so I can improve the application!.</p>
+			<ul>
+				<li><a href="http://www.flashcardexchange.com/index.php">Flashcard Exchange</a></li>
+				<li><a href="http://theory.cs.iitm.ernet.in/~arvindn/gretools/">Gretools: GNOME Vocabulary Builder</a></li>
+				<li><a href="http://www.peterandlinda.com/kwordquiz/">KWordQuiz - Flashcards and more for KDE</a></li>
+				<li><a href="http://pauker.sourceforge.net/">Pauker</a></li>
+				<li><a href="http://memaid.sourceforge.net/index.php">Memaid</a></li>
+				<li><a href="http://www.arrowartoft.se/produkter/sel_java/index_eng.asp">Senlingua Java applet</a></li>
+				<li><a href="http://www.cursodeesperanto.com.br/bazo/index.html?en">Kurso de Esperanto</a></li>
+				<li><a href="http://ksalomon.sourceforge.net/index.php">KSalomon</a></li>
+				<li><a href="http://vocabulala.sourceforge.net/index.html">Vocabulala</a></li>
+				<li><a href="http://xcard.seul.org/index.shtml">XCard</a></li>
+				<li><a href="http://www.zabaan.org">Zabaan</a></li>
+				<li><a href="http://www.jlearnit.com/">JLearnIt</a></li>
+				<li><a href="http://www.cocurea.com/doubleVoca/productIntro.php">Cocurea: double your vocabulary</a></li>
+			</ul>
+		</section>
+		<section id="other">
+			<title>Other language and learning related software</title>
+			<ul>
+				<li><a href="http://www.babylon.com/">Babylon online dictionary</a></li>
+				<li><a href="http://www.phon.ucl.ac.uk/home/wells/fonts.htm">IPA_SAM phonetic fonts</a></li>
+				<li><a href="http://www-user.tu-chemnitz.de/~fri/ding/">DING dictionary lookup program</a></li>
+				<li><a href="http://www.microsoft.com/typography/ctfonts/WordRecognition.aspx">The Science of Word Recognition</a></li>
+				<li><a href="http://www.linuxlinks.com/Software/Home_and_Education/Tutor/Language/">LinuxLinks.com language tutor links</a></li>
+			</ul>
+		</section>
+	</body>
+</document>

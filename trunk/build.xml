@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<project name="Dings" basedir="." default="compile">
+	<property name="src" value="./src"/>
+	<property name="build" value="./build/classes"/>
+	<property name="dist"  value="./dist"/>
+	<property name="lib" value="./lib" />
+
+	<target name="init" depends="clean">
+		<!-- Create the time stamp -->
+		<tstamp/>
+		<!-- Create the build directory structure used by compile and dist-->
+		<mkdir dir="${dist}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac srcdir="${src}/java" destdir="${build}" excludes="net/vanosten/dings/gnome/**" >
+			<classpath>
+				<pathelement path="${classpath}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<pathelement location="external"/>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile">
+		<!-- Unjar the external libraries -->
+		<unjar src="${lib}/xpp3.jar" dest="${dist}" />
+		<unjar src="${lib}/jfreechart.jar" dest="${dist}" />
+		<unjar src="${lib}/jcommon.jar" dest="${dist}" />
+		<!-- Make a dings.jar file -->
+		<jar jarfile="./dingsbums.jar" basedir="${build}">
+			<fileset dir="${build}" includes="net/**" />
+			<fileset dir="${src}" includes="images/**" />
+			<fileset dir="${dist}" excludes="META-INF/MANIFEST.MF"/>
+			<manifest>
+				<attribute name="Main-Class" value="net.vanosten.dings.swing.DingsSwing"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}/net"/>
+		<delete dir="${dist}"/>
+	</target>
+</project>

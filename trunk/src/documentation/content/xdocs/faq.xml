@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faqs PUBLIC "-//APACHE//DTD FAQ V2.0//EN" "http://forrest.apache.org/dtd/faq-v20.dtd">
+
+<faqs>
+	<title>Frequently Asked Questions</title>
+	<!-- General -->
+	<faqsection id="general">
+		<title>General</title>
+		<faq id="name">
+			<question>What does the name DingsBums?! stand for?</question>
+			<answer>
+				<p>DingsBums?! is based on the German words &quot;Dings&quot; and &quot;Dingsbums&quot; -&gt; a &quot;thing&quot;. In German and Swiss German these words are used, when one doesn&apos;t know the right term or cannot remember it. The exclamation and question marks fit naturally, because people tend to get a bit upset when they cannot remember something they normally know, but just not right at the moment.</p>
+				<p>The aim of the DingsBums?! application is to help people memorize stuff, so they can remember it on request.</p>
+			</answer>
+		</faq>
+	</faqsection>
+	<!-- Translations -->
+	<faqsection id="translations">
+		<title>Translations</title>
+		<faq id="translation_gui">
+			<question>Are there any languages other than English available for the user interface?</question>
+			<answer>
+				<p>Unfortuantely English is the only language available right now. However it would be great if you could contribute with a translation to your own language. This does not require any programming skills. And I would look forward to help you get started.</p>
+			</answer>
+		</faq>
+		<faq id="translation_docs">
+			<question>Are there any languages other than English available for the documentation?</question>
+			<answer>
+				<p>See answer above.</p>
+			</answer>
+		</faq>
+	</faqsection>
+	<!-- Import / export -->
+	<faqsection id="import_export">
+		<title>Import and export</title>
+		<faq id="import">
+			<question>Is it possible to import a learning stack from application XY?</question>
+			<answer>
+				<p>The short answer is: if the format transformation is not listed in the features, then no.</p>
+				<p>The long answer is: it depends. If you can send me a file with the contents, I can understand the format, and the contents can be mapped to the native format of DingsBums?! (eventually with some loss of information), then things look better.</p>
+				<p>I am aware of the fact that you might have invested hundreds of hours in your current learning stack, which you do not want to loose, and which might prevent you from using DingsBums?! even if it might fit your needs better. Therefore write me an email and I will look into it.</p>
+			</answer>
+		</faq>
+		<faq id="export">
+			<question>Is it possible to export a learning stack from DingsBums?! to some other format?</question>
+			<answer>
+				<p>Yes, it most probably is. The native file format of dingsBums?! is an <a href="http://www.w3.org/XML/">xml</a>-dialect. Therefore it should be pretty forward to write a transformer, e.g. using <a href="http://www.w3.org/TR/xslt">XSLT</a>.</p>
+			</answer>
+		</faq>
+	</faqsection>
+	<!-- Look and feel -->
+	<faqsection id="look_and_feel">
+		<title>Usability and Look and Feel</title>
+		<faq id="accessibility">
+			<question>Could you please make the application better accessible?</question>
+			<answer>
+				<p>Sorry, I agree this is not good enough. This is one of the areas, where you could <a href="contribute.xml">contribute</a> without any knowledge of programming. As I (a) am so fortunate not to have any fysical disabilities, and (b) as the author of the DingsBums?! know the application by heart, I tend to be unaware of accessibility problems :-(</p>
+			</answer>
+		</faq>
+		<faq id="not_native">
+			<question>Why doesn&apos;t the application look like the other applications installed on my computer?</question>
+			<answer>
+				<p>This program is programmed in <a href="http://java.com">Java</a> with the <a href="http://java.sun.com/products/jfc">Swing</a> toolkit.</p>
+			</answer>
+		</faq>
+		<faq id="icons">
+			<question>Why doesn&apos;t the application use the standard icons?</question>
+			<answer>
+				<p>Because the application is written to run on many different operating systems (OS) and operating system versions, there is no easy way to tell, which icons your particular desktop or desktop theme uses. If you cannot live with the icons used and have a better icon set at hand, please tell me so. However I will only take icon sets into consideration, which are freely distributable.</p>
+			</answer>
+		</faq>
+		<faq id="touch">
+			<question>Couldn&apos;t the application look nicer? At least more professional?</question>
+			<answer>
+				<p>Yes, you are absolutely right. I have the same feeling. But unfortunately I have no clue how to enhance the aestethic aspect. I am just an engineer, you know. As with all other look and feel aspects of this application I am looking forward to get hints from people with the eye for design.</p>
+			</answer>
+		</faq>
+	</faqsection>
+	<!-- Technical Questions -->
+	<faqsection id="technical">
+		<title>Technical Questions</title>
+		<faq id="installer">
+			<question>Isn't there an easier way to install and run the application?</question>
+			<answer>
+				<p>Unfortuantely I cannot provide installers at the moment. Partly due to the fact, that I do not own e.g. a Mac, and partly because I did not invest time into it (e.g. for Windows). However this is part of the todo list. And any help is natuarlly welcome!</p>
+			</answer>
+		</faq>
+		<faq id="java">
+			<question>Why is Java mentioned all the time? Why do I have to bother?</question>
+			<answer>
+				<p>Java is both a programming language and a platform. An application programmed in Java normally needs a Java runtime environment (otherwise calle Java Virtual Machine) to actually execute. This differs from most other applications, which can run directly without any help. See <a href="http://java.com">Java.com</a> for further information.</p>
+				<p>The advantage for me as a developer to use Java is amongst others, that I can program the application in just one version, but the application can be used on all common operating systems (e.g. Windows, Linux, Mac OS X) and hardware architectures. So a lot more people can profit without any extra effort from my side.</p>
+			</answer>
+		</faq>
+		<faq id="jre_version">
+			<question>Why does the application only run with a Java Virtual Machine 1.4.2 or later?</question>
+			<answer>
+				<p>Some parts of the code (e.g. the user interface) relies on features, that are only available in recent Java versions. Due to the fact, that there are up to date Java Virtual Machines for Windows, Macintosh, Solaris and Linux (x86), I guess that pretty much everyone can use the application.</p>
+				<p>However I am aware of the fact, that not everybody updates the Java Virtual Machine with the latest and greatest release. Therefore I will try to keep the requirements conservative (e.g. not updating to Java version 5 in 2004 or 2005.</p>
+			</answer>
+		</faq>
+		<faq id="alternatives">
+			<question>Can the application be run under alternative Java virtual Machines (e.g. IKVM) or compiled with GCJ?</question>
+			<answer>
+				<p>Honestly I do not know. Support for <a href="http://gcc.gnu.org/java/">GCJ (the GNU compuiler for the Java language)</a> is on the todo list. There are currently no plans to be able to run the application on top of <a href="http://www.ikvm.net">IKVM</a>.</p>
+			</answer>
+		</faq>
+	</faqsection>
+</faqs>

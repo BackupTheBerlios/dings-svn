@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Contribute</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>The design and implementation of DingsBums?! has been a one man show until now. There are good reasons, why this should change in the future:</p>
+			<ul>
+				<li>I only have so much time. I work on DingsBums?! in my spare time.</li>
+				<li>While I use the application myself, I am not aware of all the features and usage patterns, that the other users require. The development of DingsBums?! should be driven what real users with different backgrounds need.</li>
+				<li>My knowledge of foreign languages is limited when it comes to translations.</li>
+			</ul>
+		</section>
+		<section id="help">
+			<title>Where you can help</title>
+			<p>The DingsBums?! project is an Open Source volunteer project released under a very liberal license. There are lots of areas, where DingsBums?! would profit from your help, and where no knowledge of programming is needed: e.g. documenting, answering questions, proposing ideas, reporting bugs, suggesting bug-fixes, etc..</p>
+			<ul>
+				<li>Translations:</li>
+				<li>Programming:</li>
+				<li>Accessibility:</li>
+				<li>Look &amp; Feel: icons, program icon, ...</li>
+				<li>Samples</li>
+				<li>Other feedback</li>
+				<li>End user distribution: If you happen to have an Apple Macintosh with a recent version of the operating system, you could provide other Mac users with a <code>Mac OS X Application Bundle</code> for easier installation and execution.</li>
+				<li>Check need for languages in Middle East (Arabic, Hebrew) and Asia (Japanese, Chinese, Korean, Mongolian).</li>
+			</ul>
+		</section>
+	</body>
+</document>

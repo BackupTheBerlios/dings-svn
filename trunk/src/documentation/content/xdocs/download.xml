@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Download and Install</title>
+	</header>
+	<body>
+		<section id="prerequisites">
+			<title>Prerequisites</title>
+			<p>You need a Java Virtual Machine (JVM) 1.4 or higher to run the program.</p>
+			<p>If you are in doubt of, what this means, then please read the section <a href="#java">&quot;Testing for and installing a Java Virtual Machine&quot;</a> below.</p>
+		</section>
+		<section id="download">
+			<title>Download</title>
+			<p>The newest version of the program can be downloaded from the <a href="http://developer.berlios.de/project/showfiles.php?group_id=844">files section</a> of the project website.</p>
+		</section>
+		<section id="installation">
+			<title>Running and Installation</title>
+			<p>Unfortunately at the moment there is no sophisticated way to install and run DingsBums?!.</p>
+			<p>Unpack the zip-file you downloaded and place the contents into a folder, where you have read access.</p>
+			<p>On Mac OS X you can simply double-click the dingsbums.jar file to launch the application. All others have to get a command prompt, change to the directory containing the application and then type the following: <code>java -jar dingsbums.jar</code>.</p>
+		</section>
+		<section id="samples">
+			<title>Samples</title>
+			<p>In the sample directory, which is included in the zip-file, you can find a version of the author's personal German-Danish vocabulary as well as a learning stack about the countries of the European Union to get you started.</p>
+		</section>
+		<section id="sources">
+			<title>Sources</title>
+			<p>The program sources can be obtained from <a href="http://developer.berlios.de/cvs/?group_id=844">CVS</a> on the project website, if you want to compile yourself. Compile the program using the included build.xml file with <a href="http://ant.apache.org/">Ant</a>.</p>
+		</section>
+		<section id="java">
+			<title>Testing for and installing a Java Virtual Machine</title>
+			<p>A Java Virtual Machine (JVM) is included in a Java Runtime environment (JRE) for end users, and Java Development Kits (Java SDK or JDK) for programmers. The way to test whether you have a JVM in the right version depends on you operating system (e.g. Microsoft Windows).</p>
+			<p><a href="http://java.com/en/download/help/testvm.jsp">&quot;Test your Java Virtual Machine&quot;</a> lets you do the test in your browser. This web page is part of the official Java site at <a href="http://java.com">java.com</a>, which contains lots of help around Java.</p>
+			<p>If you happen to be the owner of an Apple Macintosh you can find additional information at <a href="http://www.apple.com/macosx/features/java/">Apple&apos;s Java pages</a> and <a href="http://developer.apple.com/java/faq/">Java Frequently Asked Questions</a>. Unfortunately there is no recent JVM for Mac OS 9 and earlier.</p>
+			<p>If you are still in doubt of what to do after reading the documentation in this section you may <a href="contact.html">contact</a> me.</p>
+			<p>Another way test your installation is to do the following:</p>
+			<ol>
+				<li>Open a command prompt</li>
+				<li>Type the following: <code>java -version</code></li>
+			</ol>
+			<p>On Microsoft Windows (actually the Danish version, but you get the idea ;-):</p>
+			<figure alt="Run in Start menu" src="images/start_run.png"/>
+			<figure alt="Typing cmd into Run dialog" src="images/run_prompt.png"/>
+			<figure alt="Testing for Java in command window" src="images/windows_cmd.png"/>
+			<p>If you use a Unix or Linux system like me then no explanation is needed, as I believe you know what you do :-).</p>
+		</section>
+	</body>
+</document>
