@@ -7,14 +7,15 @@
 	<body>
 		<section id="contributors">
 			<title>Contributions</title>
-			<p>Until now DingsBums?! has been a one man show - unfortunately! Find out how you can <a href="contribute.html">contribute</a>.</p>
+			<p>Until now <code>DingsBums?!</code> has been a one man show - unfortunately :-( Find out how you can <a href="contribute.html">contribute</a>.</p>
 		</section>
 		<section id="libraries">
 			<title>Libraries used</title>
 			<p>The program uses the following external libraries:</p>
 			<ul>
 				<li><a href="http://www.extreme.indiana.edu/xgws/xsoap/xpp/">XML Pull Parser (XPP)</a></li>
-				<li>The icons are stock items of the <a href="http://www.gtk.org/">GTK+</a> graphical user interface widget toolkit</li>
+				<li>The icons are taken from <a href="http://www.icon-king.com/index.php?p=23">Nuvola</a> by David Vignoni.</li>
+				<li><a href="http://www.jfree.org/jfreechart/">JFreeChart</a> for generating statistics charts.</li>
 				<li><a href="http://forrest.apache.org/">Apache Forrest</a> is used to render this website.</li>
 			</ul>
 		</section>

@@ -7,38 +7,40 @@
 	<body>
 		<section id="about">
 			<title>About</title>
-			<p>DingsBums?! is a flashcard trainer originally concepted for vocabularies, but can be used for any kind of content, that can be memorized using flashcards. See <a href="features.html">features</a> for an extensive overview, take a look at the <a href="screenshots.html">screenshots</a>, or <a href="download.html">download</a> it right away.</p>
-			<p>DingsBums?! is an open source development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
-			<p>DingsBums?! is written in <a href="http://java.com/">Java</a> and should therefore run on most popular operating systems including Linux, MacOS-X, Windows and Solaris.</p>
+			<p><code>DingsBums?!</code> is a flashcard trainer originally concepted for vocabularies, but can be used for any kind of content, that can be memorized using flashcards. See <a href="features.html">features</a> for an extensive overview, take a look at the <a href="screenshots.html">screenshots</a>, or <a href="download.html">download</a> it right away.</p>
+			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
+			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and should therefore run on most popular operating systems including Linux, MacOS-X, Windows and Solaris.</p>
 		</section>
 		<section id="evaluating">
 			<title>Is this for you?</title>
-			<p>DingsBums?! is written with flexibility in mind. So it can be adapted to many different needs. It is open source and you can therefore try and later use it free of charge. If you miss a feature in the current version, then there is a chance that it is on the <a href="todo.html">todo list</a>.</p>
-			<p>DingsBums?! is for you if:</p>
+			<p><code>DingsBums?!</code> is written with flexibility in mind. So it can be adapted to many different needs. It is open source and you can therefore try and later use it free of charge. If you miss a feature in the current version, then there is a chance that it is on the <a href="todo.html">todo list</a>.</p>
+			<p><code>DingsBums?!</code> is for you if:</p>
 			<ul>
 				<li>you want to be able to memorize stuff in the classical way (item by item)</li>
-				<li>you would like to have the possibility to define the level of details by yourself. E.g. grammatical details for language training depend both on your level and the actual language. DingsBums?! supports both sophisticated categorization / level of details and a very basic approach.</li>
-				<li>a bit of fun should be part of learning. DingsBums?! provides different help methods and one game. More games coming soon.</li>
+				<li>you would like to have the possibility to define the level of details by yourself. E.g. grammatical details for language training depend both on your level and the actual language. <code>DingsBums?!</code> supports both sophisticated categorization / level of details and a very basic approach.</li>
+				<li>a bit of fun should be part of learning. <code>DingsBums?!</code> provides different help methods. Learning games coming soon.</li>
 				<li>learning statistics is something you are looking for.</li>
 				<li>the application should present the hard to remember items more often then the ones you already know by heart. After all the computer should both help you to save time and make learning less boring, shouldn&apos;t it?</li>
 				<li>you want to define the learning items yourself - no matter whether you are learning the stuff or you are a teacher.</li>
-				<li>mixture of languages and bi-directional text is a must-have.</li>
+				<!--<li>a mixture of languages and bi-directional text is a must-have.</li>  -->
+				<li>you want to be able to learn in both directions. E.g. in a French - English learning stack you can test both from French to English and from English to French.</li>
 			</ul>
-			<p>DingsBums?! in its current form and within the next releases is not for you if:</p>
+			<p><code>DingsBums?!</code> in its current form and within the next releases is not for you if:</p>
 			<ul>
 				<li>you need a predefined stack of learning items, e.g. an English - French vocabulary. Although the community could provide this in the future, you cannot rely on it.</li>
-				<li>you want to have audio support. DingsBums?! in its current form is only about reading and eventually writing. Audio support is a feature with low priority, so do not rely on it in the near future.</li>
+				<li>you want to have audio support. <code>DingsBums?!</code> in its current form is only about memorizing visually (reading and eventually writing). Audio support is a feature with low priority, so do not rely on it in the near future.</li>
 				<li>you need extensive support for cunjugation</li>
-				<li>you are a teacher and wnat to have a framework to write excercies and tests.</li>
+				<li>you are a teacher and want to have a framework to write exercises and tests.</li>
 				<li>you need PDA or mobile phone support right now. The possibility to use a PDA or the mobile phone to memorize stuff while sitting in the bus, waiting in the restaurant etc. is a high priority for me, too. So chances are good that this will be an option somewhen in 2005.</li>
-				<li>a great looking application is more important then functionality. I know that DingsBums?! needs som final touch.</li>
+				<li>a great looking application is more important to you then functionality. I know that <code>DingsBums?!</code> needs som final touch.</li>
 			</ul>
-			<p>If DingsBums?! is not for you, you might find a better suited software on the <a href="links.xml">links</a> page.</p>
+			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="links.xml">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title>DingsBums?! 0.3 released</title>
-			<p>Version 0.3 is the third public release of DingsBums?! <!-- TODO: decribe changes --></p>
-			<p>At the same time the application has been renamed from Dings?! to DingsBums?!, as there is already a software called <a href="http://virtualskysoft.de/">Dings</a> (without &quot;?!&quot;).</p>
+			<title><code>DingsBums?!</code> 0.3.0 released</title>
+			<p>Version 0.3.0 is the third public release of <code>DingsBums?!</code> <!-- TODO: decribe changes --></p>
+			<p>At the same time the application has been renamed from <code>Dings?!</code> to <code>DingsBums?!</code>, as there is already an astronomy software called <a href="http://virtualskysoft.de/">Dings</a> (without &quot;?!&quot;).</p>
 		</section>
+		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
 	</body>
 </document>

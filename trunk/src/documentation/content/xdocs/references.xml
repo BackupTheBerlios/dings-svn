@@ -7,7 +7,7 @@
 	<body>
 		<section id="introduction">
 			<title>Introduction</title>
-			<p>This is a collection of reference links to software, documentation and ideas, that are or could be important to the development of DingsBums?!.</p>
+			<p>This is a collection of reference links to software, documentation and ideas, that are or could be important to the development of <code>DingsBums?!</code>.</p>
 		</section>
 		<section id="internationalization">
 			<title>I18N and L12N</title>
