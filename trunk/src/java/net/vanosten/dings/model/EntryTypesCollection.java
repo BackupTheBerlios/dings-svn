@@ -2,7 +2,8 @@
  * EntryTypesCollection.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +33,7 @@ import net.vanosten.dings.event.AppEvent;
 public class EntryTypesCollection extends AChoiceCollection {
 	/** The id for the actual EntryType */
 	private EntryType currentItem = null;
-	
+
 	/** EntryTypeAttributesCollection for reference and to add pointer to EntryTypes */
 	private EntryTypeAttributesCollection attributes;
 
@@ -71,7 +72,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 		//set index
 		iter = allKeys.iterator();
 		if (iter.hasNext()) setCurrentItem((String)iter.next());
-	} //End protected void setItems(HashMap)
+	} //END protected void setItems(HashMap)
 
 	protected EntryType getCurrentItem() {
 		return currentItem;
@@ -107,7 +108,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 		setCurrentItem(newEntryType.getId());
 		//save needed
 		sendSaveNeeded();
-	} //End public void newItem(String)
+	} //END public void newItem(String)
 
 	//implements ACollection
 	protected void refreshListView() {
@@ -124,7 +125,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 			listView.setList(EntryType.getTableDisplayTitles(), data, EntryType.getTableColumnFixedWidth());
 		}
 		if (null != currentItem) listView.setSelected(currentItem.getId());
-	} //End private void resetListView()
+	} //END private void resetListView()
 
 	protected EntryType getEntryType(String anID) {
 		EntryType foo = (EntryType)items.get(anID);
@@ -152,7 +153,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 	protected void setEntryTypeAttributes(EntryTypeAttributesCollection theAttributes) {
 		attributes = theAttributes;
 	} //END protected void setEntryTypeAttributes(EntryTypeAttributesCollection)
-	
+
 	//overrides AChoiceCollection
 	public void handleAppEvent(AppEvent evt) {
 		if (evt.getMessage().equals(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES)) {

@@ -2,7 +2,8 @@
  * DingsSwing.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,8 +21,6 @@
  */
 package net.vanosten.dings.swing;
 
-import java.awt.ComponentOrientation;
-
 import net.vanosten.dings.model.ADings;
 
 public class DingsSwing extends ADings {
@@ -33,7 +32,7 @@ public class DingsSwing extends ADings {
 	
 	//implements ADings
 	protected void initializeGUI() {
-		mainWindow = new MainWindow(this, preferences, ComponentOrientation.getOrientation(locale));
+		mainWindow = new MainWindow(this);
 	} //END protected void initializeGUI()
 
 	/**
@@ -41,6 +40,6 @@ public class DingsSwing extends ADings {
 	 * @param args - the command line parameters. There are no arguments needed.
 	 */
 	public static void main(String[] args) {
-		DingsSwing myDings = new DingsSwing(args);
+		new DingsSwing(args);
 	} //end public static void main(String[])
 } //END public class DingsSwing extends ADings

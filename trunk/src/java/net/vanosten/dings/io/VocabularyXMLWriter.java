@@ -2,7 +2,8 @@
  * VocabularyXMLWriter.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,7 +70,7 @@ public class VocabularyXMLWriter implements IOHandler {
 			vocabularyFile = null;
 			throw new Exception("VocabularyXMLWriter.setVocabularyFile(String): " + e.toString());
 		}
-	} //End setVocabularyFile(String)
+	} //END setVocabularyFile(String)
 
 	/**
 	 * Gives access to the lessons and entries as xml-Strings.
@@ -128,7 +129,7 @@ public class VocabularyXMLWriter implements IOHandler {
 			xmlList = null;
 			throw new Exception("VocabularyXMLWriter.setXMLElements(): there was a problem when adding: " + e.toString());
 		}
-	} //End public void setXMLElements(HashMap, HashMap, EntryTypesCollection, InfoVocab)
+	} //END public void setXMLElements(HashMap, HashMap, EntryTypesCollection, InfoVocab)
 
 	/**
 	 * Controls whether everything is ok to execute <code>writeVocabulary()</code>.
@@ -143,7 +144,7 @@ public class VocabularyXMLWriter implements IOHandler {
 		if (xmlList == null)
 			allOk = false;
 		return allOk;
-	} //End readyToExecute()
+	} //END readyToExecute()
 
 	/**
 	 * This method writes a vocabulary-xml-file.

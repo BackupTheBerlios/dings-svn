@@ -2,7 +2,8 @@
  * IDTableModel.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,9 +54,7 @@ public class IDEditableTableModel extends IDTableModel {
 			//the values have not been set so just return false
 			return false;
 		}
-		else {
-			return columnEditable[col+1];
-		}
+		return columnEditable[col+1];
 	} //END public boolean isCellEditable(int, int)
 	
 	/**
@@ -97,7 +96,7 @@ public class IDEditableTableModel extends IDTableModel {
 		theData[data.length] = newData;
 		data = theData;
 		fireTableDataChanged();		
-	} //public void addRow(int, Object[])
+	} //END public void addRow(int, Object[])
 	
 	/**
 	 * Moves a row up or down in the sequence.

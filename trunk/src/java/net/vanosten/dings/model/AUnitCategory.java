@@ -2,7 +2,8 @@
  * AUnitCategory.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,71 +31,71 @@ import net.vanosten.dings.consts.Constants;
  */
 public abstract class AUnitCategory extends AIdItemModel {
 
-    /** This unit's name */
-    protected String name;
-    
-    /** The description */
-    protected String description;
+	/** This unit's name */
+	protected String name;
 
-    /** The edit view */
-    private IUnitEditView editView;
-    
-    public AUnitCategory(String anId, String aLastUpd, String aName, String aDescription) {
-        this.id = anId;
-        this.setLastUpd(aLastUpd);
+	/** The description */
+	protected String description;
 
-        if (null == aName) this.name = Constants.UNDEFINED;
-        else this.name = aName;
-        
-        if (null == aDescription) this.description = Constants.EMPTY_STRING;
-        else this.description = aDescription;
-    } //END public AUnitCategory(...)
+	/** The edit view */
+	protected IUnitEditView editView;
 
-    /**
-     * Returns this unit as an array containing a String with the ID and the name
-     *
-     * @return String[][] choiceProxy
-     */
-    protected String[] getChoiceProxy() {
-        String choiceProxy[] = {id, name, description};
-        return choiceProxy;
-    } //END protected String[] getChoiceProxy()
+	public AUnitCategory(String anId, String aLastUpd, String aName, String aDescription) {
+		this.id = anId;
+		this.setLastUpd(aLastUpd);
+
+		if (null == aName) this.name = Constants.UNDEFINED;
+		else this.name = aName;
+
+		if (null == aDescription) this.description = Constants.EMPTY_STRING;
+		else this.description = aDescription;
+	} //END public AUnitCategory(...)
+
+	/**
+	 * Returns this unit as an array containing a String with the ID and the name
+	 *
+	 * @return String[][] choiceProxy
+	 */
+	protected String[] getChoiceProxy() {
+		String choiceProxy[] = {id, name, description};
+		return choiceProxy;
+	} //END protected String[] getChoiceProxy()
 
 	protected Object[] getTableDisplay(){
 		Object[] display = {id, name, description};
 		return display;
-	} //End protected Object[] getTableDisplay()
+	} //END protected Object[] getTableDisplay()
 
-    
+
 	protected static String[] getTableDisplayTitles() {
 		String[] titles = {"Name", "Description"};
 		return titles;
 	} //END protected static String[] getTableDisplayTitles()
-	
+
 	protected static boolean[] getTableColumnFixedWidth() {
 		boolean fixed[] = {false, false};
 		return fixed;
 	} //END protected static boolean[] getTableColumnFixedWidth()
 
-    /**
-     * Lets you set the edit view
-     *
-     * @param ICategoryEditView aView
-     */
-    protected void setEditView(IUnitEditView aView)  {
-        editView = aView;
-    } //END protected void setEditView(IUnitEditView)
-    
-    //implements AItemModel
-    protected void releaseViews() {
-    	editView = null;
-    } //protected void releaseViews()
-    
-    /**
-     * Hides the static method validate(String, String) in the subcalsses
-     */
-    protected abstract ArrayList validateIt(String anId, String aName);
-    
+	/**
+	 * Lets you set the edit view
+	 *
+	 * @param ICategoryEditView aView
+	 */
+	protected void setEditView(IUnitEditView aView)  {
+		editView = aView;
+	} //END protected void setEditView(IUnitEditView)
+
+	//implements AItemModel
+	protected void releaseViews() {
+		editView = null;
+	} //protected void releaseViews()
+
+	/**
+	 * Hides the static method validate(String, String) in the subcalsses
+	 */
+	protected abstract ArrayList validateIt(String anId, String aName);
+
 	//Implements AModel.
 	protected void updateModel() {
 		//get values from editView and trim them
@@ -111,28 +112,30 @@ public abstract class AUnitCategory extends AIdItemModel {
 			sendSaveNeeded();
 			updateGUI();
 		}
-		else {
-			//Show an error message with the validation details
-			showValidationErrors(errors);
-		}
 	} //END private void updateModel()
 
 	//Implements AModel
 	protected void updateGUI() {
 		editView.setName(name);
 		editView.setDescription(description);
-		editView.setEditing(false);
+
+		//visual feedback
+		editView.setEditing(false, true);
+		editView.setNameIsValueValid(true);
 	 } //END protected void updateGUI()
-     
+
 	//Implements AItemModel
 	protected void checkChangeInGUI() {
+		boolean isValid = validateString(editView.getName(), 1);
 		if (editView.getName().trim().equals(name) &&
 				(editView.getDescription().trim().equals(description))) {
-			editView.setEditing(false);
+			editView.setEditing(false, isValid);
 		}
 		else {
-			editView.setEditing(true);
+			editView.setEditing(true, isValid);
 		}
+		//validation
+		editView.setNameIsValueValid(isValid);
 	} //END protected void checkChangeInGUI()
 } //END public class AUnitCategory extends AIdItemModel
 

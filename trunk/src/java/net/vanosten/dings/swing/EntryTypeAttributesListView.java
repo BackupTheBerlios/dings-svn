@@ -2,7 +2,8 @@
  * EntryTypeAttributesListView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,15 +21,17 @@
  */
 package net.vanosten.dings.swing;
 
+import java.awt.ComponentOrientation;
+
 import net.vanosten.dings.consts.MessageConstants;
 
 public class EntryTypeAttributesListView extends ListView {
 
-	public EntryTypeAttributesListView() {
-		super("Entry Type Attributes");
-	}	//END public EntryTypeAttributesListView()
+	public EntryTypeAttributesListView(ComponentOrientation aComponentOrientation) {
+		super("Entry Type Attributes", aComponentOrientation);
+	} //END public EntryTypeAttributesListView(ComponentOrientation)
 	
 	protected void setMessages() {
 		msgEdit = MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT;
 	} //END protected void setMessages()
-}	//END public class EntryTypeAttributesListView extends ListView
+} //END public class EntryTypeAttributesListView extends ListView

@@ -2,7 +2,8 @@
  * AViewWithScrollPane.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,7 +36,7 @@ public abstract class AViewWithScrollPane extends AViewWithButtons {
 
 	public AViewWithScrollPane(String aTitle, ComponentOrientation aComponentOrientation) {
 		super(aTitle, aComponentOrientation);
-	} //End public AViewWithScrollPane(String, ComponentOrientation)
+	} //END public AViewWithScrollPane(String, ComponentOrientation)
 	
 	//Implements AEditView
 	protected void initializeMainP() {
@@ -66,4 +67,4 @@ public abstract class AViewWithScrollPane extends AViewWithButtons {
 	} //END protected void initializeMainP()
 	
 	protected abstract void initializeEditP();
-}	//END public abstract class AViewWithScrollPane
+} //END public abstract class AViewWithScrollPane

@@ -2,7 +2,8 @@
  * AModel.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +24,7 @@ package net.vanosten.dings.model;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
 
-import java.util.logging.Logger; 
+import java.util.logging.Logger;
 
 public abstract class AModel implements IAppEventHandler {
 
@@ -58,9 +59,25 @@ public abstract class AModel implements IAppEventHandler {
 
 	/**
 	 * Handle application events
-	 *
+	 * TODO: why is this method not abstract?
 	 * @param AppEvent evt
 	 */
 	public void handleAppEvent(AppEvent evt) {
+		//must be overridden in the subclasses
 	} //END public void handleAppEvent(AppEvent)
+	
+    
+    /**
+     * Validates a value for a String field.
+     * @param value a String
+     * @param minimumCharacters the minimal number of characters in the string
+     * @return false if the String is null or has not enough characters
+     */
+    protected final static boolean validateString(String value, int minimumCharacters) {
+    	if (null == value) {
+    		return false;
+    	}
+    	return (minimumCharacters <= value.trim().length());
+    } //END protected final static boolean validateName(String, int)
+
 } //END public abstract class AModel implements IAppEventHandler

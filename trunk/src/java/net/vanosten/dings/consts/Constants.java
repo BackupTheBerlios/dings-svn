@@ -2,7 +2,8 @@
  * Constants.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,10 +21,6 @@
  */
 package net.vanosten.dings.consts;
 
-import java.awt.Font;
-import javax.swing.ImageIcon;
-
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,12 +42,12 @@ public class Constants  {
 	/**
 	* Private constructor, so constructor can not be called
 	 */
-	private Constants() {}
+	private Constants() {
+		//noting to initialize
+	}
 
 	/** The lineSeparator to be used. See method Constants.getLineSeparator() */
 	private static String lineSeparator = null;
-
-	private static Logger logger = Logger.getLogger("net.vanosten.dings.consts.Constants");
 
 	/**
 	 * Gets the system value of the line separator.
@@ -170,34 +167,6 @@ public class Constants  {
         }
         return sb.toString();
     } //END public static String getThrowableStackTrace(Throwable)
-    
-	/*-------------------------FONTS------------------------------------------------*/
-
-	public static Font TITLE_ONE_FONT;
-	
-	public static Font TITLE_TWO_FONT;
-	
-	public static Font DEFAULT_FONT;
-	
-	public static Font STATUS_BAR_FONT;
-	
-	/** The font used to show hideable text in entries (e.g. text for example */
-	public static Font SOLUTION_FONT;
-	
-	/**
-	 * Sets the static Fonts (e.g. TITLE_ONE_FONT) relative to the default font size.
-	 *
-	 * @param Font defaultFont - the default font size of the application
-	 */
-	public static void setFontSizes(Font defaultFont) {
-		DEFAULT_FONT = defaultFont;
-		String fontName = defaultFont.getName();
-		int fontSize = defaultFont.getSize();
-		TITLE_ONE_FONT = new Font(fontName, Font.BOLD, (int)(fontSize * 1.5));
-		TITLE_TWO_FONT = new Font(fontName, Font.BOLD, (int)(fontSize * 1.2));
-		STATUS_BAR_FONT = new Font(fontName, Font.PLAIN, fontSize);
-		SOLUTION_FONT = new Font(fontName, Font.ITALIC, fontSize);
-	} //END public static setFontSizes(Font)
 
 	/*---- Logging ----------------------------------------------------------------*/
 
@@ -222,8 +191,6 @@ public class Constants  {
 	//public final static int OK_OPTION = 304;
 	//public final static int CLOSED_OPTION = 305; 
 	public final static String CANCELLED_INPUT = "CANCELLED_INPUT";
-
-	
 
 	/*---- IDs RELATED ------------------------------------------------------------*/
 
@@ -276,8 +243,8 @@ public class Constants  {
 	public final static String XML_ATTR_LAST_LEARNED = "ll"; //only for Entry
 	
 	//core info
-	public final static String XML_ORIGIN = "o";
-	public final static String XML_DESTINATION = "d";
+	public final static String XML_BASE = "o"; //was origin
+	public final static String XML_TARGET = "d"; //was destination
 	public final static String XML_EXPLANATION = "ep";
 	public final static String XML_PRONUNCIATION = "p";
 	public final static String XML_EXAMPLE = "ea";
@@ -302,6 +269,8 @@ public class Constants  {
 	public final static String XML_TITLE = "title";
 	public final static String XML_AUTHOR = "author";
 	public final static String XML_NOTES = "notes";
+	public final static String XML_LICENCE = "licence";
+	public final static String XML_COPYRIGHT = "copyright";
 	public final static String XML_BASE_LABEL = "blabel";
 	public final static String XML_TRAGET_LABEL = "tlabel";
 	public final static String XML_ATTRIBUTES_LABEL = "alabel";
@@ -382,71 +351,6 @@ public class Constants  {
 			}
 		}	
 	} //END public final static Date getDateFromString(String, Date, Logger)
-	
-	/*------------------- Get images ------------------------------*/
-	
-	//home grown
-	public final static String IMG_DINGS_32 = "dings32.png";
-	public final static String IMG_EMPTY_24x1 = "empty_24x1.png";
-	
-	//gtk2.4 stock images
-	//menu items
-	public final static String IMG_CLOSE_16 = "stock_close_16.png";
-	public final static String IMG_ABOUT_16 = "stock_about_16.png";
-	public final static String IMG_EXIT_16 = "stock_exit_16.png";
-	public final static String IMG_HELP_16 = "stock_help_16.png";
-	public final static String IMG_PROPERTIES_16 = "stock_file-properties_16.png";
-	public final static String IMG_OPEN_16 = "stock_open_16.png";
-	public final static String IMG_SAVE_16 = "stock_save_16.png";
-	public final static String IMG_SAVE_AS_16 = "stock_save_as_16.png";
-	public final static String IMG_NEW_16 = "stock_new_16.png";
-	public final static String IMG_PREFERENCES_16 = "stock_preferences_16.png";
-	//dialog
-	public final static String IMG_DLG_INFO_48 = "stock_dialog_info_48.png";
-	public final static String IMG_DLG_ERROR_48 = "stock_dialog_error_48.png";
-	public final static String IMG_DLG_QUESTION_48 = "stock_dialog_question_48.png";
-	public final static String IMG_DLG_WARNING_48 = "stock_dialog_warning_48.png";
-	public final static String IMG_CLOSE_20 = "stock_close_20.png";
-	public final static String IMG_CANCEL_20 = "stock_cancel_20.png";
-	public final static String IMG_OK_20 = "stock_ok_20.png";
-	public final static String IMG_YES_20 = "stock_yes_20.png";
-	public final static String IMG_NO_20 = "stock_no_20.png";
-	//buttons
-	public final static String IMG_APPLY_24 = "stock_apply_24.png"; //stock_calc-accept
-	public final static String IMG_ADD_24 = "stock_add_24.png";
-	public final static String IMG_REMOVE_24 = "stock_remove_24.png";
-	public final static String IMG_DELETE_24 = "stock_delete_24.png"; //stock_trash
-	public final static String IMG_RESET_24 = "stock_undo_24.png";
-	public final static String IMG_OPEN_24 = "stock_open_24.png";
-	public final static String IMG_NEW_24 = "stock_new_24.png";
-	public final static String IMG_EDIT_24 = "stock_edit_24.png"; //stock_jump_to
-	public final static String IMG_BACK_24 = "stock_back_24.png"; //stock_jump_to_rtl
-	public final static String IMG_EXEC_24 = "stock_exec_24.png";
-	public final static String IMG_CLOSE_24 = "stock_close_24.png";
-	public final static String IMG_UP_24 = "stock_up_24.png"; //stock_up_arrow
-	public final static String IMG_DOWN_24 = "stock_down_24.png"; //stocl_down_arrow
-	
-	
-	/**
-	 * Gets an ImageIcon by providing the resource path and a description.
-	 * 
-	 * @param String path - the relative resource file path for the image
-	 * @param String description - allows assistive technologies to help a visually impaired 
-	 * user understand what information the icon conveys
-	 */
-	public static ImageIcon createImageIcon(String path, String description) {
-		String fullPath = "images/" + path;
-		URL imgURL = Constants.class.getClassLoader().getResource(fullPath);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL, description);
-		} 
-		else {
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, Constants.class.getName(), "createImageIcon", "Could not load image: " + fullPath);
-			}
-			return null;
-		}
-	} //END public static ImageIcon createImageIcon(String, String)
 	
 	/*------------------------- Locales ------------------------------------------*/
 	
@@ -791,7 +695,7 @@ public class Constants  {
 		}
 		//check for integer
 		try {
-			int foo = Integer.parseInt(localeString);
+			Integer.parseInt(localeString);
 			return DEFAULT_LOCALE;
 		} catch(NumberFormatException e) {
 			//nothing to do. It just wasn't an int

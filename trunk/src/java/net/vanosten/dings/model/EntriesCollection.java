@@ -2,7 +2,8 @@
  * EntriesCollection.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,9 +51,11 @@ public class EntriesCollection extends ACollection {
 
 	/** A pointer to the EntryTypes */
 	private EntryTypesCollection entryTypes = null;
-	
-	/** A pointer to the preferences */
-	private Preferences preferences;
+
+	/** A pointer to the Categories */
+	private CategoriesCollection categories = null;
+
+	private UnitsCollection units = null;
 
 	//The holders of pointers to different scores
 	private ArrayList scoreOne;
@@ -62,7 +65,7 @@ public class EntriesCollection extends ACollection {
 	private ArrayList scoreFive;
 	private ArrayList scoreSix;
 	private ArrayList scoreSeven;
-	
+
 	//the selections in the IEntriesSelectionView
 	int selStatusChoice;
 	int selDays;
@@ -83,7 +86,7 @@ public class EntriesCollection extends ACollection {
 	public EntriesCollection(IAppEventHandler anEventHandler) {
 		super(anEventHandler);
 		chosenKeys = new ArrayList();
-	} //End public EntriesCollection(IAppEventHandler)
+	} //END public EntriesCollection(IAppEventHandler)
 
 	//implements ACollection
 	protected void setTagName() {
@@ -117,11 +120,7 @@ public class EntriesCollection extends ACollection {
 
 		//set chosen keys
 		chosenKeys = new ArrayList(items.keySet());
-	} //End protected void setItems(HashMap)
-	
-	protected void setPreferences(Preferences thePreferences) {
-		this.preferences = thePreferences;
-	} //END protected void setPreferences(Preferences)
+	} //END protected void setItems(HashMap)
 
 	protected Entry getCurrentItem() {
 		return currentItem;
@@ -185,7 +184,7 @@ public class EntriesCollection extends ACollection {
 		chosenKeys.add(newEntry.getId());
 		//save needed
 		sendSaveNeeded();
-	} //End public void newItem(String)
+	} //END public void newItem(String)
 
 	//implements ACollection
 	protected void refreshListView() {
@@ -203,7 +202,7 @@ public class EntriesCollection extends ACollection {
 		if (null != currentItem) {
 			listView.setSelected(currentItem.getId());
 		}
-	} //End protected void resetListView()
+	} //END protected void resetListView()
 
 	//implements ACollection
 	public void handleAppEvent(AppEvent evt) {
@@ -230,7 +229,7 @@ public class EntriesCollection extends ACollection {
 				ArrayList foo = checkSelectionCriteria();
 				if (0 < foo.size()) {
 					parentController.handleAppEvent(MessageConstants.getShowErrorListEvent(foo
-							, "The selection is not valid"));					
+							, "The selection is not valid"));
 				}
 				else {
 					placeSelection();
@@ -322,17 +321,25 @@ public class EntriesCollection extends ACollection {
 	protected void setEntryTypes(EntryTypesCollection theEntryTypes) {
 		this.entryTypes = theEntryTypes;
 	} //END protected void setEntryTypes(EntryTypesCollection)
-	
+
+	protected void setCategories(CategoriesCollection theCategories) {
+		this.categories = theCategories;
+	} //END protected void setCategories(CategoriesCollection)
+
+	protected void setUnits(UnitsCollection theUnits) {
+		this.units = theUnits;
+	} //END protected void setUnits(UnitsCollection)
+
 	protected int countChosenEntries() {
 		return chosenKeys.size();
 	} //END protected int countChosenEntries()
-	
+
 	private void requestStatusBarUpdate() {
 		AppEvent evt = new AppEvent(AppEvent.DATA_EVENT);
 		evt.setMessage(MessageConstants.D_ENTRIES_TOTALS_CHANGED);
-		parentController.handleAppEvent(evt);		
+		parentController.handleAppEvent(evt);
 	} //END private void requestStatusBarUpdate()
-	
+
 	//------------------ Statistics --------------------------------------------
 	protected int[] getEntriesScoreStats() {
 		int[] theStats = new int[Entry.SCORE_MAX];
@@ -341,16 +348,14 @@ public class EntriesCollection extends ACollection {
 		//do the counting
 		Entry thisEntry;
 		String thisID;
-		int thisScore = 0;
 		while (iter.hasNext()) {
 			thisID = (String)iter.next();
 			thisEntry = (Entry)items.get(thisID);
-			thisScore = thisEntry.getScore();
-			theStats[thisScore -1] = theStats[thisScore -1] + 1;
+			theStats[thisEntry.getScore() -1]++;
 		}
 		return theStats;
 	} //END protected int[] getEntriesScoreStats()
-	
+
 	protected int[] getEntriesPerXStats(boolean onlyChosenEntries, String[] theIds, int type) {
 		int[] theStats = new int[theIds.length];
 		Set theKeys;
@@ -389,12 +394,12 @@ public class EntriesCollection extends ACollection {
 	} //END protected int[] getEntriesPerXStats(boolean, String[], int)
 
 	//------------------ Learning --------------------------------------------
-	
+
 	/**
 	 * Resets the level of all entries either in the current selection or in all entries.
 	 * If EntriesListView is the current View, then the view is updated
-	 * 
-	 * @param boolean - if true all entries are reset, else nly the ones in the selection
+	 *
+	 * @param boolean - if true all entries are reset, else only the ones in the selection
 	 * @param String - the currently shown view
 	 */
 	private void resetScores(boolean all, String currentView) {
@@ -560,7 +565,7 @@ public class EntriesCollection extends ACollection {
 		if (currentScore > 0) {
 			//get score of old (current) entry
 			int currentEntryScore = currentItem.getScore();
-			
+
 			//check whether the currentItem is still part of the selection based on its new score
 			//and in this not the case, then do not continue
 			if (false == checkCurrentItemSelection(true)) {
@@ -592,11 +597,11 @@ public class EntriesCollection extends ACollection {
 			}
 		}
 	} //END private void reassignScoreList()
-	
+
 	//utility method: is called from reassignScoreList
 	private void removeCurrentItemFromScoreList() {
 		boolean fooB = true; //whether the item could be removed
-		
+
 		switch(currentItem.getScore()) {
 			case 1: fooB = scoreOne.remove(currentItem.getId()); break;
 			case 2: fooB = scoreTwo.remove(currentItem.getId()); break;
@@ -608,9 +613,9 @@ public class EntriesCollection extends ACollection {
 		}
 		if (false == fooB && logger.isLoggable(Level.FINEST)) {
 			logger.logp(Level.FINEST, this.getClass().getName(), "nextLearnOne()", "Could not remove entry: " + currentScore);
-		}		
+		}
 	} //END private void removeCurrentItemFromScoreList()
-	
+
 	//utility method
 	private Date getLastLearnedBeforeDate() {
 		Calendar now = Calendar.getInstance();
@@ -622,23 +627,39 @@ public class EntriesCollection extends ACollection {
 	} //END private Date getLastLearnedBeforeDate()
 
 	//------------------ Selection --------------------------------------------
-	
-	/*
+
+	/**
+	 * Initializes the selection to include everything
+	 */
+	public final void initializeSelection() {
+		selStatusChoice = Entry.STATUS_SELECT_ALL;
+		selDays = 0;
+		selMinMaxScore = new int[2];
+		selMinMaxScore[0] = Entry.SCORE_MIN;
+		selMinMaxScore[1] = Entry.SCORE_MAX;
+		//TODO: find a nicer way to do this
+		String[] theIDs = new String[categories.items.size()];
+		Set keys = categories.items.keySet();
+		selCategoriesChoice = (String[])keys.toArray(theIDs);
+		theIDs = new String[units.items.size()];
+		keys = units.items.keySet();
+		selUnitsChoice = (String[])keys.toArray(theIDs);
+		theIDs = new String[entryTypes.items.size()];
+		keys = entryTypes.items.keySet();
+		selTypesChoice = (String[])keys.toArray(theIDs);
+	} //END public final void initializeSelection()
+
+	/**
 	 * Refreshes the choice in the IEntriesSelectionView to the values chosen the last time.
 	 * If none had been chosen before, then the defaults (as defined in the view) are left.
 	 */
 	private void refreshSelection() {
-		//check if selection has been done before.
-		//If selUnitsChoice != null, then a selection has been made and selection can be reset
-		if (null != selUnitsChoice) {
-			selectionView.setStatusChoice(selStatusChoice);
-			selectionView.setLastLearnedBefore(selDays);
-			selectionView.setMinMaxScore(selMinMaxScore);
-			selectionView.setUnitsChoice(selUnitsChoice);
-			selectionView.setCategoriesChoice(selCategoriesChoice);
-			selectionView.setTypesChoice(selTypesChoice);
-		}
-		//else do nothing
+		selectionView.setStatusChoice(selStatusChoice);
+		selectionView.setLastLearnedBefore(selDays);
+		selectionView.setMinMaxScore(selMinMaxScore);
+		selectionView.setUnitsChoice(selUnitsChoice);
+		selectionView.setCategoriesChoice(selCategoriesChoice);
+		selectionView.setTypesChoice(selTypesChoice);
 	} //END private void refreshSelection()
 
 	private void placeSelection() {
@@ -651,7 +672,7 @@ public class EntriesCollection extends ACollection {
 			catch (NumberFormatException e) {
 				selDays = 0;
 			}
-			
+
 			//score
 			selMinMaxScore = selectionView.getMinMaxScore();
 			//selections
@@ -675,10 +696,10 @@ public class EntriesCollection extends ACollection {
 		}
 		//else error
 	} //END private void placeSelection()
-	
+
 	/**
 	 * Checks whether the selection made in <code>IEntriesSelectionView</code> is valid.
-	 * 
+	 *
 	 * @return ArrayList - If there are validation errors then a String for each error is included. Otherwise the List is empty.
 	 */
 	private ArrayList checkSelectionCriteria() {
@@ -702,18 +723,18 @@ public class EntriesCollection extends ACollection {
 		//test the number of categories
 		if (0 >= selectionView.getCategoriesChoice().length) {
 			errors.add("At least one category has to be chosen.");
-		}		
+		}
 		//test the number of entry types
 		if (0 >= selectionView.getTypesChoice().length) {
 			errors.add("At least one entry type has to be chosen.");
-		}		
+		}
 		return errors;
 	} //END private ArrayList checkSelectionCriteria()
-	
+
 	/**
 	 * Checks whether the current item is still within the selection.
 	 * The check is only made, if the preferences state immediate check.
-	 * 
+	 *
 	 * @param isLearning - whether the current item is used in learning or editing right now
 	 * @return boolean - true if the item is still in the selection
 	 */
@@ -722,7 +743,7 @@ public class EntriesCollection extends ACollection {
 		if (isLearning) {
 			propertyS = Preferences.PROP_SEL_UPD_INST_LEARNING;
 		}
-		if (Boolean.valueOf(preferences.getProperty(propertyS)).booleanValue()) {
+		if (Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(propertyS)).booleanValue()) {
 			if (false == currentItem.partOfChoice(selStatusChoice, getLastLearnedBeforeDate(), selMinMaxScore
 					, selUnitsChoice, selCategoriesChoice, selTypesChoice)) {
 				//remove from score list if isLEarning == true
@@ -730,9 +751,9 @@ public class EntriesCollection extends ACollection {
 					removeCurrentItemFromScoreList();
 				}
 				//remove from current selection
-				chosenKeys.remove(currentItem.getId());					
+				chosenKeys.remove(currentItem.getId());
 				//update status bar
-				requestStatusBarUpdate();					
+				requestStatusBarUpdate();
 				//do not continue
 				return false;
 			}
@@ -760,4 +781,4 @@ public class EntriesCollection extends ACollection {
 		}
 		return false;
 	} //END protected boolean isSelectionItemUsed(String)
-} //End public class EntriesCollection
+} //END public class EntriesCollection

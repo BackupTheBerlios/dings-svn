@@ -2,7 +2,8 @@
  * AppEvent.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,68 +27,68 @@ import java.util.EventObject;
  * This class represents an ApplicationEvent.
  * The original class was published in a www.javaworld.com article:
  * HMVC: The layered pattern for developing strong client tiers.
- */ 
+ */
 public class AppEvent extends EventObject {
-    public final static String NAV_EVENT = "NAV_EVENT";
-    public final static String STATUS_EVENT = "STATUS_EVENT";
-    public final static String DATA_EVENT = "DATA_EVENT";
+	public final static String NAV_EVENT = "NAV_EVENT";
+	public final static String STATUS_EVENT = "STATUS_EVENT";
+	public final static String DATA_EVENT = "DATA_EVENT";
 	public final static String HELP_EVENT = "HELP_EVENT";
-    
-    /** The message header */
+
+	/** The message header */
 	private String message;
-	
+
 	/** The details of the message */
 	private String details;
-	
+
 	/** The type of event */
-    private String eventType;
-    
-    public AppEvent(String anEventType) {
-        super(anEventType);
-        eventType = anEventType;
-    }	//END public AppEvent(String)
-    
-    public boolean isNavEvent() {
-        if(eventType.equals(NAV_EVENT))
-            return true;
-        else
-            return false;
-    }	//END public boolean isNavEvent()
-    
-    public boolean isStatusEvent() {
-        if(eventType.equals(STATUS_EVENT))
-            return true;
-        else
-            return false;
-    }	//END public boolean isStatusEvent()
+	private String eventType;
 
-    public boolean isDataEvent() {
-        if(eventType.equals(DATA_EVENT))
-            return true;
-        else
-            return false;
-    }	//END public boolean isDataEvent()
+	public AppEvent(String anEventType) {
+		super(anEventType);
+		eventType = anEventType;
+	}	//END public AppEvent(String)
 
-    public boolean isHelpEvent() {
-        if(eventType.equals(HELP_EVENT))
-            return true;
-        else
-            return false;
-    }	//END public boolean isHelpEvent()
+	public boolean isNavEvent() {
+		if(eventType.equals(NAV_EVENT))
+			return true;
+		else
+			return false;
+	}	//END public boolean isNavEvent()
 
-    public void setMessage(String aMessage) {
-        message = aMessage;
-    }	//END public void setMessage(String)
-    
-    public String getMessage() {
-        return message;
-    }	//END public String getMessage()
+	public boolean isStatusEvent() {
+		if(eventType.equals(STATUS_EVENT))
+			return true;
+		else
+			return false;
+	}	//END public boolean isStatusEvent()
 
-    public void setDetails(String aDetails) {
-        details = aDetails;
-    }	//END public void setDetails(String)
-    
-    public String getDetails() {
-        return details;
-    }	//END public String getDetails()
-}	//End public class AppEvent extends EventObject
+	public boolean isDataEvent() {
+		if(eventType.equals(DATA_EVENT))
+			return true;
+		else
+			return false;
+	}	//END public boolean isDataEvent()
+
+	public boolean isHelpEvent() {
+		if(eventType.equals(HELP_EVENT))
+			return true;
+		else
+			return false;
+	}	//END public boolean isHelpEvent()
+
+	public void setMessage(String aMessage) {
+		message = aMessage;
+	}	//END public void setMessage(String)
+
+	public String getMessage() {
+		return message;
+	}	//END public String getMessage()
+
+	public void setDetails(String aDetails) {
+		details = aDetails;
+	}	//END public void setDetails(String)
+
+	public String getDetails() {
+		return details;
+	}	//END public String getDetails()
+}	//END public class AppEvent extends EventObject

@@ -2,7 +2,8 @@
  * Preferences.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,6 +24,7 @@ package net.vanosten.dings.model;
 import java.util.Properties;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,9 +89,29 @@ public class Preferences extends AModel{
 	
 	/** Whether learning statistics should be saved on quit */
 	public final static String PROP_STATS_QUIT = "stats_quit";
+	
+	/** The Locale of the application */
+	public final static String PROP_LOCALE = "locale";
+	
+	/** The color of the hint text in learn one */
+	public final static String PROP_COLOR_HINT ="color_hint";
+
+	/** The color of the result text in learn one */
+	public final static String PROP_COLOR_RESULT ="color_result";
 
 	public final static String FILE_ENCODING = "file_encoding";
-	public final static String LEARN_HINT_COVER_PERCENT = "learn_hint_cover_percent";
+	//file encoding (as specified in http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc)
+	public final static String FILE_ENCODING_DEFAULT = "UTF-8";
+	public final static String[] FILE_ENCODINGS = {
+		"US-ASCII"
+		,"ISO-8859-1"
+		,FILE_ENCODING_DEFAULT
+		,"UTF-16BE"
+		,"UTF-16LE"
+		,"UTF-16"
+	};
+
+	//public final static String LEARN_HINT_COVER_PERCENT = "learn_hint_cover_percent";
 	public final static String LEARN_HINT_FLASH_TIME = "learn_hint_flash_time";
 	public final static String LEARN_HINT_SHUFFLE_WORD = "learn_hint_shuffle_word";
 
@@ -102,7 +124,7 @@ public class Preferences extends AModel{
 	public Preferences() {
 		logger = Logger.getLogger("net.vanosten.dings.model.Preferences");
 		readProperties();
-	} //public Preferences
+	} //END public Preferences()
 
 	/**
 	 * Lets you set the edit view
@@ -111,12 +133,12 @@ public class Preferences extends AModel{
 	 */
 	public void setEditView(IPreferencesEditView aView) {
 		editView = aView;
-	}	//END public void setEditView(IPreferencesEditView)
+	} //END public void setEditView(IPreferencesEditView)
 
 	//implements AItemModel
 	protected void releaseViews() {
 		editView = null;
-	} //protected void releaseViews()
+	} //END protected void releaseViews()
 
 	//Implements AModel
 	protected void updateGUI() {
@@ -124,35 +146,47 @@ public class Preferences extends AModel{
 			//file encoding
 			editView.setFileEncoding(props.getProperty(FILE_ENCODING));
 			//look and feel
-			editView.setSystemLookAndFeel(Boolean.valueOf(props.getProperty(Preferences.PROP_SYSTEM_LAF)).booleanValue());
+			editView.setSystemLookAndFeel(Boolean.valueOf(props.getProperty(PROP_SYSTEM_LAF)).booleanValue());
 			//learn hints
-			editView.setLearnHintCoverPercent(Integer.parseInt(props.getProperty(LEARN_HINT_COVER_PERCENT)));
+			//editView.setLearnHintCoverPercent(Integer.parseInt(props.getProperty(LEARN_HINT_COVER_PERCENT)));
 			editView.setLearnHintFlashTime(Integer.parseInt(props.getProperty(LEARN_HINT_FLASH_TIME)));
 			editView.setLearnHintShuffleByWord(props.getProperty(LEARN_HINT_SHUFFLE_WORD));
+			editView.setHintTextColor(new Color(Integer.parseInt(props.getProperty(PROP_COLOR_HINT))));
+			editView.setResultTextColor(new Color(Integer.parseInt(props.getProperty(PROP_COLOR_RESULT))));
 			//logging
 			editView.setLoggingEnabled(props.getProperty(PROP_LOGGING_ENABLED));
 			editView.setLoggingToFile(props.getProperty(PROP_LOG_TO_FILE));
 			//selection updates
-			editView.setSelUpdInst(Boolean.valueOf(props.getProperty(Preferences.PROP_SEL_UPD_INST_EDITING)).booleanValue()
-										, Boolean.valueOf(props.getProperty(Preferences.PROP_SEL_UPD_INST_LEARNING)).booleanValue());
+			editView.setSelUpdInst(Boolean.valueOf(props.getProperty(PROP_SEL_UPD_INST_EDITING)).booleanValue()
+										, Boolean.valueOf(props.getProperty(PROP_SEL_UPD_INST_LEARNING)).booleanValue());
 			//stats on quit
-			editView.setStatsOnQuit(Boolean.valueOf(props.getProperty(Preferences.PROP_STATS_QUIT)).booleanValue());
+			editView.setStatsOnQuit(Boolean.valueOf(props.getProperty(PROP_STATS_QUIT)).booleanValue());
+			//locale
+			editView.setApplicationLocale(props.getProperty(PROP_LOCALE));
 		}
 		catch (NumberFormatException e) {
 			//TODO: log this
 		}
-	 }	//END protected void updateGUI()
+	 } //END protected void updateGUI()
 
 	//Implements AModel
 	protected void updateModel() {
 		//file encoding
 		props.setProperty(FILE_ENCODING, editView.getFileEncoding());
 		//look and feel
-		props.setProperty(PROP_SYSTEM_LAF, String.valueOf(editView.isSystemLookAndFeel()));
+		boolean oldLAF = Boolean.valueOf(props.getProperty(PROP_SYSTEM_LAF)).booleanValue();
+		if (oldLAF != editView.isSystemLookAndFeel()) { 
+			props.setProperty(PROP_SYSTEM_LAF, String.valueOf(editView.isSystemLookAndFeel()));
+			AppEvent ape1 = new AppEvent(AppEvent.STATUS_EVENT);
+			ape1.setMessage(MessageConstants.S_CHANGE_LAF);
+			parentController.handleAppEvent(ape1);
+		}
 		//learn hints
-		props.setProperty(LEARN_HINT_COVER_PERCENT, Integer.toString(editView.getLearnHintCoverPercent()));
+		//props.setProperty(LEARN_HINT_COVER_PERCENT, Integer.toString(editView.getLearnHintCoverPercent()));
 		props.setProperty(LEARN_HINT_FLASH_TIME, Integer.toString(editView.getLearnHintFlashTime()));
 		props.setProperty(LEARN_HINT_SHUFFLE_WORD, editView.getLearnHintShuffleByWord());
+		props.setProperty(PROP_COLOR_HINT, Integer.toString(editView.getHintTextColor().getRGB()));
+		props.setProperty(PROP_COLOR_RESULT, Integer.toString(editView.getResultTextColor().getRGB()));
 		//logging
 		String oldEnabled = props.getProperty(PROP_LOGGING_ENABLED);
 		String newEnabled = editView.getLoggingEnabled();
@@ -161,15 +195,17 @@ public class Preferences extends AModel{
 		if (false == oldEnabled.equals(newEnabled) || false == oldToFile.equals(newToFile)) {
 			props.setProperty(PROP_LOGGING_ENABLED, newEnabled); //must come before event
 			props.setProperty(PROP_LOG_TO_FILE, newToFile); //must come before event
-			AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-			ape.setMessage(MessageConstants.S_CHANGE_LOGGING);
-			parentController.handleAppEvent(ape);
+			AppEvent ape2 = new AppEvent(AppEvent.STATUS_EVENT);
+			ape2.setMessage(MessageConstants.S_CHANGE_LOGGING);
+			parentController.handleAppEvent(ape2);
 		}
 		//resetting score
 		props.setProperty(PROP_SEL_UPD_INST_EDITING, String.valueOf(editView.isSelUpdInstEditing()));
 		props.setProperty(PROP_SEL_UPD_INST_LEARNING, String.valueOf(editView.isSelUpdInstLearning()));
 		//stats on quit
 		props.setProperty(PROP_STATS_QUIT, String.valueOf(editView.isStatsOnQuit()));
+		//locale
+		props.setProperty(PROP_LOCALE, editView.getApplicationLocale());
 	} //END protected void updateModel()
 
 	//Overrides AModel
@@ -187,7 +223,7 @@ public class Preferences extends AModel{
 			saveDialogSize();
 		}
 		else parentController.handleAppEvent(evt);
-	}	//END public void handleAppEvent(AppEvent)
+	} //END public void handleAppEvent(AppEvent)
 
 	/**
 	 * Saves the size information of the dialog showing the preferences
@@ -248,16 +284,24 @@ public class Preferences extends AModel{
 		}
 		//assign defaults
 		if (!props.containsKey(FILE_ENCODING)) {
-			props.setProperty(FILE_ENCODING, IPreferencesEditView.FILE_ENCODING_DEFAULT);
+			props.setProperty(FILE_ENCODING, FILE_ENCODING_DEFAULT);
 		}
+		/*
 		if (!props.containsKey(LEARN_HINT_COVER_PERCENT)) {
 			props.setProperty(LEARN_HINT_COVER_PERCENT, Integer.toString(IPreferencesEditView.LH_COVER_PERCENT_DEFAULT));
 		}
+		*/
 		if (!props.containsKey(LEARN_HINT_FLASH_TIME)) {
 			props.setProperty(LEARN_HINT_FLASH_TIME, Integer.toString(IPreferencesEditView.LH_FLASH_TIME_DEFAULT));
 		}
 		if (!props.containsKey(LEARN_HINT_SHUFFLE_WORD)) {
 			props.setProperty(LEARN_HINT_SHUFFLE_WORD, Boolean.toString(true));
+		}
+		if (!props.containsKey(PROP_COLOR_HINT)){
+			props.setProperty(PROP_COLOR_HINT, Integer.toString(Color.BLUE.getRGB()));
+		}
+		if (!props.containsKey(PROP_COLOR_RESULT)){
+			props.setProperty(PROP_COLOR_RESULT, Integer.toString(Color.RED.getRGB()));
 		}
 		if (!props.containsKey(PROP_LOGGING_ENABLED)) {
 			props.setProperty(PROP_LOGGING_ENABLED, Boolean.toString(false));
@@ -280,6 +324,8 @@ public class Preferences extends AModel{
 		if (!props.containsKey(PROP_STATS_QUIT)) {
 			props.setProperty(PROP_STATS_QUIT, Boolean.toString(false));
 		}
+		//PROP_LOCALE is not set to a value. The value is set to the value of the underlying
+		//OS the first time the application is started
 	} //END private void readProperties()
 	
 	/**

@@ -2,7 +2,8 @@
  * IPreferencesEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,17 +21,9 @@
  */
 package net.vanosten.dings.uiif;
 
+import java.awt.Color;
+
 public interface IPreferencesEditView extends IView {
-	//file encoding (as specified in http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc)
-	public final static String FILE_ENCODING_DEFAULT = "UTF-8";
-	public final static String[] FILE_ENCODINGS = {
-		"US-ASCII"
-		,"ISO-8859-1"
-		,FILE_ENCODING_DEFAULT
-		,"UTF-16BE"
-		,"UTF-16LE"
-		,"UTF-16"
-	};
 
 	//The preference dialog's window size
 	public void setDialogSize(int aWidth, int aHeight);
@@ -41,14 +34,18 @@ public interface IPreferencesEditView extends IView {
 	public String getFileEncoding();
 
 	//learn hint
+	/*
 	public final static int LH_COVER_PERCENT_MIN = 0;
 	public final static int LH_COVER_PERCENT_MAX = 100;
 	public final static int LH_COVER_PERCENT_DEFAULT = 40;
+	*/
 	public final static int LH_FLASH_TIME_MIN = 0;
 	public final static int LH_FLASH_TIME_MAX = 3000;
 	public final static int LH_FLASH_TIME_DEFAULT = 500;
+	/*
 	public void setLearnHintCoverPercent(int thePercentage);
 	public int getLearnHintCoverPercent();
+	*/
 	public void setLearnHintFlashTime(int theFlashTime);
 	public int getLearnHintFlashTime();
 	public void setLearnHintShuffleByWord(String isEnabled);
@@ -69,4 +66,12 @@ public interface IPreferencesEditView extends IView {
 	//statistics
 	public boolean isStatsOnQuit();
 	public void setStatsOnQuit(boolean statsEnabled);
+	//locale
+	public String getApplicationLocale();
+	public void setApplicationLocale(String aLocale);
+	//hint colors
+	public Color getHintTextColor();
+	public void setHintTextColor(Color aColor);
+	public Color getResultTextColor();
+	public void setResultTextColor(Color aColor);
 } //END public interface IPreferencesEditView extends IDetailsView

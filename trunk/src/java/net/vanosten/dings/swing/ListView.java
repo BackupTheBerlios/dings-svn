@@ -2,7 +2,8 @@
  * ListView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,12 +29,11 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.JScrollPane;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+
+import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -53,7 +53,7 @@ import net.vanosten.dings.swing.helperui.IDTableModel;
 import net.vanosten.dings.swing.helperui.LevelTableCellRenderer;
 import net.vanosten.dings.uiif.IListView;
 
-public abstract class ListView extends JPanel implements IListView{
+public abstract class ListView extends JPanel implements IListView {
 	private JTable listT;
 	private IDTableModel model;
 	private JPanel buttonsP, mainP;
@@ -69,12 +69,14 @@ public abstract class ListView extends JPanel implements IListView{
 	/**
 	 * Empty constructor the EntriesListView
 	 */
-	public ListView(String aTitle) {
+	public ListView(String aTitle, ComponentOrientation aComponentOrientation) {
 		super();
+		super.setComponentOrientation(aComponentOrientation);
 		this.title = aTitle;
 		setMessages();
 		initializeGUI();
-	}	//END public ListView(String)
+		this.applyComponentOrientation(aComponentOrientation);
+	} //END public ListView(String, ComponentOrientation)
 
 	/**
 	 * Sets up the initial GUI.
@@ -96,32 +98,19 @@ public abstract class ListView extends JPanel implements IListView{
 		
 		mainP = new JPanel();
 		initializeMainP();
-		
-		//the title area
-		JPanel titleP = new JPanel();
-		titleP.setBackground(DingsSwingConstants.COLOR_PRIMARY_1);
-		Border titleBo = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		titleP.setBorder(titleBo);
-		GridBagLayout tgbl = new GridBagLayout();
-		GridBagConstraints tgbc = new GridBagConstraints();
-		titleP.setLayout(tgbl);
+				
 		JLabel titleL = new JLabel(title);
-		titleL.setFont(Constants.TITLE_ONE_FONT);
-		titleL.setForeground(DingsSwingConstants.COLOR_PRIMARY_3);
-		tgbc.weightx = 1.0;
-		tgbc.fill = GridBagConstraints.HORIZONTAL;
-		tgbc.anchor = GridBagConstraints.LINE_START;
-		tgbl.setConstraints(titleL, tgbc);
-		titleP.add(titleL);
-		
+		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
+		titleL.setEnabled(false);
+
 		//make gui
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(titleP, gbc);
-		add(titleP);
+		gbl.setConstraints(titleL, gbc);
+		add(titleL);
 		//----
 		gbc.gridy = 1;
 		gbc.insets = new Insets(DingsSwingConstants.SP_V_G, 0,0,0);
@@ -140,7 +129,7 @@ public abstract class ListView extends JPanel implements IListView{
 		gbc.weighty = 0.0d;
 		gbl.setConstraints(buttonsP, gbc);
 		add(buttonsP);
-	}	//END private void initializeGUI()
+	} //END private void initializeGUI()
 	
 	private void initializeButtonP() {
 		buttonsP = new JPanel();
@@ -154,10 +143,10 @@ public abstract class ListView extends JPanel implements IListView{
 		myButtonsP.add(editB);
 		
 		buttonsP.add(myButtonsP);
-	}	//END private void initializeButtonP()
+	} //END private void initializeButtonP()
 	
 	private final void initButtonComponents() {
-		newB = new JButton("Add", Constants.createImageIcon(Constants.IMG_ADD_24, "FIXME"));
+		newB = new JButton("Add", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
 		newB.setMnemonic("A".charAt(0));
 		newB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -165,7 +154,7 @@ public abstract class ListView extends JPanel implements IListView{
 			}
 		});
 		
-		deleteB = new JButton("Remove", Constants.createImageIcon(Constants.IMG_REMOVE_24, "FIXME"));
+		deleteB = new JButton("Remove", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
 		deleteB.setMnemonic("R".charAt(0));
 		deleteB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -176,8 +165,8 @@ public abstract class ListView extends JPanel implements IListView{
 			}
 		});
 		
-		editB = new JButton("Edit", Constants.createImageIcon(Constants.IMG_EDIT_24, "FIXME"));
-		editB.setMnemonic("E".charAt(0));
+		editB = new JButton("Edit", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EDIT_BTN, "FIXME"));
+		editB.setMnemonic("d".charAt(0)); //Cannot be "E" due to menu "Edit"
 		editB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onEdit();         
@@ -207,10 +196,18 @@ public abstract class ListView extends JPanel implements IListView{
 					onEdit();
 				}
 			}
-			public void mouseEntered(MouseEvent evt) {}
-			public void mouseExited(MouseEvent evt) {}
-			public void mousePressed(MouseEvent evt) {}
-			public void mouseReleased(MouseEvent evt) {}
+			public void mouseEntered(MouseEvent evt) {
+				//nothing to be done
+			}
+			public void mouseExited(MouseEvent evt) {
+				//nothing to be done
+			}
+			public void mousePressed(MouseEvent evt) {
+				//nothing to be done
+			}
+			public void mouseReleased(MouseEvent evt) {
+				//nothing to be done
+			}
 		});
 		listT.setDefaultRenderer(Integer.class, new LevelTableCellRenderer());
 
@@ -223,7 +220,7 @@ public abstract class ListView extends JPanel implements IListView{
 		gbc.fill = GridBagConstraints.BOTH;
 		gbl.setConstraints(listPane, gbc);
 		mainP.add(listPane);
-	}	//END private initializeMainP()
+	} //END private initializeMainP()
     
     /**
      * Gets the ID of the selected row
@@ -232,7 +229,7 @@ public abstract class ListView extends JPanel implements IListView{
      */
     private String getSelectedRowID() {
     	return model.getIDAt(listT.getSelectedRow());
-    }   //END private String getSelectedRowID()
+    } //END private String getSelectedRowID()
 
 	
 	/**
@@ -245,7 +242,7 @@ public abstract class ListView extends JPanel implements IListView{
 		ape.setMessage(MessageConstants.D_LIST_VIEW_REFRESH);
 		controller.handleAppEvent(ape);
 		return true;
-	}	//END public boolean init()
+	} //END public boolean init()
 	
 	public void setList(String theTitles[], Object theData[][], boolean[] columnFixedWidth) {
 		model = new IDTableModel(theTitles, theData);
@@ -270,7 +267,8 @@ public abstract class ListView extends JPanel implements IListView{
 			listT.setRowSelectionInterval(row, row);
 			listT.scrollRectToVisible(listT.getCellRect(row, 0, true));
 		}
-	}	//END public void setSelected(String)		
+	} //END public void setSelected(String)
+	
 	/**
 	 * Sets the width of the table columns. Gets called from setList(...)
 	 */
@@ -295,7 +293,7 @@ public abstract class ListView extends JPanel implements IListView{
             }
 			column.setResizable(!fixed[i]);
 		}
-	}	//END private void setTableColumnFixedWidths()
+	} //END private void setTableColumnFixedWidths()
 	
 	/**
 	 * Assigns the concrete messages.
@@ -364,4 +362,4 @@ public abstract class ListView extends JPanel implements IListView{
 			deleteB.setEnabled(true);
 		}
 	} //END private void onTableSelection(ListSelectionEvent)
-}	//END public class ListView
+} //END public class ListView extends JPanel implements IListView

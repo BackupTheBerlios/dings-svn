@@ -2,7 +2,8 @@
  * UnitEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,24 +25,21 @@ import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-
+import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IUnitEditView;
 
 public class UnitEditView extends AEditView implements IUnitEditView {
-	private JTextField nameTF;
+	private ValidatedTextField nameVTF;
 	private JTextArea descriptionTA;
 	
 	public UnitEditView(String aTitle, ComponentOrientation aComponentOrientation, String aMessage) {
 		super(aTitle, aComponentOrientation, true, true, aMessage);
-	} //End public UnitEditView(String, ComponentOrientation, String)
+	} //END public UnitEditView(String, ComponentOrientation, String)
 
 	//Implements AEditView
 	protected void initializeEditP() {
@@ -50,34 +48,19 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 		editP.setLayout(gbl);
 
 		JLabel nameL = new JLabel("Name:");
-		nameTF = new JTextField(50);
-		nameTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		nameVTF = new ValidatedTextField(50);
+		nameVTF.setToolTipText("Name may not be empty");
+		nameVTF.addKeyListener(this);
 		nameL.setDisplayedMnemonic("N".charAt(0));
-		nameL.setLabelFor(nameTF);
+		nameL.setLabelFor(nameVTF);
 
 		JLabel descriptionL = new JLabel("Description:");
 		descriptionTA = new JTextArea();
 		descriptionTA.setLineWrap(true);
 		descriptionTA.setWrapStyleWord(true);
 		descriptionTA.setRows(5);
-		descriptionTA.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
-		descriptionL.setDisplayedMnemonic("E".charAt(0));
+		descriptionTA.addKeyListener(this);
+		descriptionL.setDisplayedMnemonic("S".charAt(0));
 		descriptionL.setLabelFor(descriptionTA);
 		JScrollPane descriptionSP = new JScrollPane(descriptionTA);
 		descriptionSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -96,8 +79,8 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = new Insets(0, DingsSwingConstants.SP_H_G, 0, 0);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(nameTF, gbc);
-		editP.add(nameTF);
+		gbl.setConstraints(nameVTF, gbc);
+		editP.add(nameVTF);
 		//------
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -117,22 +100,31 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 		gbl.setConstraints(descriptionSP, gbc);
 		editP.add(descriptionSP);
 		//set focus
-		nameTF.requestFocus();
-	}	//End protected void initializeEditP()
+		nameVTF.requestFocus();
+	}//END protected void initializeEditP()
 	
+	//implements IUnitEditView
 	public void setName(String aName) {
-		nameTF.setText(aName);
-	}	//END public void setUnitName(String)
+		nameVTF.setText(aName);
+	} //END public void setUnitName(String)
 	
+	//implements IUnitEditView
 	public String getName() {
-		return nameTF.getText();
-	}	//END public String getName()
+		return nameVTF.getText();
+	} //END public String getName()
 	
+	//implements IUnitEditView
 	public void setDescription(String aDescription) {
 		descriptionTA.setText(aDescription);
-	}	//END public void setDescription(String)
+	} //END public void setDescription(String)
 	
+	//implements IUnitEditView
 	public String getDescription() {
 		return descriptionTA.getText();
-	}	//END public String getDescription()
-}	//END public class UnitEditView
+	} //END public String getDescription()
+	
+	//implements IUnitEditView
+	public void setNameIsValueValid(boolean valid) {
+		nameVTF.isValueValid(valid);
+	} //END public void setNameIsValueValid(boolean)
+} //END public class UnitEditView

@@ -2,7 +2,8 @@
  * AEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,29 +29,30 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.uiif.IDetailsView;
 import net.vanosten.dings.swing.DingsSwingConstants;
 
-public abstract class AEditView extends AViewWithScrollPane implements IDetailsView {
+public abstract class AEditView extends AViewWithScrollPane implements IDetailsView, KeyListener {
 	private JButton applyB, revertB, deleteB, doneB;
 
 	/** Whether the delete button should be shown */
 	private boolean showDelete = false;
-	
+
 	/** Whether the done button should be shown */
 	private boolean showDone = false;
 
 	/** The message for ok */
 	private String msgDone;
-	
+
 	/**
-	 * Indicates whether the gui value is changed programmatically 
-	 * or by the user. This is important, as otherwise the programmatic 
+	 * Indicates whether the gui value is changed programmatically
+	 * or by the user. This is important, as otherwise the programmatic
 	 * changes would again call the method (endless loop).
 	 * The value is true when programmatically updated.
 	*/
@@ -63,15 +65,15 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 		this.msgDone = aMsgDone;
 		initializeGUI();
 		this.setGUIOrientation();
-	} //End public AEditView(String, ComponentOrientation, ...)
-		
+	} //END public AEditView(String, ComponentOrientation, ...)
+
 	protected abstract void initializeEditP();
-	
+
 	//Implements AViewWithButtons
 	protected void initializeButtonP() {
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
-		
+
 		JPanel myButtonsP = new JPanel();
 		int countButtons = 2;
 		if (showDelete) {
@@ -81,7 +83,7 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 			countButtons++;
 		}
 		myButtonsP.setLayout(new GridLayout(1,countButtons, DingsSwingConstants.SP_H_C, 0));
-		
+
 		myButtonsP.add(applyB);
 		myButtonsP.add(revertB);
 		if (showDelete) {
@@ -90,30 +92,30 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 		if (showDone) {
 			myButtonsP.add(doneB);
 		}
-		
+
 		buttonsP.add(myButtonsP);
-	}	//END private void initializeButtonP()
-	
+	} //END private void initializeButtonP()
+
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		applyB = new JButton("Apply", Constants.createImageIcon(Constants.IMG_APPLY_24, "FIXME"));
+		applyB = new JButton("Apply", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_APPLY_BTN, "FIXME"));
 		applyB.setMnemonic("A".charAt(0));
 		applyB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onApply();
 			}
 		});
-		
-		revertB = new JButton("Revert", Constants.createImageIcon(Constants.IMG_RESET_24, "FIXME"));
+
+		revertB = new JButton("Revert", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_RESET_BTN, "FIXME"));
 		revertB.setMnemonic("R".charAt(0));
 		revertB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onRevert();
 			}
 		});
-		
+
 		if (showDelete) {
-			deleteB = new JButton("Delete", Constants.createImageIcon(Constants.IMG_DELETE_24, "FIXME"));
+			deleteB = new JButton("Delete", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DELETE_BTN, "FIXME"));
 			deleteB.setMnemonic("D".charAt(0));
 			deleteB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -122,7 +124,7 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 			});
 		}
 		if (showDone) {
-			doneB = new JButton("Back", Constants.createImageIcon(Constants.IMG_BACK_24, "FIXME"));
+			doneB = new JButton("Back", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_BACK_BTN, "FIXME"));
 			doneB.setMnemonic("B".charAt(0));
 			doneB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
@@ -131,22 +133,25 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 			});
 		}
 	} //END protected final void initButtonComponents()
-		
-	/**
-	 * 
-	 * Indicates that the values are edited and sets the button states.
-	 * @param boolean isEditing
-	 */
-	public void setEditing(boolean isEditing) {
-		boolean reverse = true;
-		if (true == isEditing) reverse = false;
-		applyB.setEnabled(isEditing);
+
+	//implements IDetailsView
+	public void setEditing(boolean isEditing, boolean isValid) {
+		if (true == isEditing && true == isValid) {
+			applyB.setEnabled(true);
+		} else {
+			applyB.setEnabled(false);
+		}
 		revertB.setEnabled(isEditing);
+
 		if (showDone) {
+			boolean reverse = true;
+			if (true == isEditing) {
+				reverse = false;
+			}
 			doneB.setEnabled(reverse);
 		}
 		//the deleteB is always active!
-	}	//End private void setEditing(boolean)
+	} //END private void setEditing(boolean)
 
 	//Overrides AViewWithButtons
 	public boolean init(IAppEventHandler aController) {
@@ -190,4 +195,22 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 			controller.handleAppEvent(ape);
 		}
 	} //END protected void onChange()
-}	//END public abstract class AEditView extends AViewWithScrollPane
+
+	//-----------------implement KeyListener --------------------
+
+	//implements KeyListener
+	public void keyTyped(KeyEvent evt) {
+		//nothing to be done
+	} //END public void keyTyped(KeyEvent)
+
+	//implements KeyListener
+	public void keyReleased(KeyEvent evt) {
+		onChange();
+	} //END public void keyReleased(KeyEvent)
+
+	//implements KeyListener
+	public void keyPressed(KeyEvent evt) {
+		//nothing to be done
+	} //END public void keyPressed(KeyEvent)
+
+} //END public abstract class AEditView extends AViewWithScrollPane

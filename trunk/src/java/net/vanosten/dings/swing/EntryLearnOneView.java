@@ -2,7 +2,8 @@
  * EntryLearnOneView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +21,7 @@
  */
 package net.vanosten.dings.swing;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -39,14 +42,14 @@ import java.awt.event.ActionEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.consts.Constants;
-import net.vanosten.dings.swing.helperui.MultilineTextRenderer;
+import net.vanosten.dings.swing.helperui.HintLabel;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
 import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.model.InfoVocab;
+import net.vanosten.dings.model.Toolbox;
 
 public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView {
 	private ChoiceID attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh, categoriesCh, unitsCh;
@@ -54,7 +57,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	private ChoiceID modeCh; //Which hint mode should be used
 	private SolutionLabel baseSL, explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
 	private JTextField targetTF;
-	private MultilineTextRenderer hintMTR;
+	private HintLabel hintHL;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL;
 	private JLabel baseL, hintL, targetL, explanationL, exampleL, pronunciationL, relationL, unitL, categoryL, scoreL;
 	private LabeledSeparator attributesLS, othersLS;
@@ -62,16 +65,15 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 
 	private boolean hintUsed = false; //did it require a hint
 	private boolean success = false; //entry known?
-
-	/** The preferences */
-	private transient Preferences preferences;
-	private int shownLetters = 0;
+	
+	/** The learning direction is true, if target is asked */
+	private boolean targetAsked = true;
 
 	public EntryLearnOneView(ComponentOrientation aComponentOrientation) {
-		super("Learn One By One", aComponentOrientation);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.learn_one"), aComponentOrientation);
 		initializeGUI();
 		this.setGUIOrientation();
-	} //End public EntryEditViewer(ComponentOrientation)
+	} //END public EntryEditViewer(ComponentOrientation)
 	
 	private void initComponents() {
 		//separators
@@ -81,8 +83,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		baseL = new JLabel();
 		baseSL = new SolutionLabel();
 		//hint
-		hintL = new JLabel("Hint");
-		hintMTR = new MultilineTextRenderer(this.getFont());
+		hintL = new JLabel("Hint:");
+		hintHL = new HintLabel(Color.BLUE, Color.RED);
 		//target
 		targetL = new JLabel();
 		targetTF = new JTextField();
@@ -93,34 +95,34 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		//score
 		scoreL = new JLabel("?");
 		//units
-		unitL = new JLabel("Unit");
+		unitL = new JLabel();
 		unitsCh = new ChoiceID();
 		//categories
-		categoryL = new JLabel("Category");
+		categoryL = new JLabel();
 		categoriesCh = new ChoiceID();
 		//attributeOne
-		attributeOneL = new JLabel("N/A");
+		attributeOneL = new JLabel("N/A:");
 		attributeOneCh = new ChoiceID();
 		//attributeTwo
-		attributeTwoL = new JLabel("N/A");
+		attributeTwoL = new JLabel("N/A:");
 		attributeTwoCh = new ChoiceID();
 		//attributeThree
-		attributeThreeL = new JLabel("N/A");
+		attributeThreeL = new JLabel("N/A:");
 		attributeThreeCh = new ChoiceID();
 		//attributeFour
-		attributeFourL = new JLabel("N/A");
+		attributeFourL = new JLabel("N/A:");
 		attributeFourCh = new ChoiceID();
 		//explanation
-		explanationL = new JLabel("Explanation");
+		explanationL = new JLabel();
 		explanationSL = new SolutionLabel();
 		//example
-		exampleL = new JLabel("Example");
+		exampleL = new JLabel();
 		exampleSL = new SolutionLabel();
 		//pronunciation
-		pronunciationL = new JLabel("Pronunciation");
+		pronunciationL = new JLabel("Pronunciation:");
 		pronunciationSL = new SolutionLabel();
 		//relation
-		relationL = new JLabel("Relation");
+		relationL = new JLabel("Relation:");
 		relationSL = new SolutionLabel();		
 	} //END private void initComponents()
 
@@ -130,11 +132,11 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		
 		//static components
 		LabeledSeparator basicsLS = new LabeledSeparator("Basics");
-		JLabel statusL = new JLabel("Status");
-		JLabel scoreLabelL = new JLabel("Score");
+		JLabel statusL = new JLabel("Status:");
+		JLabel scoreLabelL = new JLabel("Score:");
 		statusL.setDisplayedMnemonic("S".charAt(0));
 		statusL.setLabelFor(statusCB);
-		JLabel entryTypeL = new JLabel("Entry Type");
+		JLabel entryTypeL = new JLabel("Entry Type:");
 		Insets vghg = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_G, 0, 0);
 		Insets vght = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_T, 0, 0);
 		Insets ls = new Insets(DingsSwingConstants.SP_V_T, 0, DingsSwingConstants.SP_V_G, 0);
@@ -145,6 +147,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		editP = new JPanel();
+		editP.setBorder(BorderFactory.createEmptyBorder(DingsSwingConstants.SP_V_C
+				, DingsSwingConstants.SP_H_C
+				, DingsSwingConstants.SP_V_C
+				, DingsSwingConstants.SP_H_C));
 		editP.setLayout(gbl);
 		
 		//----basicsLS
@@ -170,26 +176,9 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.insets = vghg;
 		gbl.setConstraints(baseSL, gbc);
 		editP.add(baseSL);
-		//----hint
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.LINE_END;
-		gbc.insets = vghg;
-		gbl.setConstraints(hintL, gbc);
-		editP.add(hintL);
-		//----
-		gbc.gridx = 1;
-		gbc.gridwidth = 4;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.insets = vghg;
-		gbl.setConstraints(hintMTR, gbc);
-		editP.add(hintMTR);
 		//----target
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -204,6 +193,23 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.insets = vghg;
 		gbl.setConstraints(targetTF, gbc);
 		editP.add(targetTF);
+		//----hint
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbc.insets = vghg;
+		gbl.setConstraints(hintL, gbc);
+		editP.add(hintL);
+		//----
+		gbc.gridx = 1;
+		gbc.gridwidth = 4;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.insets = vghg;
+		gbl.setConstraints(hintHL, gbc);
+		editP.add(hintHL);
 		//----entrytype
 		gbc.gridx = 0;
 		gbc.gridy = 4;
@@ -439,7 +445,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.insets = vthg;
 		gbl.setConstraints(scoreL, gbc);
 		editP.add(scoreL);
-	} //End protected void initializeEditP()
+	} //END protected void initializeEditP()
 
 	//implements AViewWithButtons
 	protected final void initializeButtonP() {
@@ -460,28 +466,34 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
 		String[][] modeItems = {
-					{Integer.toString(MultilineTextRenderer.MODE_FLASH), "Flash"}
-							,{Integer.toString(MultilineTextRenderer.MODE_COVER), "Cover"}
-							,{Integer.toString(MultilineTextRenderer.MODE_LETTER), "Letter"}
-							,{Integer.toString(MultilineTextRenderer.MODE_SHUFFLE), "Shuffle"}
+					{Integer.toString(HintLabel.MODE_FLASH), "Flash"}
+					,{Integer.toString(HintLabel.MODE_LETTER), "Letter"}
+					,{Integer.toString(HintLabel.MODE_SHUFFLE), "Shuffle"}
 		};
 		modeCh = new ChoiceID();
 		modeCh.setItems(modeItems);
-		hintB = new JButton("Hint", Constants.createImageIcon(Constants.IMG_EMPTY_24x1, ""));
+		modeCh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if (HintLabel.MODE_LETTER == Integer.parseInt(modeCh.getSelectedID())) {
+					hintHL.resetLetters();
+				}
+			}
+		});
+		hintB = new JButton("Hint", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_HINT_BTN, ""));
 		hintB.setMnemonic("I".charAt(0));
 		hintB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doHint();
 			}
 		});
-		showB = new JButton("Show", Constants.createImageIcon(Constants.IMG_EMPTY_24x1, ""));
+		showB = new JButton("Show", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_RESULT_BTN, ""));
 		showB.setMnemonic("S".charAt(0));
 		showB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doShow();
 			}
 		});
-		knowB = new JButton("Know it", Constants.createImageIcon(Constants.IMG_EMPTY_24x1, ""));
+		knowB = new JButton("Know it", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_KNOWN_BTN, "FIXME"));
 		knowB.setMnemonic("K".charAt(0));
 		knowB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -490,7 +502,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				sendNext();
 			}
 		});
-		notKnowB = new JButton("Don't know", Constants.createImageIcon(Constants.IMG_EMPTY_24x1, ""));
+		notKnowB = new JButton("Don't know", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_UNKNOWN_BTN, "FIXME"));
 		notKnowB.setMnemonic("N".charAt(0));
 		notKnowB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -500,38 +512,44 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			}
 		});
 	} //END protected final void initButtonComponents()
-
+	
 	/**
-	 * The preferences for hints
+	 * Sets the colors for the hint text according to preferences.
+	 * This is done repeately to cope with changes in preferences without restart of learning.
 	 */
-	public void setPreferences(Preferences thePreferences) {
-		this.preferences = thePreferences;
-	} //END public void setPreferences(Preferences)
+	private void setHintTextColors() {
+		Color hintC = null;
+		Color resultC = null;
+		try {
+			hintC = new Color(Integer.parseInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_COLOR_HINT)));
+			resultC = new Color(Integer.parseInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_COLOR_RESULT)));
+		}
+		catch(NumberFormatException e) {
+			hintC = Color.BLUE;
+			resultC = Color.RED;
+		}
+		hintHL.setTextColors(hintC, resultC);
+	} //END private void setHintTextColors()
 
 	/**
 	 * Displays a hint in the target field.
 	 */
 	private void doHint() {
+		setHintTextColors();
 		try {
 			int helperMode = Integer.parseInt(modeCh.getSelectedID());
-			hintMTR.setViewMode(helperMode);
 			switch(helperMode) {
-				case MultilineTextRenderer.MODE_FLASH:
-					hintMTR.doFlash(Integer.parseInt(preferences.getProperty(Preferences.LEARN_HINT_FLASH_TIME)));
+				case HintLabel.MODE_FLASH:
+					hintHL.doFlash(Integer.parseInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.LEARN_HINT_FLASH_TIME)));
 					break;
-				case MultilineTextRenderer.MODE_COVER:
-					hintMTR.doCover(Integer.parseInt(preferences.getProperty(Preferences.LEARN_HINT_COVER_PERCENT)));
-					break;
-				case MultilineTextRenderer.MODE_LETTER:
-					shownLetters++;
-					if (shownLetters >= hintMTR.getTextLength()) {
-						hintMTR.setViewMode(MultilineTextRenderer.MODE_RESULT);
-						hintB.setEnabled(false);
+				case HintLabel.MODE_LETTER:
+					if (false == hintHL.doLetters()) {
+						knowB.setEnabled(false);
+						doShow();
 					}
-					else hintMTR.doLetters(shownLetters);
 					break;
-				case MultilineTextRenderer.MODE_SHUFFLE:
-					hintMTR.doShuffle();
+				case HintLabel.MODE_SHUFFLE:
+					hintHL.doShuffle();
 					break;
 			}
 			hintUsed = true;
@@ -545,7 +563,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	 * Shows the entries.
 	 */
 	private void doShow() {
-		hintMTR.setViewMode(MultilineTextRenderer.MODE_RESULT);
+		setHintTextColors();
+		hintHL.doResult();
 		explanationSL.setHidden(false);
 		pronunciationSL.setHidden(false);
 		exampleSL.setHidden(false);
@@ -600,10 +619,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		hintUsed = false;
 		success = false;
 		//reset the helps
-		hintMTR.setViewMode(MultilineTextRenderer.MODE_FLASH);
+		hintHL.doHide();
+		hintHL.resetLetters();
 		hintB.setEnabled(true);
 		showB.setEnabled(true);
-		shownLetters = 0;
 		//reset others
 		explanationSL.setHidden(true);
 		pronunciationSL.setHidden(true);
@@ -611,19 +630,19 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		relationSL.setHidden(true);
 		//reset attributes
 		attributeOneL.setEnabled(false);
-		attributeOneL.setText("N/A");
+		attributeOneL.setText("N/A:");
 		attributeOneCh.removeAllItems();
 		attributeOneCh.setEnabled(false);
 		attributeTwoL.setEnabled(false);
-		attributeTwoL.setText("N/A");
+		attributeTwoL.setText("N/A:");
 		attributeTwoCh.removeAllItems();
 		attributeTwoCh.setEnabled(false);
 		attributeThreeL.setEnabled(false);
-		attributeThreeL.setText("N/A");
+		attributeThreeL.setText("N/A:");
 		attributeThreeCh.removeAllItems();
 		attributeThreeCh.setEnabled(false);
 		attributeFourL.setEnabled(false);
-		attributeFourL.setText("N/A");
+		attributeFourL.setText("N/A:");
 		attributeFourCh.removeAllItems();
 		attributeFourCh.setEnabled(false);
 	} //END public void reset()
@@ -637,22 +656,43 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	} //END public boolean isSuccess()
 
 	//---Setters and Getters
-
-	public void setBase(String aBase) {
+	
+	//implements IEntrlyLearnOneView
+	public final void setTargetAsked(boolean isTargetAsked) {
+		this.targetAsked = isTargetAsked;
+	} //END public final void setTargetAsked(boolean)
+	
+	private final void setRealBase(String aBase) {
 		if (null == aBase) {
 			baseSL.setText("");
 		}
 		else {
 			baseSL.setText(aBase);
+		}		
+	} //END private final void setRealBase(String)
+	
+	public void setRealTarget(String aTarget) {
+		if (null == aTarget) {
+			hintHL.setHintText("");
+		}
+		else {
+			hintHL.setHintText(aTarget);
+		}
+	} //END public void setRealTarget(String)
+
+	public void setBase(String aBase) {
+		if (targetAsked) {
+			setRealBase(aBase);
+		} else {
+			setRealTarget(aBase);
 		}
 	} //END public void setBase(String)
 
 	public void setTarget(String aTarget) {
-		if (null == aTarget) {
-			hintMTR.setText("");
-		}
-		else {
-			hintMTR.setText(aTarget);
+		if (targetAsked) {
+			setRealTarget(aTarget);
+		} else {
+			setRealBase(aTarget);
 		}
 	} //END public void setTarget(String)
 	
@@ -720,16 +760,16 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	public void setAttributeName(String anAttributeName, int aNumber) {
 		switch (aNumber) {
 			case 1:
-				attributeOneL.setText(anAttributeName);
+				attributeOneL.setText(anAttributeName + ":");
 				break;
 			case 2:
-				attributeTwoL.setText(anAttributeName);
+				attributeTwoL.setText(anAttributeName + ":");
 				break;
 			case 3:
-				attributeThreeL.setText(anAttributeName);
+				attributeThreeL.setText(anAttributeName + ":");
 				break;
 			case 4:
-				attributeFourL.setText(anAttributeName);
+				attributeFourL.setText(anAttributeName + ":");
 				break;
 		}
 	} //END public void setAttributeName(String, int)
@@ -806,14 +846,14 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	//implements IEntryLearnOneView
 	public void setLabels(String aBaseL, String aTargetL, String anAttributesL, String aUnitL, String aCategoryL
 						  , String anOthersL, String anExplanationL, String anExampleL) {
-		baseL.setText(aBaseL);
-		targetL.setText(aTargetL);
-		attributesLS.setText(anAttributesL);
-		unitL.setText(aUnitL);
-		categoryL.setText(aCategoryL);
-		othersLS.setText(anOthersL);
-		explanationL.setText(anExplanationL);
-		exampleL.setText(anExampleL);
+		baseL.setText(aBaseL + ":");
+		targetL.setText(aTargetL + ":");
+		attributesLS.setText(anAttributesL + ":");
+		unitL.setText(aUnitL + ":");
+		categoryL.setText(aCategoryL + ":");
+		othersLS.setText(anOthersL + ":");
+		explanationL.setText(anExplanationL + ":");
+		exampleL.setText(anExampleL + ":");
 	} //END public void setLabels(String ...)
 	
 	//implements IEntryEditView

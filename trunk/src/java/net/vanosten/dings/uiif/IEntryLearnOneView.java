@@ -2,7 +2,8 @@
  * IEntryLearnOneView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,14 +21,13 @@
  */
 package net.vanosten.dings.uiif;
 
-import net.vanosten.dings.model.Preferences;
-
 public interface IEntryLearnOneView extends IView {
 	/**
 	 * Resets the view in order to be prepared for the next learn entry
 	 */
 	public void reset();
 	public void sendUpdateGUI();
+	public void setTargetAsked(boolean isTargetAsked);
 	public void setBase(String anBase);
 	public void setTarget(String aTarget);
 	public void setEntryType(String aLabel);
@@ -47,7 +47,6 @@ public interface IEntryLearnOneView extends IView {
 	public void setScore(int aScore);
 	public boolean isSuccess();
 	public boolean isHintUsed();
-	public void setPreferences(Preferences thePreferences);
 	public void setLabels(String aBaseL, String aTargetL, String anAttributeL, String aUnitL
 			  ,String aCategoryL, String anOthersL, String anExplanationL, String anExampleL);
 	public void setVisibilities(int anAttributesVis, int aUnitVis, int aCategoryVis

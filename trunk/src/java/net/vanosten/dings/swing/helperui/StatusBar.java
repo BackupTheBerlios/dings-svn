@@ -2,7 +2,8 @@
  * StatusBar.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,7 +29,6 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.FlowLayout;
 
-import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class StatusBar extends JPanel {
@@ -48,8 +48,8 @@ public class StatusBar extends JPanel {
 		selectionL = new JLabel(" "); //needs to have a blank for display
 		
 		//set fonts
-		statusL.setFont(Constants.STATUS_BAR_FONT);
-		selectionL.setFont(Constants.STATUS_BAR_FONT);
+		statusL.setFont(DingsSwingConstants.STATUS_BAR_FONT);
+		selectionL.setFont(DingsSwingConstants.STATUS_BAR_FONT);
 		
 		//panels
 		JPanel statusP = new JPanel(new FlowLayout(FlowLayout.LEADING, DingsSwingConstants.SP_H_C,0));

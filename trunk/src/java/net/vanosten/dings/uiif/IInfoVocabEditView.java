@@ -2,7 +2,8 @@
  * IInfoVocabEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,6 +28,10 @@ public interface IInfoVocabEditView extends IDetailsView {
 	public String getAuthor();
 	public void setNotes(String theNotes);
 	public String getNotes();
+	public void setCopyright(String aCopyright);
+	public String getCopyright();
+	public void setLicence(String aLicence);
+	public String getLicence();
 	public void setBaseLabel(String aLabel);
 	public String getBaseLabel();
 	public void setTargetLabel(String aLabel);
@@ -76,4 +81,14 @@ public interface IInfoVocabEditView extends IDetailsView {
 	public void setVisibilityRelation(int aVisibility);
 	public int getVisibilityRelation();
 	public void setAvailableLocales(String[][] theLocales);
+	//validation
+	public void setTitleIsValueValid(boolean valid);
+	public void setBaseLabelIsValueValid(boolean valid);
+	public void setTragetLabelIsValueValid(boolean valid);
+	public void setAttributesLabelIsValueValid(boolean valid);
+	public void setUnitLabelIsValueValid(boolean valid);
+	public void setCategoryLabelIsValueValid(boolean valid);
+	public void setOthersLabelIsValueValid(boolean valid);
+	public void setExplanationLabelIsValueValid(boolean valid);
+	public void setExampleLabelIsValueValid(boolean valid);
 } //END public interface IInfoVocabEditView extends IDetailsView

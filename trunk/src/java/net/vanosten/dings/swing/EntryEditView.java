@@ -2,7 +2,8 @@
  * EntryEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,6 +27,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 
@@ -38,21 +40,22 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.InfoVocab;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
+import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IEntryEditView;
 import net.vanosten.dings.event.AppEvent;
 
 public class EntryEditView extends AEditView implements IEntryEditView {
 	private ChoiceID unitsCh, categoriesCh, attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh;
 	private JCheckBox statusCB;
-	private JTextField baseTF, targetTF, explanationTF, pronunciationTF, exampleTF, relationTF;
+	private ValidatedTextField baseVTF, targetVTF;
+	private JTextField explanationTF, pronunciationTF, exampleTF, relationTF;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL; //populated based on entry type
 	private JLabel baseL, targetL, unitL, categoryL, explanationL, exampleL; //populated based on InfoVocab
 	private JLabel pronunciationL, relationL; //visible based on InfoVocab
@@ -65,8 +68,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private String entryTypeId;
 
 	public EntryEditView(ComponentOrientation aComponentOrientation) {
-		super("Edit Entry", aComponentOrientation, true, true, MessageConstants.N_VIEW_ENTRIES_LIST);
-	} //End public EntryEditViewer(ComponentOrientation)
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry"), aComponentOrientation, true, true, MessageConstants.N_VIEW_ENTRIES_LIST);
+	} //END public EntryEditViewer(ComponentOrientation)
 
 	private void initComponents() {
 		//separators
@@ -80,40 +83,26 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		categoryL = new JLabel();
 		explanationL = new JLabel();
 		exampleL = new JLabel();
-		pronunciationL = new JLabel("Pronunciation");
-		relationL = new JLabel("Relation");
+		pronunciationL = new JLabel("Pronunciation:");
+		relationL = new JLabel("Relation:");
 		
-		attributeOneL = new JLabel("N/A");
-		attributeTwoL = new JLabel("N/A");
-		attributeThreeL = new JLabel("N/A");
-		attributeFourL = new JLabel("N/A");
+		attributeOneL = new JLabel("N/A:");
+		attributeTwoL = new JLabel("N/A:");
+		attributeThreeL = new JLabel("N/A:");
+		attributeFourL = new JLabel("N/A:");
 		attributeOneL.setEnabled(false);
 		attributeTwoL.setEnabled(false);
 		attributeThreeL.setEnabled(false);		
 		attributeFourL.setEnabled(false);		
 		
 		//base
-		baseTF = new JTextField();
-		baseTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		baseVTF = new ValidatedTextField(50);
+		baseVTF.setToolTipText("May not be empty");
+		baseVTF.addKeyListener(this);
 		//target
-		targetTF = new JTextField();
-		targetTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		targetVTF = new ValidatedTextField(50);
+		targetVTF.setToolTipText("May not be empty");
+		targetVTF.addKeyListener(this);
 		//entry type
 		changeEntryTypeB = new JButton("Change Entry Type ...");
 		changeEntryTypeB.setMnemonic("C".charAt(0));
@@ -177,49 +166,17 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		attributeFourCh.setEnabled(false);
 		//explanation
 		explanationTF = new JTextField();
-		explanationTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		explanationTF.addKeyListener(this);
 		//example
 		exampleTF = new JTextField();
-		exampleTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		exampleTF.addKeyListener(this);
 		//pronunciation
 		pronunciationTF = new JTextField();
-		pronunciationTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		pronunciationTF.addKeyListener(this);
 
 		//relation
 		relationTF = new JTextField();
-		relationTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});	
+		relationTF.addKeyListener(this);	
 	} //END private void initComponents()
 	
 	//implements AViewWithScrollPane
@@ -228,10 +185,10 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		
 		//static components
 		LabeledSeparator basicsLS = new LabeledSeparator("Basics");
-		JLabel statusL = new JLabel("Status");
+		JLabel statusL = new JLabel("Status:");
 		statusL.setDisplayedMnemonic("S".charAt(0));
 		statusL.setLabelFor(statusCB);
-		JLabel entryTypeL = new JLabel("Entry Type");
+		JLabel entryTypeL = new JLabel("Entry Type:");
 		Insets vghg = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_G, 0, 0);
 		Insets vght = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_T, 0, 0);
 		Insets ls = new Insets(DingsSwingConstants.SP_V_T, 0, DingsSwingConstants.SP_V_G, 0);
@@ -248,6 +205,10 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		editP = new JPanel();
+		editP.setBorder(BorderFactory.createEmptyBorder(DingsSwingConstants.SP_V_C
+				, DingsSwingConstants.SP_H_C
+				, DingsSwingConstants.SP_V_C
+				, DingsSwingConstants.SP_H_C));
 		editP.setLayout(gbl);
 		
 		//----basicsLS
@@ -271,8 +232,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(baseTF, gbc);
-		editP.add(baseTF);
+		gbl.setConstraints(baseVTF, gbc);
+		editP.add(baseVTF);
 		//----target
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -288,8 +249,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(targetTF, gbc);
-		editP.add(targetTF);
+		gbl.setConstraints(targetVTF, gbc);
+		editP.add(targetVTF);
 		//----entrytype
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -508,7 +469,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.insets = vghg;
 		gbl.setConstraints(statusCB, gbc);
 		editP.add(statusCB);
-	} //End private void initializeEditP()
+	} //END private void initializeEditP()
 	
 	private void onChangeEntryType() {
 		//make the GUI
@@ -560,21 +521,21 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	} //END private void onChangeEntryType()
 
 	public void setBase(String aBase) {
-		if (null == aBase) baseTF.setText("");
-		else baseTF.setText(aBase);
+		if (null == aBase) baseVTF.setText("");
+		else baseVTF.setText(aBase);
 	} //END public void setBase(String)
 
 	public String getBase() {
-		return baseTF.getText();
+		return baseVTF.getText();
 	} //END public String getBase()
 
 	public void setTarget(String aTarget) {
-		if (null == aTarget) targetTF.setText("");
-		else targetTF.setText(aTarget);
+		if (null == aTarget) targetVTF.setText("");
+		else targetVTF.setText(aTarget);
 	} //END public void setTarget(String)
 
 	public String getTarget() {
-		return targetTF.getText();
+		return targetVTF.getText();
 	} //END public String getTarget()
 	
 	public void setEntryType(String aLabel, String anId) {
@@ -644,16 +605,16 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	public void setAttributeName(String anAttributeName, int aNumber) {
 		switch (aNumber) {
 			case 1:
-				attributeOneL.setText(anAttributeName);
+				attributeOneL.setText(anAttributeName + ":");
 				break;
 			case 2:
-				attributeTwoL.setText(anAttributeName);
+				attributeTwoL.setText(anAttributeName + ":");
 				break;
 			case 3:
-				attributeThreeL.setText(anAttributeName);
+				attributeThreeL.setText(anAttributeName + ":");
 				break;
 			case 4:
-				attributeFourL.setText(anAttributeName);
+				attributeFourL.setText(anAttributeName + ":");
 				break;
 		}
 	} //END public void setAttributeName(String, int)
@@ -763,14 +724,14 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	//implements IEntryEditView
 	public void setLabels(String aBaseL, String aTargetL, String anAttributesL, String aUnitL, String aCategoryL
 						  , String anOthersL, String anExplanationL, String anExampleL) {
-		baseL.setText(aBaseL);
-		targetL.setText(aTargetL);
-		attributesLS.setText(anAttributesL);
-		unitL.setText(aUnitL);
-		categoryL.setText(aCategoryL);
-		othersLS.setText(anOthersL);
-		explanationL.setText(anExplanationL);
-		exampleL.setText(anExampleL);
+		baseL.setText(aBaseL + ":");
+		targetL.setText(aTargetL + ":");
+		attributesLS.setText(anAttributesL + ":");
+		unitL.setText(aUnitL + ":");
+		categoryL.setText(aCategoryL + ":");
+		othersLS.setText(anOthersL + ":");
+		explanationL.setText(anExplanationL + ":");
+		exampleL.setText(anExampleL + ":");
 	} //END public void setLabels(String ...)
 	
 	//implements IEntryEditView
@@ -817,4 +778,14 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 		//others separator is always visible due to status checkbox
 	} //END public void setVisibilities(int, int, int, int)
+	
+	//implements IEntryEditView
+	public void setBaseIsValueValid(boolean valid) {
+		baseVTF.isValueValid(valid);
+	} //END public void setBaseIsValueValid(boolean)
+	
+	//implements IEntryEditView
+	public void setTargetIsValueValid(boolean valid) {
+		targetVTF.isValueValid(valid);
+	} //END public void setTrargetIsValueValid(boolean)
 } //END public class EntryEditView extends AEditView implements IEntryEditView

@@ -2,7 +2,8 @@
  * EntryTypeAttribute.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,41 +31,41 @@ import java.util.logging.Logger;
 
 public final class EntryTypeAttribute extends AIdItemModel {
 
-    /** This entryTypeAttribute's name */
-    private String name;
-    
-    /** The id of the default item */
-    private String defaultItem;
-    
-    /** All related EntryTypeAttributeItems in an Array */
-    private EntryTypeAttributeItem items[];
-    
+	/** This entryTypeAttribute's name */
+	private String name;
+
+	/** The id of the default item */
+	private String defaultItem;
+
+	/** All related EntryTypeAttributeItems in an Array */
+	private EntryTypeAttributeItem items[];
+
 	/** Defines the maximal number of an EntryTypeAttribute until now */
 	private static int maxId = 0;
-	
+
 	/** A pointer to the entries */
 	private EntriesCollection entries;
 
-    /** The edit view */
-    private IEntryTypeAttributeEditView editView;
-    
-    public EntryTypeAttribute(String anId, String aName, String aDefaultItem, String aLastUpd
-							  , EntryTypeAttributeItem theItems[]) {
-    	setMaxId(anId);
-        this.id = anId;
+	/** The edit view */
+	private IEntryTypeAttributeEditView editView;
 
-        if (null == aName) this.name = Constants.UNDEFINED;
-        else this.name = aName;
-        setLastUpd(aLastUpd);
-        
-        //check for existing items and set defaultItem
-        if (null == theItems || 0 == theItems.length) {
-        	items = new EntryTypeAttributeItem[1];
-        	EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem();
-        	items[0] = newItem;
-        	defaultItem = newItem.getId();
-        }
-        else {
+	public EntryTypeAttribute(String anId, String aName, String aDefaultItem, String aLastUpd
+							  , EntryTypeAttributeItem theItems[]) {
+		setMaxId(anId);
+		this.id = anId;
+
+		if (null == aName) this.name = Constants.UNDEFINED;
+		else this.name = aName;
+		setLastUpd(aLastUpd);
+
+		//check for existing items and set defaultItem
+		if (null == theItems || 0 == theItems.length) {
+			items = new EntryTypeAttributeItem[1];
+			EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem();
+			items[0] = newItem;
+			defaultItem = newItem.getId();
+		}
+		else {
 			items = theItems;
 			//check correct default value
 			boolean existing = false; //whether the input defaultITem really exists
@@ -81,11 +82,11 @@ public final class EntryTypeAttribute extends AIdItemModel {
 				//take the first available EntryTypeAttributeItem
 				defaultItem = items[0].getId();
 			}
-        }
-        
+		}
+
 		logger = Logger.getLogger("net.vanosten.dings.model.EntryTypeAttribute");
-    } //END public EntryTypeAttribute(String, String, EntryTypeAttributeItem[], String)
-		
+	} //END public EntryTypeAttribute(String, String, EntryTypeAttributeItem[], String)
+
 	/**
 	 * Checks and sets the highest Id
 	 */
@@ -93,14 +94,14 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		maxId = Math.max(maxId, Integer.parseInt(thisId.substring(Constants.PREFIX_ENTRTYPE_ATTRIBUTE.length(),thisId.length())));
 	} //END private static void setMaxId(string)
 
-	/** 
+	/**
 	 * Returns a valid id for a new item
 	 */
 	private static String getNewId() {
 		maxId++;
 		return (Constants.PREFIX_ENTRTYPE_ATTRIBUTE + maxId);
 	} //END private static String getNewId()
-	
+
 	/**
 	 * Reset the max Id to 0.
 	 * E.g. used when creating a new vocabulary after another vocabulary had been opened.
@@ -109,27 +110,27 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		maxId = 0;
 	} //END protected static void resetMaxId()
 
-    /**
-     * Construct a new EntryTypeAttribute from scratch adding the necessary information.
-     */
+	/**
+	 * Construct a new EntryTypeAttribute from scratch adding the necessary information.
+	 */
 	protected static EntryTypeAttribute newItem(boolean isDefault) {
-    	EntryTypeAttributeItem newItems[] = new EntryTypeAttributeItem[1];
+		EntryTypeAttributeItem newItems[] = new EntryTypeAttributeItem[1];
 		EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem();
 		newItems[0] = newItem;
 		if (isDefault) {
 			return new EntryTypeAttribute(getNewId(), "Default", newItem.getId(), null, newItems);
-			
+
 		}
-        return new EntryTypeAttribute(getNewId(), Constants.UNDEFINED, newItem.getId(), null, newItems);
-    } //END protected static EntryTypeAttribute newItem(boolean)
-    
-    /**
-     * Implements AItemModel.
-     */
-    protected String getXMLString() {
-        StringBuffer xml = new StringBuffer();
-        xml.append("<").append(Constants.XML_ENTRYTYPE_ATTRIBUTE);
-        xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		return new EntryTypeAttribute(getNewId(), Constants.UNDEFINED, newItem.getId(), null, newItems);
+	} //END protected static EntryTypeAttribute newItem(boolean)
+
+	/**
+	 * Implements AItemModel.
+	 */
+	protected String getXMLString() {
+		StringBuffer xml = new StringBuffer();
+		xml.append("<").append(Constants.XML_ENTRYTYPE_ATTRIBUTE);
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_NAME, name));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_DEFAULTITEM, defaultItem));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
@@ -137,46 +138,46 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		for (int i = 0; i < items.length; i++) {
 			xml.append(items[i].getXMLString());
 		}
-        xml.append("</").append(Constants.XML_ENTRYTYPE_ATTRIBUTE).append(">");
-        return xml.toString();
-    } //END protected String getXMLString()
-    
-    /**
-     * Sets a pointer to the entries collection
-     * @param EntriesCollection theEntries
-     */
-    protected void setEntries(EntriesCollection theEntries) {
-    	this.entries = theEntries;
-    } //ENd protected void setEntries(EntriesCollection)
+		xml.append("</").append(Constants.XML_ENTRYTYPE_ATTRIBUTE).append(">");
+		return xml.toString();
+	} //END protected String getXMLString()
 
-    /**
-     * Returns this unit as an array containing a String with the ID and the name
-     *
-     * @return String[][] choiceProxy
-     */
-    protected String[] getChoiceProxy() {
-        String choiceProxy[] = {id, name};
-        return choiceProxy;
-    } //END protected String[] getChoiceProxy()
+	/**
+	 * Sets a pointer to the entries collection
+	 * @param EntriesCollection theEntries
+	 */
+	protected void setEntries(EntriesCollection theEntries) {
+		this.entries = theEntries;
+	} //ENd protected void setEntries(EntriesCollection)
 
-    protected Object[] getTableDisplay(){
+	/**
+	 * Returns this unit as an array containing a String with the ID and the name
+	 *
+	 * @return String[][] choiceProxy
+	 */
+	protected String[] getChoiceProxy() {
+		String choiceProxy[] = {id, name};
+		return choiceProxy;
+	} //END protected String[] getChoiceProxy()
+
+	protected Object[] getTableDisplay(){
 		Object[] display = {id, name};
 		return display;
-	} //End protected Object[] getTableDisplay()
-    
+	} //END protected Object[] getTableDisplay()
+
 	protected static String[] getTableDisplayTitles() {
 		String[] titles = {"Name"};
 		return titles;
 	} //END protected static String[] getTableDisplayTitles()
-	
+
 	protected static boolean[] getTableColumnFixedWidth() {
 		boolean fixed[] = {false};
 		return fixed;
 	} //END protected static boolean[] getTableColumnFixedWidth()
-	
+
 	/**
 	 * To display the items of this attribute in a list or combobox.
-	 * 
+	 *
 	 * @return
 	 */
 	protected String[][] getItemsChoiceProxy() {
@@ -187,73 +188,92 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		return proxy;
 	} //END protected String[][] getItemsChoiceProxy()
 
-    /**
-     * Lets you set the edit view
-     *
-     * @param IEntryTypeAttributeEditView aView
-     */
+	/**
+	 * Lets you set the edit view
+	 *
+	 * @param IEntryTypeAttributeEditView aView
+	 */
 	protected void setEditView(IEntryTypeAttributeEditView aView)  {
-        editView = aView;
-    } //END protected void setEditView(IEntryTypeAttributeEditView)
-    
-    //implements AItemModel
-    protected void releaseViews() {
-    	editView = null;
-    } //protected void releaseViews()
-    
+		editView = aView;
+	} //END protected void setEditView(IEntryTypeAttributeEditView)
+
+	//implements AItemModel
+	protected void releaseViews() {
+		editView = null;
+	} //protected void releaseViews()
+
 	/**
 	 * Tests the required fields for valid contents.
-	 * 
+	 *
 	 * @return ArrayList - a list of validation errors. Size() = 0 means valid model.
 	 */
-    public static ArrayList validate(String anId, String aName) {
-    	ArrayList errors = new ArrayList();
-    	String idError = validateId(Constants.PREFIX_ENTRTYPE_ATTRIBUTE, anId);
-    	if (null != idError) errors.add(idError);
+	public static ArrayList validate(String anId, String aName) {
+		ArrayList errors = new ArrayList();
+		String idError = validateId(Constants.PREFIX_ENTRTYPE_ATTRIBUTE, anId);
+		if (null != idError) errors.add(idError);
 		if (1 > aName.length()) {
 			errors.add("Name may not be empty");
 		}
-    	return errors;
-    } //END public static ArrayList validate(String, String)
-    
-    private ArrayList validate(String anId
-    								, String aName
-    								, EntryTypeAttributeItem[] someItems
-    								, String aDefaultItem) {
-    	//initialize errors by testing the id and name
-    	ArrayList errors = validate(anId, aName);
-    	//The next two tests should actually never be necessary, because
-    	//EntryTypeAttributeEditView should take care of this by disabling the deleteItemB
-    	//check that there is at least one item
-    	if (null == someItems) {
-    		errors.add("There must be at least one item");
-    	}
-    	else if (1 > someItems.length) {
-        		errors.add("There must be at least one item");    			
-    	}
-    	else {
-	    	//check that the default item is part of the items
-	    	boolean defaultFound = false;
-	    	for (int i = 0; i < someItems.length; i++) {
-	    		if (aDefaultItem.equals(someItems[i].getId())) {
-	    			defaultFound = true;
-	    			break;
-	    		}
-	    	}
-	    	if (false == defaultFound) {
-	    		errors.add("The default item does not exist");
-	    	}
-	    	//check that the names of the items are unique
-	    	HashSet theSet = new HashSet(someItems.length);
-			for (int i = 0; i < someItems.length; i++) {
-				if (false == theSet.add(someItems[i].getName())) {
-					errors.add("The items must have unique names: \"" + someItems[i].getName() + "\" (position " + (i + 1) + ")");
-				}
+		return errors;
+	} //END public static ArrayList validate(String, String)
+
+	private ArrayList validate(String anId
+									, String aName
+									, EntryTypeAttributeItem[] someItems
+									, String aDefaultItem) {
+		//initialize errors by testing the id and name
+		ArrayList errors = validate(anId, aName);
+		if (false == validateString(aName, 1)) {
+			errors.add("Name may not be empty");
+		}
+		//The test for number of items and default are not necessary in the GUI, because
+		//EntryTypeAttributeEditView takes care of this by disabling the deleteItemB
+		//check that there is at least one item
+		if (null == someItems || 1 > someItems.length) {
+			errors.add("There must be at least one item");
+		} else {
+			if (false == validateItemsHaveDefault(someItems, aDefaultItem)) {
+				errors.add("The default item does not exist");
 			}
-    	}
-    	return errors;
-    } //END private ArrayList validate(...)
-    
+			if (null != validateItemNames(someItems)) {
+				errors.add("The items must have unique names");
+			}
+		}
+		return errors;
+	} //END private ArrayList validate(...)
+
+	/**
+	 * Validates that the default item actually exists
+	 * @param someItems
+	 * @param aDefaultItem
+	 * @return false if the id of the default item is not one of the ids in the items
+	 */
+	private boolean validateItemsHaveDefault(EntryTypeAttributeItem[] someItems, String aDefaultItem) {
+		for (int i = 0; i < someItems.length; i++) {
+			if (aDefaultItem.equals(someItems[i].getId())) {
+				return true;
+			}
+		}
+		return false;
+	} //END private boolean validateItemsHaveDefault(EntryTypeAttributeItem[]
+
+	/**
+	 * Validates a set of EntryTypeAttributeItems
+	 * @param someItems
+	 * @return The ID of an item if its name is null, an empty String or has the same name as another item
+	 */
+	private String validateItemNames(EntryTypeAttributeItem[] someItems) {
+		HashSet theSet = new HashSet(someItems.length);
+		theSet.add(null); //make sure no other name is null
+		theSet.add(Constants.EMPTY_STRING); //make sure no other name is empty
+		for (int i = 0; i < someItems.length; i++) {
+			if (false == theSet.add(someItems[i].getName().trim())) {
+				return someItems[i].getId();
+			}
+		}
+		return null;
+	} //END private String validateItemNames(EntryTypeAttributeItem[]
+
 	//implements AItemModel.
 	protected void updateModel() {
 		//get values from editView and trim them
@@ -274,7 +294,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 			}
 			if (false == found) {
 				if (entries.isItemUsed(items[i].getId())) {
-					errors.add("The item may not be deleted, because it is in use: \"" 
+					errors.add("The item may not be deleted, because it is in use: \""
 							+ items[i].getName()
 							+ "\". Sorry, you have to press the Reset button to correct this.");
 				}
@@ -293,11 +313,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 			sendSaveNeeded();
 			updateGUI();
 		}
-		else {
-			//Show an error message with the validation details
-			showValidationErrors(errors);
-		}
-	}	//END private void updateModel()
+	} //END private void updateModel()
 
 	//Implements AItemModel
 	protected void updateGUI() {
@@ -305,29 +321,37 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		editView.setItems(tranlateFromAttributeItems()); //items have to be set before default item
 		editView.setDefaultItem(defaultItem);
 		editView.setItemTableNotEdited();
-		editView.setEditing(false);
+
+		//visual feedback
+		editView.setEditing(false, true);
+		editView.setNameIsValueValid(true);
 	 }	//END protected void updateGUI()
-     
+
 	//Implements AItemModel
 	protected void checkChangeInGUI() {
+		boolean isValid = validateString(editView.getName(), 1)
+			&& (null == validateItemNames(translateToAttributeItems(editView.getItems())));
 		if ((editView.getName().trim().equals(name))
 			&& (editView.getDefaultItem().trim().equals(defaultItem))
 			&& (false == editView.isItemTableEdited())) {
-			editView.setEditing(false);
+			editView.setEditing(false, isValid);
 		}
 		else {
-			editView.setEditing(true);
+			editView.setEditing(true, isValid);
 		}
+		//validation
+		editView.setNameIsValueValid(validateString(editView.getName(), 1));
+		editView.setItemNameIsValueValid(validateItemNames(translateToAttributeItems(editView.getItems())));
 	} //END protected void checkChangeInGUI()
-	
+
 	protected String getName() {
 		return name;
 	} //END protected String getName()
-	
+
 	protected String getDefaultItem() {
 		return defaultItem;
 	} //END protected String getDefaultItem()
-	
+
 	/**
 	 * Constructs EntryTypeAttributeItems from a two-dimensional
 	 * String array by calling a static function in EntryTypeAttributItem.
@@ -339,7 +363,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		}
 		return returnItems;
 	} //END private EntryTypeAttributeItem[] translateToAttributeItems(String[][])
-	
+
 	private Object[][] tranlateFromAttributeItems() {
 		Object[][] returnObj = new Object[items.length][];
 		for (int i = 0; i < returnObj.length; i++) {

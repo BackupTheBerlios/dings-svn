@@ -2,7 +2,8 @@
  * PreferencesEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,6 +21,9 @@
  */
 package net.vanosten.dings.swing;
 
+import java.awt.Color;
+
+import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
@@ -36,9 +40,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
@@ -47,6 +48,7 @@ import java.awt.CardLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -57,6 +59,8 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.model.Preferences;
+import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IPreferencesEditView;
 
 public class PreferencesEditView extends JDialog implements IPreferencesEditView {
@@ -75,11 +79,13 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private final static String LOGGING = "Logging";
 	private final static String SELECTION_UPDATE = "Selection Update";
 	private final static String STATS = "Statistics";
+	private final static String LOCALE = "Locale";
 
 	private JPanel learnHintP;
-	private JSlider learnHintCoverPercentSL;
 	private JSlider learnHintFlashTimeSL;
 	private JCheckBox learnHintShuffleByWordCB;
+	private JButton hintTextChangeB;
+	private JButton resultTextChangeB;
 
 	private JPanel fileEncodingP;
 	private JComboBox fileEncodingCB;
@@ -96,6 +102,9 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 
 	private JPanel statsP;
 	private JCheckBox statsOnQuitCB;
+	
+	private JPanel localeP;
+	private ChoiceID localeCh;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -146,7 +155,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		
 		JLabel categoryL = new JLabel();
 		categoryL.setText("Categories:");
-		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS};
+		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE};
 		choiceLi = new JList(choices);
 		choiceLi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		choiceLi.addListSelectionListener(new ListSelectionListener() {
@@ -189,20 +198,9 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		rightP.setLayout(gbl);
 		
 		//the title area
-		JPanel titleP = new JPanel();
-		titleP.setBackground(DingsSwingConstants.COLOR_PRIMARY_1);
-		Border titleBo = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		titleP.setBorder(titleBo);
-		GridBagLayout tgbl = new GridBagLayout();
-		GridBagConstraints tgbc = new GridBagConstraints();
-		titleP.setLayout(tgbl);
 		titleL = new JLabel();
-		titleL.setFont(Constants.TITLE_ONE_FONT);
-		tgbc.weightx = 1.0;
-		tgbc.fill = GridBagConstraints.HORIZONTAL;
-		tgbc.anchor = GridBagConstraints.LINE_START;
-		tgbl.setConstraints(titleL, tgbc);
-		titleP.add(titleL);
+		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
+		titleL.setEnabled(false);
 				
 		//the description area
 		descriptionL = new JLabel();
@@ -222,6 +220,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		mainP.add(selectionUpdateP, SELECTION_UPDATE);
 		initializeStatsOnQuitPanel();
 		mainP.add(statsP, STATS);
+		initializeLocalePanel();
+		mainP.add(localeP, LOCALE);
 		
 		//layout
 		gbc.gridx = 0;
@@ -229,8 +229,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(titleP, gbc);
-		rightP.add(titleP);
+		gbl.setConstraints(titleL, gbc);
+		rightP.add(titleL);
 		//----
 		gbc.gridy = 1;
 		gbc.insets = new Insets(DingsSwingConstants.SP_V_G, 0,0,0);
@@ -257,7 +257,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		);
 		buttonP.setBorder(border);
 		buttonP.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		JButton b = new JButton("Close", Constants.createImageIcon(Constants.IMG_CLOSE_24, "FIXME"));
+		JButton b = new JButton("Close", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_CLOSE_BTN, "FIXME"));
 		b.setMnemonic("C".charAt(0));
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -273,11 +273,13 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private void switchPreferencePanel() {		
 		//set the title and description
 		switch(choiceLi.getSelectedIndex()) {
+			//the cases have to be synchronized with the declaration of
+			//String[] choices
 			case 1: //look and feel
 				titleL.setText("Look And Feel");
 				descriptionL.setText(
 						"<html>Determines whether the look and feel should mimic the operating system or show the Java " +
-						"cross platform \"Metal\" theme.</html>"
+						"cross platform theme.</html>"
 				);
 				break;
 			case 2: //learn hints
@@ -315,6 +317,15 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 					+ " statistics view by pressing a button.</html>"
 				);
 				break;
+			case 6: //statistics on quit
+				titleL.setText("Locale and Language");
+				descriptionL.setText(
+					"<html>These setting influence the displayed language of the dialogs."
+					+ " Eventually the language does not change if the chosen locale is not"
+					+ " supported. The changes are only visible after a restart of the application."
+					+ "</html>"
+				);
+				break;
 			default: //file encoding
 				titleL.setText("File Encoding");
 				descriptionL.setText(
@@ -342,7 +353,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		fileEncodingP.setLayout(gbl);
 		
 		JLabel fileEncodingL = new JLabel("File encoding:");
-		fileEncodingCB = new JComboBox(FILE_ENCODINGS);
+		fileEncodingCB = new JComboBox(Preferences.FILE_ENCODINGS);
 		fileEncodingCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onChange();
@@ -399,25 +410,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagConstraints gbc = new GridBagConstraints();
 		learnHintP.setLayout(gbl);
 
-		JLabel coverL = new JLabel("Vertical coverage in %:");
-		learnHintCoverPercentSL = new JSlider(SwingConstants.HORIZONTAL, LH_COVER_PERCENT_MIN, LH_COVER_PERCENT_MAX, LH_COVER_PERCENT_DEFAULT);
-		learnHintCoverPercentSL.setMajorTickSpacing(20);
-		learnHintCoverPercentSL.setMinorTickSpacing(5);
-		learnHintCoverPercentSL.setSnapToTicks(true);
-		learnHintCoverPercentSL.setPaintTicks(true);
-		learnHintCoverPercentSL.setPaintLabels(true);
-		learnHintCoverPercentSL.putClientProperty("JSlider.isFilled", Boolean.TRUE);
-		learnHintCoverPercentSL.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				JSlider source = (JSlider)e.getSource();
-				if (!source.getValueIsAdjusting()) {
-					onChange();
-				}
-			}
-		});
-		coverL.setLabelFor(learnHintCoverPercentSL);
-
-		JLabel visibleL = new JLabel("Visible time for flash in milli seconds:");
+		JLabel visibleL = new JLabel("Visible time for flash in milli
+seconds:");
 		learnHintFlashTimeSL = new JSlider(SwingConstants.HORIZONTAL, LH_FLASH_TIME_MIN, LH_FLASH_TIME_MAX, LH_FLASH_TIME_DEFAULT);
 		learnHintFlashTimeSL.setMajorTickSpacing(1000);
 		learnHintFlashTimeSL.setMinorTickSpacing(100);
@@ -442,6 +436,26 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		learnHintShuffleByWordCB.setMnemonic(("W").charAt(0));
+		
+		GridLayout gl = new GridLayout(2,0,0,DingsSwingConstants.SP_V_C);
+		JPanel changeP = new JPanel(); //to display the buttons in the same size
+		changeP.setLayout(gl);
+		hintTextChangeB = new JButton("Change hint text color ...");
+		hintTextChangeB.setMnemonic(("H").charAt(0));
+		hintTextChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(hintTextChangeB);
+			}
+		});
+		resultTextChangeB = new JButton("Change result text color ...");
+		resultTextChangeB.setMnemonic(("R").charAt(0));
+		resultTextChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(resultTextChangeB);
+			}
+		});
+		changeP.add(hintTextChangeB);
+		changeP.add(resultTextChangeB);
 			
 		//layout
 		gbc.gridx = 0;
@@ -450,30 +464,26 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.anchor = GridBagConstraints.LINE_START;
-		gbl.setConstraints(coverL, gbc);
-		learnHintP.add(coverL);
-		//----
-		gbc.gridy = 1;
-		gbc.insets = new Insets(DingsSwingConstants.SP_V_G, 0, 0, 0);
-		gbl.setConstraints(learnHintCoverPercentSL, gbc);
-		learnHintP.add(learnHintCoverPercentSL);
-		//----
-		gbc.gridy = 2;
-		gbc.insets = new Insets(DingsSwingConstants.SP_V_T, 0, 0, 0);
 		gbl.setConstraints(visibleL, gbc);
 		learnHintP.add(visibleL);
 		//----
-		gbc.gridy = 3;
+		gbc.gridy = 1;
 		gbc.insets = new Insets(DingsSwingConstants.SP_V_G, 0, 0, 0);
+		gbc.weightx = 1.0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbl.setConstraints(learnHintFlashTimeSL, gbc);
 		learnHintP.add(learnHintFlashTimeSL);
 		//----
-		gbc.gridy = 4;
-		gbc.weighty = 1.0;
+		gbc.gridy = 2;
+		gbc.weightx = 0.0;
 		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
-		gbc.insets = new Insets(DingsSwingConstants.SP_V_T, 0, 0, 0);
+		gbc.fill = GridBagConstraints.NONE;
 		gbl.setConstraints(learnHintShuffleByWordCB, gbc);
 		learnHintP.add(learnHintShuffleByWordCB);
+		//----
+		gbc.gridy = 3;
+		gbl.setConstraints(changeP, gbc);
+		learnHintP.add(changeP);
 	} //END private void initializeLearnHintPanel()
 
 	private void initializeLoggingPanel() {
@@ -580,6 +590,39 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		statsP.add(statsOnQuitCB);
 	} //END private void initializeStatsOnQuitPanel()
 
+	private void initializeLocalePanel() {
+		localeP = new JPanel();
+		GridBagLayout gbl = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		localeP.setLayout(gbl);
+		
+		JLabel localeL = new JLabel("Locale of the application:");
+		localeCh = new ChoiceID();
+		localeCh.setItems(Constants.getSupportedLocales(null)); //TODO replace null with real RessourceBundle
+		localeCh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onChange();
+			}
+		});
+		localeL.setLabelFor(localeCh);
+			
+		//layout
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gbl.setConstraints(localeL, gbc);
+		localeP.add(localeL);
+		//----
+		gbc.gridx = 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.insets = new Insets(0, DingsSwingConstants.SP_H_G, 0, 0);
+		gbl.setConstraints(localeCh, gbc);
+		localeP.add(localeCh);
+	} //END private void initializeLocalePanel()
+
 	//Implements IView
 	public boolean init(IAppEventHandler aController) {
 		this.controller = aController;
@@ -604,6 +647,23 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			controller.handleAppEvent(ape);
 		}
 	} //END private void onChange()
+	
+	/**
+	 * Shows a color chooser dialog and changes the foreground
+	 * color of the button which is initiating the dialog.
+	 * 
+	 * @param aButton The button initiating the dialog
+	 */
+	private void showColorChooser(JButton aButton) {
+		Color newColor = JColorChooser.showDialog(
+                this,
+                "Choose Text Color",
+                aButton.getForeground());
+		if (null != newColor) {
+			aButton.setForeground(newColor);
+			onChange();
+		}
+	} //END private void showColorChooser(JButton)
 
 	private void onClose() {
 		//store the application's size
@@ -626,18 +686,6 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public String getFileEncoding() {
 		return (String)fileEncodingCB.getSelectedItem();
 	} //END public String getFileEncoding()
-
-	//implements IPreferencesEditView
-	public void setLearnHintCoverPercent(int thePercentage) {
-		isUpdating = true;
-		learnHintCoverPercentSL.setValue(thePercentage);
-		isUpdating = false;
-	} //public void setLearnHintCoverPercent(int)
-
-	//implements IPreferencesEditView
-	public int getLearnHintCoverPercent() {
-		return learnHintCoverPercentSL.getValue();
-	} //END public int getLearnHintCoverPercent()
 
 	//implements IPreferencesEditView
 	public void setLearnHintFlashTime(int theFlashTime) {
@@ -744,5 +792,40 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public boolean isStatsOnQuit() {
 		return statsOnQuitCB.isSelected();
 	} //END public boolean isStatsOnQuit()
+	
+	//implements IPreferencesEditView
+	public String getApplicationLocale() {
+		return localeCh.getSelectedID();
+	} //END public String getApplicationLocale()
+	
+	//implements IPreferenceEditView
+	public void setApplicationLocale(String aLocale) {
+		isUpdating = true;
+		localeCh.setSelectedID(aLocale);
+		isUpdating = false;
+	} //public void setApplicationLocale(String)
 
+	//implements IPreferencesEditView
+	public Color getHintTextColor() {
+		return hintTextChangeB.getForeground();
+	} //END public Color getHintTextColor()
+	
+	//implements IPreferencesEditView
+	public void setHintTextColor(Color aColor) {
+		isUpdating = true;
+		hintTextChangeB.setForeground(aColor);
+		isUpdating = false;
+	} //public void setHintTextColor(Color)
+
+	//implements IPreferencesEditView
+	public Color getResultTextColor() {
+		return resultTextChangeB.getForeground();
+	} //END public Color getResultTextColor()
+	
+	//implements IPreferencesEditView
+	public void setResultTextColor(Color aColor) {
+		isUpdating = true;
+		resultTextChangeB.setForeground(aColor);
+		isUpdating = false;
+	} //public void setResultTextColor(Color)
 } //END public class PreferencesEditView extends JPanel implements IPreferencesEditView

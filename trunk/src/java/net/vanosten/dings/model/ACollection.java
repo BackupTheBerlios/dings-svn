@@ -2,7 +2,8 @@
  * ACollection.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,54 +33,54 @@ import net.vanosten.dings.event.IAppEventHandler;
 
 public abstract class ACollection implements IAppEventHandler {
 
-    /** Is actually the container holding all items */
-    protected HashMap items = null;
+	/** Is actually the container holding all items */
+	protected HashMap items = null;
 
-    protected IListView listView = null;
+	protected IListView listView = null;
 
-    protected IAppEventHandler parentController = null;
+	protected IAppEventHandler parentController = null;
 
 	/** The name of the XML tag for this collection */
 	protected String tagName;
-	
+
 	/** The message for getting the list view */
 	protected String msgListView = null;
 
-    /**
-     * The empty constructor.
-     */
-    public ACollection(IAppEventHandler anEventHandler) {
-        this.parentController = anEventHandler;
-        setTagName();
-        setMessageListView();
-        items = new HashMap(); //TODO: maybe we should provide an intelligent default size
-    } //End public ACollection;
-	
+	/**
+	 * The empty constructor.
+	 */
+	public ACollection(IAppEventHandler anEventHandler) {
+		this.parentController = anEventHandler;
+		setTagName();
+		setMessageListView();
+		items = new HashMap(); //TODO: maybe we should provide an intelligent default size
+	} //END public ACollection;
+
 	/**
 	 * Sets the name of the tag.
 	 */
 	protected abstract void setTagName();
-	
+
 	/**
 	 * Sets the name of the list view message.
 	 */
 	protected abstract void setMessageListView();
 
-    /**
-     * Sets the items and and does some processing to prepare the items for use (e.g. max Id).
-     *
-     * @param HashMap units
-     */
+	/**
+	 * Sets the items and and does some processing to prepare the items for use (e.g. max Id).
+	 *
+	 * @param HashMap units
+	 */
 	protected abstract void setItems(HashMap theItems);
 
-    /**
-     * The collection as an XML string.
-     */
+	/**
+	 * The collection as an XML string.
+	 */
 	protected String getXMLString() {
 		StringBuffer xml = new StringBuffer();
 
 		xml.append("<").append(tagName).append(">").append(Constants.getLineSeparator());
-		
+
 		//run through collection
 		Set keys = items.keySet();
 		Iterator iter = keys.iterator();
@@ -88,36 +89,36 @@ public abstract class ACollection implements IAppEventHandler {
 			item = (AItemModel)items.get(iter.next());
 			xml.append(item.getXMLString()).append(Constants.getLineSeparator());
 		}
-		
+
 		xml.append("</").append(tagName).append(">");
 		return xml.toString();
 	} //END protected String getXMLString()
-    
-    /**
-     * Sets the current item.
-     *
-     * @param String anID - the ID of the unit
-     */
-    protected abstract void setCurrentItem(String anID);
+
+	/**
+	 * Sets the current item.
+	 *
+	 * @param String anID - the ID of the unit
+	 */
+	protected abstract void setCurrentItem(String anID);
 
 	/*
 	 * Tries to find the neighbour of an item, which is going to be deleted.
-	 * 
+	 *
 	 * @returns String - the id of a neighbour or null if the list will be empty
-	 */	
+	 */
 	protected abstract String selectNewCurrent(String anId);
-	
+
 	/**
 	 * Removes an Id or item from another collection besides the items
 	 */
 	protected abstract void removeInOther(String anId);
-	
+
 	/**
 	 * Deletes an item from a request in an edit view.
 	 * Has to call deleteItem(String, boolean) with the currentItem.getId() and "false".
 	 */
 	protected abstract void deleteItem();
-	
+
 	/**
 	 * Controls whether it is allowed to delete the item.
 	 * E.g. there has to be at least one unit and the unit may not be used in any Entry.
@@ -147,39 +148,39 @@ public abstract class ACollection implements IAppEventHandler {
 			}
 		}
 		//else do nothing. The implementation of checkDeleteAllowed() should show error message
-	} //End public deleteItem(String, boolean)
-	
-    protected void editItem(String anID) {
-        setCurrentItem(anID);
-    } //END protected void editItem(String)
+	} //END public deleteItem(String, boolean)
+
+	protected void editItem(String anID) {
+		setCurrentItem(anID);
+	} //END protected void editItem(String)
 
 	/**
-	 * Add a new item. 
+	 * Add a new item.
 	 * @param aType - which type it is (only for Entries, null otherwise)
 	 * @param isDefault - whether this is a default item (only for selection items -> Unit, Category, EntryType)
 	 */
-    protected abstract void newItem(String aType, boolean isDefault);
+	protected abstract void newItem(String aType, boolean isDefault);
 
-    /**
-     * Sets the list for the listview
-     */
-    protected abstract void refreshListView();
+	/**
+	 * Sets the list for the listview
+	 */
+	protected abstract void refreshListView();
 
-    /**
-     * Handles AppEvents
-     */
-    public abstract void handleAppEvent(AppEvent evt);
+	/**
+	 * Handles AppEvents
+	 */
+	public abstract void handleAppEvent(AppEvent evt);
 
-    /**
-     * Counts the number of entry types in this collection.
-     *
-     * @return int the number of elements.
-     */
-    protected int countElements() {
-        return items.size();
-    } //END protected int countElements()
+	/**
+	 * Counts the number of entry types in this collection.
+	 *
+	 * @return int the number of elements.
+	 */
+	protected int countElements() {
+		return items.size();
+	} //END protected int countElements()
 
-    protected void setListView(IListView aListView) {
+	protected void setListView(IListView aListView) {
 		this.listView = aListView;
 	} //END protected void setListView(IListView)
 
@@ -188,5 +189,5 @@ public abstract class ACollection implements IAppEventHandler {
 		ape.setMessage(MessageConstants.S_SAVE_NEEDED);
 		parentController.handleAppEvent(ape);
 	} //END protected void sendSaveNeeded()
-} //End public abstract class ACollection
+} //END public abstract class ACollection
 

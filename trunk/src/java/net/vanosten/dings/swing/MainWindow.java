@@ -2,7 +2,8 @@
  * MainWindow.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -28,7 +29,9 @@ package net.vanosten.dings.swing;
  * @author Rick Gruber
  * @version
  */
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -36,6 +39,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.KeyStroke;
@@ -63,6 +67,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.ADings;
 import net.vanosten.dings.model.Preferences;
+import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.swing.helperui.XMLFileFilter;
 import net.vanosten.dings.swing.helperui.StatusBar;
 import net.vanosten.dings.uiif.*;
@@ -73,9 +78,6 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class MainWindow extends JFrame implements IDingsMainWindow {
-
-	/** Holds the applications preferences and properties */
-	private transient Preferences preferences = null;
 
 	/** The main Panel */
 	private JPanel mainP;
@@ -107,7 +109,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	//The menus
 	private JMenu fileMenu;
 	private JMenu editMenu;
-	private JMenu goMenu; //the different views
+	private JMenu learnMenu;
 	private JMenu toolsMenu;
 	private JMenu helpMenu;
 
@@ -117,7 +119,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	private JMenuItem openMI;   //opens a vocabulary file
 	private JMenuItem saveMI;   //saves the current vocabulary into the opened file
 	private JMenuItem saveAsMI; //opens a file dialog to save vocabulary to a new file
-	private JMenuItem propertiesMI;   //a view to edit the vocabulary properties
+	private JMenuItem infoMI;   //a view to edit the vocabulary properties
 	private JMenuItem closeMI; //closes a vocabulary file
 	private JMenuItem quitMI;   //exit from the application
 
@@ -155,33 +157,15 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	 * The Constructor. It sets up the frame with a default set of menus and at
 	 * program start the go view is displayed.
 	 */
-	public MainWindow(IAppEventHandler aController, Preferences thePreferences, ComponentOrientation aComponentOrientation) {
-		super.setComponentOrientation(aComponentOrientation);
+	public MainWindow(IAppEventHandler aController) {
+		super.setComponentOrientation(ComponentOrientation.getOrientation(Toolbox.getInstance().getCurrentLocalePointer()));
 		//set pointers
+		Preferences preferences = Toolbox.getInstance().getPreferencesPointer();
 		this.parentController = aController;
-		this.preferences = thePreferences;
-		this.guiOrientation = aComponentOrientation;
+		this.guiOrientation = ComponentOrientation.getOrientation(Toolbox.getInstance().getCurrentLocalePointer());
 		
 		//prepare look & feel
-		try {
-			String systemLAF = UIManager.getSystemLookAndFeelClassName();
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "System look and feel class name: " + systemLAF);
-			}			
-			if (Boolean.valueOf(preferences.getProperty(Preferences.PROP_SYSTEM_LAF)).booleanValue()) {
-				UIManager.setLookAndFeel (systemLAF);
-			}
-		}
-		catch (UnsupportedLookAndFeelException evt) {
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "System specific look and feel could not be found: " + evt.getMessage());
-			}			
-		}
-		catch (Exception evt) {
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "Look and feel property could not be properly translated to boolean: " + evt.getMessage());
-			}			
-		}
+		setLookAndFeel();
 
 		//prepare show
 		int windowWidth  = 800;
@@ -202,7 +186,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		setBounds(locationX, locationY, windowWidth, windowHeight);
 		
 		//define the icon
-		ImageIcon icon = Constants.createImageIcon(Constants.IMG_DINGS_32, "logo of the " + ADings.APP_NAME + " application");
+		ImageIcon icon = DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DINGS_32, "logo of the " + ADings.APP_NAME + " application");
 		if (null != icon) {
 			this.setIconImage(icon.getImage());
 		}
@@ -220,13 +204,21 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		mainP = new JPanel();
 		mainP.setLayout(new BorderLayout());
 		//set the font sizes
-		Constants.setFontSizes(mainP.getFont());
+		DingsSwingConstants.setFontSizes(mainP.getFont());
 
 		this.getContentPane().add(mainP, BorderLayout.CENTER);
 
 		//status bar
 		statusBar = new StatusBar();
-		this.getContentPane().add(statusBar, BorderLayout.PAGE_END);		
+		this.getContentPane().add(statusBar, BorderLayout.PAGE_END);
+		//key
+		KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0);
+		mainP.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "HELP");
+		mainP.getActionMap().put("HELP", new AbstractAction() {
+			public void actionPerformed(ActionEvent evt) {
+				showHelp(MessageConstants.H_ALL);
+			}
+		});
 
 		//add the menu bar
 		initializeMenuBar();
@@ -237,12 +229,39 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		//show the frame
 		//Do not pack() to have the size correctly set
 		this.setVisible(true);
-	} //End public MainWindow()
+	} //END public MainWindow()
 	
-	//	implements IDingsMainWindow
+	//implements IDingsMainWindow
+	public void setLookAndFeel() {
+		try {
+			String systemLAF = UIManager.getSystemLookAndFeelClassName();
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "System look and feel class name: " + systemLAF);
+			}			
+			if (Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_SYSTEM_LAF)).booleanValue()) {
+				UIManager.setLookAndFeel(systemLAF);
+			} else {
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			}
+			SwingUtilities.updateComponentTreeUI(this);
+		}
+		catch (UnsupportedLookAndFeelException evt) {
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "System specific look and feel could not be found: " + evt.getMessage());
+			}			
+		}
+		catch (Exception evt) {
+			if (logger.isLoggable(Level.FINEST)) {
+				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "Look and feel property could not be properly translated to boolean: " + evt.getMessage());
+			}			
+		}
+	} //END public void setLookAndFeel()
+	
+	//implements IDingsMainWindow
 	public void saveWindowLocationAndSize() {
 		Dimension d = this.getSize();
 		Point p = this.getLocationOnScreen();
+		Preferences preferences = Toolbox.getInstance().getPreferencesPointer(); //locale Preferences pointer
 		preferences.setProperty(Preferences.PROP_APP_WINDOW_WIDTH, Integer.toString(d.width));
 		preferences.setProperty(Preferences.PROP_APP_WINDOW_HEIGHT, Integer.toString(d.height));
 		preferences.setProperty(Preferences.PROP_APP_LOCATION_X, Integer.toString(p.x));
@@ -256,12 +275,14 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		PreferencesEditView preferencesEditView = new PreferencesEditView(this, this.guiOrientation);
 		int dialogWidth = 500;
 		int dialogHeight = 400;
+		Preferences preferences = Toolbox.getInstance().getPreferencesPointer(); //locale Preferences pointer
 		if (preferences.containsKey(Preferences.PROP_PREF_DIALOG_WIDTH) && preferences.containsKey(Preferences.PROP_PREF_DIALOG_HEIGHT)) {
 			try {
 				dialogWidth = Integer.parseInt(preferences.getProperty(Preferences.PROP_PREF_DIALOG_WIDTH));
 				dialogHeight = Integer.parseInt(preferences.getProperty(Preferences.PROP_PREF_DIALOG_HEIGHT));
 			}
 			catch (NumberFormatException e) {
+				//if exception do nothing, because default width will be taken
 			}
 		}
 		preferencesEditView.setSize(dialogWidth, dialogHeight);
@@ -273,13 +294,25 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	
 	//implements IDingsMainWindow
 	public void showHelp(String screen) {
-		JOptionPane.showMessageDialog(this, "Sorry, not implemented yet! " + screen, "Help", JOptionPane.INFORMATION_MESSAGE);
+		if (screen.equals(MessageConstants.H_ALL)) {
+			//JOptionPane.showMessageDialog(this, "Sorry, not implemented yet!", "Help", JOptionPane.INFORMATION_MESSAGE);
+			showMessageDialog("Help", "Sorry, not implemented yet!\nHave a look at the website http://dings.berlios.de/", Constants.INFORMATION_MESSAGE);
+		} else {
+			//JOptionPane.showMessageDialog(this, "DingsBums?! by vanosten", "About", JOptionPane.INFORMATION_MESSAGE);
+			showMessageDialog("About", "DingsBums?! by vanosten", Constants.INFORMATION_MESSAGE);
+		}
 	} //END public void showHelp(String)
 
 	//implements IDingsMainWindow
 	public String showFileChooser(String aFileName, boolean showOpen) {
 		JFileChooser fc = new JFileChooser(aFileName);
-		fc.setDialogTitle("Open Vocabulary File");
+		fc.setComponentOrientation(guiOrientation);
+		if (showOpen) {
+			fc.setDialogTitle("Open Learning Stack File");
+		}
+		else {
+			fc.setDialogTitle("Save Learning Stack File As");
+		}
 		fc.setMultiSelectionEnabled(false);
 		fc.addChoosableFileFilter(new XMLFileFilter());
 		int returnValue;
@@ -294,7 +327,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 
 	//implements IDingsMainWindow
 	public void showMessageDialog(String aTitle, String aMessage, int aMessageType) {
-		JOptionPane.showMessageDialog(this, aMessage, aTitle, getSwingMessageType(aMessageType));
+		JOptionPane.showMessageDialog(this, aMessage, aTitle
+				, getSwingMessageType(aMessageType)
+				, DingsSwingConstants.getIconForMessageType(aMessageType));
 	} //END public void showMessageDialog(String, String, int)
 
 	//implements IDingsMainWindow
@@ -314,9 +349,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		int answer = JOptionPane.showOptionDialog(this
 						, aMessage
 						, aTitle
-						, getSwingMessageType(aMessageType)
 						, getSwingOptionType(anOptionType)
-						, null //don't use a custom Icon
+						, getSwingMessageType(aMessageType)
+						, DingsSwingConstants.getIconForMessageType(aMessageType)
 						, options //the titles of buttons
 						, options[0]); //default button title
 		return getDingsAnswer(answer);
@@ -407,27 +442,31 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	} //END public IInfoVocabEditView getInfoVocabEditView()
 	
 	public IListView getUnitsListView() {
-		unitsListView = new UnitsListView();
+		unitsListView = new UnitsListView(this.getComponentOrientation());
 		return unitsListView;
 	} //END public IListView getUnitsListView()
 	
 	public IUnitEditView getUnitEditView() {
-		unitEditView = new UnitEditView("Edit Unit", this.guiOrientation, MessageConstants.N_VIEW_UNITS_LIST);
+		unitEditView = new UnitEditView(Toolbox.getInstance().getLocalizedString("viewtitle.edit_unit")
+				, this.guiOrientation
+				, MessageConstants.N_VIEW_UNITS_LIST);
 		return unitEditView;
 	} //END public IUnitEditView getUnitEditView()
 	
 	public IListView getCategoriesListView() {
-		categoriesListView = new CategoriesListView();
+		categoriesListView = new CategoriesListView(this.getComponentOrientation());
 		return categoriesListView;
 	} //END public IListView getCategoriesListView()
 	
 	public IUnitEditView getCategoryEditView() {
-		categoryEditView = new UnitEditView("Edit Unit", this.guiOrientation, MessageConstants.N_VIEW_CATEGORIES_LIST);
+		categoryEditView = new UnitEditView(Toolbox.getInstance().getLocalizedString("viewtitle.edit_category")
+				, this.guiOrientation
+				, MessageConstants.N_VIEW_CATEGORIES_LIST);
 		return categoryEditView;
 	} //ENDpublic IUnitEditView getCategoryEditView()
 	
 	public IEntriesListView getEntriesListView() {
-		entriesListView = new EntriesListView();
+		entriesListView = new EntriesListView(this.getComponentOrientation());
 		return entriesListView;
 	} //END public IEntriesListView getEntriesListView()
 	
@@ -437,7 +476,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	} //END public IEntryEditView getEntryEditView()
 	
 	public IListView getEntryTypesListView() {
-		entryTypesListView = new EntryTypesListView();
+		entryTypesListView = new EntryTypesListView(this.getComponentOrientation());
 		return entryTypesListView;
 	} //END public IListView getEntryTypesListView()
 	
@@ -447,7 +486,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	} //END public IEntryTypeEditView getEntryTypeEditView()
 	
 	public IListView getEntryTypeAttributesListView() {
-		entryTypeAttributesListView = new EntryTypeAttributesListView();
+		entryTypeAttributesListView = new EntryTypeAttributesListView(this.getComponentOrientation());
 		return entryTypeAttributesListView;
 	} //END public IListView getEntryTypeAttributesListView()
 	
@@ -540,11 +579,12 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		menuBar = new JMenuBar();
 		
 		//fileMenu
-		fileMenu = new JMenu("File");
-		fileMenu.setMnemonic("F".charAt(0));
+		fileMenu = new JMenu(Toolbox.getInstance().getLocalizedString("label.menu.file"));
+		fileMenu.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menu.file").charAt(0));
 		//----
-		newMI = new JMenuItem("New", Constants.createImageIcon(Constants.IMG_NEW_16, "FIXME"));
-		newMI.setMnemonic("N".charAt(0));
+		newMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.file_new"));
+		newMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_NEW_MI, "FIXME"));
+		newMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.file_new").charAt(0));
 		newMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		newMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -554,8 +594,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			}
 		});
 		//----
-		openMI = new JMenuItem("Open ...", Constants.createImageIcon(Constants.IMG_OPEN_16, "FIXME"));
-		openMI.setMnemonic("O".charAt(0));
+		openMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.file_open"));
+		openMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_OPEN_MI, "FIXME"));
+		openMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.file_open").charAt(0));
 		openMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		openMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -565,8 +606,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			}
 		});
 		//----
-		saveMI = new JMenuItem("Save", Constants.createImageIcon(Constants.IMG_SAVE_16, "FIXME"));
-		saveMI.setMnemonic("S".charAt(0));
+		saveMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.file_save"));
+		saveMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_SAVE_MI, "FIXME"));
+		saveMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.file_save").charAt(0));
 		saveMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		saveMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -576,8 +618,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			}
 		});
 		//----
-		saveAsMI = new JMenuItem("Save As ...", Constants.createImageIcon(Constants.IMG_SAVE_AS_16, "FIXME"));
-		saveAsMI.setMnemonic("A".charAt(0));
+		saveAsMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.file_save_as"));
+		saveAsMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_SAVE_AS_MI, "FIXME"));
+		saveAsMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.file_save_as").charAt(0));
 		saveAsMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK));
 		saveAsMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -587,18 +630,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			}
 		});
 		//----
-		propertiesMI = new JMenuItem("Properties", Constants.createImageIcon(Constants.IMG_PROPERTIES_16, "FIXME"));
-		propertiesMI.setMnemonic("P".charAt(0));
-		propertiesMI.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-				ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
-				parentController.handleAppEvent(ape);
-			}
-		});
-		//----
-		closeMI = new JMenuItem("Close", Constants.createImageIcon(Constants.IMG_CLOSE_16, "FIXME"));
-		closeMI.setMnemonic("C".charAt(0));
+		closeMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.file_close"));
+		closeMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_CLOSE_MI, "FIXME"));
+		closeMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.file_close").charAt(0));
 		closeMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.CTRL_MASK));
 		closeMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -608,8 +642,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			}
 		});
 		//----
-		quitMI = new JMenuItem("Quit", Constants.createImageIcon(Constants.IMG_EXIT_16, "FIXME"));
-		quitMI.setMnemonic("Q".charAt(0));
+		quitMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.file_quit"));
+		quitMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EXIT_MI, "FIXME"));
+		quitMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.file_quit").charAt(0));
 		quitMI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.CTRL_MASK));
 		quitMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -621,38 +656,12 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		addDefaultsToFileMenu();
 
 		//editMenu
-		editMenu = new JMenu("Edit");
-		editMenu.setMnemonic("E".charAt(0));
+		editMenu = new JMenu(Toolbox.getInstance().getLocalizedString("label.menu.edit"));
+		editMenu.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menu.edit").charAt(0));
 		//----
-		preferencesMI = new JMenuItem("Preferences", Constants.createImageIcon(Constants.IMG_PREFERENCES_16, "FIXME"));
-		preferencesMI.setMnemonic("P".charAt(0));
-		editMenu.add(preferencesMI);
-		preferencesMI.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				showPreferences();
-			}
-		});
-
-
-		//goMenu
-		goMenu = new JMenu("Go");
-		goMenu.setMnemonic("G".charAt(0));
-		//----
-		learnOneByOneMI = new JMenuItem("Learn One by One");
-		learnOneByOneMI.setMnemonic("O".charAt(0));
-		learnOneByOneMI.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-				ape.setMessage(MessageConstants.N_VIEW_ENTRY_LEARNONE);
-				parentController.handleAppEvent(ape);
-			}
-		});
-		goMenu.add(learnOneByOneMI);
-		//----
-		goMenu.addSeparator();
-		//----
-		entriesMI = new JMenuItem("Edit Entries");
-		entriesMI.setMnemonic("E".charAt(0));
+		entriesMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_entries"));
+		entriesMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		entriesMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_entries").charAt(0));
 		entriesMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -660,10 +669,11 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 				parentController.handleAppEvent(ape);
 			}
 		});
-		goMenu.add(entriesMI);
+		editMenu.add(entriesMI);
 		//----
-		unitsMI = new JMenuItem("Edit Units");
-		unitsMI.setMnemonic("U".charAt(0));
+		unitsMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_units"));
+		unitsMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		unitsMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_units").charAt(0));
 		unitsMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -671,10 +681,11 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 				parentController.handleAppEvent(ape);
 			}
 		});
-		goMenu.add(unitsMI);
+		editMenu.add(unitsMI);
 		//----
-		categoriesMI = new JMenuItem("Edit Categories");
-		categoriesMI.setMnemonic("C".charAt(0));
+		categoriesMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_categories"));
+		categoriesMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		categoriesMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_categories").charAt(0));
 		categoriesMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -682,10 +693,11 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 				parentController.handleAppEvent(ape);
 			}
 		});
-		goMenu.add(categoriesMI);
+		editMenu.add(categoriesMI);
 		//----
-		entryTypesMI = new JMenuItem("Edit Entry Types");
-		entryTypesMI.setMnemonic("T".charAt(0));
+		entryTypesMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_entry_types"));
+		entryTypesMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		entryTypesMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_entry_types").charAt(0));
 		entryTypesMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -693,9 +705,11 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 				parentController.handleAppEvent(ape);
 			}
 		});
-		goMenu.add(entryTypesMI);
-		entryTypeAttributesMI = new JMenuItem("Edit Entry Type Attributes");
-		entryTypeAttributesMI.setMnemonic("A".charAt(0));
+		editMenu.add(entryTypesMI);
+		//----
+		entryTypeAttributesMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_entry_type_attributes"));
+		entryTypeAttributesMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		entryTypeAttributesMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_entry_type_attributes").charAt(0));
 		entryTypeAttributesMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -703,28 +717,56 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 				parentController.handleAppEvent(ape);
 			}
 		});
-		goMenu.add(entryTypeAttributesMI);
+		editMenu.add(entryTypeAttributesMI);
 		//----
-		goMenu.addSeparator();
+		editMenu.addSeparator();
 		//----
-		statisticsMI = new JMenuItem("Display Statistics");
-		statisticsMI.setMnemonic("D".charAt(0));
-		statisticsMI.addActionListener(new ActionListener() {
+		infoMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_properties"));
+		infoMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_INFO_MI, "FIXME"));
+		infoMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_properties").charAt(0));
+		infoMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-				ape.setMessage(MessageConstants.N_VIEW_STATISTICS);
+				ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
 				parentController.handleAppEvent(ape);
 			}
 		});
-		goMenu.add(statisticsMI);
+		editMenu.add(infoMI);
+		//----
+		editMenu.addSeparator();
+		//----
+		preferencesMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.edit_edit_preferences"));
+		preferencesMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_PREFERENCES_MI, "FIXME"));
+		preferencesMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.edit_edit_preferences").charAt(0));
+		preferencesMI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showPreferences();
+			}
+		});
+		editMenu.add(preferencesMI);
 
+		//learn menu
+		learnMenu = new JMenu(Toolbox.getInstance().getLocalizedString("label.menu.learn"));
+		learnMenu.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menu.learn").charAt(0));
+		//----
+		learnOneByOneMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.learn_one"));
+		learnOneByOneMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.learn_one").charAt(0));
+		learnOneByOneMI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+				ape.setMessage(MessageConstants.N_VIEW_ENTRY_LEARNONE);
+				parentController.handleAppEvent(ape);
+			}
+		});
+		learnMenu.add(learnOneByOneMI);
 		
 		//tools menu
-		toolsMenu = new JMenu("Tools");
-		toolsMenu.setMnemonic("T".charAt(0));
+		toolsMenu = new JMenu(Toolbox.getInstance().getLocalizedString("label.menu.tools"));
+		toolsMenu.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menu.tools").charAt(0));
 		//----
-		selectMI = new JMenuItem("Select Entries");
-		selectMI.setMnemonic("S".charAt(0));
+		selectMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.tools_select_entries"));
+		selectMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		selectMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.tools_select_entries").charAt(0));
 		selectMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
@@ -736,8 +778,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		//----
 		toolsMenu.addSeparator();
 		//----
-		resetScoreAllMI = new JMenuItem("Reset Score All");
-		resetScoreAllMI.setMnemonic("A".charAt(0));
+		resetScoreAllMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.tools_reset_score_all"));
+		resetScoreAllMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		resetScoreAllMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.tools_reset_score_all").charAt(0));
 		resetScoreAllMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
@@ -747,8 +790,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		});
 		toolsMenu.add(resetScoreAllMI);
 		//----
-		resetScoreSelMI = new JMenuItem("Reset Score Current Selection");
-		resetScoreSelMI.setMnemonic("C".charAt(0));
+		resetScoreSelMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.tools_reset_score_current"));
+		resetScoreSelMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		resetScoreSelMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.tools_reset_score_current").charAt(0));
 		resetScoreSelMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
@@ -760,8 +804,21 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		//----
 		toolsMenu.addSeparator();
 		//----
-		saveStatsMI = new JMenuItem("Save Current Learning Statistics");
-		saveStatsMI.setMnemonic("L".charAt(0));
+		statisticsMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.tools_display_stats"));
+		statisticsMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_STATS_MI, "FIXME"));
+		statisticsMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.tools_display_stats").charAt(0));
+		statisticsMI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+				ape.setMessage(MessageConstants.N_VIEW_STATISTICS);
+				parentController.handleAppEvent(ape);
+			}
+		});
+		toolsMenu.add(statisticsMI);
+		//----
+		saveStatsMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.tools_save_stats"));
+		saveStatsMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		saveStatsMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.tools_save_stats").charAt(0));
 		saveStatsMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
@@ -771,13 +828,13 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		});
 		toolsMenu.add(saveStatsMI);
 
-
 		//helpMenu
-		helpMenu = new JMenu("Help");
-		helpMenu.setMnemonic("H".charAt(0));
+		helpMenu = new JMenu(Toolbox.getInstance().getLocalizedString("label.menu.help"));
+		helpMenu.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menu.help").charAt(0));
 		//----
-		contentsMI = new JMenuItem("Contents", Constants.createImageIcon(Constants.IMG_HELP_16, "FIXME"));
-		contentsMI.setMnemonic("C".charAt(0));
+		contentsMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.help_contents"));
+		contentsMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_HELP_MI, "FIXME"));
+		contentsMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.help_contents").charAt(0));
 		//contentsMI.setAccelerator(KeyStroke.getKeyStrokeForEvent(KeyEvent.VK_F1));
 		contentsMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -788,8 +845,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		});
 		helpMenu.add(contentsMI);
 		//----
-		aboutMI = new JMenuItem("About", Constants.createImageIcon(Constants.IMG_ABOUT_16, "FIXME"));
-		aboutMI.setMnemonic("A".charAt(0));
+		aboutMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.help_about"));
+		aboutMI.setIcon(DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EMPTY_MI, "FIXME"));
+		aboutMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.help_about").charAt(0));
 		aboutMI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				AppEvent ape = new AppEvent(AppEvent.HELP_EVENT);
@@ -802,7 +860,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		//put all into menu bar
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
-		menuBar.add(goMenu);
+		menuBar.add(learnMenu);
 		menuBar.add(toolsMenu);
 		menuBar.add(helpMenu);
 	} //END private void initializeMenuBar()
@@ -816,8 +874,6 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		fileMenu.addSeparator();
 		fileMenu.add(saveMI);
 		fileMenu.add(saveAsMI);
-		fileMenu.addSeparator();
-		fileMenu.add(propertiesMI);
 		fileMenu.addSeparator();
 		fileMenu.add(closeMI);
 		fileMenu.add(quitMI);
@@ -836,7 +892,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		categoriesMI.setEnabled(aStatus);
 		entryTypesMI.setEnabled(aStatus);
 		entryTypeAttributesMI.setEnabled(aStatus);
-		propertiesMI.setEnabled(aStatus);
+		infoMI.setEnabled(aStatus);
 		statisticsMI.setEnabled(aStatus);
 	} //END public void setOpenVocabEnabled(boolean)
 	
@@ -897,7 +953,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	 * This inner class reuses some of the code in a class presented
 	 * in <a href="https://www.javaworld.com/javatips/jw-javatip119_p.html"">JavaWorld Java Tip 119</a>.
 	 */
-	private final class FileHistoryMenuItem extends JMenuItem {
+	private final static class FileHistoryMenuItem extends JMenuItem {
 		public FileHistoryMenuItem(String aText) {
 			super(aText);
 		} //END public FileHistoryMenuItem(String)
@@ -910,6 +966,6 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			int x = SwingConstants.TRAILING + SwingConstants.LEADING -1 + prefixWidth;
 			return new Point(x,0);
 		} //END public Point getToolTipLocation(MouseEvent)
-	} //private final class FileHistoryMenuItem extends JMenuItem
+	} //END private final class FileHistoryMenuItem extends JMenuItem
 	
-} //End public class ADings
+} //END public class MainWindow extends JFrame implements IDingsMainWindow

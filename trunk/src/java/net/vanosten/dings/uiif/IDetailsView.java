@@ -2,7 +2,8 @@
  * IDetailsView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,5 +22,10 @@
 package net.vanosten.dings.uiif;
 
 public interface IDetailsView extends IView {
-	public void setEditing(boolean isEdited);
+	/** 
+	 * Indicates that the values are edited and sets the button states.
+	 * @param isEditing true if the data in the model and the data in the GUI are different
+	 * @param isValid true if the edited value is valid according to the model requirements
+	 */
+	public void setEditing(boolean isEdited, boolean isValid);
 } //END public interface IDetailsView extends IView

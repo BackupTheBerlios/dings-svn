@@ -2,7 +2,8 @@
  * ADings.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +23,6 @@ package net.vanosten.dings.model;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Locale;
 import java.text.DateFormat;
 
 import net.vanosten.dings.event.IAppEventHandler;
@@ -35,23 +35,23 @@ import net.vanosten.dings.io.VocabularyXMLWriter;
 import net.vanosten.dings.uiif.*;
 
 //Logging with java.util.logging
-import java.util.logging.Logger; 
+import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 
 public abstract class ADings implements IAppEventHandler {
-	
+
 	/** The version of the dataformat */
 	public final static String dataVersion = "3";
-	
+
 	/** The minimal JVM major number to run the applicaiton */
 	public final static int MIN_JVM_MAJOR = 1;
-	
+
 	/** The minimal JVM minor number to run the applicaiton */
 	public final static int MIN_JVM_MINOR = 4;
-	
+
 	/** The name of the application */
 	public final static String APP_NAME = "DingsBums?!";
 
@@ -66,28 +66,22 @@ public abstract class ADings implements IAppEventHandler {
 
 	/** Holds the entry types */
 	private EntryTypesCollection entryTypes;
-	
+
 	/** Holds the EntryTypeAttributs */
 	private EntryTypeAttributesCollection attributes;
 
 	/** Holds the info about the vocabulary */
 	private InfoVocab info;
 
-	/** Holds the applications preferences and properties */
-	protected Preferences preferences = null;
-	
 	/** Holds the learning statistics */
 	private StatsCollection stats;
-	
-	/** Holds the current locale, which by default is set by the user's desktop settings */
-	protected Locale locale = Locale.getDefault();
 
 	/** Whether safe is needed */
 	private boolean saveNeeded = false;
 
 	/** Whether a vocabulary file is already open */
 	private boolean vocabOpened = false;
-	
+
 	/** The file name of the currently open vocabulary*/
 	private String currentVocabFileName = null;
 
@@ -96,15 +90,15 @@ public abstract class ADings implements IAppEventHandler {
 
 	/** The learnOneView to be reused */
 	private IEntryLearnOneView entryLearnOneView = null;
-	
+
 	/** The logging handler */
 	private Handler loggingHandler = null;
-	
+
 	/** The current view */
 	private String currentView = MessageConstants.N_VIEW_WELCOME;
 
-	/** 
-	 * The logging logger. The base package structure is chosen as name 
+	/**
+	 * The logging logger. The base package structure is chosen as name
 	 * in order to have the other loggers in the divers classes inherit the settings (level).
 	 * */
 	private static Logger logger = Logger.getLogger("net.vanosten.dings");
@@ -114,17 +108,18 @@ public abstract class ADings implements IAppEventHandler {
 	 * program start the go view is displayed.
 	 */
 	public ADings(String[] args) {
-		//read the preferences needs to be first
-		preferences = new Preferences();
-		preferences.setParentController(this);
-		
-		checkMainArgs(args);
+		//set the parent controller for Preferences
+		Toolbox.getInstance().getPreferencesPointer().setParentController(this);
+
 		//locale
 		if (logger.isLoggable(Level.INFO)) {
 			logger.logp(Level.INFO, this.getClass().getName(), "ADings(String[])"
-					, "Locale: " + locale.toString());
+					, "Locale: " + Toolbox.getInstance().getCurrentLocalePointer().toString());
 		}
-		
+		//check the arguments
+		checkMainArgs(args);
+
+
 		this.initializeGUI();
 		mainWindow.setApplicationTitle(APP_NAME);
 
@@ -132,17 +127,17 @@ public abstract class ADings implements IAppEventHandler {
 		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
 		ape.setMessage(MessageConstants.N_VIEW_WELCOME);
 		this.handleAppEvent(ape);
-		
+
 		//set status information
 		setSaveNeeded(false);
 		vocabOpened = false;
-	} //End public ADings(String[])
-	
+	} //END public ADings(String[])
+
 	/**
 	 * Parses and checks the runtime arguments from the main method
 	 * and checks the minimal JVM version.
 	 * If something goes wrong the usage is printed and the program exited.
-	 * 
+	 *
 	 * @param args The arguments form the main method
 	 */
 	private final void checkMainArgs(String[] args) {
@@ -184,10 +179,6 @@ public abstract class ADings implements IAppEventHandler {
 						printUsage();
 						System.exit(1);
 					}
-					else if (args[i].startsWith("--locale=")) {
-						locale = Constants.parseLocale(args[i].substring(args[i].indexOf('=') + 1));
-						Locale.setDefault(locale);
-					}
 					else {
 						printUsage();
 						System.exit(1);
@@ -210,12 +201,11 @@ public abstract class ADings implements IAppEventHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Usage: java -jar dingsbums.jar [options]");
 		sb.append("\nOptions:");
-		sb.append("\n  --locale=xx_YY   use the xx_YY locale, where xx is a valid language/country combination");
 		sb.append("\n  --debug          force logging messages to console");
 		sb.append("\n  --help           show this help");
 		System.err.println(sb.toString());
 	} //END private final void printUsage()
-	
+
 	/**
 	 * Entry point for GUI-toolkit to initialize the GUI elements.
 	 */
@@ -278,6 +268,9 @@ public abstract class ADings implements IAppEventHandler {
 			else if (evt.getMessage().equals(MessageConstants.S_CHANGE_LOGGING)) {
 				changeLogging(false);
 			}
+			else if (evt.getMessage().equals(MessageConstants.S_CHANGE_LAF)) {
+				mainWindow.setLookAndFeel();
+			}
 		}
 		else if (evt.isNavEvent()) {
 			//show the new view
@@ -339,7 +332,7 @@ public abstract class ADings implements IAppEventHandler {
 										, info.getUnitLabel(), info.getCategoryLabel()
 										, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
 				entryEditView.setVisibilities(info.getVisibilityAttributes(), info.getVisibilityUnit(), info.getVisibilityCategory()
-										, info.getVisibilityExplanation(), info.getVisibilityExample() 
+										, info.getVisibilityExplanation(), info.getVisibilityExample()
 										, info.getVisibilityPronunciation(), info.getVisibilityRelation());
 				entryEditView.setEntryTypes(entryTypes.getChoiceProxy());
 				Entry thisEntry = entries.getCurrentItem();
@@ -364,14 +357,26 @@ public abstract class ADings implements IAppEventHandler {
 			}
 			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_LEARNONE)) {
 				entryLearnOneView = mainWindow.getEntryLearnOneView();
-				entryLearnOneView.setLabels(info.getBaseLabel(), info.getTargetLabel(), info.getAttributesLabel()
-						, info.getUnitLabel(), info.getCategoryLabel()
-						, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
+				//learning direction
+				if (Constants.YES_OPTION == mainWindow.showOptionDialog("Learning Direction"
+						, "Do you want to learn in the default direction: "
+						+ info.getBaseLabel() + " -> " + info.getTargetLabel() + "?"
+						, Constants.QUESTION_MESSAGE
+						, Constants.YES_NO_OPTION)) {
+					entryLearnOneView.setTargetAsked(true);
+					entryLearnOneView.setLabels(info.getBaseLabel(), info.getTargetLabel(), info.getAttributesLabel()
+							, info.getUnitLabel(), info.getCategoryLabel()
+							, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
+				} else {
+					entryLearnOneView.setTargetAsked(false);
+					entryLearnOneView.setLabels(info.getTargetLabel(), info.getBaseLabel(), info.getAttributesLabel()
+							, info.getUnitLabel(), info.getCategoryLabel()
+							, info.getOthersLabel(), info.getExplanationLabel(), info.getExampleLabel());
+				}
 				entryLearnOneView.setVisibilities(info.getVisibilityAttributes(), info.getVisibilityUnit(), info.getVisibilityCategory()
-						, info.getVisibilityExplanation(), info.getVisibilityExample() 
+						, info.getVisibilityExplanation(), info.getVisibilityExample()
 						, info.getVisibilityPronunciation(), info.getVisibilityRelation());
-				
-				entryLearnOneView.setPreferences(preferences);
+
 				//prepare entries
 				AppEvent initializeEvt = new AppEvent(AppEvent.DATA_EVENT);
 				initializeEvt.setMessage(MessageConstants.D_ENTRIES_INITIALIZE_LEARNING);
@@ -458,7 +463,7 @@ public abstract class ADings implements IAppEventHandler {
 			}
 			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_TOTALS_CHANGED)) {
 				updateStatusBarStatus(null);
-			}		
+			}
 			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_ALL)) {
 				if (checkDoReset(true)) {
 					evt.setDetails(currentView);
@@ -472,17 +477,17 @@ public abstract class ADings implements IAppEventHandler {
 				}
 			}
 			else if (evt.getMessage().equals(MessageConstants.D_STATISTICS_SAVE_SET)) {
-				DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, locale);
+				DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Toolbox.getInstance().getCurrentLocalePointer());
 				Date timestamp = stats.addNewStatisticSet();
 				mainWindow.showMessageDialog("", "Learning statistics saved: " + df.format(timestamp), Constants.INFORMATION_MESSAGE);
-			}		
+			}
 		}
 		else if (evt.isHelpEvent()) {
 			mainWindow.showHelp(evt.getMessage());
 		}
 		//else if(evt.isStatusEvent() || evt.isNavEvent()) parentController.handleAppEvent(evt);
 	} //END public void handleAppEvent(AppEvent)
-	
+
 	/**
 	 * Get a file name to read or write the vocabulary from/to by showing
 	 * a file chooser dialog.
@@ -492,11 +497,9 @@ public abstract class ADings implements IAppEventHandler {
 	private boolean fileChoosen(boolean showOpen) {
 		//get the initial fileName
 		String fileName = null;
-		if (null != preferences) {
-			String[][] fileNameHist = preferences.getFileHistoryPaths();
-			if (0 < fileNameHist.length) {
-				fileName = fileNameHist[0][0];
-			}
+		String[][] fileNameHist = Toolbox.getInstance().getPreferencesPointer().getFileHistoryPaths();
+		if (0 < fileNameHist.length) {
+			fileName = fileNameHist[0][0];
 		}
 		String chosenFileName = mainWindow.showFileChooser(fileName, showOpen);
 
@@ -510,17 +513,17 @@ public abstract class ADings implements IAppEventHandler {
 	/**
 	 * Checks if save needed and closes the vocabulary by resetting all
 	 * entities and fields.
-	 * 
+	 *
 	 * @param boolean - true if successful close
 	 */
 	private boolean closeVocabulary() {
 		boolean writeSuccess = true;
-		
+
 		//eventually save the learning statistics
-		if (Boolean.valueOf(preferences.getProperty(Preferences.PROP_STATS_QUIT)).booleanValue()) {
+		if (Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_STATS_QUIT)).booleanValue()) {
 			stats.addNewStatisticSet();
-		}		
-		
+		}
+
 		//check write of file needed
 		if (saveNeeded) {
 			int answer = mainWindow.showOptionDialog("Unsafed Changes"
@@ -546,19 +549,19 @@ public abstract class ADings implements IAppEventHandler {
 			units = null;
 			entryTypes = null;
 			stats = null;
-			
+
 			currentVocabFileName = null;
 			vocabOpened = false;
 			setSaveNeeded(false);
 			mainWindow.setApplicationTitle(APP_NAME);
-			
+
 			//everything went fine, so retrun true
 			return true;
 		}
 		else { //vocabulary was not written successfully
 			return false;
 		}
-	} //End public void closeVocabulary()
+	} //END public void closeVocabulary()
 
 	/**
 	 * does the real exit of the program by calling System.exit(0). Before, the properties are safed.
@@ -566,12 +569,12 @@ public abstract class ADings implements IAppEventHandler {
 	private void exit() {
 		//store the application's size
 		mainWindow.saveWindowLocationAndSize();
-		
+
 		//hide the main window
 		mainWindow.hideMainWindow();
-		
+
 		//safe preferences
-		preferences.save();
+		Toolbox.getInstance().getPreferencesPointer().save();
 
 		//exit
 		System.exit(0);
@@ -584,38 +587,38 @@ public abstract class ADings implements IAppEventHandler {
 	 */
 	private void setVocabularyFileName(String aFileName) {
 		currentVocabFileName = aFileName;
-		preferences.updateFileHistory(aFileName, true);
-		mainWindow.setFileHistory(preferences.getFileHistoryPaths());
+		Toolbox.getInstance().getPreferencesPointer().updateFileHistory(aFileName, true);
+		mainWindow.setFileHistory(Toolbox.getInstance().getPreferencesPointer().getFileHistoryPaths());
 		mainWindow.setApplicationTitle(aFileName + " - " + APP_NAME);
 	} //END private void setVocabularyFileName(String)
-	
+
 	/**
 	 * Removes the current vocabulary file name from the history.
 	 */
 	private void removeVocabularyFileName() {
-		preferences.updateFileHistory(currentVocabFileName, false);
-		mainWindow.setFileHistory(preferences.getFileHistoryPaths());
+		Toolbox.getInstance().getPreferencesPointer().updateFileHistory(currentVocabFileName, false);
+		mainWindow.setFileHistory(Toolbox.getInstance().getPreferencesPointer().getFileHistoryPaths());
 	} //END private void removeVocabularyFileName()
 
 	/**
 	 * Changes the status of logging between enabled and disabled.
-	 * The status is taken from the applications preferences. 
+	 * The status is taken from the applications preferences.
 	 * If the property does not exist yet, then Level.OFF is used.
-	 * 
+	 *
 	 * @param boolean overrideLogging - if set to true logging is turned on no matter what the preferences
 	 *                                  and logs go to Console.
 	 */
 	private void changeLogging(boolean overrideLogging) {
 		boolean isFileLogging = false;
-				
+
 		//get from preferences, whether logging should be made to file
 		if (false == overrideLogging) {
-			if (preferences.containsKey(Preferences.PROP_LOG_TO_FILE)) {
-				isFileLogging = Boolean.valueOf(preferences.getProperty(Preferences.PROP_LOG_TO_FILE)).booleanValue();
+			if (Toolbox.getInstance().getPreferencesPointer().containsKey(Preferences.PROP_LOG_TO_FILE)) {
+				isFileLogging = Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_LOG_TO_FILE)).booleanValue();
 			}
 		}
 		//else isFileLogging remains false to force logging to console
-		
+
 		if (isFileLogging) {
 			String userHome = System.getProperty("user.home");
 			if (null == loggingHandler || loggingHandler instanceof ConsoleHandler) {
@@ -642,8 +645,8 @@ public abstract class ADings implements IAppEventHandler {
 			}
 		}
 		if (false == isFileLogging) { //explicit if needed to take catch argument above into account
-		    ConsoleHandler consoleHandler = new ConsoleHandler();
-		    consoleHandler.setLevel(Level.ALL);
+			ConsoleHandler consoleHandler = new ConsoleHandler();
+			consoleHandler.setLevel(Level.ALL);
 			if (null == loggingHandler) {
 				loggingHandler = consoleHandler;
 				logger.addHandler(loggingHandler);
@@ -654,14 +657,14 @@ public abstract class ADings implements IAppEventHandler {
 				logger.addHandler(loggingHandler); //TODO: can't this be done by just reassigning the pointer?
 			}
 		}
-		
+
 		//set the log level
 		if (overrideLogging) {
 			logger.setLevel(Level.FINEST);
 		}
 		else {
-			if (preferences.containsKey(Preferences.PROP_LOGGING_ENABLED)) {
-				boolean logEnabled = Boolean.valueOf(preferences.getProperty(Preferences.PROP_LOGGING_ENABLED)).booleanValue();
+			if (Toolbox.getInstance().getPreferencesPointer().containsKey(Preferences.PROP_LOGGING_ENABLED)) {
+				boolean logEnabled = Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_LOGGING_ENABLED)).booleanValue();
 				if (logEnabled) {
 					logger.setLevel(Level.FINEST);
 				}
@@ -714,8 +717,8 @@ public abstract class ADings implements IAppEventHandler {
 		try {
 			mainWindow.setWaitCursor(true);
 			this.updateStatusBarStatus("Opening ...");
-			
-			reader.setVocabularyFile(currentVocabFileName, preferences.getProperty(Preferences.FILE_ENCODING));
+
+			reader.setVocabularyFile(currentVocabFileName, Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.FILE_ENCODING));
 			if (reader.readyToExecute()) {
 				//reset the max Ids
 				resetMaxIds();
@@ -751,8 +754,10 @@ public abstract class ADings implements IAppEventHandler {
 				entries = new EntriesCollection(this);
 				//populate entries
 				entries.setEntryTypes(entryTypes);
+				entries.setCategories(categories);
+				entries.setUnits(units);
 				entries.setItems(reader.getEntries());
-				entries.setPreferences(preferences);
+				entries.initializeSelection();
 				//set pointer to entries to be able to find entries that use info
 				categories.setEntries(entries);
 				units.setEntries(entries);
@@ -763,7 +768,7 @@ public abstract class ADings implements IAppEventHandler {
 				info = reader.getInfo();
 				info.setParentController(this);
 				Entry.setInfoVocab(info);
-				
+
 				//statistics
 				stats = new StatsCollection(this);
 				stats.setItems(reader.getStats());
@@ -771,7 +776,7 @@ public abstract class ADings implements IAppEventHandler {
 				stats.setCategories(categories);
 				stats.setEntryTypes(entryTypes);
 				stats.setUnits(units);
-				
+
 				//we now have an opened vocabulary
 				vocabOpened = true;
 				setSaveNeeded(false);
@@ -809,10 +814,14 @@ public abstract class ADings implements IAppEventHandler {
 		entryTypes = new EntryTypesCollection(this);
 		entryTypes.setEntryTypeAttributes(attributes);
 		entryTypes.setDefaultItem();
-		entries = new EntriesCollection(this);
 		info = new InfoVocab();
-		//set pointers
+		//populate entries
+		entries = new EntriesCollection(this);
 		entries.setEntryTypes(entryTypes);
+		entries.setCategories(categories);
+		entries.setUnits(units);
+		entries.initializeSelection();
+		//set pointers
 		categories.setEntries(entries);
 		units.setEntries(entries);
 		entryTypes.setEntryTypeAttributes(attributes);
@@ -820,14 +829,14 @@ public abstract class ADings implements IAppEventHandler {
 		attributes.setEntries(entries);
 		info.setParentController(this);
 		Entry.setInfoVocab(info);
-		
+
 		//statistics
 		stats = new StatsCollection(this);
 		stats.setEntries(entries);
 		stats.setCategories(categories);
 		stats.setEntryTypes(entryTypes);
 		stats.setUnits(units);
-		
+
 		//show the InfoVocab view
 		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
 		ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
@@ -864,7 +873,7 @@ public abstract class ADings implements IAppEventHandler {
 				mainWindow.setWaitCursor(true);
 				this.updateStatusBarStatus("Saving ...");
 				VocabularyXMLWriter writer = new VocabularyXMLWriter();
-				writer.setVocabularyFile(currentVocabFileName, preferences.getProperty(Preferences.FILE_ENCODING));
+				writer.setVocabularyFile(currentVocabFileName, Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.FILE_ENCODING));
 
 				//set the XML strings
 				writer.setXMLElements(dataVersion, units.getXMLString()
@@ -891,25 +900,25 @@ public abstract class ADings implements IAppEventHandler {
 		}
 		return success;
 	} //END private boolean writeVocabulary(boolean)
-	
+
 	/**
 	 * Sets the saveNeeded status. At the same time the enabling and disabling
 	 * of the menu items.
-	 * 
+	 *
 	 * @param boolean status - true if save of the vocabulary is needed
 	 */
 	private void setSaveNeeded(boolean aStatus) {
 		//set the status
 		saveNeeded = aStatus;
 		this.updateStatusBarStatus(null);
-		
+
 		//set the status of the menu items
 		checkMIsStatus();
 	} //END private void setSaveNeeded(boolean)
-	
+
 	/**
 	 * Shows a dialog box to the user asking whether he really wnats to reset the scores.
-	 * 
+	 *
 	 * @param boolean all - true if the request is for all entries, otherwise only for current selection
 	 * @return boolean - true if the user accepts, that the changes really should be made
 	 */
@@ -919,7 +928,7 @@ public abstract class ADings implements IAppEventHandler {
 			message = "Do you really want to reset the score of all entries to 1?";
 		}
 		else {
-			message = "Do you really want to reset the score of all entries in the current selection to 1?";			
+			message = "Do you really want to reset the score of all entries in the current selection to 1?";
 		}
 		int answer = mainWindow.showOptionDialog(""
 				,message
@@ -930,7 +939,7 @@ public abstract class ADings implements IAppEventHandler {
 		}
 		return false;
 	} //END private boolean checkDoReset(boolean)
-	
+
 	/**
 	 * Changes the status of the menu items based on the status of the model
 	 * and the chosen view
@@ -939,10 +948,10 @@ public abstract class ADings implements IAppEventHandler {
 		//set the status of the menu items
 		//quit, new, open, preferences, help, about are always enabled
 		mainWindow.setSaveMIEnabled(saveNeeded);
-		
+
 		//depending on open vocabulary
 		mainWindow.setOpenVocabEnabled(vocabOpened);
-		
+
 		//depending on number of categories, units and entry types > 0
 		if ((null != categories && categories.countElements() > 0)
 			&& (null != units && units.countElements() > 0)
@@ -953,7 +962,7 @@ public abstract class ADings implements IAppEventHandler {
 		else {
 			mainWindow.setEntriesMIEnabled(false);
 		}
-		
+
 		//depending on number of entries > 0
 		if (null != entries && entries.countElements() > 0) {
 			mainWindow.setEntriesOkEnabled(true);
@@ -969,11 +978,11 @@ public abstract class ADings implements IAppEventHandler {
 			mainWindow.setEntriesOkEnabled(false);
 			mainWindow.setResetScoreMIsEnabled(false);
 		}
-		
+
 		//depending on the number of chosen entries
 		checkLearningMIsStatus();
 	} //END private void checkMIsStatus()
-	
+
 	/**
 	 * Checks the number of chosen entries and sets the status of the menu items
 	 * for learning accordingly.
@@ -987,11 +996,11 @@ public abstract class ADings implements IAppEventHandler {
 		}
 		mainWindow.setLearningMIsEnabled(enableLearnOneByOne);
 	} //END private void checkLearningMIsStatus()
-	
+
 	/**
 	 * Updates the texts of the status bar based on the current status of saving
 	 * and selection.
-	 * 
+	 *
 	 * @param String aStatusText - overrides the text to be displayed based on saving status.
 	 */
 	private void updateStatusBarStatus(String aStatusText) {
@@ -1027,8 +1036,8 @@ public abstract class ADings implements IAppEventHandler {
 			logger.logp(Level.FINEST, this.getClass().getName(), "updateStatusBarStatus(String)", "aStatusText: " + aStatusText
 					+ ", theStatus: " + theStatus + ", theSelection: " + theSelection.toString());
 		}
-		
+
 		//set the strings in the status bar
 		mainWindow.setStatusBarStatusText(theStatus, theSelection.toString());
 	} //END private void updateStatusBarStatus(String)
-} //End public abstract class ADings extends IAppEventHandler
+} //END public abstract class ADings extends IAppEventHandler

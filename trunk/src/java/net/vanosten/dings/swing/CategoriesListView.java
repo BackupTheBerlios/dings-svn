@@ -2,7 +2,8 @@
  * CategoriesListView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,15 +21,18 @@
  */
 package net.vanosten.dings.swing;
 
+import java.awt.ComponentOrientation;
+
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.model.Toolbox;
 
 public class CategoriesListView extends ListView {
 
-	public CategoriesListView() {
-		super("Categories");
-	}	//END public CategoriesListView()
+	public CategoriesListView(ComponentOrientation aComponentOrientation) {
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_categories"), aComponentOrientation);
+	} //END public CategoriesListView(ComponentOrientation)
 	
 	protected void setMessages() {
 		msgEdit = MessageConstants.N_VIEW_CATEGORY_EDIT;
 	} //END protected void setMessages()
-}	//END public class CategoriesListView extends ListView
+} //END public class CategoriesListView extends ListView

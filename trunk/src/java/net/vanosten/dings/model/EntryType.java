@@ -2,7 +2,8 @@
  * EntryType.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,7 +22,6 @@
 package net.vanosten.dings.model;
 
 import java.util.ArrayList;
-//import java.util.HashSet;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
@@ -39,7 +39,7 @@ public class EntryType extends AIdItemModel {
 	private static int maxId = 0;
 	
 	/** Defines the number of attributes */
-	public static int NUMBER_OF_ATTRIBUTES = 4;
+	public final static int NUMBER_OF_ATTRIBUTES = 4;
 
 	/** A pointer to the available attributes */
 	private EntryTypeAttributesCollection attributes;
@@ -133,7 +133,7 @@ public class EntryType extends AIdItemModel {
 			}
 		}
 		return display;
-	} //End protected Object[] getTableDisplay()
+	} //END protected Object[] getTableDisplay()
 
 	/**
 	 * Get theEntryTypeAttribute of a specific position.
@@ -163,7 +163,7 @@ public class EntryType extends AIdItemModel {
 	//implements AItemModel
 	protected void releaseViews() {
 		editView = null;
-	} //protected void releaseViews()
+	} //END protected void releaseViews()
 	
 	/**
 	 * Tests the required fields for valid contents.
@@ -174,7 +174,7 @@ public class EntryType extends AIdItemModel {
 		ArrayList errors = new ArrayList();
 		String idError = validateId(Constants.PREFIX_ENTRYTYPE, anId);
 		if (null != idError) errors.add(idError);
-		if (1 > aName.length()) {
+		if (false == validateString(aName,1)) {
 			errors.add("Name may not be empty");
 		}
 		return errors;
@@ -245,10 +245,6 @@ public class EntryType extends AIdItemModel {
 			sendSaveNeeded();
 			updateGUI();
 		}
-		else {
-			//Show an error message with the validation details
-			showValidationErrors(errors);
-		}
 	} //END protected void updateModel()
 
 	//Implements AItemModel
@@ -270,12 +266,15 @@ public class EntryType extends AIdItemModel {
 			}
 		}
 		//determine overall change
+		boolean isValid = validateString(editView.getName(), 1);
 		if (editView.getName().trim().equals(name) && attribUnchanged) {
-			editView.setEditing(false);
+			editView.setEditing(false, isValid);
 		}
 		else {
-			editView.setEditing(true);
+			editView.setEditing(true, isValid);
 		}
+		//validation
+		editView.setNameIsValueValid(isValid);
 	} //END protected void checkChangeInGUI()
 
 	/**
@@ -292,7 +291,8 @@ public class EntryType extends AIdItemModel {
 		editView.setName(name);
 		editView.setAttributeChoices(attributes.getChoiceProxy());
 		editView.setAttributes(attributeIds);
-		editView.setEditing(false);
+		editView.setEditing(false, true);
+		editView.setNameIsValueValid(true);
 	} //END protected void resetView()
 	
 	/**

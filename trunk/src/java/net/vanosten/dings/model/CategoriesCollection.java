@@ -2,7 +2,8 @@
  * CategoriesCollection.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,56 +30,56 @@ import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.IAppEventHandler;
 
 public class CategoriesCollection extends AChoiceCollection {
-    /** The id for the actual Category */
-    private Category currentItem = null;
+	/** The id for the actual Category */
+	private Category currentItem = null;
 
-    public CategoriesCollection(IAppEventHandler anEventHandler) {
-        super(anEventHandler);
-    }	//End public CategoriesCollection(IAppEventHandler)
-    
-    //implements ACollection
+	public CategoriesCollection(IAppEventHandler anEventHandler) {
+		super(anEventHandler);
+	}	//END public CategoriesCollection(IAppEventHandler)
+
+	//implements ACollection
 	protected void setTagName() {
 		tagName = Constants.XML_CATEGORIES;
 	} //END protected void setTagName()
-    
+
 	//implements ACollection
 	protected void setMessageListView() {
 		msgListView = MessageConstants.N_VIEW_CATEGORIES_LIST;
 	} //END protected void setMessageListView()
-    
+
 	//implements AChoiceCollection
 	protected void setMessageEditView() {
 		msgEditView = MessageConstants.N_VIEW_CATEGORY_EDIT;
 	} //END protected void setMessageEditView()
-	
-    //implements ACollection
+
+	//implements ACollection
 	protected void setItems(HashMap theCategories) {
-        this.items = theCategories;
-        
-        Set allKeys = items.keySet();
-        Iterator iter = allKeys.iterator();
-        if (iter.hasNext()) setCurrentItem((String)iter.next());
-    } //End protected void setItems(HashMap)
+		this.items = theCategories;
+
+		Set allKeys = items.keySet();
+		Iterator iter = allKeys.iterator();
+		if (iter.hasNext()) setCurrentItem((String)iter.next());
+	} //END protected void setItems(HashMap)
 
 	protected Category getCurrentItem() {
 		return currentItem;
 	} //END protected Category getCurrentItem()
 
-    //implements ACollection
-    protected void setCurrentItem(String anID) {
-    	if (null != currentItem) {
-    		//release the views of the current
-    		currentItem.releaseViews();
-    	}
-    	if (null == anID) {
-    		currentItem = null;
-    	}
-        else if (items.containsKey(anID)) {
-            currentItem = (Category)items.get(anID);
-            currentItem.setParentController(this);
-        }
-    }	//END private void setCurrentItem(String)
-    
+	//implements ACollection
+	protected void setCurrentItem(String anID) {
+		if (null != currentItem) {
+			//release the views of the current
+			currentItem.releaseViews();
+		}
+		if (null == anID) {
+			currentItem = null;
+		}
+		else if (items.containsKey(anID)) {
+			currentItem = (Category)items.get(anID);
+			currentItem.setParentController(this);
+		}
+	}	//END private void setCurrentItem(String)
+
 	//implements AChoiceCollection
 	protected void deleteItem() {
 		deleteItem(currentItem.getId(), false);
@@ -86,18 +87,18 @@ public class CategoriesCollection extends AChoiceCollection {
 
 	//implements ACollection
 	//the type attribute is not used for Categories
-    protected void newItem(String aType, boolean isDefault) {
-        Category newCategory = null;
-        newCategory = Category.newItem(isDefault);
-        items.put(newCategory.getId(), newCategory);
-        setCurrentItem(newCategory.getId());
-        //save needed
-        sendSaveNeeded();
-    }   //End public void newItem(String)
+	protected void newItem(String aType, boolean isDefault) {
+		Category newCategory = null;
+		newCategory = Category.newItem(isDefault);
+		items.put(newCategory.getId(), newCategory);
+		setCurrentItem(newCategory.getId());
+		//save needed
+		sendSaveNeeded();
+	} //END public void newItem(String)
 
-    //implements ACollection
-    protected void refreshListView() {
-		Object[][] data = new Object[items.size()][AUnitCategory.getTableDisplayTitles().length]; 
+	//implements ACollection
+	protected void refreshListView() {
+		Object[][] data = new Object[items.size()][AUnitCategory.getTableDisplayTitles().length];
 
 		Category item;
 		Set keys = items.keySet();
@@ -109,20 +110,20 @@ public class CategoriesCollection extends AChoiceCollection {
 		if (listView != null) {
 			listView.setList(AUnitCategory.getTableDisplayTitles(), data, AUnitCategory.getTableColumnFixedWidth());
 		}
-        if (null != currentItem) listView.setSelected(currentItem.getId());
-    }	//End private void resetListView()
+		if (null != currentItem) listView.setSelected(currentItem.getId());
+	} //END private void resetListView()
 
 	//implements AChoiceCollection
-    public String[][] getChoiceProxy() {
-        String theIDsAndNames[][] = new String[items.size()][2];
-        Set keys = items.keySet();
-        Category item;
-        Iterator iter = keys.iterator();
-        for (int i = 0; i < theIDsAndNames.length; i++) {
-            item = (Category)items.get(iter.next());
-            theIDsAndNames[i] = item.getChoiceProxy();
-        }
-        return theIDsAndNames;
-    }	//END public String[][] getChoiceProxy()
-}	//End public class CategoriesCollection extends AChoiceCollection
+	public String[][] getChoiceProxy() {
+		String theIDsAndNames[][] = new String[items.size()][2];
+		Set keys = items.keySet();
+		Category item;
+		Iterator iter = keys.iterator();
+		for (int i = 0; i < theIDsAndNames.length; i++) {
+			item = (Category)items.get(iter.next());
+			theIDsAndNames[i] = item.getChoiceProxy();
+		}
+		return theIDsAndNames;
+	} //END public String[][] getChoiceProxy()
+} //END public class CategoriesCollection extends AChoiceCollection
 

@@ -2,7 +2,8 @@
  * MessageConstants.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +30,9 @@ public class MessageConstants {
 	/**
 	 * Private constructor so it can not be called
 	 */
-	private MessageConstants() {}
+	private MessageConstants() {
+		//nothing to initialize
+	}
 
 	//Navigation
 	public final static String N_VIEW_ENTRIES_SELECTION = "N_VIEW_ENTRIES_SELECTION";
@@ -60,6 +63,7 @@ public class MessageConstants {
 	public final static String S_SHOW_DELETE_ERROR = "S_SHOW_DELETE_ERROR";
 	public final static String S_SAVE_DIALOG_SIZE = "S_SAVE_DIALOG_SIZE";
 	public final static String S_CHANGE_LOGGING = "S_CHANGE_LOGGING";
+	public final static String S_CHANGE_LAF = "S_CHANGE_LAF";
 	public final static String D_STATISTICS_SAVE_SET = "D_STATISTICS_SAVE_SET";
 
 	public final static String H_ABOUT = "H_ABOUT";
@@ -114,24 +118,24 @@ public class MessageConstants {
 	//PreferencesEditView
 	public final static String D_PREFERENCES_EDIT_REVERT  = "D_PREFERENCES_EDIT_REVERT";
 	public final static String D_PREFERENCES_EDIT_APPLY  = "D_PREFERENCES_EDIT_APPLY";
-	
+
 	//EntryType
 	public final static String D_ENTRY_TYPE_CHANGE_ATTRIBUTES = "D_ENTRY_TYPE_CHANGE_ATTRIBUTES";
-	
+
 	//SummaryView
 	public final static String D_SUMMARY_VIEW_DISPLAY_UNITS = "D_SUMMARY_VIEW_DISPLAY_UNITS";
 	public final static String D_SUMMARY_VIEW_DISPLAY_CATEGORIES = "D_SUMMARY_VIEW_DISPLAY_CATEGORIES";
 	public final static String D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES = "D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES";
 	public final static String D_SUMMARY_VIEW_DISPLAY_SCORES = "D_SUMMARY_VIEW_DISPLAY_SCORES";
 	public final static String D_SUMMARY_VIEW_DISPLAY_TIMELINE = "D_SUMMARY_VIEW_DISPLAY_TIMELINE";
-	
+
 	//other
 	public final static String D_ENTRIES_RESET_SCORE_ALL = "D_ENTRIES_RESET_SCORE_ALL";
 	public final static String D_ENTRIES_RESET_SCORE_SEL = "D_ENTRIES_RESET_SCORE_SEL";
-	
+
 	/**
 	 * Returns an AppEvent to show a list of errors, which are contained in a ArrayList.
-	 * 
+	 *
 	 * @param ArrayList errors - the validation errors to be shown as bullet points
 	 * @param String message - the explanation of the errors
 	 */
@@ -144,7 +148,7 @@ public class MessageConstants {
 			validationErrors.append("</li>");
 		}
 		validationErrors.append("</ul></html>");
-		
+
 		//send AppEvent
 		AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
 		ape.setMessage(MessageConstants.S_SHOW_VALIDATION_ERROR);
@@ -152,4 +156,4 @@ public class MessageConstants {
 		return ape;
 	} //END public final static AppEvent getShowErrorListEvent(ArrayList, String)
 
-}   //End public class MessageConstants
+}   //END public class MessageConstants

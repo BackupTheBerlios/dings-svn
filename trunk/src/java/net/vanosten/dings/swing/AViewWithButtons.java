@@ -2,7 +2,8 @@
  * AViewWithButtons.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,16 +25,12 @@ import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.uiif.IView;
-import net.vanosten.dings.consts.Constants;
 
 public abstract class AViewWithButtons extends JPanel implements IView {
 	protected JPanel mainP;
@@ -51,7 +48,7 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		super.setComponentOrientation(aComponentOrientation);
 		this.title = aTitle;
 		this.guiOrientation = aComponentOrientation;
-	} //End public AViewWithButtons(String, ComponentOrientation)
+	} //END public AViewWithButtons(String, ComponentOrientation)
 		
 	/**
 	 * Sets up the initial GUI.
@@ -73,22 +70,9 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		
 		initializeMainP();
 				
-		//the title area
-		JPanel titleP = new JPanel();
-		titleP.setBackground(DingsSwingConstants.COLOR_PRIMARY_1);
-		Border titleBo = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		titleP.setBorder(titleBo);
-		GridBagLayout tgbl = new GridBagLayout();
-		GridBagConstraints tgbc = new GridBagConstraints();
-		titleP.setLayout(tgbl);
 		JLabel titleL = new JLabel(title);
-		titleL.setFont(Constants.TITLE_ONE_FONT);
-		titleL.setForeground(DingsSwingConstants.COLOR_PRIMARY_3);
-		tgbc.weightx = 1.0;
-		tgbc.fill = GridBagConstraints.HORIZONTAL;
-		tgbc.anchor = GridBagConstraints.LINE_END;
-		tgbl.setConstraints(titleL, tgbc);
-		titleP.add(titleL);
+		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
+		titleL.setEnabled(false);
 				
 		//make gui
 		gbc.gridx = 0;
@@ -96,8 +80,8 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(titleP, gbc);
-		add(titleP);
+		gbl.setConstraints(titleL, gbc);
+		add(titleL);
 		//----
 		gbc.gridy = 1;
 		gbc.insets = new Insets(DingsSwingConstants.SP_V_G, 0,0,0);
@@ -116,7 +100,7 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		gbc.weighty = 0.0d;
 		gbl.setConstraints(buttonsP, gbc);
 		add(buttonsP);
-	}	//END private void initializeGUI()
+	} //END private void initializeGUI()
 
 	/**
 	 * Sets the main part of the view up.
@@ -154,4 +138,4 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 	protected final void setGUIOrientation() {
 		this.applyComponentOrientation(this.guiOrientation);
 	} //END protected final void setGUIOrientation()
-}	//END public abstract class AViewWithButtons
+} //END public abstract class AViewWithButtons

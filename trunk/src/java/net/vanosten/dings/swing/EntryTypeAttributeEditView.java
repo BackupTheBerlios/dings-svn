@@ -2,7 +2,8 @@
  * EntryTypeAttributeEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,13 +26,11 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -42,16 +41,19 @@ import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableColumn;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.uiif.IEntryTypeAttributeEditView;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.IDEditableTableModel;
+import net.vanosten.dings.swing.helperui.ValidStringTableCellRenderer;
+import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.model.EntryTypeAttributeItem;
+import net.vanosten.dings.model.Toolbox;
 
 public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeAttributeEditView, TableModelListener {
-	private JTextField nameTF;
+	private ValidatedTextField nameVTF;
 	private ChoiceID defaultItemCh;
 	private JPanel itemsP;
 	private JPanel itemsTableButtonP;
@@ -61,13 +63,18 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	private JButton moveItemDownB;
 	private JTable itemsTable;
 	private IDEditableTableModel itemsModel;
+	private ValidStringTableCellRenderer validStringRenderer;
 		
 	/** If the table with items has changes, then this is true */
 	private boolean itemTableEdited = false;
 	
 	public EntryTypeAttributeEditView(ComponentOrientation aComponentOrientation) {
-		super("Edit EntryTypeAttribute", aComponentOrientation, true, true, MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
-	} //End public EntryTypeAttributeEditView(ComponentOrientation)
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry_type_attribute")
+				, aComponentOrientation
+				, true
+				, true
+				, MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
+	} //END public EntryTypeAttributeEditView(ComponentOrientation)
 
 	//Implements AEditView
 	protected void initializeEditP() {
@@ -78,20 +85,13 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		//name
 		JLabel nameL = new JLabel("Name:");
 		nameL.setDisplayedMnemonic("N".charAt(0));
-		nameTF = new JTextField(50);
-		nameL.setLabelFor(nameTF);
-		nameTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		nameVTF = new ValidatedTextField(50);
+		nameVTF.setToolTipText("Name may not be empty");
+		nameL.setLabelFor(nameVTF);
+		nameVTF.addKeyListener(this);
 		//default item
 		JLabel defaultItemL = new JLabel("Default Item:");
-		defaultItemL.setDisplayedMnemonic("D".charAt(0));
+		defaultItemL.setDisplayedMnemonic("FD".charAt(0));
 		defaultItemCh = new ChoiceID();
 		defaultItemL.setLabelFor(defaultItemCh);
 		defaultItemCh.addItemListener(new ItemListener() {
@@ -115,8 +115,8 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.insets = new Insets (0,DingsSwingConstants.SP_H_G,0,0);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(nameTF, gbc);
-		editP.add(nameTF);
+		gbl.setConstraints(nameVTF, gbc);
+		editP.add(nameVTF);
 		//------
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -144,8 +144,8 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		gbl.setConstraints(itemsP, gbc);
 		editP.add(itemsP);
 		//set focus
-		nameTF.requestFocus();
-	} //End protected void initializeEditP()
+		nameVTF.requestFocus();
+	} //END protected void initializeEditP()
 	
 	private void initializeItemsP() {
 		itemsP = new JPanel();
@@ -154,7 +154,11 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		itemsP.setLayout(gbl);
 		//populate panels
 		initializeItemsTableButtonP();
+		//special cell renderer
+		validStringRenderer = new ValidStringTableCellRenderer();
+		validStringRenderer.setToolTipText("The name must be unique and not be empty");
 		itemsTable = new JTable();
+
 		itemsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		ListSelectionModel rowSM = itemsTable.getSelectionModel();
 		rowSM.addListSelectionListener(new ListSelectionListener() {
@@ -192,28 +196,28 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	private void initializeItemsTableButtonP() {
 		itemsTableButtonP = new JPanel();
 		itemsTableButtonP.setLayout(new GridLayout(4,1,0,DingsSwingConstants.SP_V_C));
-		newItemB = new JButton("Add Item", Constants.createImageIcon(Constants.IMG_ADD_24, "FIXME"));
+		newItemB = new JButton("Add Item", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
 		newItemB.setMnemonic("A".charAt(0));
 		newItemB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onNewItem();
 			}
 		});
-		deleteItemB = new JButton("Remove Item", Constants.createImageIcon(Constants.IMG_REMOVE_24, "FIXME"));
+		deleteItemB = new JButton("Remove Item", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
 		deleteItemB.setMnemonic("R".charAt(0));
 		deleteItemB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onDeleteItem();
 			}
 		});
-		moveItemUpB = new JButton("Move Up", Constants.createImageIcon(Constants.IMG_UP_24, "FIXME"));
+		moveItemUpB = new JButton("Move Up", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_UP_BTN, "FIXME"));
 		moveItemUpB.setMnemonic("U".charAt(0));
 		moveItemUpB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onMoveItem(true);
 			}
 		});
-		moveItemDownB = new JButton("Move Down", Constants.createImageIcon(Constants.IMG_DOWN_24, "FIXME"));
+		moveItemDownB = new JButton("Move Down", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DOWN_BTN, "FIXME"));
 		moveItemDownB.setMnemonic("W".charAt(0));
 		moveItemDownB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -224,16 +228,16 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		itemsTableButtonP.add(deleteItemB);
 		itemsTableButtonP.add(moveItemUpB);
 		itemsTableButtonP.add(moveItemDownB);
-	}	//END private void initializeItemsTableButtonP()
+	} //END private void initializeItemsTableButtonP()
 	
 	//implements IEntryTypeAttributeEditView
 	public void setName(String aName) {
-		nameTF.setText(aName);
+		nameVTF.setText(aName);
 	} //END public void setUnitName(String)
 	
 	//implements IEntryTypeAttributeEditView
 	public String getName() {
-		return nameTF.getText();
+		return nameVTF.getText();
 	} //END public String getName()
 	
 	//implements IEntryTypeAttributeEditView
@@ -261,7 +265,11 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		itemsTable.setModel(itemsModel);
 		setSelectedItemRow(0);
 		itemsModel.addTableModelListener(this);	
-			
+		
+		//editors and renderers (must be applied after valid model
+        TableColumn namesColumn = itemsTable.getColumnModel().getColumn(0);
+        namesColumn.setCellRenderer(validStringRenderer);
+
 		//default item
 		setDefaultItemItems();
 	} //END public void setItems(Object[][])
@@ -302,9 +310,10 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	
 	//implements TableModelListener
 	public void tableChanged(TableModelEvent evt) {
-		setEditing(true);
+		//setEditing(true, true);
 		itemTableEdited = true;
 		setDefaultItemItems();
+		onChange();
 	} //END public void tableChanged(TableModelEvent)
 
 	private void setSelectedItemRow(int pos) {
@@ -400,4 +409,22 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 			}
 		}
 	} //END private void onTableSelection(ListSelectionEvent)
-}	//END public class EntryTpeAttributEditView extends AEditView implements IEntryTypeAttributeEditView
+	
+	//implements IEntryTypeAttributeEditView
+	public void setNameIsValueValid(boolean valid) {
+		nameVTF.isValueValid(valid);
+	} //END public void setNameIsValueValid(boolean)
+	
+	//implements IEntryTypeAttributeEditView
+	public void setItemNameIsValueValid(String invalidId) {
+		String invalid;
+		if (null == invalidId) {
+			invalid = null;
+		} else {
+			int pos = itemsModel.getIDIndexPos(invalidId);
+			invalid = (String)itemsModel.getValueAt(pos, 0);
+		}
+		validStringRenderer.setInvalidString(invalid);
+	} //END public void setItemNameIsValueValid(String
+
+} //END public class EntryTpeAttributEditView extends AEditView implements IEntryTypeAttributeEditView

@@ -2,7 +2,8 @@
  * Unit.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -94,7 +95,7 @@ public final class Unit extends AUnitCategory {
     	ArrayList errors = new ArrayList();
     	String idError = validateId(Constants.PREFIX_UNIT, anId);
     	if (null != idError) errors.add(idError);
-		if (1 > aName.length()) {
+		if (false == validateString(aName, 1)) {
 			errors.add("Name may not be empty");
 		}
     	return errors;

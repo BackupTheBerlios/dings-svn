@@ -2,7 +2,8 @@
  * StatisticSet.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,11 +51,29 @@ public final class StatisticSet {
 		return xml.toString();
 	} //END public String getXMLString()
 	
-	protected int[] getNumberOfEntries() {
-		return numberOfEntries;
-	} //END protected int[] getNumberOfEntries()
+	public int getTotalNumberofEntries() {
+		int totalNumberOfEntries = 0;
+		for (int i = 0; i < Entry.SCORE_MAX; i++) {
+			totalNumberOfEntries += numberOfEntries[i];
+		}
+		return totalNumberOfEntries;
+	} //END public int getTotalNumberofEntries()
 	
 	public Date getTimeStamp() {
 		return timeStamp;
 	} //END public Date getTimeStamp()
+	
+	/**
+	 * Calculates the arithmetic average score of the entries in this set
+	 * @return
+	 */
+	public double getAverageScore() {
+		int totalNumberOfEntries = 0;
+		int totalScore = 0;
+		for (int i = 0; i < Entry.SCORE_MAX; i++) {
+			totalNumberOfEntries += numberOfEntries[i];
+			totalScore += (i + 1) * numberOfEntries[i];
+		}
+		return (double) totalScore / totalNumberOfEntries;
+	} //END public double getAverageScore()
 } //END public class StatisticSet

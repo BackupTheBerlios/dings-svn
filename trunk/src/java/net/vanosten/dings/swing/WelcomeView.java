@@ -2,7 +2,8 @@
  * WelcomeView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +34,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.ADings;
 import net.vanosten.dings.uiif.IWelcomeView;
@@ -45,7 +45,7 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		super("Welcome to " + ADings.APP_NAME, aComponentOrientation);
 		initializeGUI();
 		this.setGUIOrientation();
-	} //End public WelcomeView(ComponentOrientation)
+	} //END public WelcomeView(ComponentOrientation)
 	
 	//implements AViewWithButtons
 	protected void initializeMainP() {
@@ -68,7 +68,7 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		mgbc.anchor = GridBagConstraints.PAGE_START;
 		mgbl.setConstraints(label, mgbc);
 		mainP.add(label);
-	}	//End protected void initializeMainP()
+	} //END protected void initializeMainP()
 	
 	//implements AViewWithButtons
 	protected final void initializeButtonP() {
@@ -86,7 +86,7 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		newB = new JButton("New", Constants.createImageIcon(Constants.IMG_NEW_24, "FIXME"));
+		newB = new JButton("New", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_NEW_BTN, "FIXME"));
 		newB.setMnemonic("N".charAt(0));
 		newB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -96,7 +96,7 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 			}
 		});
 
-		openB = new JButton("Open ...", Constants.createImageIcon(Constants.IMG_OPEN_24, "FIXME"));
+		openB = new JButton("Open ...", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_OPEN_BTN, "FIXME"));
 		openB.setMnemonic("O".charAt(0));
 		openB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -105,5 +105,6 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 				controller.handleAppEvent(ape);
 			}
 		});
-	} //protected final void initButtonComponents();
-}	//END public class WelcomeView extends AViewWithButtons implements IWelcomeView
+	} //END protected final void initButtonComponents();
+} //END public class WelcomeView extends AViewWithButtons implements
+IWelcomeView

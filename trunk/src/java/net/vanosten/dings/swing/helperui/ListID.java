@@ -2,7 +2,8 @@
  * ListID.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,19 +24,18 @@ package net.vanosten.dings.swing.helperui;
 import javax.swing.JList;
 
 public class ListID extends JList {
-	//private String itemID[] = {};
 	private ListIDModel listModel;
 	
 	public ListID (int rows, int mode) {
 		super();
 		setVisibleRowCount(rows);
 		setSelectionMode(mode);
-	}	//END public ListID(int)
+	} //END public ListID(int)
 	
 	public void setListIDModel(ListIDModel aListModel) {
 		this.listModel = aListModel; 
 		setModel(aListModel);
-	}	//public setModel(ListIDModel)
+	} //END public setModel(ListIDModel)
 	
 	public void setSelectedIDs(String[] theIDs) {
 		int[] indices = new int[theIDs.length];
@@ -50,15 +50,15 @@ public class ListID extends JList {
 		if (myPos >= 0) {
 			setSelectedIndex(myPos);
 		}
-		//else ???????
-	}	//END public void selectID(String)
+		//TODO: else ???????
+	} //END public void selectID(String)
 	
 	public String getSelectedID() {
 		return listModel.getIDAt(getSelectedIndex());
-	}	//END public String getSelectedID()
+	} //END public String getSelectedID()
 	
 	public String[] getSelectedIDs() {
 		int [] indices = this.getSelectedIndices();
 		return listModel.getIDsAt(indices);
-	}	//END public String[] getSelectedIDs()
-}	//END public class ListID
+	} //END public String[] getSelectedIDs()
+} //END public class ListID

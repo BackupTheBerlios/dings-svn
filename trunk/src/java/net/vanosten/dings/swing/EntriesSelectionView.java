@@ -2,7 +2,8 @@
  * EntriesSelectionView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,13 +37,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.swing.helperui.ListID;
 import net.vanosten.dings.swing.helperui.ListIDModel;
 import net.vanosten.dings.uiif.IEntriesSelectionView;
 import net.vanosten.dings.model.Entry;
+import net.vanosten.dings.model.Toolbox;
 
 public class EntriesSelectionView extends AViewWithButtons implements IEntriesSelectionView {
 	
@@ -58,7 +59,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	 * Empty constructor the EntriesSelectionView
 	 */
 	public EntriesSelectionView(ComponentOrientation aComponentOrientation) {
-		super("Selection of Entries", aComponentOrientation);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.entries_selection"), aComponentOrientation);
 		initializeGUI();
 		this.setGUIOrientation();
 	} //END public EntriesSelectionView(ComponentOrientation)
@@ -68,15 +69,15 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		statusCB.addItem("All");
 		statusCB.addItem("Only up-to-date entries");
 		statusCB.addItem("Only entries that need editing");
-		statusL = new JLabel("Status");
+		statusL = new JLabel("Status:");
 		statusL.setDisplayedMnemonic(("S").charAt(0));
 		statusL.setLabelFor(statusCB);
 		
 		lastLearnedBeforeTF = new JTextField();
 		lastLearnedBeforeTF.setText(Integer.toString(0));
 		lastLearnedBeforeTF.setColumns(5);
-		lastLearnedBeforeL = new JLabel("Last learned before (days)");
-		lastLearnedBeforeL.setDisplayedMnemonic(("L").charAt(0));
+		lastLearnedBeforeL = new JLabel("Last learned before (days):");
+		lastLearnedBeforeL.setDisplayedMnemonic(("A").charAt(0));
 		lastLearnedBeforeL.setLabelFor(lastLearnedBeforeTF);
 		
 		minScoreCB = new JComboBox();
@@ -87,29 +88,29 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		}
 		minScoreCB.setSelectedIndex(0);
 		maxScoreCB.setSelectedIndex(maxScoreCB.getItemCount() -1);
-		minScoreL = new JLabel("Minimal Score");
+		minScoreL = new JLabel("Minimal Score:");
 		minScoreL.setDisplayedMnemonic(("i").charAt(0));
 		minScoreL.setLabelFor(minScoreCB);
-		maxScoreL = new JLabel("Maximal Score");
+		maxScoreL = new JLabel("Maximal Score:");
 		maxScoreL.setDisplayedMnemonic(("x").charAt(0));
 		maxScoreL.setLabelFor(maxScoreCB);
 		
 		//units
 		unitsLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		unitsL = new JLabel("Selected Units");
+		unitsL = new JLabel("Selected Units:");
 		unitsL.setDisplayedMnemonic(("U").charAt(0));
 		unitsL.setLabelFor(unitsLi);
 		
 		//categories
 		categoriesLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		categoriesL = new JLabel("Selected Categories");
+		categoriesL = new JLabel("Selected Categories:");
 		categoriesL.setDisplayedMnemonic(("C").charAt(0));
 		categoriesL.setLabelFor(categoriesL);
 		
 		//EntryTypes
 		typesLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		typesL = new JLabel("Selected Entry Types");
-		typesL.setDisplayedMnemonic(("E").charAt(0));
+		typesL = new JLabel("Selected Entry Types:");
+		typesL.setDisplayedMnemonic(("Y").charAt(0));
 		typesL.setLabelFor(typesLi);
 	} //END private final void initComponents()
 	
@@ -240,14 +241,14 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		applyB = new JButton("Apply Selection", Constants.createImageIcon(Constants.IMG_EXEC_24, "FIXME"));
+		applyB = new JButton("Apply Selection", DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_APPLY_BTN, "FIXME"));
 		applyB.setMnemonic("A".charAt(0));
 		applyB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onApply();
 			}
 		});
-	} //protected final void initButtonComponents()
+	} //END protected final void initButtonComponents()
 	
 	//overrides AViewWithButtons
 	public final boolean init(IAppEventHandler aHandler) {
@@ -290,7 +291,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	//implements IEntriesSelectionView
 	public void setStatusChoice(int aStatusChoice) {
 		statusCB.setSelectedIndex(aStatusChoice);
-	} //public void setStatusChoice(int)
+	} //END public void setStatusChoice(int)
 	
 	//implements IEntriesSelectionView
 	public String[] getUnitsChoice() {
@@ -351,11 +352,11 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 
 	//implements IEntriesSelectionView
 	public void setUnitsLabel(String aUnitsLabel) {
-		unitsL.setText(aUnitsLabel);
+		unitsL.setText(aUnitsLabel + ":");
 	} //END public void setUnitsLabel(String)
 
 	//implements IEntriesSelectionView
 	public void setCategoriesLabel(String aCategoriesLabel) {
-		categoriesL.setText(aCategoriesLabel);
+		categoriesL.setText(aCategoriesLabel + ":");
 	} //END public void setCategoriesLabel(String)
 } //END public class EntriesSelectionView extends JPanel

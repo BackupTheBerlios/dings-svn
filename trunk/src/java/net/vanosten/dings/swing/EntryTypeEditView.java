@@ -2,7 +2,8 @@
  * EntryTypeEditView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,28 +25,26 @@ import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.uiif.IEntryTypeEditView;
 import net.vanosten.dings.swing.helperui.ChoiceID;
+import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.model.EntryType;
 
 public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
-	private JTextField nameTF;
+	private ValidatedTextField nameVTF;
 	private JCheckBox attribOneEnabledCB, attribTwoEnabledCB, attribThreeEnabledCB, attribFourEnabledCB;
 	private ChoiceID attribOneTypeCh, attribTwoTypeCh, attribThreeTypeCh, attribFourTypeCh;
 	
 	
 	public EntryTypeEditView(ComponentOrientation aComponentOrientation) {
 		super("Edit Entry Type", aComponentOrientation, true, true, MessageConstants.N_VIEW_ENTRYTYPES_LIST);
-	} //End public EntryTypeEditView(ComponentOrientation)
+	} //END public EntryTypeEditView(ComponentOrientation)
 
 	//Implements AEditView
 	protected void initializeEditP() {
@@ -55,17 +54,10 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 
 		JLabel nameL = new JLabel("Name:");
 		nameL.setDisplayedMnemonic(("N").charAt(0));
-		nameTF = new JTextField(50);
-		nameL.setLabelFor(nameTF);
-		nameTF.addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent evt) {
-			}
-			public void keyReleased(KeyEvent evt) {
-				onChange();
-			}
-			public void keyPressed(KeyEvent evt) {
-			}
-		});
+		nameVTF = new ValidatedTextField(50);
+		nameVTF.setToolTipText("Name may not be empty");
+		nameL.setLabelFor(nameVTF);
+		nameVTF.addKeyListener(this);
 		
 		attribOneEnabledCB = new JCheckBox("Attribute 1:");
 		attribOneEnabledCB.setMnemonic(("1").charAt(0));
@@ -134,8 +126,8 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		gbc.insets = new Insets (0,DingsSwingConstants.SP_H_G,0,0);
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbl.setConstraints(nameTF, gbc);
-		editP.add(nameTF);
+		gbl.setConstraints(nameVTF, gbc);
+		editP.add(nameVTF);
 		//------
 		gbc.gridx = 0;
 		gbc.gridy = 1;
@@ -216,18 +208,18 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		gbl.setConstraints(emptyL, gbc);
 		editP.add(emptyL);
 		//set focus
-		nameTF.requestFocus();
-	}	//End protected void initializeEditP()
+		nameVTF.requestFocus();
+	} //END protected void initializeEditP()
 	
 	//implements IEntryTypeEditView
 	public void setName(String aName) {
-		nameTF.setText(aName);
-	}	//END public void setUnitName(String)
+		nameVTF.setText(aName);
+	} //END public void setUnitName(String)
 	
 	//	implements IEntryTypeEditView
 	public String getName() {
-		return nameTF.getText();
-	}	//END public String getName()
+		return nameVTF.getText();
+	} //END public String getName()
 	
 	//	implements IEntryTypeEditView
 	public void setAttributeChoices(String[][] theAttributes) {
@@ -350,4 +342,9 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		//set to changed
 		onChange();
 	} //END private void onEnabled(int)
+	
+	//implements IEntryTypeEditView
+	public void setNameIsValueValid(boolean valid) {
+		nameVTF.isValueValid(valid);
+	} //END public void setNameIsValueValid(boolean)
 } //END public class EntryTypeEditView extends AEditView implements IEntryTypeEditView

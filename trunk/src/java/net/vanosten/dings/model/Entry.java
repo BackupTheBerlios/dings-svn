@@ -2,7 +2,8 @@
  * Entry.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,9 +45,14 @@ public final class Entry extends AIdItemModel {
 	public final static int STATUS_SELECT_ALL = 0;
 	public final static int STATUS_SELECT_UPTODATE = 1;
 	public final static int STATUS_SELECT_NEEDSEDITING = 2;
-	
+
 	//the elements
-	private String origin, destination, pronunciation, explanation, relation, example;
+	private String base;
+	private String target;
+	private String pronunciation;
+	private String explanation;
+	private String relation;
+	private String example;
 
 	//the attributes;
 	private boolean status = false;
@@ -57,7 +63,7 @@ public final class Entry extends AIdItemModel {
 	private String attributeTwoId;
 	private String attributeThreeId;
 	private String attributeFourId;
-	
+
 	/** The date when this Entry has been learned the last time */
 	private Date lastLearned;
 
@@ -72,12 +78,12 @@ public final class Entry extends AIdItemModel {
 
 	/** A pointer to the EntryType of this Entry */
 	private EntryType entryType;
-	
+
 	/** The entry type id.
-	 * In contrast to the entryType pointer this is stored in XML. 
+	 * In contrast to the entryType pointer this is stored in XML.
 	 * The pointer is for convenience only. */
 	private String entryTypeId;
-	
+
 	/** A static pointer to InfoVocab */
 	private static InfoVocab infoVocab;
 
@@ -91,7 +97,7 @@ public final class Entry extends AIdItemModel {
 	public Entry(String anId, boolean aStatus, int aScore, String aUnitId, String aCategoryId, String anEntryTypeId
 					, String anAttributeOne, String anAttributeTwo, String anAttributeThree, String anAttributeFour
 					, String aLastUpd, String aLastLearned
-					, String anOrigin, String aDestination
+					, String aBase, String aTarget
 					, String aPronunciation, String anExplanation
 					, String anExample, String aRelation) {
 		logger = Logger.getLogger("net.vanosten.dings.model.Entry");
@@ -108,8 +114,8 @@ public final class Entry extends AIdItemModel {
 		this.attributeFourId = anAttributeFour;
 		this.setLastUpd(aLastUpd);
 		this.lastLearned = Constants.getDateFromString(aLastLearned, new Date(0), logger);
-		this.origin = anOrigin;
-		this.destination = aDestination;
+		this.base = aBase;
+		this.target = aTarget;
 
 		//the rest of the String may be null
 		if (null == aPronunciation) this.pronunciation = Constants.EMPTY_STRING;
@@ -120,7 +126,7 @@ public final class Entry extends AIdItemModel {
 		else this.example = anExample;
 		if (null == aRelation) this.relation = Constants.EMPTY_STRING;
 		else this.relation = aRelation;
-	}   //END public Entry(...)
+	} //END public Entry(...)
 
 	/**
 	 * Checks and sets the highest Id
@@ -149,7 +155,7 @@ public final class Entry extends AIdItemModel {
 		return new Entry(getNewId(), false, SCORE_MIN, Constants.UNDEFINED, Constants.UNDEFINED, anEntryTypeID
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 									, null, null
-									, Constants.EMPTY_STRING, Constants.EMPTY_STRING
+									, Constants.UNDEFINED, Constants.UNDEFINED
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING);
 	} //END protected static Entry newItem(String)
@@ -182,8 +188,8 @@ public final class Entry extends AIdItemModel {
 		}
 		xml.append(">");
 		//rest
-		xml.append(Constants.getXMLTaggedValue(Constants.XML_ORIGIN, origin));
-		xml.append(Constants.getXMLTaggedValue(Constants.XML_DESTINATION, destination));
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_BASE, base));
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_TARGET, target));
 		if (null == explanation || false == explanation.equals(Constants.EMPTY_STRING)) {
 			xml.append(Constants.getXMLTaggedValue(Constants.XML_EXPLANATION, explanation));
 		}
@@ -203,9 +209,9 @@ public final class Entry extends AIdItemModel {
 
 	//implements AIdModel
 	protected Object[] getTableDisplay(){
-		Object[] display = {id, Boolean.valueOf(status), new Integer(score), origin, destination};
+		Object[] display = {id, Boolean.valueOf(status), new Integer(score), base, target};
 		return display;
-	} //End protected Object[] getTableDisplay()
+	} //END protected Object[] getTableDisplay()
 
 	//overrides AIdModel with a real implementation
 	protected static String[] getTableDisplayTitles() {
@@ -264,11 +270,11 @@ public final class Entry extends AIdItemModel {
 		ArrayList errors = new ArrayList();
 		String idError = validateId(Constants.PREFIX_ENTRY, anId);
 		if (null != idError) errors.add(idError);
-		if (1 > anOrigin.length()) {
-			errors.add("Origin may not be empty");
+		if (false == validateString(anOrigin, 1)) {
+			errors.add("Base may not be empty");
 		}
-		if (1 > aDestination.length()) {
-			errors.add("Destination may not be empty");
+		if (false == validateString(aDestination, 1)) {
+			errors.add("Target may not be empty");
 		}
 		return errors;
 	} //END public static ArrayList validate(...)
@@ -288,8 +294,8 @@ public final class Entry extends AIdItemModel {
 			//if validation is ok, save the new values.
 			if (0 ==  errors.size()) {
 				//validated values
-				origin = originV;
-				destination = destinationV;
+				base = originV;
+				target = destinationV;
 				//not validated values
 				if (entryType.getNumberOfAttributes() > 0) {
 					attributeOneId = editView.getAttributeId(1);
@@ -314,12 +320,8 @@ public final class Entry extends AIdItemModel {
 				sendSaveNeeded();
 				updateGUI();
 			}
-			else {
-				//Show an error message with the validation details
-				showValidationErrors(errors);
-			}
 		}
-	}   //END protected void updateModel()
+	} //END protected void updateModel()
 
 	private void getResultLearnOneView() {
 		//update status
@@ -357,15 +359,18 @@ public final class Entry extends AIdItemModel {
 			if (entryType.getNumberOfAttributes() > 3) {
 				editView.setAttributeId(attributeFourId, 4);
 			}
-			editView.setBase(origin);
-			editView.setTarget(destination);
+			editView.setBase(base);
+			editView.setTarget(target);
 			editView.setExplanation(explanation);
 			editView.setExample(example);
 			editView.setRelation(relation);
 			editView.setPronunciation(pronunciation);
 			editView.setEntryType(entryType.getName(), entryType.getId());
 
-			editView.setEditing(false);
+			//visual feedback
+			editView.setEditing(false, true);
+			editView.setBaseIsValueValid(true);
+			editView.setTargetIsValueValid(true);
 		}
 		else { //learnOneView
 			learnOneView.setUnitId(unitId);
@@ -384,8 +389,8 @@ public final class Entry extends AIdItemModel {
 			if (entryType.getNumberOfAttributes() > 3) {
 				learnOneView.setAttributeId(attributeFourId, 4);
 			}
-			learnOneView.setBase(origin);
-			learnOneView.setTarget(destination);
+			learnOneView.setBase(base);
+			learnOneView.setTarget(target);
 			learnOneView.setExplanation(explanation);
 			learnOneView.setExample(example);
 			learnOneView.setRelation(relation);
@@ -397,10 +402,17 @@ public final class Entry extends AIdItemModel {
 	//Implements AItemModel
 	protected void checkChangeInGUI() {
 		boolean isEditing = false;
+		boolean isValid = validateString(editView.getBase(), 1) && validateString(editView.getTarget(), 1);
 
-		if (false == editView.getUnitId().trim().equals(unitId)) isEditing = true;
-		if (false == editView.getCategoryId().trim().equals(categoryId)) isEditing = true;
-		if (editView.getStatus() != status) isEditing = true;
+		if (false == editView.getUnitId().trim().equals(unitId)) {
+			isEditing = true;
+		}
+		if (false == editView.getCategoryId().trim().equals(categoryId)) {
+			isEditing = true;
+		}
+		if (editView.getStatus() != status) {
+			isEditing = true;
+		}
 		if (entryType.getNumberOfAttributes() > 0) {
 			if (false == editView.getAttributeId(1).trim().equals(attributeOneId)) isEditing = true;
 		}
@@ -413,14 +425,29 @@ public final class Entry extends AIdItemModel {
 		if (entryType.getNumberOfAttributes() > 3) {
 			if (false == editView.getAttributeId(4).trim().equals(attributeFourId)) isEditing = true;
 		}
-		if (false == editView.getBase().trim().equals(origin)) isEditing = true;
-		if (false == editView.getTarget().trim().equals(destination)) isEditing = true;
-		if (false == editView.getExplanation().trim().equals(explanation)) isEditing = true;
-		if (false == editView.getExample().trim().equals(example)) isEditing = true;
-		if (false == editView.getRelation().trim().equals(relation)) isEditing = true;
-		if (false == editView.getPronunciation().trim().equals(pronunciation)) isEditing = true;
+		if (false == editView.getBase().trim().equals(base)) {
+			isEditing = true;
+		}
+		if (false == editView.getTarget().trim().equals(target)) {
+			isEditing = true;
+		}
+		if (false == editView.getExplanation().trim().equals(explanation)) {
+			isEditing = true;
+		}
+		if (false == editView.getExample().trim().equals(example)) {
+			isEditing = true;
+		}
+		if (false == editView.getRelation().trim().equals(relation)) {
+			isEditing = true;
+		}
+		if (false == editView.getPronunciation().trim().equals(pronunciation)) {
+			isEditing = true;
+		}
 
-		editView.setEditing(isEditing);
+		editView.setEditing(isEditing, isValid);
+		//validation
+		editView.setBaseIsValueValid(validateString(editView.getBase(), 1));
+		editView.setTargetIsValueValid(validateString(editView.getTarget(), 1));
 	} //END protected void checkChangeInGUI()
 
 	/**
@@ -516,7 +543,7 @@ public final class Entry extends AIdItemModel {
 	 *
 	 * @return boolean - whether this entry is part of choice, i.e. passes the criterias
 	 */
-	protected boolean partOfChoice(int theStatus, Date lastLearnedBefore, int[] minMaxLevels
+	protected boolean partOfChoice(int theStatus, Date lastLearnedBefore, int[] minMaxScores
 			, String[] theUnitIds, String[] theCategoryIds, String[] theEntryTypeIds) {
 		boolean check;
 		//status
@@ -532,7 +559,7 @@ public final class Entry extends AIdItemModel {
 		}
 		if (false == check) return false;
 		//levels
-		if (score < minMaxLevels[0] || score > minMaxLevels[1]) {
+		if (score < minMaxScores[0] || score > minMaxScores[1]) {
 			return false;
 		}
 		//date
@@ -593,7 +620,7 @@ public final class Entry extends AIdItemModel {
 
 	/**
 	 * Sets the EntryType for reference
-	 * 
+	 *
 	 * @param EntryType - a pointer to the entry Type
 	 * @param boolean - true if the attributes should be reset, because the entryType was changed
 	 * 					in the GUI.
@@ -625,7 +652,7 @@ public final class Entry extends AIdItemModel {
 			attributeFourId = entryType.getAttribute(4).getDefaultItem();
 		}
 	} //END protected void setEntryType(EntryType)
-	
+
 	/**
 	 * Sets the InfoVocab
 	 */
@@ -639,11 +666,11 @@ public final class Entry extends AIdItemModel {
 	protected String getEntryTypeId() {
 		return entryTypeId;
 	} //END protected String getEntryTypeId()
-	
+
 	protected String getCategoryId() {
 		return categoryId;
 	} //END protected String getCategoryId()
-	
+
 	protected String getUnitId() {
 		return unitId;
 	} //END protected String getUnitId()

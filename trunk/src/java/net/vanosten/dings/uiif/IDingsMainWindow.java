@@ -2,7 +2,8 @@
  * IDingsMainWindow.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,6 +22,10 @@
 package net.vanosten.dings.uiif;
 
 public interface IDingsMainWindow {
+	/**
+	 * Sets the look and feel based on the preferences.
+	 */
+	public void setLookAndFeel();
 	public void saveWindowLocationAndSize();
 	public void showHelp(String aMessage);
 	public void showMessageDialog(String aTitle, String aMessage, int aMessageType);

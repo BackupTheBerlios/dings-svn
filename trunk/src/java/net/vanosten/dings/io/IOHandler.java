@@ -2,7 +2,8 @@
  * IOHandler.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,4 +35,4 @@ public interface IOHandler {
 	public void setVocabularyFile(String fileName, String encoding) throws Exception;
 	public boolean readyToExecute();
 	public void execute() throws Exception;
-}
+} //END public interface IOHandler

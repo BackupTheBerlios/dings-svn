@@ -2,7 +2,8 @@
  * VocabularyXMLReader.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,10 +63,10 @@ public class VocabularyXMLReader implements IOHandler {
 
 	/** Holds the entry types */
 	private HashMap entryTypes;
-	
+
 	/** Holds the attributes */
 	private HashMap attributes;
-	
+
 	/** Holds the learning statistics */
 	private HashMap stats;
 
@@ -84,6 +85,8 @@ public class VocabularyXMLReader implements IOHandler {
 	private String title;
 	private String author;
 	private String notes;
+	private String copyright;
+	private String licence;
 	private String blabel = "Base";
 	private String tlabel = "Target";
 	private String alabel = "Attributes";
@@ -117,16 +120,16 @@ public class VocabularyXMLReader implements IOHandler {
 	private String lastLearned;
 
 	//Entry tags
-	private String origin = Constants.EMPTY_STRING;
-	private String destination = Constants.EMPTY_STRING;
+	private String base = Constants.EMPTY_STRING;
+	private String target = Constants.EMPTY_STRING;
 	private String explanation = Constants.EMPTY_STRING;
 	private String pronunciation = Constants.EMPTY_STRING;
 	private String example = Constants.EMPTY_STRING;
 	private String relation = Constants.EMPTY_STRING;
 
 	//attributes EntryType
-	private String[] attributeIds;	
-	
+	private String[] attributeIds;
+
 	//attriubutes for EntryTypeAttribute
 	private String aId; //needed because EntryTypeAttributeItems have also id
 	private String aLastUpd; //needed because EntryTypeAttributeItems have also lastUpd
@@ -145,7 +148,7 @@ public class VocabularyXMLReader implements IOHandler {
 	private String attributeTwo;
 	private String attributeThree;
 	private String attributeFour;
-	
+
 	//statistics
 	private StatisticSet statSet;
 	private int[] numberOfEntries = new int[Entry.SCORE_MAX];
@@ -163,7 +166,7 @@ public class VocabularyXMLReader implements IOHandler {
 	 */
 	public VocabularyXMLReader() {
 		super();
-	}   //End VocabularyXMLReader()
+	}   //END VocabularyXMLReader()
 
 	/**
 	 * Returns the units in a collection with id as keys
@@ -172,7 +175,7 @@ public class VocabularyXMLReader implements IOHandler {
 	 */
 	public HashMap getUnits() {
 		return units;
-	}   //End public HashMap getUnits()
+	}   //END public HashMap getUnits()
 
 	/**
 	 * Returns the categories in a collection with id as keys
@@ -181,7 +184,7 @@ public class VocabularyXMLReader implements IOHandler {
 	 */
 	public HashMap getCategories() {
 		return categories;
-	}   //End public HashMap getCategories()
+	}   //END public HashMap getCategories()
 
 	/**
 	 * Returns the entries in a Collection with id as keys
@@ -190,7 +193,7 @@ public class VocabularyXMLReader implements IOHandler {
 	 */
 	public HashMap getEntries() {
 		return entries;
-	}   //End public HashMap getEntries()
+	}   //END public HashMap getEntries()
 
 	/**
 	 * Returns the EntryTypeAttributes in a Collection with id as keys
@@ -199,7 +202,7 @@ public class VocabularyXMLReader implements IOHandler {
 	 */
 	public HashMap getAttributes() {
 		return attributes;
-	}   //End public HashMap getAttributes()
+	}   //END public HashMap getAttributes()
 
 	/**
 	 * Returns the entryTypes in a collection with id as key
@@ -208,12 +211,12 @@ public class VocabularyXMLReader implements IOHandler {
 	 */
 	public HashMap getEntryTypes() {
 		return entryTypes;
-	}   //End public HashMap getEntryTypes()
+	}   //END public HashMap getEntryTypes()
 
 	public InfoVocab getInfo() {
 		return info;
 	}   //END public InfoVocab getInfo()
-	
+
 	public HashMap getStats() {
 		return stats;
 	} //END public HashMap getStats()
@@ -237,7 +240,7 @@ public class VocabularyXMLReader implements IOHandler {
 			vocabularyFile = null;
 			throw new Exception("IOHandler.setVocabularyFile(String): " + e.toString());
 		}
-	} //End setVocabularyFile(String)
+	} //END setVocabularyFile(String)
 
 	/**
 	 * Controls whether everything is ok to execute <code>readVocabulary()</code>.
@@ -249,7 +252,7 @@ public class VocabularyXMLReader implements IOHandler {
 		boolean allOk = true;
 		if (vocabularyFile == null) allOk = false;
 		return allOk;
-	}   //End readyToExecute()
+	}   //END readyToExecute()
 
 	/**
 	 * This method reads a given vocabulary-xml-file and puts the data back to the definition and unit controllers.
@@ -308,7 +311,7 @@ public class VocabularyXMLReader implements IOHandler {
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.exiting(this.getClass().getName(), "execute");
 		}
-	}   //End execute()
+	}   //END execute()
 
 	/**
 	 * Traverses the document by pulling the next elements.
@@ -370,7 +373,7 @@ public class VocabularyXMLReader implements IOHandler {
 			attributeIds[2] = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETHREE);
 			attributeIds[3] = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEFOUR);
 		}
-		
+
 		//attributes for EntryTypeAttribute
 		else if (localName.equals(Constants.XML_ENTRYTYPE_ATTRIBUTE)) {
 			aId = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
@@ -401,13 +404,14 @@ public class VocabularyXMLReader implements IOHandler {
 			attributeTwo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO);
 			attributeThree = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETHREE);
 			attributeFour = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEFOUR);
-			
+
 			lastUpd = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_UPD);
 			lastLearned = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_LEARNED);
 		}
-		
+
 		//Attributes for StatisticSet
 		else if (localName.equals(Constants.XML_STATS_SET)) {
+			numberOfEntries = new int[Entry.SCORE_MAX];
 			lastUpd = xpp.getAttributeValue(namespace,Constants.XML_STATS_TIMESTAMP);
 		}
 		else if (localName.equals(Constants.XML_STATS_NOF_ENTRIES)) {
@@ -415,13 +419,13 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//reset currentValue
 		currentValue = null;
-	} //End processStartElement(XmlPullParser)
+	} //END processStartElement(XmlPullParser)
 
 	public void processEndElement(XmlPullParser xpp) throws Exception {
 		String localName = xpp.getName();
 		//Entry tags
-		if (localName.equals(Constants.XML_ORIGIN)) origin = currentValue;
-		else if (localName.equals(Constants.XML_DESTINATION)) destination = currentValue;
+		if (localName.equals(Constants.XML_BASE)) base = currentValue;
+		else if (localName.equals(Constants.XML_TARGET)) target = currentValue;
 		else if (localName.equals(Constants.XML_EXPLANATION)) explanation = currentValue;
 		else if (localName.equals(Constants.XML_PRONUNCIATION)) pronunciation = currentValue;
 		else if (localName.equals(Constants.XML_EXAMPLE)) example = currentValue;
@@ -486,7 +490,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//Entry
 		else if (localName.equals(Constants.XML_ENTRY)) {
-			ArrayList errors = Entry.validate(id, origin, destination);
+			ArrayList errors = Entry.validate(id, base, target);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -494,7 +498,7 @@ public class VocabularyXMLReader implements IOHandler {
 				anEntry = new Entry(id, status, score, unit, category, entryType
 										, attributeOne, attributeTwo, attributeThree, attributeFour
 										, lastUpd, lastLearned
-										, origin, destination
+										, base, target
 										, pronunciation, explanation
 										, example, relation);
 				entries.put(id, anEntry);
@@ -510,6 +514,12 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		else if (localName.equals(Constants.XML_NOTES)) {
 			notes = currentValue;
+		}
+		else if (localName.equals(Constants.XML_COPYRIGHT)) {
+			copyright = currentValue;
+		}
+		else if (localName.equals(Constants.XML_LICENCE)) {
+			licence = currentValue;
 		}
 		else if (localName.equals(Constants.XML_BASE_LABEL)) {
 			blabel = currentValue;
@@ -537,31 +547,31 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		else if (localName.equals(Constants.XML_BASE_LOCALE)) {
 			blocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_TARGET_LOCALE)) {
 			tlocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_ATTRIBUTES_LOCALE)) {
 			alocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_UNIT_LOCALE)) {
 			ulocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_CATEGORY_LOCALE)) {
 			clocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_EXPLANATION_LOCALE)) {
 			explocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_EXAMPLE_LOCALE)) {
 			exlocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_PRONUNCIATION_LOCALE)) {
 			plocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_RELATION_LOCALE)) {
 			rlocale = currentValue;
-		}		
+		}
 		else if (localName.equals(Constants.XML_VISIBILITY_ATTRIBUTES)) {
 			visa = Integer.parseInt(currentValue);
 		}
@@ -589,7 +599,7 @@ public class VocabularyXMLReader implements IOHandler {
 				throw new Exception(errors.toString());
 			}
 			else {
-				info = new InfoVocab(title, author, notes
+				info = new InfoVocab(title, author, notes, copyright, licence
 						, blabel, tlabel, alabel
 						, ulabel, clabel
 						, olabel, explabel, exlabel
@@ -609,7 +619,7 @@ public class VocabularyXMLReader implements IOHandler {
 			statSet = new StatisticSet(Constants.getDateFromString(lastUpd, new Date(0), logger), numberOfEntries);
 			stats.put(statSet.getTimeStamp(), statSet);
 		}
-	} //End processEndElements(XmlPullParser) throws Exception
+	} //END processEndElements(XmlPullParser) throws Exception
 
 	/**
 	 * Resets common entry tags

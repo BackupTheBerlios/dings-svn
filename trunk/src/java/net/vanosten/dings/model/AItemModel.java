@@ -2,7 +2,8 @@
  * AItemModel.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,8 +20,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package net.vanosten.dings.model;
-
-import java.util.ArrayList;
 
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.consts.MessageConstants;
@@ -63,16 +62,6 @@ public abstract class AItemModel extends AModel {
 	} //END public static String validateId(String)
 	
 	/**
-	 * Sends an AppEvent to show the validation errors, which are contained in a ArrayList.
-	 * 
-	 * @param errors
-	 */
-	protected void showValidationErrors(ArrayList errors) {
-		parentController.handleAppEvent(MessageConstants.getShowErrorListEvent(errors
-				, "The following validation errors occured"));
-	} //END protected void showValidationError(ArrayList)
-	
-	/**
 	 * Sends an AppEvent to set save neded.
 	 */
 	protected void sendSaveNeeded() {
@@ -106,5 +95,5 @@ public abstract class AItemModel extends AModel {
 			}
 		}
 		else parentController.handleAppEvent(evt);
-	}	//END public void handleAppEvent(AppEvent)
+	} //END public void handleAppEvent(AppEvent)
 } //END public abstract class AItemModel extends AModel

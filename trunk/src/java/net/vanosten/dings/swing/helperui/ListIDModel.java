@@ -2,7 +2,8 @@
  * ListIDModel.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,14 +31,14 @@ public class ListIDModel extends AbstractListModel {
 		super();
 		this.objects = theObjects;
 		fireIntervalAdded(this,0,getSize() - 1);
-	}	//END public ListIDModel(String[][])
+	} //END public ListIDModel(String[][])
 	
 	/**
 	 * Implements abstract method.
 	 */
 	public int getSize() {
 		return objects.length;
-	}	//END public int getSize()
+	} //END public int getSize()
 	
 	/**
 	 * Implements abstract method.
@@ -45,11 +46,11 @@ public class ListIDModel extends AbstractListModel {
 	 */
 	public Object getElementAt(int pos) {
 		return objects[pos][1];
-	}	//END public Object getElementAt(int)
+	} //END public Object getElementAt(int)
 	
 	public String getIDAt(int pos) {
 		return objects[pos][0];
-	}	//END public String getIDAt(int)
+	} //END public String getIDAt(int)
 	
 	/**
 	 * Returns the index pos of an ID or -1 if ID cannot be found
@@ -61,7 +62,7 @@ public class ListIDModel extends AbstractListModel {
 			} 
 		}
 		return -1;
-	}	//END public int getIDIndexPos(String)
+	} //END public int getIDIndexPos(String)
 	
 	public String[] getIDsAt(int[] pos) {
 		String IDs[] = new String[pos.length];
@@ -69,6 +70,6 @@ public class ListIDModel extends AbstractListModel {
 			IDs[i] = objects[pos[i]][0];
 		}
 		return IDs;
-	}	//END public String[] getIDsAt(int[])
+	} //END public String[] getIDsAt(int[])
 	
-}	//END public class IDListModel extends AbstractListModel
+} //END public class IDListModel extends AbstractListModel

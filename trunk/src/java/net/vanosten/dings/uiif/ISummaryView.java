@@ -2,7 +2,8 @@
  * ISummaryView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,7 +22,12 @@
 package net.vanosten.dings.uiif;
 
 import org.jfree.data.CategoryDataset;
+import org.jfree.data.time.TimeSeriesCollection;
 
 public interface ISummaryView extends IView {
 	public void displayHorizontalBarChart(final CategoryDataset dataset, final String title, final String categoryTitle, final String valueTitle);
+	public void displayTimeSeriesChart(final TimeSeriesCollection averageScore
+			, final int maxScoreRange
+			, final TimeSeriesCollection nuberOfEntries
+			, final int maxtotalRange);
 } //END public interface IsummaryView extends IView

@@ -2,7 +2,8 @@
  * InfoVocab.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -42,8 +43,14 @@ public final class InfoVocab extends AItemModel {
     /** The author of this vocabulary */
     private String author;
 
-    /** Free text notes about this vocabulary */
+    /** Free text notes about this learning stack */
     private String notes;
+
+    /** Copyright info for this learning stack */
+    private String copyright;
+
+    /** Free text licence about this learning stack */
+    private String licence;
     
     /** The edit editView */
     private IInfoVocabEditView editView;
@@ -146,7 +153,7 @@ public final class InfoVocab extends AItemModel {
      * A constructor without any data to make a default.
      */
     public InfoVocab() {
-    	this("Learning stack", "", ""
+    	this("Learning stack", "", "", "", ""
     				,"Base", "Target", "Attributes"
     				, "Unit", "Category"
 					, "Others", "Explanation", "Example"
@@ -162,7 +169,7 @@ public final class InfoVocab extends AItemModel {
     /**
      * The constructor with full data.
      */
-    public InfoVocab(String aTitle, String anAuthor, String theNotes
+    public InfoVocab(String aTitle, String anAuthor, String theNotes, String aCopyright, String aLicence
 					 , String aBaseLabel, String aTargetLabel, String anAttributesLabel
 					 , String aUnitLabel, String aCategoryLabel
 					 , String anOthersLabel, String anExplanationLabel, String anExampleLabel
@@ -194,6 +201,18 @@ public final class InfoVocab extends AItemModel {
         else {
         	this.notes = theNotes;
         }
+    	if (null == aCopyright) {
+    		this.copyright = Constants.EMPTY_STRING;
+    	}
+        else {
+        	this.copyright = aCopyright;
+        }
+        if (null == aLicence) {
+        	this.licence = Constants.EMPTY_STRING;
+        }
+        else {
+        	this.licence = aLicence;
+        }
         
         //labels
         this.baseLabel = aBaseLabel;
@@ -224,7 +243,7 @@ public final class InfoVocab extends AItemModel {
     	this.visibilityExample = aVisibilityExample;
     	this.visibilityPronunciation = aVisibilityPronunciation;
     	this.visibilityRelation = aVisibilityRelation;
-    }	//END public InfoVocab(...)
+    } //END public InfoVocab(...)
 
     //Implements AItemModel
     protected String getXMLString() {
@@ -234,6 +253,8 @@ public final class InfoVocab extends AItemModel {
         xml.append(Constants.getXMLTaggedValue(Constants.XML_TITLE, title));
         xml.append(Constants.getXMLTaggedValue(Constants.XML_AUTHOR, author));
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_NOTES, notes));
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_COPYRIGHT, copyright));
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_LICENCE, licence));
 		//labels
         xml.append(Constants.getXMLTaggedValue(Constants.XML_BASE_LABEL, baseLabel));
         xml.append(Constants.getXMLTaggedValue(Constants.XML_TRAGET_LABEL, targetLabel));
@@ -288,31 +309,31 @@ public final class InfoVocab extends AItemModel {
 									 , String anExplanationLabel
 									 , String anExampleLabel) {
 		ArrayList errors = new ArrayList();
-		if (1 > aTitle.length()) {
+		if (false == validateString(aTitle, 1)) {
 			errors.add("Title may not be empty");
 		}
-		if (1 > aBaseLabel.length()) {
+		if (false == validateString(aBaseLabel, 1)) {
 			errors.add("Label for Base may not be empty");
 		}
-		if (1 > aTargetLabel.length()) {
+		if (false == validateString(aTargetLabel, 1)) {
 			errors.add("Label for Target may not be empty");
 		}
-		if (1 > anAttributesLabel.length()) {
+		if (false == validateString(anAttributesLabel, 1)) {
 			errors.add("Label for attributes section may not be empty");
 		}
-		if (1 > aUnitLabel.length()) {
+		if (false == validateString(aUnitLabel, 1)) {
 			errors.add("Label for Unit may not be empty");
 		}
-		if (1 > aCategoryLabel.length()) {
+		if (false == validateString(aCategoryLabel, 1)) {
 			errors.add("Label for Category may not be empty");
 		}
-		if (1 > anOthersLabel.length()) {
+		if (false == validateString(anOthersLabel, 1)) {
 			errors.add("Label for others section may not be empty");
 		}
-		if (1 > anExplanationLabel.length()) {
+		if (false == validateString(anExplanationLabel, 1)) {
 			errors.add("Label for Explanation may not be empty");
 		}
-		if (1 > anExampleLabel.length()) {
+		if (false == validateString(anExampleLabel, 1)) {
 			errors.add("Label for Example may not be empty");
 		}
 		return errors;
@@ -351,6 +372,8 @@ public final class InfoVocab extends AItemModel {
 			//not validated values
 			author = editView.getAuthor().trim();
 			notes = editView.getNotes().trim();
+			copyright = editView.getCopyright().trim();
+			licence = editView.getLicence().trim();
 			baseLocale = Constants.parseLocale(editView.getBaseLocale());
 			targetLocale = Constants.parseLocale(editView.getTargetLocale());
 	        attributesLocale = Constants.parseLocale(editView.getAttributesLocale());
@@ -371,17 +394,15 @@ public final class InfoVocab extends AItemModel {
 			sendSaveNeeded();
 			updateGUI();
 		}
-		else {
-			//Show an error message with the validation details
-			showValidationErrors(errors);
-		}
-    }	//END private void updateModel()
+    } //END private void updateModel()
 
     //Implements AItemModel.
     protected void updateGUI() {
         editView.setTitle(title);
         editView.setAuthor(author);
         editView.setNotes(notes);
+        editView.setCopyright(copyright);
+        editView.setLicence(licence);
         editView.setBaseLabel(baseLabel);
         editView.setTargetLabel(targetLabel);
         editView.setAttributesLabel(attributesLabel);
@@ -408,8 +429,19 @@ public final class InfoVocab extends AItemModel {
         editView.setVisibilityExample(visibilityExample);
         editView.setVisibilityPronunciation(visibilityPronunciation);
         editView.setVisibilityRelation(visibilityRelation);
-        editView.setEditing(false);
-     }	//END protected void updateGUI()
+        
+        //user feedback
+        editView.setEditing(false, true);
+        editView.setTitleIsValueValid(true);
+        editView.setBaseLabelIsValueValid(true);
+    	editView.setTragetLabelIsValueValid(true);
+    	editView.setAttributesLabelIsValueValid(true);
+    	editView.setUnitLabelIsValueValid(true);
+    	editView.setCategoryLabelIsValueValid(true);
+    	editView.setOthersLabelIsValueValid(true);
+    	editView.setExplanationLabelIsValueValid(true);
+    	editView.setExampleLabelIsValueValid(true);
+     } //END protected void updateGUI()
      
 	/**
 	 *Implements AItemModel.
@@ -418,9 +450,20 @@ public final class InfoVocab extends AItemModel {
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.logp(Level.FINEST, this.getClass().getName(), "checkChangeInGUI", author + "," +editView.getAuthor().trim() + ".");
 		}
+		boolean isValid = validateString(editView.getTitle(), 1) 
+			&& validateString(editView.getBaseLabel(), 1)
+			&& validateString(editView.getTargetLabel(), 1)
+			&& validateString(editView.getAttributesLabel(), 1)
+			&& validateString(editView.getUnitLabel(), 1)
+			&& validateString(editView.getCategoryLabel(), 1)
+			&& validateString(editView.getOthersLabel(), 1)
+			&& validateString(editView.getExplanationLabel(), 1)
+			&& validateString(editView.getExampleLabel(), 1);
  		if ((editView.getTitle().trim().equals(title)) &&
  			(editView.getAuthor().trim().equals(author)) &&
 			(editView.getNotes().trim().equals(notes)) &&
+			(editView.getCopyright().trim().equals(copyright)) &&
+			(editView.getLicence().trim().equals(licence)) &&
 			(editView.getBaseLabel().trim().equals(baseLabel)) &&
 			(editView.getTargetLabel().trim().equals(targetLabel)) &&
  			(editView.getAttributesLabel().trim().equals(attributesLabel)) &&
@@ -445,10 +488,19 @@ public final class InfoVocab extends AItemModel {
  			(editView.getVisibilityExample() == visibilityExample) &&
  			(editView.getVisibilityPronunciation() == visibilityPronunciation) &&
  			(editView.getVisibilityRelation() == visibilityRelation)) {
-			editView.setEditing(false);
+			editView.setEditing(false, isValid);
 		}
 		else {
-			editView.setEditing(true);
+			editView.setEditing(true, isValid);
+	        editView.setTitleIsValueValid(validateString(editView.getTitle(), 1));
+	        editView.setBaseLabelIsValueValid(validateString(editView.getBaseLabel(), 1));
+	    	editView.setTragetLabelIsValueValid(validateString(editView.getTargetLabel(), 1));
+	    	editView.setAttributesLabelIsValueValid(validateString(editView.getAttributesLabel(), 1));
+	    	editView.setUnitLabelIsValueValid(validateString(editView.getUnitLabel(), 1));
+	    	editView.setCategoryLabelIsValueValid(validateString(editView.getCategoryLabel(), 1));
+	    	editView.setOthersLabelIsValueValid(validateString(editView.getOthersLabel(), 1));
+	    	editView.setExplanationLabelIsValueValid(validateString(editView.getExplanationLabel(), 1));
+	    	editView.setExampleLabelIsValueValid(validateString(editView.getExampleLabel(), 1));
 		}
 	} //END protected void checkChangeInGUI()
 	
@@ -513,4 +565,4 @@ public final class InfoVocab extends AItemModel {
 	protected int getVisibilityRelation() {
 		return visibilityRelation;
 	} //END protected int getVisibilityRelation()
-}	//END public class InfoVocab extends DingsItem
+} //END public class InfoVocab extends DingsItem

@@ -2,7 +2,8 @@
  * SolutionLabel.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,7 +25,7 @@ import javax.swing.JLabel;
 
 import java.awt.Color;
 
-import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class SolutionLabel extends JLabel {
 	
@@ -37,7 +38,7 @@ public class SolutionLabel extends JLabel {
 	 */
 	public SolutionLabel() {
 		super();
-		this.setFont(Constants.SOLUTION_FONT);
+		this.setFont(DingsSwingConstants.SOLUTION_FONT);
 	} //END public SolutionLabel()
 	
 	/**

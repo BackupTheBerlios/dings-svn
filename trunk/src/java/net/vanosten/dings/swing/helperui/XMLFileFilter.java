@@ -2,7 +2,8 @@
  * XMLFileFilter.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,12 +39,12 @@ public class XMLFileFilter extends FileFilter {
 		}
 
 		return false;
-	}	//END public boolean accept(File)
+	} //END public boolean accept(File)
     
 	// The description of this filter
 	public String getDescription() {
 		return "Only xml-files";
-	}	//END public String getDescription()
+	} //END public String getDescription()
 	
 	private String getExtension(File f) {
 		String ext = null;
@@ -54,7 +55,7 @@ public class XMLFileFilter extends FileFilter {
 			ext = s.substring(i+1).toLowerCase();
 		}
 		return ext;
-	}	//END private String getExtension(File)
-}	//END public class XMLFileFilter extends FileFilter
+	} //END private String getExtension(File)
+} //END public class XMLFileFilter extends FileFilter
 
 

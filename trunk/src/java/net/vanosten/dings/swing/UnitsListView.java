@@ -2,7 +2,8 @@
  * UnitsListView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
- * Copyright (C) 2002, 2003 Rick Gruber (rick@vanosten.net)
+ * DingsBums?! A flexible flashcard application written in Java.
+ * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,15 +21,17 @@
  */
 package net.vanosten.dings.swing;
 
+import java.awt.ComponentOrientation;
+
 import net.vanosten.dings.consts.MessageConstants;
 
 public class UnitsListView extends ListView {
 
-	public UnitsListView() {
-		super("Units");
-	}	//END public UnitsListView()
+	public UnitsListView(ComponentOrientation aComponentOrientation) {
+		super("Units", aComponentOrientation);
+	} //END public UnitsListView(ComponentOrientation)
 	
 	protected void setMessages() {
 		msgEdit = MessageConstants.N_VIEW_UNIT_EDIT;
 	} //END protected void setMessages()
-}	//END public class UnitsListView
+} //END public class UnitsListView extends ListView
