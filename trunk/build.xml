@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="Dings" basedir="." default="compile">
+<project name="Dings" basedir="." default="dist">
 	<property name="src" value="./src"/>
 	<property name="build" value="./build/classes"/>
 	<property name="dist"  value="./dist"/>
