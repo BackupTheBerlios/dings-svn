@@ -46,6 +46,7 @@ import net.vanosten.dings.swing.helperui.ListIDModel;
 import net.vanosten.dings.uiif.IEntriesSelectionView;
 
 public class EntriesSelectionView extends AViewWithButtons implements IEntriesSelectionView {
+	private final static long serialVersionUID = 1L;
 	
 	private JButton applyB;
 	private ListID unitsLi, categoriesLi, typesLi;
@@ -254,15 +255,15 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	//overrides AViewWithButtons
 	public final boolean init(IAppEventHandler aHandler) {
 		boolean foo = super.init(aHandler);
-        AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-        ape.setMessage(MessageConstants.D_ENTRIES_SELECTION_REFRESH);
+        AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+        ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_REFRESH);
         controller.handleAppEvent(ape);
         return foo;
 	} //END public final boolean init(IAppEventHandler)
 	
 	private final void onApply() {
-        AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-        ape.setMessage(MessageConstants.D_ENTRIES_SELECTION_APPLY);
+        AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+        ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_APPLY);
         controller.handleAppEvent(ape);
 	} //END private final void onApply()
 	

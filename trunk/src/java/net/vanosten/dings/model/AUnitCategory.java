@@ -21,7 +21,7 @@
  */
 package net.vanosten.dings.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.vanosten.dings.uiif.IUnitEditView;
 import net.vanosten.dings.consts.Constants;
@@ -94,14 +94,14 @@ public abstract class AUnitCategory extends AIdItemModel {
 	/**
 	 * Hides the static method validate(String, String) in the subcalsses
 	 */
-	protected abstract ArrayList validateIt(String anId, String aName);
+	protected abstract List<String> validateIt(String anId, String aName);
 
 	//Implements AModel.
 	protected void updateModel() {
 		//get values from editView and trim them
 		String nameV = editView.getName().trim();
 		//validate where necessary
-		ArrayList errors = validateIt(id, nameV);
+		List<String> errors = validateIt(id, nameV);
 		//if validation is ok, save the new values.
 		if (0 ==  errors.size()) {
 			//validated values

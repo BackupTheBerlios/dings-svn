@@ -21,20 +21,21 @@
  */
 package net.vanosten.dings.model;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
 import net.vanosten.dings.uiif.IListView;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 
 public abstract class ACollection implements IAppEventHandler {
 
 	/** Is actually the container holding all items */
-	protected HashMap items = null;
+	protected Map items = null;
 
 	protected IListView listView = null;
 
@@ -44,7 +45,7 @@ public abstract class ACollection implements IAppEventHandler {
 	protected String tagName;
 
 	/** The message for getting the list view */
-	protected String msgListView = null;
+	protected Message msgListView = null;
 
 	/**
 	 * The empty constructor.
@@ -53,7 +54,6 @@ public abstract class ACollection implements IAppEventHandler {
 		this.parentController = anEventHandler;
 		setTagName();
 		setMessageListView();
-		items = new HashMap(); //TODO: maybe we should provide an intelligent default size
 	} //END public ACollection;
 
 	/**
@@ -71,7 +71,7 @@ public abstract class ACollection implements IAppEventHandler {
 	 *
 	 * @param HashMap units
 	 */
-	protected abstract void setItems(HashMap theItems);
+	protected abstract void setItems(Map items);
 
 	/**
 	 * The collection as an XML string.
@@ -139,7 +139,7 @@ public abstract class ACollection implements IAppEventHandler {
 			sendSaveNeeded();
 			//if inList is false, then show list
 			if (false == inList) {
-				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 				ape.setMessage(msgListView);
 				parentController.handleAppEvent(ape);
 			}
@@ -185,8 +185,8 @@ public abstract class ACollection implements IAppEventHandler {
 	} //END protected void setListView(IListView)
 
 	protected void sendSaveNeeded() {
-		AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-		ape.setMessage(MessageConstants.S_SAVE_NEEDED);
+		AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+		ape.setMessage(MessageConstants.Message.S_SAVE_NEEDED);
 		parentController.handleAppEvent(ape);
 	} //END protected void sendSaveNeeded()
 } //END public abstract class ACollection

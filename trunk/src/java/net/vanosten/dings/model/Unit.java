@@ -22,83 +22,89 @@
 package net.vanosten.dings.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.vanosten.dings.consts.Constants;
 
 import java.util.logging.Logger;
 
 public final class Unit extends AUnitCategory {
-    
+
 	/** Defines the maximal number of an item until now */
 	private static int maxId = 0;
-    
-    public Unit(String anId, String aLastUpd, String aName, String aDescription) {
-    	super(anId, aLastUpd, aName, aDescription);
-    	setMaxId(anId);        
+
+	public Unit(String anId, String aLastUpd, String aName, String aDescription) {
+		super(anId, aLastUpd, aName, aDescription);
+		setMaxId(anId);
 		logger = Logger.getLogger("net.vanosten.dings.model.Unit");
-    } //END public Unit(String, String, String)
-		
+	} // END public Unit(String, String, String)
+
 	/**
 	 * Checks and sets the highest Id
 	 */
 	private static void setMaxId(String thisId) {
-		maxId = Math.max(maxId, Integer.parseInt(thisId.substring(Constants.PREFIX_UNIT.length(),thisId.length())));
-	} //END private static void setMaxId(string)
+		maxId = Math.max(maxId, Integer.parseInt(thisId.substring(
+				Constants.PREFIX_UNIT.length(), thisId.length())));
+	} // END private static void setMaxId(string)
 
-	/** 
+	/**
 	 * Returns a valid id for a new item
 	 */
 	private static String getNewId() {
 		maxId++;
 		return (Constants.PREFIX_UNIT + maxId);
-	} //END private static String getNewId()
-	
+	} // END private static String getNewId()
+
 	/**
-	 * Reset the max Id to 0.
-	 * E.g. used when creating a new vocabulary after another vocabulary had been opened.
+	 * Reset the max Id to 0. E.g. used when creating a new vocabulary after
+	 * another vocabulary had been opened.
 	 */
 	protected static void resetMaxId() {
 		maxId = 0;
-	} //END protected static void resetMaxId()
+	} // END protected static void resetMaxId()
 
-    /**
-     * Construct a new unit from scratch adding the necessary information.
-     */
-    protected static Unit newItem(boolean isDefault) {
+	/**
+	 * Construct a new unit from scratch adding the necessary information.
+	 */
+	protected static Unit newItem(boolean isDefault) {
 		if (isDefault) {
 			return new Unit(getNewId(), null, "Default", Constants.EMPTY_STRING);
 		}
-        return new Unit(getNewId(), null, Constants.UNDEFINED, Constants.EMPTY_STRING);
-    } //END protected static Unit newItem()
-    
-    //Implements AItemModel.
-    protected String getXMLString() {
-        StringBuffer xml = new StringBuffer();
-        xml.append("<").append(Constants.XML_UNIT);
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
-		xml.append(">");
-        xml.append(Constants.getXMLTaggedValue(Constants.XML_NAME, name));
-        xml.append(Constants.getXMLTaggedValue(Constants.XML_DESCRIPTION, description));
-        xml.append("</").append(Constants.XML_UNIT).append(">");
-        return xml.toString();
-    } //END protected String getXMLString()
-       
-    //implements AUnitCategory
-    protected ArrayList validateIt(String anId, String aName) {
-    	return validate(anId, aName);
-    } //END protected ArrayList validateIt(String, String)
+		return new Unit(getNewId(), null, Constants.UNDEFINED,
+				Constants.EMPTY_STRING);
+	} // END protected static Unit newItem()
 
-    
-    //implements AUnitCategory
-    public static ArrayList validate(String anId, String aName) {
-    	ArrayList errors = new ArrayList();
-    	String idError = validateId(Constants.PREFIX_UNIT, anId);
-    	if (null != idError) errors.add(idError);
+	// Implements AItemModel.
+	protected String getXMLString() {
+		StringBuffer xml = new StringBuffer();
+		xml.append("<").append(Constants.XML_UNIT);
+		xml.append(Constants
+				.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		xml.append(Constants.getXMLFormattedAttribute(
+				Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
+		xml.append(">");
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_NAME, name));
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_DESCRIPTION,
+				description));
+		xml.append("</").append(Constants.XML_UNIT).append(">");
+		return xml.toString();
+	} // END protected String getXMLString()
+
+	// implements AUnitCategory
+	protected List<String> validateIt(String anId, String aName) {
+		return validate(anId, aName);
+	} // END protected List<String> validateIt(String, String)
+
+	// implements AUnitCategory
+	public static List<String> validate(String anId, String aName) {
+		List<String> errors = new ArrayList<String>();
+		String idError = validateId(Constants.PREFIX_UNIT, anId);
+		if (null != idError)
+			errors.add(idError);
 		if (false == validateString(aName, 1)) {
 			errors.add("Name may not be empty");
 		}
-    	return errors;
-    } //END public static ArrayList validate(String, String)
-} //END public class Unit extends AUnitCategory
+		return errors;
+	} // END public static ArrayList validate(String, String)
+} // END public class Unit extends AUnitCategory
 

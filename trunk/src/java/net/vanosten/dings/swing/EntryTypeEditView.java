@@ -38,6 +38,8 @@ import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IEntryTypeEditView;
 
 public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
+	private final static long serialVersionUID = 1L;
+
 	private ValidatedTextField nameVTF;
 	private JCheckBox attribOneEnabledCB, attribTwoEnabledCB, attribThreeEnabledCB, attribFourEnabledCB;
 	private ChoiceID attribOneTypeCh, attribTwoTypeCh, attribThreeTypeCh, attribFourTypeCh;
@@ -48,7 +50,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 				, aComponentOrientation
 				, true
 				, true
-				, MessageConstants.N_VIEW_ENTRYTYPES_LIST);
+				, MessageConstants.Message.N_VIEW_ENTRYTYPES_LIST);
 	} //END public EntryTypeEditView(ComponentOrientation)
 
 	//Implements AEditView

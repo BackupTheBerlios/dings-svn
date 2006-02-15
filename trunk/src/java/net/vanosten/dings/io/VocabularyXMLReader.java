@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import net.vanosten.dings.model.*;
 import net.vanosten.dings.consts.Constants;
@@ -68,7 +70,7 @@ public class VocabularyXMLReader implements IOHandler {
 	private HashMap attributes;
 
 	/** Holds the learning statistics */
-	private HashMap stats;
+	private Map<Date,StatisticSet> stats;
 
 	/** Holds the info about the vocabulary */
 	private InfoVocab info;
@@ -217,9 +219,9 @@ public class VocabularyXMLReader implements IOHandler {
 		return info;
 	}   //END public InfoVocab getInfo()
 
-	public HashMap getStats() {
+	public Map<Date,StatisticSet> getStats() {
 		return stats;
-	} //END public HashMap getStats()
+	} //END public Map<Date,StatisticSet> getStats()
 
 	//implements IOHandler
 	public void setVocabularyFile(String fileName, String anEncoding) throws Exception {
@@ -270,7 +272,7 @@ public class VocabularyXMLReader implements IOHandler {
 		entries = new HashMap(89);
 		entryTypes = new HashMap();
 		attributes = new HashMap();
-		stats = new HashMap();
+		stats = new HashMap<Date,StatisticSet>();
 
 		//helpers
 		boolean hasException = false;
@@ -438,7 +440,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//EntryTypeAttribute
 		else if (localName.equals(Constants.XML_ENTRYTYPE_ATTRIBUTE)) {
-			ArrayList errors = EntryTypeAttribute.validate(aId, name);
+			List<String> errors = EntryTypeAttribute.validate(aId, name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -455,7 +457,7 @@ public class VocabularyXMLReader implements IOHandler {
 
 		//EntryType
 		else if (localName.equals(Constants.XML_ENTRYTYPE)) {
-			ArrayList errors = EntryType.validate(id, name);
+			List<String> errors = EntryType.validate(id, name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -468,7 +470,7 @@ public class VocabularyXMLReader implements IOHandler {
 		else if (localName.equals(Constants.XML_NAME)) name = currentValue;
 		else if (localName.equals(Constants.XML_DESCRIPTION)) description = currentValue;
 		else if (localName.equals(Constants.XML_UNIT)) {
-			ArrayList errors = Unit.validate(id, name);
+			List<String> errors = Unit.validate(id, name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -479,7 +481,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//Category
 		else if (localName.equals(Constants.XML_CATEGORY)) {
-			ArrayList errors = Category.validate(id, name); //May not be called from AUnitCategory -> NullPointer
+			List<String> errors = Category.validate(id, name); //May not be called from AUnitCategory -> NullPointer
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -490,7 +492,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//Entry
 		else if (localName.equals(Constants.XML_ENTRY)) {
-			ArrayList errors = Entry.validate(id, base, target);
+			List<String> errors = Entry.validate(id, base, target);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}

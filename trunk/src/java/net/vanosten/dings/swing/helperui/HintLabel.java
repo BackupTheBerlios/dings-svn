@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -35,7 +36,8 @@ import javax.swing.Timer;
  * Previously class <code>MultilineTextRenderer</code>.
  */
 public class HintLabel extends JLabel {
-
+	private final static long serialVersionUID = 1L;
+	
 	public final static int MODE_FLASH = 0;
 	public final static int MODE_LETTER = 1;
 	public final static int MODE_SHUFFLE = 2;
@@ -112,7 +114,7 @@ public class HintLabel extends JLabel {
 	public void doShuffle() {
 		StringBuffer shuffeledSB = new StringBuffer();
 		String[] theTokens = originalText.split("\\s+");
-		ArrayList shuffeler = new ArrayList();
+		List<String> shuffeler = new ArrayList<String>();
 		for (int i = 0; i < theTokens.length; i++) {
 			//if word is not longer than one letter then no need to shuffle
 			if (theTokens[i].length() <= 1) {

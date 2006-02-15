@@ -24,6 +24,8 @@ package net.vanosten.dings.swing.helperui;
 import javax.swing.JComboBox;
 
 public class ChoiceID extends JComboBox {
+	private final static long serialVersionUID = 1L;
+	
 	private String itemID[] = {};
 
 	public ChoiceID () {

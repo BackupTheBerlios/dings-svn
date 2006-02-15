@@ -27,6 +27,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.Toolbox;
 
 public class EntryTypeAttributesListView extends ListView {
+	private final static long serialVersionUID = 1L;
 
 	public EntryTypeAttributesListView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_entry_type_attributes"), aComponentOrientation);
@@ -34,6 +35,6 @@ public class EntryTypeAttributesListView extends ListView {
 	
 	//implements Listview
 	protected void setMessages() {
-		msgEdit = MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT;
+		msgEdit = MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT;
 	} //END protected void setMessages()
 } //END public class EntryTypeAttributesListView extends ListView

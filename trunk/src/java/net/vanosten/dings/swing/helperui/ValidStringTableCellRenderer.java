@@ -37,6 +37,7 @@ import net.vanosten.dings.swing.DingsSwingConstants;
  * Thyere is most porbably a smarter way to do this.
  */
 public class ValidStringTableCellRenderer extends JLabel implements TableCellRenderer {
+	private final static long serialVersionUID = 1L;
 	
 	/** The string to compare to to test for invalidity */
 	private String invalid;

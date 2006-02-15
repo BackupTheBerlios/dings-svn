@@ -29,6 +29,8 @@ import java.awt.Component;
 import java.awt.Color;
 
 public class LevelTableCellRenderer extends JLabel implements TableCellRenderer {
+	private final static long serialVersionUID = 1L;
+	
 	
 	public LevelTableCellRenderer() {
 		super();

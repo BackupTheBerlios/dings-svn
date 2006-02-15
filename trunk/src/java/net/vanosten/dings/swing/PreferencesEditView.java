@@ -65,6 +65,7 @@ import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IPreferencesEditView;
 
 public class PreferencesEditView extends JDialog implements IPreferencesEditView {
+	private final static long serialVersionUID = 1L;
 
 	private IAppEventHandler controller;
 	private JPanel mainP;
@@ -633,8 +634,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	} //END public boolean init(IAppEventHandler)
 
 	private void onRevert() {
-		AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-		ape.setMessage(MessageConstants.D_PREFERENCES_EDIT_REVERT);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_PREFERENCES_EDIT_REVERT);
 		controller.handleAppEvent(ape);
 	} //END private void onRevert()
 
@@ -643,8 +644,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			//set logging to file enabled based on logging enabled
 			loggingToFileCB.setEnabled(loggingEnabledCB.isSelected());
 			//check for real changes
-			AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-			ape.setMessage(MessageConstants.D_PREFERENCES_EDIT_APPLY);
+			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			ape.setMessage(MessageConstants.Message.D_PREFERENCES_EDIT_APPLY);
 			controller.handleAppEvent(ape);
 		}
 	} //END private void onChange()
@@ -668,8 +669,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 
 	private void onClose() {
 		//store the application's size
-		AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-		ape.setMessage(MessageConstants.S_SAVE_DIALOG_SIZE);
+		AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+		ape.setMessage(MessageConstants.Message.S_SAVE_DIALOG_SIZE);
 		controller.handleAppEvent(ape);
 
 		//close the dialog

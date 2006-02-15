@@ -42,58 +42,58 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class StatsCollection implements IAppEventHandler {
-	
+
 	private ISummaryView statsView;
-	
+
 	/** Use a sorted Map with Date as key for the StatisticSets */
-	private Map items = new HashMap();
-	
+	private Map<Date,StatisticSet> items = new HashMap<Date,StatisticSet>();
+
 	/** A pointer to entries collection */
 	private EntriesCollection entries;
-	
+
 	/** A pointer to units collection */
 	private UnitsCollection units;
-	
+
 	/** A pointer to categories collection */
 	private CategoriesCollection categories;
-	
+
 	/** A pointer to EntryTypes collection */
 	private EntryTypesCollection entryTypes;
-	
+
 	public final static int UNIT = 1;
 	public final static int CATEGORY = 2;
 	public final static int ENTRYTYPE = 3;
 	public final static int SCORE = 4;
 
-    private final IAppEventHandler parentController;
-    
+	private final IAppEventHandler parentController;
+
 	private static Logger logger = Logger.getLogger("net.vanosten.dings.model.StatsCollection");
 
 	public StatsCollection(IAppEventHandler anEventHandler) {
-        this.parentController = anEventHandler;
+		this.parentController = anEventHandler;
 	} //END public StatsCollection(IAppEventHandler)
-	
-	protected final void setItems(Map theItems) {
+
+	protected final void setItems(Map<Date,StatisticSet> theItems) {
 		items.clear();
 		items.putAll(theItems);
 	} //END protected final void setItems(Map)
-	
+
 	protected final void addItem(StatisticSet aSet) {
 		items.put(aSet.getTimeStamp(), aSet);
 	} //END protected final void addItem(StatisticSet)
-	
+
 	protected void setStatsView(ISummaryView aStatsView) {
 		this.statsView = aStatsView;
 	} //END protected void setStatsView(ISummaryView)
-	
-    /**
-     * The collection as an XML string.
-     */
+
+	/**
+	 * The collection as an XML string.
+	 */
 	protected String getXMLString() {
 		StringBuffer xml = new StringBuffer();
 
 		xml.append("<").append(Constants.XML_STATS).append(">").append(Constants.getLineSeparator());
-		
+
 		//run through collection
 		Set keys = items.keySet();
 		Iterator iter = keys.iterator();
@@ -102,46 +102,46 @@ public class StatsCollection implements IAppEventHandler {
 			item = (StatisticSet)items.get(iter.next());
 			xml.append(item.getXMLString()).append(Constants.getLineSeparator());
 		}
-		
+
 		xml.append("</").append(Constants.XML_STATS).append(">");
 		return xml.toString();
 	} //END protected String getXMLString()
-	
+
 	//implements IAppEventHandler
 	public final void handleAppEvent(AppEvent evt) {
 		if (logger.isLoggable(Level.FINEST)) {
 			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent()", evt.getMessage() + "; " + evt.getDetails());
 		}
 		if (evt.isDataEvent()) {
-			if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_UNITS)) {
+			if (evt.getMessage() == MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_UNITS) {
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(UNIT, onlyChosen, units.getChoiceProxy()
 						,"Entries per " + Toolbox.getInstance().getInfoPointer().getUnitLabel()
 						, Toolbox.getInstance().getInfoPointer().getUnitLabel()
 						, "Number of Entries"
 						, "Entries per " + Toolbox.getInstance().getInfoPointer().getUnitLabel());
-			} else if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_CATEGORIES)) {
+			} else if (evt.getMessage() == MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_CATEGORIES) {
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(CATEGORY, onlyChosen, categories.getChoiceProxy()
 						,"Entries per " + Toolbox.getInstance().getInfoPointer().getCategoryLabel()
 						, Toolbox.getInstance().getInfoPointer().getCategoryLabel()
 						, "Number of Entries"
 						, "Entries per " + Toolbox.getInstance().getInfoPointer().getCategoryLabel());
-			} else if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES)) {
+			} else if (evt.getMessage() == MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES) {
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(ENTRYTYPE, onlyChosen, entryTypes.getChoiceProxy()
 						,"Entries per Entry Type", "Entry Type", "Number of Entries", "Entries per Entry Type");
-			} else if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_SCORES)) {
+			} else if (evt.getMessage() == MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_SCORES) {
 				String[][] 	idAndName = {{"1", "1"},{"2", "2"},{"3", "3"},{"4", "4"},{"5", "5"},{"6", "6"},{"7", "7"}};
 				boolean onlyChosen = Boolean.getBoolean(evt.getDetails());
 				this.makeEntriesPerUnitChart(SCORE, onlyChosen, idAndName
 						,"Entries per Score", "Score", "Number of Entries", "Entries per Score");
-			} else if (evt.getMessage().equals(MessageConstants.D_SUMMARY_VIEW_DISPLAY_TIMELINE)) {
+			} else if (evt.getMessage() == MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_TIMELINE) {
 				this.makeTimeSeriesChart();
 			}
 		}
 	} //END public final void handleAppEvent(AppEvent)
-	
+
 	/**
 	 * Adds the current learning statistics as a new StatisticSet
 	 */
@@ -151,42 +151,42 @@ public class StatsCollection implements IAppEventHandler {
 		StatisticSet set = new StatisticSet(now, entries.getEntriesScoreStats());
 		//add to collection
 		this.addItem(set);
-		
+
 		//send save needed to the application
-		AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-		ape.setMessage(MessageConstants.S_SAVE_NEEDED);
+		AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+		ape.setMessage(MessageConstants.Message.S_SAVE_NEEDED);
 		parentController.handleAppEvent(ape);
 		return now;
 	} //END protected final void addNewStatisticSet()
-	
+
 	/**
 	 * @param categories The categories to set.
 	 */
 	protected void setCategories(CategoriesCollection categories) {
 		this.categories = categories;
 	} //END protected void setCategories(CategoriesCollection)
-	
+
 	/**
 	 * @param entries The entries to set.
 	 */
 	protected void setEntries(EntriesCollection entries) {
 		this.entries = entries;
 	} //END protected void setEntries(EntriesCollection)
-	
+
 	/**
 	 * @param entryTypes The entryTypes to set.
 	 */
 	protected void setEntryTypes(EntryTypesCollection entryTypes) {
 		this.entryTypes = entryTypes;
 	} //END protected void setEntryTypes(EntryTypesCollection)
-	
+
 	/**
 	 * @param units The units to set.
 	 */
 	protected void setUnits(UnitsCollection units) {
 		this.units = units;
 	} //END protected void setUnits(UnitsCollection)
-	
+
 	private final void makeEntriesPerUnitChart(int type, boolean onlyChosenEntries, String[][] idAndName
 			, final String title, final String categoryTitle, final String valueTitle, final String serie) {
 		//get the id and display name
@@ -196,39 +196,39 @@ public class StatsCollection implements IAppEventHandler {
 			theIds[i] = idAndName[i][0];
 		}
 		final int[] theStats = entries.getEntriesPerXStats(onlyChosenEntries, theIds, type);
-		
-		//Create the dataset
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (int i = 0; i < theIds.length; i++) {
-        	dataset.addValue(new Integer(theStats[i]), serie, idAndName[i][1]);
-        }
-        //tell GUI to display a barchart
-        statsView.displayHorizontalBarChart(dataset, title, categoryTitle, valueTitle);
-	} //END private final void makeEntriesPerUnitChart(...)
-	
-	private final void makeTimeSeriesChart() {
-        final TimeSeries scoresSeries = new TimeSeries("Score", Minute.class);
-        final TimeSeries entriesSeries = new TimeSeries("Entries", Minute.class);
-        StatisticSet currentSet;
-        Minute timeStamp;
-        int maxTotal = -1;
-        int currentTotal;
-        for (Iterator i = items.entrySet().iterator(); i.hasNext(); ) {
-            Map.Entry e = (Map.Entry) i.next();
-            currentSet = (StatisticSet) e.getValue();
-            timeStamp = new Minute(currentSet.getTimeStamp());
-            scoresSeries.addOrUpdate(timeStamp, currentSet.getAverageScore());
-            currentTotal = currentSet.getTotalNumberofEntries();
-            maxTotal = Math.max(maxTotal, currentTotal);
-            entriesSeries.addOrUpdate(timeStamp, currentTotal);
-        }
 
-        final TimeSeriesCollection averageScore = new TimeSeriesCollection();
-        averageScore.addSeries(scoresSeries);
-        final TimeSeriesCollection numberOfEntries = new TimeSeriesCollection();
-        numberOfEntries.addSeries(entriesSeries);
-        
-        //tell GUI to display a timeserie
-        statsView.displayTimeSeriesChart(averageScore, Entry.SCORE_MAX, numberOfEntries, maxTotal);
+		//Create the dataset
+		final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		for (int i = 0; i < theIds.length; i++) {
+			dataset.addValue(new Integer(theStats[i]), serie, idAndName[i][1]);
+		}
+		//tell GUI to display a barchart
+		statsView.displayHorizontalBarChart(dataset, title, categoryTitle, valueTitle);
+	} //END private final void makeEntriesPerUnitChart(...)
+
+	private final void makeTimeSeriesChart() {
+		final TimeSeries scoresSeries = new TimeSeries("Score", Minute.class);
+		final TimeSeries entriesSeries = new TimeSeries("Entries", Minute.class);
+		StatisticSet currentSet;
+		Minute timeStamp;
+		int maxTotal = -1;
+		int currentTotal;
+		for (Iterator i = items.entrySet().iterator(); i.hasNext(); ) {
+			Map.Entry e = (Map.Entry) i.next();
+			currentSet = (StatisticSet) e.getValue();
+			timeStamp = new Minute(currentSet.getTimeStamp());
+			scoresSeries.addOrUpdate(timeStamp, currentSet.getAverageScore());
+			currentTotal = currentSet.getTotalNumberofEntries();
+			maxTotal = Math.max(maxTotal, currentTotal);
+			entriesSeries.addOrUpdate(timeStamp, currentTotal);
+		}
+
+		final TimeSeriesCollection averageScore = new TimeSeriesCollection();
+		averageScore.addSeries(scoresSeries);
+		final TimeSeriesCollection numberOfEntries = new TimeSeriesCollection();
+		numberOfEntries.addSeries(entriesSeries);
+
+		//tell GUI to display a timeserie
+		statsView.displayTimeSeriesChart(averageScore, Entry.SCORE_MAX, numberOfEntries, maxTotal);
 	} //END private final void makeTimeSeriesChart()
 } //END public final class StatsCollection implements IAppEventHandler

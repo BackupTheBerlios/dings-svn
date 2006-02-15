@@ -24,6 +24,8 @@ package net.vanosten.dings.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
@@ -263,11 +265,11 @@ public final class Entry extends AIdItemModel {
 	/**
 	 * Tests the required fields for valid contents.
 	 *
-	 * @return ArrayList - a list of validation errors. Size() = 0 means valid model.
+	 * @return List<String> - a list of validation errors. Size() = 0 means valid model.
 	 */
-	public static ArrayList validate(String anId, String anOrigin, String aDestination) {
+	public static List<String> validate(String anId, String anOrigin, String aDestination) {
 		//TODO: implement this the right way (score, attributes based on EntryType)
-		ArrayList errors = new ArrayList();
+		List<String> errors = new ArrayList<String>();
 		String idError = validateId(Constants.PREFIX_ENTRY, anId);
 		if (null != idError) errors.add(idError);
 		if (false == validateString(anOrigin, 1)) {
@@ -290,7 +292,7 @@ public final class Entry extends AIdItemModel {
 			String originV = editView.getBase().trim();
 			String destinationV = editView.getTarget().trim();
 			//validate where necessary
-			ArrayList errors = validate(id, originV, destinationV);
+			List<String> errors = validate(id, originV, destinationV);
 			//if validation is ok, save the new values.
 			if (0 ==  errors.size()) {
 				//validated values
@@ -460,30 +462,30 @@ public final class Entry extends AIdItemModel {
 			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent()", evt.getMessage() + "; " + evt.getDetails());
 		}
 		if (evt.isDataEvent()) {
-			if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_APPLY)) {
+			if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_APPLY) {
 				updateModel();
 				//give entries chance to check selection
 				parentController.handleAppEvent(evt);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_REVERT)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_REVERT) {
 				updateGUI();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_CHECK_CHANGE)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_CHECK_CHANGE) {
 				checkChangeInGUI();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_DELETE)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_DELETE) {
 				parentController.handleAppEvent(evt);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_GETRESULT)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_GETRESULT) {
 				getResultLearnOneView();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_REFRESH)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_REFRESH) {
 				updateGUI();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_NEXT)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_NEXT) {
 				parentController.handleAppEvent(evt);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_CHANGE_ENTRY_TYPE)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE) {
 				parentController.handleAppEvent(evt);
 			}
 		}
@@ -515,7 +517,7 @@ public final class Entry extends AIdItemModel {
 			inUse = anId.equals(categoryId);
 		}
 		else if (anId.startsWith(Constants.PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM)) {
-			ArrayList attributeIds = new ArrayList(3);
+			List<String> attributeIds = new ArrayList<String>(3);
 			if (null != attributeOneId) {
 				attributeIds.add(attributeOneId);
 				if (null != attributeTwoId) {
@@ -688,7 +690,7 @@ public final class Entry extends AIdItemModel {
 										  , String defaultFourId) {
 		if (anEntryTypeId.equals(this.entryTypeId)) {
 			//save the existing attributes
-			HashMap oldRelation = new HashMap(EntryType.NUMBER_OF_ATTRIBUTES);
+			Map<String,String> oldRelation = new HashMap<String,String>(EntryType.NUMBER_OF_ATTRIBUTES);
 			if (null != oldOneId) {
 				oldRelation.put(oldOneId, attributeOneId);
 			}

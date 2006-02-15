@@ -22,15 +22,17 @@
 package net.vanosten.dings.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
 
 public abstract class AChoiceCollection extends ACollection {
 
 	/** The message for getting the edit view */
-	protected String msgEditView = null;
+	protected Message msgEditView = null;
 
 	/** A pointer to teh EntriesCollection */
 	protected EntriesCollection entries = null;
@@ -54,7 +56,7 @@ public abstract class AChoiceCollection extends ACollection {
 
 	//Implements ACollection
 	protected String selectNewCurrent(String anId) {
-		ArrayList foo = new ArrayList(items.keySet());
+		List<String> foo = new ArrayList<String>(items.keySet());
 		int pos = foo.indexOf(anId);
 		if (pos > 0) {
 			return (String)foo.get(pos -1);
@@ -78,8 +80,8 @@ public abstract class AChoiceCollection extends ACollection {
 		//this should be handled by ListView.java
 		if (1 >= items.size()) {
 			//send AppEvent
-			AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-			ape.setMessage(MessageConstants.S_SHOW_DELETE_ERROR);
+			AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+			ape.setMessage(MessageConstants.Message.S_SHOW_DELETE_ERROR);
 			ape.setDetails("There has to be at least one item!");
 			parentController.handleAppEvent(ape);
 			return false;
@@ -87,8 +89,8 @@ public abstract class AChoiceCollection extends ACollection {
 		//the item may not be used in any Entry
 		if (entries.isItemUsed(anId)) {
 			//send AppEvent
-			AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-			ape.setMessage(MessageConstants.S_SHOW_DELETE_ERROR);
+			AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+			ape.setMessage(MessageConstants.Message.S_SHOW_DELETE_ERROR);
 			ape.setDetails("The item is used in one or several entries!");
 			parentController.handleAppEvent(ape);
 			return false;
@@ -112,16 +114,16 @@ public abstract class AChoiceCollection extends ACollection {
 			//logger.debug("handleAppEvent(): " + evt.getMessage() + "; " + evt.getDetails());
 		//}
 		if(evt.isDataEvent()) {
-			if (evt.getMessage().equals(MessageConstants.D_LIST_VIEW_NEW)) {
+			if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_NEW) {
 				newItem(null, false);
 				//send navigation event
-				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 				ape.setMessage(msgEditView);
 				parentController.handleAppEvent(ape);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_LIST_VIEW_DELETE)) deleteItem(evt.getDetails(), true);
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_DELETE)) deleteItem();
-			else if (evt.getMessage().equals(MessageConstants.D_LIST_VIEW_REFRESH)) refreshListView();
+			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_DELETE) deleteItem(evt.getDetails(), true);
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_DELETE) deleteItem();
+			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_REFRESH) refreshListView();
 		}
 		else if (evt.isNavEvent()) {
 			if (evt.getMessage().equals(msgEditView)) {

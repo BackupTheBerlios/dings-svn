@@ -23,6 +23,8 @@ package net.vanosten.dings.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import net.vanosten.dings.uiif.IEntryTypeAttributeEditView;
 import net.vanosten.dings.consts.Constants;
@@ -205,24 +207,24 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	/**
 	 * Tests the required fields for valid contents.
 	 *
-	 * @return ArrayList - a list of validation errors. Size() = 0 means valid model.
+	 * @return List<String> - a list of validation errors. Size() = 0 means valid model.
 	 */
-	public static ArrayList validate(String anId, String aName) {
-		ArrayList errors = new ArrayList();
+	public static List<String> validate(String anId, String aName) {
+		List<String> errors = new ArrayList<String>();
 		String idError = validateId(Constants.PREFIX_ENTRTYPE_ATTRIBUTE, anId);
 		if (null != idError) errors.add(idError);
 		if (1 > aName.length()) {
 			errors.add("Name may not be empty");
 		}
 		return errors;
-	} //END public static ArrayList validate(String, String)
+	} //END public static List<String> validate(String, String)
 
-	private ArrayList validate(String anId
+	private List<String> validate(String anId
 									, String aName
 									, EntryTypeAttributeItem[] someItems
 									, String aDefaultItem) {
 		//initialize errors by testing the id and name
-		ArrayList errors = validate(anId, aName);
+		List<String> errors = validate(anId, aName);
 		if (false == validateString(aName, 1)) {
 			errors.add("Name may not be empty");
 		}
@@ -263,7 +265,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	 * @return The ID of an item if its name is null, an empty String or has the same name as another item
 	 */
 	private String validateItemNames(EntryTypeAttributeItem[] someItems) {
-		HashSet theSet = new HashSet(someItems.length);
+		Set<String> theSet = new HashSet<String>(someItems.length);
 		theSet.add(null); //make sure no other name is null
 		theSet.add(Constants.EMPTY_STRING); //make sure no other name is empty
 		for (int i = 0; i < someItems.length; i++) {
@@ -281,7 +283,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		String defaultItemV = editView.getDefaultItem().trim();
 		EntryTypeAttributeItem[] itemsV = translateToAttributeItems(editView.getItems());
 		//validate where necessary
-		ArrayList errors = validate(id, nameV, itemsV, defaultItemV);
+		List<String> errors = validate(id, nameV, itemsV, defaultItemV);
 		//check that no items are deleted, that actually are used in entries
 		boolean found = false;
 		for (int i = 0; i < items.length; i++) {

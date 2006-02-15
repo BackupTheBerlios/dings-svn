@@ -25,7 +25,9 @@ entitled "GNU Free Documentation License".
 		<release version="0.3.2" date="TODO: ????">
 			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
 			<action type="add" context="doc" dev="vanosten">Uses GNU Free Documentation License, Version 1.2</action>
-			<action type="update" context="refactor" dev="vanosten">Use Toolbox singleton for Preferences and ResourceBundles</action>
+			<action type="update" context="refactor" dev="vanosten">Use Toolbox singleton for Preferences, Properties and ResourceBundles</action>
+			<action type="update" context="refactor" dev="vanosten">Changed to more accurate check of JVM version</action>
+			<action type="fix" context="gui" dev="vanosten">Use correct labels in statistics</action>
 		</release>
 		<release version="0.3.1" date="2005-02-27">
 			<action type="add" context="feature" dev="vanosten">Use F1 to get help.</action>
@@ -70,13 +72,13 @@ entitled "GNU Free Documentation License".
 	<todo>
 		<actions priority="next release">
 			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics.</action>
-			<action context="gui" dev="vanosten">Use configured name for unit and categories (e.g. in stats).</action>
 		</actions>
 		<actions priority="high">
 			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
 			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
 			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation</action><!-- ## Enable orientation in EntryEdit and EntryLearn -->
 			<action context="tools" dev="vanosten">Change from CVS to Subversion.</action>
+			<action context="tools" dev="vanosten">Use XPlanner.org</action>
 			<action context="feature" dev="vanosten">Make ready for Java Webstart</action>
 			<action context="feature" dev="vanosten">Show Window with error text instead of Usage on command line</action>
 			<action context="gui" dev="vanosten">Disable menu items when page is shown (e.g. in Go menu).</action>
@@ -100,6 +102,7 @@ entitled "GNU Free Documentation License".
 			<action context="gui" dev="vanosten">Add possibility for Mnemonics to labels.</action>
 			<action context="gui" dev="vanosten">Preferences for background color of valid/invalid input.</action>
 			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a>.</action>
+			<action context="gui" dev="vanosten">Automatically generate mnemonics for those labels, which are configured in the properties/info. The theory is that most people will not be able to do it correctly or even understnad it. It could be done by giving a method the label names and the preconfigured mnemonics for the view and menus. the function should then make a pool of remaining letters from the labels and find a distribution, where as many as possible can get a mnemonic, preferably the first letter(s).</action>
 			<!-- FEATURE -->
 			<action context="feature" dev="vanosten">Use a codewrapper for Windows executable. See Heise IX 4/2005: <a href="http://www.ucware.com">Jexecreator</a> and <a href="http://www.duckware.com/jexepack/index.html">Jexepack</a>.</action>
 			<action context="feature" dev="vanosten">Spell checker: E.g. ASPELL for spell checking (see <a href="http://jedit.org">JEdit</a>, <a href="http://vocabulala.sourceforge.net/deutsch/deutsch.html">Vocabulala</a>, <a href="http://linux.org.mt/projects/jtextcheck/index.html">JTextCheck</a>) or the <a href="http://jazzy.sourceforge.net">Jazzy</a> open source Java spell checker <!-- see also http://www-106.ibm.com/developerworks/library/j-jazzy -->.</action>

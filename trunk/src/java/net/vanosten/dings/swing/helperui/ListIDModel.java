@@ -24,7 +24,8 @@ package net.vanosten.dings.swing.helperui;
 import javax.swing.AbstractListModel;
 
 public class ListIDModel extends AbstractListModel {
-	
+	private final static long serialVersionUID = 1L;
+		
 	String objects[][] = null;
 	
 	public ListIDModel(String[][] theObjects) {

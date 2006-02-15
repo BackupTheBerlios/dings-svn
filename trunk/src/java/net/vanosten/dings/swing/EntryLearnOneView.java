@@ -52,6 +52,8 @@ import net.vanosten.dings.swing.helperui.LabeledSeparator;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
 
 public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView {
+	private final static long serialVersionUID = 1L;
+
 	private ChoiceID attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh, categoriesCh, unitsCh;
 	private JCheckBox statusCB;
 	private ChoiceID modeCh; //Which hint mode should be used
@@ -678,20 +680,20 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	 * Sends the events common to the know and notknow buttons
 	 */
 	private void sendGetResults() {
-		AppEvent apeG = new AppEvent(AppEvent.DATA_EVENT);
-		apeG.setMessage(MessageConstants.D_ENTRY_LEARNONE_GETRESULT);
+		AppEvent apeG = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		apeG.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_GETRESULT);
 		controller.handleAppEvent(apeG);
 	} //END private void sendGetResults()
 
 	private void sendNext() {
-		AppEvent apeN = new AppEvent(AppEvent.DATA_EVENT);
-		apeN.setMessage(MessageConstants.D_ENTRY_LEARNONE_NEXT);
+		AppEvent apeN = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		apeN.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_NEXT);
 		controller.handleAppEvent(apeN);
 	} //END private void sendNext()
 
 	public void sendUpdateGUI() {
-		AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-		ape.setMessage(MessageConstants.D_ENTRY_LEARNONE_REFRESH);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_REFRESH);
 		controller.handleAppEvent(ape);
 	} //END public void sendUpdateGUI()
 

@@ -21,7 +21,7 @@
  */
 package net.vanosten.dings.model;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
@@ -44,16 +44,16 @@ public class UnitsCollection extends AChoiceCollection {
 
 	//implements ACollection
 	protected void setMessageListView() {
-		msgListView = MessageConstants.N_VIEW_UNITS_LIST;
+		msgListView = MessageConstants.Message.N_VIEW_UNITS_LIST;
 	} //END protected void setMessageListView()
 
 	//implements AChoiceCollection
 	protected void setMessageEditView() {
-		msgEditView = MessageConstants.N_VIEW_UNIT_EDIT;
+		msgEditView = MessageConstants.Message.N_VIEW_UNIT_EDIT;
 	} //END protected void setMessageEditView()
 
 	//implements ACollection
-	protected void setItems(HashMap theUnits) {
+	protected void setItems(Map theUnits) {
 		this.items = theUnits;
 
 		Set allKeys = items.keySet();

@@ -33,7 +33,8 @@ package net.vanosten.dings.swing.helperui;
  * @author Rick.Gruber
  */
 public class IDEditableTableModel extends IDTableModel {
-	
+	private final static long serialVersionUID = 1L;
+		
 	/** Determines whether a column is editable or not.
 	 * The first row should always be non-editable, as it is the ID
 	 */

@@ -23,72 +23,77 @@
 
 import java.util.EventObject;
 
+import net.vanosten.dings.consts.MessageConstants.Message;
+
 /**
  * This class represents an ApplicationEvent.
  * The original class was published in a www.javaworld.com article:
  * HMVC: The layered pattern for developing strong client tiers.
  */
 public class AppEvent extends EventObject {
-	public final static String NAV_EVENT = "NAV_EVENT";
-	public final static String STATUS_EVENT = "STATUS_EVENT";
-	public final static String DATA_EVENT = "DATA_EVENT";
-	public final static String HELP_EVENT = "HELP_EVENT";
+	private final static long serialVersionUID = 1L;
+	
+	public enum EventType {NAV_EVENT
+		, STATUS_EVENT
+		, DATA_EVENT
+		, HELP_EVENT
+	}	
 
 	/** The message header */
-	private String message;
+	private Message message;
 
 	/** The details of the message */
 	private String details;
 
 	/** The type of event */
-	private String eventType;
+	private EventType eventType;
 
-	public AppEvent(String anEventType) {
+	public AppEvent(EventType anEventType) {
 		super(anEventType);
 		eventType = anEventType;
-	}	//END public AppEvent(String)
+	} //END public AppEvent(String)
 
 	public boolean isNavEvent() {
-		if(eventType.equals(NAV_EVENT))
+		if(EventType.NAV_EVENT == eventType) {
 			return true;
-		else
-			return false;
-	}	//END public boolean isNavEvent()
+		}
+		return false;
+	} //END public boolean isNavEvent()
 
 	public boolean isStatusEvent() {
-		if(eventType.equals(STATUS_EVENT))
+		if(EventType.STATUS_EVENT == eventType) {
 			return true;
-		else
-			return false;
-	}	//END public boolean isStatusEvent()
+		}
+		return false;
+	} //END public boolean isStatusEvent()
 
 	public boolean isDataEvent() {
-		if(eventType.equals(DATA_EVENT))
+		if(EventType.DATA_EVENT == eventType) {
 			return true;
-		else
-			return false;
-	}	//END public boolean isDataEvent()
+		}
+		return false;
+	} //END public boolean isDataEvent()
 
 	public boolean isHelpEvent() {
-		if(eventType.equals(HELP_EVENT))
+		if(EventType.HELP_EVENT == eventType) {
 			return true;
-		else
-			return false;
-	}	//END public boolean isHelpEvent()
+		}
+		return false;
+	} //END public boolean isHelpEvent()
 
-	public void setMessage(String aMessage) {
+	public void setMessage(Message aMessage) {
 		message = aMessage;
-	}	//END public void setMessage(String)
+	} //END public void setMessage(Message)
 
-	public String getMessage() {
+	public Message getMessage() {
 		return message;
-	}	//END public String getMessage()
+	} //END public Message getMessage()
 
 	public void setDetails(String aDetails) {
 		details = aDetails;
-	}	//END public void setDetails(String)
+	} //END public void setDetails(String)
 
 	public String getDetails() {
 		return details;
-	}	//END public String getDetails()
-}	//END public class AppEvent extends EventObject
+	} //END public String getDetails()
+} //END public class AppEvent extends EventObject

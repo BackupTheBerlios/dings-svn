@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import net.vanosten.dings.consts.Constants;
 
@@ -47,7 +48,7 @@ public class VocabularyXMLWriter implements IOHandler {
 	private String encoding;
 
 	/** Stores the xml-information to be written */
-	private ArrayList xmlList;
+	private List<String> xmlList;
 
 	/**
 	 * Empty consturctor.
@@ -113,7 +114,7 @@ public class VocabularyXMLWriter implements IOHandler {
 			throw new Exception("VocabularyXMLWriter.setXMLElements(): statsXML may not be null.");
 		}
 		try {
-			xmlList = new ArrayList();
+			xmlList = new ArrayList<String>();
 			xmlList.add("<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>");
 			xmlList.add("<" + Constants.XML_VOCABULARY + " version=\""+version+"\">");
 			xmlList.add(infoXML);

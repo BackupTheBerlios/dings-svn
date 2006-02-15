@@ -32,6 +32,7 @@ import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IEntriesListView;
 
 public class EntriesListView extends ListView implements IEntriesListView {
+	private final static long serialVersionUID = 1L;
 	
 	/** The names of and ids for EntryTypes to be presented in a dialog */
 	private String[][] entryTypes;
@@ -41,7 +42,7 @@ public class EntriesListView extends ListView implements IEntriesListView {
 	} //END public EntriesListView()
 	
 	protected void setMessages() {
-		msgEdit = MessageConstants.N_VIEW_ENTRY_EDIT;
+		msgEdit = MessageConstants.Message.N_VIEW_ENTRY_EDIT;
 	} //END protected void setMessages()
 	
 	/**

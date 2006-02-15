@@ -54,6 +54,8 @@ import net.vanosten.dings.model.EntryTypeAttributeItem;
 import net.vanosten.dings.model.Toolbox;
 
 public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeAttributeEditView, TableModelListener {
+	private final static long serialVersionUID = 1L;
+
 	private ValidatedTextField nameVTF;
 	private ChoiceID defaultItemCh;
 	private JPanel itemsP;
@@ -74,7 +76,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 				, aComponentOrientation
 				, true
 				, true
-				, MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
+				, MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
 	} //END public EntryTypeAttributeEditView(ComponentOrientation)
 
 	//Implements AEditView

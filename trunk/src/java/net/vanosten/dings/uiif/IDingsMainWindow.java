@@ -21,13 +21,15 @@
  */
 package net.vanosten.dings.uiif;
 
+import net.vanosten.dings.consts.MessageConstants.Message;
+
 public interface IDingsMainWindow {
 	/**
 	 * Sets the look and feel based on the preferences.
 	 */
 	public void setLookAndFeel();
 	public void saveWindowLocationAndSize();
-	public void showHelp(String aMessage);
+	public void showHelp(Message aMessage);
 	public void showMessageDialog(String aTitle, String aMessage, int aMessageType);
 	public int showOptionDialog(String aTitle, String aMessage, int aMessageType, int anOptionType);
 	public String showFileChooser(String aFileName, boolean showOpen);
@@ -61,5 +63,5 @@ public interface IDingsMainWindow {
 	public IEntryTypeAttributeEditView getEntryTypeAttributeEditView();
 	public IEntryLearnOneView getEntryLearnOneView();
 	public IEntriesSelectionView getEntriesSelectionView();
-	public void showView(String aView);
+	public void showView(Message aView);
 } //END public interface IDingsMainWindow

@@ -22,6 +22,7 @@
 package net.vanosten.dings.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.vanosten.dings.consts.Constants;
 
@@ -85,19 +86,19 @@ public final class Category extends AUnitCategory {
     } //END protected String getXMLString()
     
     //implements AUnitCategory
-    protected ArrayList validateIt(String anId, String aName) {
+    protected List<String> validateIt(String anId, String aName) {
     	return validate(anId, aName);
     } //END protected ArrayList validateIt(String, String)
     
     //implements AUnitCategory
-    public static ArrayList validate(String anId, String aName) {
-    	ArrayList errors = new ArrayList();
+    public static List<String> validate(String anId, String aName) {
+    	List<String> errors = new ArrayList<String>();
     	String idError = validateId(Constants.PREFIX_CATEGORY, anId);
     	if (null != idError) errors.add(idError);
 		if (false == validateString(aName, 1)) {
 			errors.add("Name may not be empty");
 		}
     	return errors;
-    } //END public static ArrayList validate(String, String)
+    } //END public static List<String> validate(String, String)
 } //END public class Category extends AUnitCategory
 

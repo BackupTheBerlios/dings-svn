@@ -32,7 +32,8 @@ import java.awt.Insets;
 import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class LabeledSeparator extends JPanel {
-	
+	private final static long serialVersionUID = 1L;
+		
 	/** The label for showing the title text */
 	private JLabel label;
 	

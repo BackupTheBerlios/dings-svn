@@ -21,7 +21,7 @@
  */
 package net.vanosten.dings.model;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
@@ -44,16 +44,16 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 
 	//implements ACollection
 	protected void setMessageListView() {
-		msgListView = MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST;
+		msgListView = MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST;
 	} //END protected void setMessageListView()
 
 	//implements AChoiceCollection
 	protected void setMessageEditView() {
-		msgEditView = MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT;
+		msgEditView = MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT;
 	} //END protected void setMessageEditView()
 
 	//implements ACollection
-	protected void setItems(HashMap theEntryTypeAttributes) {
+	protected void setItems(Map theEntryTypeAttributes) {
 		this.items = theEntryTypeAttributes;
 
 		Set allKeys = items.keySet();

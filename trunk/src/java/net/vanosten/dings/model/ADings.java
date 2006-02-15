@@ -29,6 +29,7 @@ import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.io.VocabularyXMLReader;
 import net.vanosten.dings.io.VocabularyXMLWriter;
 
@@ -47,7 +48,7 @@ public abstract class ADings implements IAppEventHandler {
 	public final static String dataVersion = "3";
 
 	/** The minimal JVM version to run the application */
-	private final static String MIN_JVM_VERSION = "1.4";
+	private final static String MIN_JVM_VERSION = "1.5";
 
 	/** Holds the units */
 	private UnitsCollection units;
@@ -86,7 +87,7 @@ public abstract class ADings implements IAppEventHandler {
 	private Handler loggingHandler = null;
 
 	/** The current view */
-	private String currentView = MessageConstants.N_VIEW_WELCOME;
+	private Message currentView = MessageConstants.Message.N_VIEW_WELCOME;
 
 	/**
 	 * The logging logger. The base package structure is chosen as name
@@ -115,8 +116,8 @@ public abstract class ADings implements IAppEventHandler {
 		mainWindow.setApplicationTitle("DingsBums?!");
 
 		//add the first view which is always the view GO
-		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-		ape.setMessage(MessageConstants.N_VIEW_WELCOME);
+		AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+		ape.setMessage(MessageConstants.Message.N_VIEW_WELCOME);
 		this.handleAppEvent(ape);
 
 		//set status information
@@ -147,14 +148,14 @@ public abstract class ADings implements IAppEventHandler {
 							, "Java version: " + implVer + "; spec version: " + specVer);
 				}
 				if (!p.isCompatibleWith(MIN_JVM_VERSION)) {
-					System.err.println("DingsBums?! requires a 1.4 JVM or higher. \n"
+					System.err.println("DingsBums?! requires a 1.5 JVM or higher. \n"
 							+ "Current JVM implementation version is '" + implVer + "' with specification '" + specVer + "'");
 					System.exit(0);
 				}
 			} catch (NumberFormatException nfe) {
-				System.err.println("Cannot detect the running JVM version. Note that DingsBums?! requires a 1.4 or higher JVM.");
+				System.err.println("Cannot detect the running JVM version. Note that DingsBums?! requires a 1.5 or higher JVM.");
 			}
- 
+
 			//check arguments
 			boolean overrideLogging = false;
 			if (args.length > 0) {
@@ -202,26 +203,26 @@ public abstract class ADings implements IAppEventHandler {
 	//implements IAppEventHandler
 	public void handleAppEvent(AppEvent evt) {
 		if (logger.isLoggable(Level.FINEST)) {
-			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent()", evt.getMessage());
+			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent()", evt.getMessage().name());
 		}
 		if (evt.isStatusEvent()) {
-			if (evt.getMessage().equals(MessageConstants.S_EXIT_APPLICATION)) {
+			if (evt.getMessage() == MessageConstants.Message.S_EXIT_APPLICATION) {
 				//if the closing of the vocabulary is successful then exit
 				if (closeVocabulary()) {
 					exit();
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_CLOSE_VOCABULARY)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_CLOSE_VOCABULARY) {
 				if (closeVocabulary()) {
-					AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-					ape.setMessage(MessageConstants.N_VIEW_WELCOME);
+					AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+					ape.setMessage(MessageConstants.Message.N_VIEW_WELCOME);
 					this.handleAppEvent(ape);
 				}
 				else {
 					//nothing has to be done
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_OPEN_VOCABULARY)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_OPEN_VOCABULARY) {
 				if (null != evt.getDetails()) {
 					setVocabularyFileName(evt.getDetails());
 					readVocabulary();
@@ -233,87 +234,87 @@ public abstract class ADings implements IAppEventHandler {
 					}
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_NEW_VOCABULARY)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_NEW_VOCABULARY) {
 				if (checkOverwriteVocabulary()) {
 					makeNewVocabulary();
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_SAVE_VOCABULARY)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_SAVE_VOCABULARY) {
 				writeVocabulary(false);
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_SAVE_AS_VOCABULARY)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_SAVE_AS_VOCABULARY) {
 				writeVocabulary(true);
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_SAVE_NEEDED)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_SAVE_NEEDED) {
 				setSaveNeeded(true);
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_SHOW_VALIDATION_ERROR)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_SHOW_VALIDATION_ERROR) {
 				mainWindow.showMessageDialog("Validation Error", evt.getDetails(), Constants.ERROR_MESSAGE);
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_SHOW_DELETE_ERROR)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_SHOW_DELETE_ERROR) {
 				mainWindow.showMessageDialog("Deletion not allowed", evt.getDetails(), Constants.ERROR_MESSAGE);
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_CHANGE_LOGGING)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_CHANGE_LOGGING) {
 				changeLogging(false);
 			}
-			else if (evt.getMessage().equals(MessageConstants.S_CHANGE_LAF)) {
+			else if (evt.getMessage() == MessageConstants.Message.S_CHANGE_LAF) {
 				mainWindow.setLookAndFeel();
 			}
 		}
 		else if (evt.isNavEvent()) {
 			//show the new view
-			if (evt.getMessage().equals(MessageConstants.N_VIEW_WELCOME)) {
+			if (evt.getMessage() == MessageConstants.Message.N_VIEW_WELCOME) {
 				IWelcomeView welcomeView = mainWindow.getWelcomeView();
 				welcomeView.init(this);
-				mainWindow.showView(MessageConstants.N_VIEW_WELCOME);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_WELCOME);
 			}
-			if (evt.getMessage().equals(MessageConstants.N_VIEW_STATISTICS)) {
+			if (evt.getMessage() == MessageConstants.Message.N_VIEW_STATISTICS) {
 				ISummaryView summaryView = mainWindow.getSummaryView();
 				stats.setStatsView(summaryView);
 				summaryView.init(stats);
-				mainWindow.showView(MessageConstants.N_VIEW_STATISTICS);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_STATISTICS);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_INFOVOCAB_EDIT)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_INFOVOCAB_EDIT) {
 				IInfoVocabEditView infoVocabEditView = mainWindow.getInfoVocabEditView();
 				Toolbox.getInstance().getInfoPointer().setEditView(infoVocabEditView);
 				infoVocabEditView.setAvailableLocales(Constants.getSupportedLocales(null));
 				infoVocabEditView.init(Toolbox.getInstance().getInfoPointer());
-				mainWindow.showView(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_INFOVOCAB_EDIT);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_UNITS_LIST)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_UNITS_LIST) {
 				IListView listView = mainWindow.getUnitsListView();
 				units.setListView(listView);
 				listView.init(units);
-				mainWindow.showView(MessageConstants.N_VIEW_UNITS_LIST);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_UNITS_LIST);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_UNIT_EDIT)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_UNIT_EDIT) {
 				Unit thisUnit = units.getCurrentItem();
 				IUnitEditView unitEditView = mainWindow.getUnitEditView();
 				thisUnit.setEditView(unitEditView);
 				unitEditView.init(thisUnit);
-				mainWindow.showView(MessageConstants.N_VIEW_UNIT_EDIT);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_UNIT_EDIT);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_CATEGORIES_LIST)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_CATEGORIES_LIST) {
 				IListView listView = mainWindow.getCategoriesListView();
 				categories.setListView(listView);
 				listView.init(categories);
-				mainWindow.showView(MessageConstants.N_VIEW_CATEGORIES_LIST);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_CATEGORIES_LIST);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_CATEGORY_EDIT)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_CATEGORY_EDIT) {
 				Category thisCategory = categories.getCurrentItem();
 				IUnitEditView categoryEditView = mainWindow.getCategoryEditView();
 				thisCategory.setEditView(categoryEditView);
 				categoryEditView.init(thisCategory);
-				mainWindow.showView(MessageConstants.N_VIEW_CATEGORY_EDIT);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_CATEGORY_EDIT);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRIES_LIST)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRIES_LIST) {
 				IEntriesListView listView = mainWindow.getEntriesListView();
 				entries.setListView(listView);
 				listView.setEntryTypes(entryTypes.getChoiceProxy());
 				listView.init(entries);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRIES_LIST);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRIES_LIST);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_EDIT)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRY_EDIT) {
 				IEntryEditView entryEditView = mainWindow.getEntryEditView();
 				entryEditView.setEntryTypes(entryTypes.getChoiceProxy());
 				Entry thisEntry = entries.getCurrentItem();
@@ -334,9 +335,9 @@ public abstract class ADings implements IAppEventHandler {
 				entryEditView.setCategories(categories.getChoiceProxy());
 				//initialize
 				entryEditView.init(thisEntry);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRY_EDIT);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRY_EDIT);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_LEARNONE)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRY_LEARNONE) {
 				entryLearnOneView = mainWindow.getEntryLearnOneView();
 				//learning direction
 				int answer = mainWindow.showOptionDialog("Learning Direction"
@@ -352,57 +353,57 @@ public abstract class ADings implements IAppEventHandler {
 				}
 
 				//prepare entries
-				AppEvent initializeEvt = new AppEvent(AppEvent.DATA_EVENT);
-				initializeEvt.setMessage(MessageConstants.D_ENTRIES_INITIALIZE_LEARNING);
+				AppEvent initializeEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+				initializeEvt.setMessage(MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING);
 				entries.handleAppEvent(initializeEvt);
 				//set entry relation
-				AppEvent entryEvt = new AppEvent(AppEvent.DATA_EVENT);
-				entryEvt.setMessage(MessageConstants.D_ENTRY_LEARNONE_NEXT);
+				AppEvent entryEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+				entryEvt.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_NEXT);
 				this.handleAppEvent(entryEvt);
 				//add to panel and show
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRY_LEARNONE);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRY_LEARNONE);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPES_LIST)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRYTYPES_LIST) {
 				IListView listView = mainWindow.getEntryTypesListView();
 				entryTypes.setListView(listView);
 				listView.init(entryTypes);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPES_LIST);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRYTYPES_LIST);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPE_EDIT)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRYTYPE_EDIT) {
 				EntryType thisEntryType = entryTypes.getCurrentItem();
 				IEntryTypeEditView entryTypeEditView = mainWindow.getEntryTypeEditView();
 				thisEntryType.setEditView(entryTypeEditView);
 				entryTypeEditView.init(thisEntryType);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPE_EDIT);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRYTYPE_EDIT);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST) {
 				IListView listView = mainWindow.getEntryTypeAttributesListView();
 				attributes.setListView(listView);
 				listView.init(attributes);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTES_LIST);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT) {
 				EntryTypeAttribute thisAttribute = attributes.getCurrentItem();
 				IEntryTypeAttributeEditView attributeEditView = mainWindow.getEntryTypeAttributeEditView();
 				thisAttribute.setEditView(attributeEditView);
 				attributeEditView.init(thisAttribute);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRYTYPE_ATTRIBUTE_EDIT);
 			}
-			else if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRIES_SELECTION)) {
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRIES_SELECTION) {
 				IEntriesSelectionView selectionView = mainWindow.getEntriesSelectionView();
 				entries.setSelectionView(selectionView);
 				selectionView.setUnitsList(units.getChoiceProxy());
 				selectionView.setCategoriesList(categories.getChoiceProxy());
 				selectionView.setTypesList(entryTypes.getChoiceProxy());
 				selectionView.init(entries);
-				mainWindow.showView(MessageConstants.N_VIEW_ENTRIES_SELECTION);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRIES_SELECTION);
 			}
 			//set the current View
 			currentView = evt.getMessage();
 			checkMIsStatus();
 		}
 		else if (evt.isDataEvent()) {
-			if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_NEXT)) {
+			if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_NEXT) {
 				entryLearnOneView.reset();
 				Entry thisEntry = entries.getCurrentItem();
 				thisEntry.setLearnOneView(entryLearnOneView);
@@ -422,10 +423,10 @@ public abstract class ADings implements IAppEventHandler {
 				entryLearnOneView.setCategories(categories.getChoiceProxy());
 				entryLearnOneView.init(thisEntry);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) {
 				entries.handleAppEvent(evt);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_SELECTION_APPLY)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_SELECTION_APPLY) {
 				if (1 > entries.countChosenEntries()) {
 					mainWindow.showMessageDialog("No chosen entries"
 							, "You have made a selection that resulted in an empty set"
@@ -433,22 +434,22 @@ public abstract class ADings implements IAppEventHandler {
 				}
 				checkLearningMIsStatus();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_TOTALS_CHANGED)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_TOTALS_CHANGED) {
 				updateStatusBarStatus(null);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_ALL)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_ALL) {
 				if (checkDoReset(true)) {
-					evt.setDetails(currentView);
+					evt.setDetails(currentView.name());
 					entries.handleAppEvent(evt);
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_SEL)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_SEL) {
 				if (checkDoReset(false)) {
-					evt.setDetails(currentView);
+					evt.setDetails(currentView.name());
 					entries.handleAppEvent(evt);
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_STATISTICS_SAVE_SET)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_STATISTICS_SAVE_SET) {
 				DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Toolbox.getInstance().getCurrentLocalePointer());
 				Date timestamp = stats.addNewStatisticSet();
 				mainWindow.showMessageDialog("", "Learning statistics saved: " + df.format(timestamp), Constants.INFORMATION_MESSAGE);
@@ -751,8 +752,8 @@ public abstract class ADings implements IAppEventHandler {
 				setSaveNeeded(false);
 
 				//show the SummaryView
-				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-				ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+				ape.setMessage(MessageConstants.Message.N_VIEW_INFOVOCAB_EDIT);
 				this.handleAppEvent(ape);
 			}
 			catch (Exception e) {
@@ -805,8 +806,8 @@ public abstract class ADings implements IAppEventHandler {
 		stats.setUnits(units);
 
 		//show the InfoVocab view
-		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-		ape.setMessage(MessageConstants.N_VIEW_INFOVOCAB_EDIT);
+		AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+		ape.setMessage(MessageConstants.Message.N_VIEW_INFOVOCAB_EDIT);
 		this.handleAppEvent(ape);
 	} //END private void makeNewVocabulary()
 
@@ -933,8 +934,8 @@ public abstract class ADings implements IAppEventHandler {
 		//depending on number of entries > 0
 		if (null != entries && entries.countElements() > 0) {
 			mainWindow.setEntriesOkEnabled(true);
-			if (currentView.equals(MessageConstants.N_VIEW_ENTRY_EDIT) ||
-					currentView.equals(MessageConstants.N_VIEW_ENTRY_LEARNONE)) {
+			if (currentView == MessageConstants.Message.N_VIEW_ENTRY_EDIT ||
+					currentView == MessageConstants.Message.N_VIEW_ENTRY_LEARNONE) {
 				mainWindow.setResetScoreMIsEnabled(false);
 			}
 			else {

@@ -32,6 +32,8 @@ import java.awt.FlowLayout;
 import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class StatusBar extends JPanel {
+	private final static long serialVersionUID = 1L;
+
 	/** The status of saving */
 	private JLabel statusL;
 	

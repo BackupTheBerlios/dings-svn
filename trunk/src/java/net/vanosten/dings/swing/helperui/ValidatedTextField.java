@@ -33,6 +33,8 @@ import net.vanosten.dings.swing.DingsSwingConstants;
  * independent of Swing and be entirely processed in the model.
  */
 public class ValidatedTextField extends JTextField {
+	private final static long serialVersionUID = 1L;
+
 	/**
 	 * Constructor
 	 * @param columns The number of visible colums

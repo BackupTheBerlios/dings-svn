@@ -21,7 +21,7 @@
  */
 package net.vanosten.dings.model;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 
@@ -48,16 +48,16 @@ public class EntryTypesCollection extends AChoiceCollection {
 
 	//implements ACollection
 	protected void setMessageListView() {
-		msgListView = MessageConstants.N_VIEW_ENTRYTYPES_LIST;
+		msgListView = MessageConstants.Message.N_VIEW_ENTRYTYPES_LIST;
 	} //END protected void setMessageListView()
 
 	//implements AChoiceCollection
 	protected void setMessageEditView() {
-		msgEditView = MessageConstants.N_VIEW_ENTRYTYPE_EDIT;
+		msgEditView = MessageConstants.Message.N_VIEW_ENTRYTYPE_EDIT;
 	} //END protected void setMessageEditView()
 
 	//implements ACollection
-	protected void setItems(HashMap theEntryTypes) {
+	protected void setItems(Map theEntryTypes) {
 		this.items = theEntryTypes;
 
 		Set allKeys = items.keySet();
@@ -156,7 +156,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 
 	//overrides AChoiceCollection
 	public void handleAppEvent(AppEvent evt) {
-		if (evt.getMessage().equals(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES)) {
+		if (evt.getMessage() == MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) {
 			this.parentController.handleAppEvent(evt);
 		}
 		else super.handleAppEvent(evt);

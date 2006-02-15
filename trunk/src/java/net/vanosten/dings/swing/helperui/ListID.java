@@ -24,6 +24,8 @@ package net.vanosten.dings.swing.helperui;
 import javax.swing.JList;
 
 public class ListID extends JList {
+	private final static long serialVersionUID = 1L;
+	
 	private ListIDModel listModel;
 	
 	public ListID (int rows, int mode) {

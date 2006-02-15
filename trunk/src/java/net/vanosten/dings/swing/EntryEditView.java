@@ -52,6 +52,8 @@ import net.vanosten.dings.uiif.IEntryEditView;
 import net.vanosten.dings.event.AppEvent;
 
 public class EntryEditView extends AEditView implements IEntryEditView {
+	private final static long serialVersionUID = 1L;
+
 	private ChoiceID unitsCh, categoriesCh, attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh;
 	private JCheckBox statusCB;
 	private ValidatedTextField baseVTF, targetVTF;
@@ -68,7 +70,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private String entryTypeId;
 
 	public EntryEditView(ComponentOrientation aComponentOrientation) {
-		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry"), aComponentOrientation, true, true, MessageConstants.N_VIEW_ENTRIES_LIST);
+		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry"), aComponentOrientation, true, true, MessageConstants.Message.N_VIEW_ENTRIES_LIST);
 	} //END public EntryEditViewer(ComponentOrientation)
 
 	private void initComponents() {
@@ -561,8 +563,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	
 		//if ok, show entry edit 
 		if (JOptionPane.OK_OPTION == answer) {
-			AppEvent evt = new AppEvent(AppEvent.DATA_EVENT);
-			evt.setMessage(MessageConstants.D_EDIT_VIEW_CHANGE_ENTRY_TYPE);
+			AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			evt.setMessage(MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE);
 			evt.setDetails(entryTypesCh.getSelectedID());
 			controller.handleAppEvent(evt);
 		}

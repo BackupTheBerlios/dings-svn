@@ -46,6 +46,8 @@ import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IInfoVocabEditView;
 
 public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
+	private final static long serialVersionUID = 1L;
+
 	private JPanel basicsP;
 	private ValidatedTextField titleVTF;
 	private JTextField authorTF, copyrightTF;
@@ -75,7 +77,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 				, aComponentOrientation
 				, false
 				, false
-				, MessageConstants.N_VIEW_ENTRIES_LIST);
+				, MessageConstants.Message.N_VIEW_ENTRIES_LIST);
 	} //END public InfoVocabEditView(ComponentOrientation)
 	
 	private final void initComponents() {

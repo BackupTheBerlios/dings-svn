@@ -31,7 +31,8 @@ import javax.swing.table.AbstractTableModel;
  * @author Rick Gruber
  */
 public class IDTableModel extends AbstractTableModel {
-	
+	private final static long serialVersionUID = 1L;
+		
 	private String[] columnNames;
 	protected Object[][] data;
 	
@@ -72,7 +73,7 @@ public class IDTableModel extends AbstractTableModel {
 	 * then the last column would contain text ("true"/"false"),
 	 * rather than a check box.
 	 */
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	} //END public Class getColumnClass(int)
 

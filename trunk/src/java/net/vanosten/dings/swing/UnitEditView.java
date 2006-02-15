@@ -30,14 +30,17 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IUnitEditView;
 
 public class UnitEditView extends AEditView implements IUnitEditView {
+	private final static long serialVersionUID = 1L;
+
 	private ValidatedTextField nameVTF;
 	private JTextArea descriptionTA;
 	
-	public UnitEditView(String aTitle, ComponentOrientation aComponentOrientation, String aMessage) {
+	public UnitEditView(String aTitle, ComponentOrientation aComponentOrientation, Message aMessage) {
 		super(aTitle, aComponentOrientation, true, true, aMessage);
 	} //END public UnitEditView(String, ComponentOrientation, String)
 

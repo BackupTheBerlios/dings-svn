@@ -308,7 +308,7 @@ public final class InfoVocab extends AItemModel {
 									 , String anOthersLabel
 									 , String anExplanationLabel
 									 , String anExampleLabel) {
-		ArrayList errors = new ArrayList();
+		ArrayList<String> errors = new ArrayList<String>();
 		if (false == validateString(aTitle, 1)) {
 			errors.add("Title may not be empty");
 		}

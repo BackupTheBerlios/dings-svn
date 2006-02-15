@@ -47,6 +47,7 @@ import java.awt.event.MouseEvent;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.Toolbox;
@@ -62,7 +63,7 @@ public abstract class ListView extends JPanel implements IListView {
     private IAppEventHandler controller;
     
 	/** The message for edit */
-	protected String msgEdit;
+	protected Message msgEdit;
 	
 	/** The title of this list */
 	private String title;
@@ -242,8 +243,8 @@ public abstract class ListView extends JPanel implements IListView {
 	public boolean init(IAppEventHandler aController) {
 		this.controller = aController;
 		if (null == controller) return false;
-		AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-		ape.setMessage(MessageConstants.D_LIST_VIEW_REFRESH);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_LIST_VIEW_REFRESH);
 		controller.handleAppEvent(ape);
 		return true;
 	} //END public boolean init()
@@ -324,8 +325,8 @@ public abstract class ListView extends JPanel implements IListView {
 		String type = getIdTypeForNew();
 		
 		if (null != type) {
-			AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-			ape.setMessage(MessageConstants.D_LIST_VIEW_NEW);
+			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			ape.setMessage(MessageConstants.Message.D_LIST_VIEW_NEW);
 			ape.setDetails(type);
 			controller.handleAppEvent(ape);
 		}
@@ -338,7 +339,7 @@ public abstract class ListView extends JPanel implements IListView {
 	private void onEdit() {
 		String rowID = getSelectedRowID();
 		if (null != rowID) {
-			AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+			AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 			ape.setMessage(msgEdit);
 			ape.setDetails(rowID);
 			controller.handleAppEvent(ape);  
@@ -348,8 +349,8 @@ public abstract class ListView extends JPanel implements IListView {
 	private void onDelete() {
 		String rowID = getSelectedRowID();
 		if (rowID != null) {
-			AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-			ape.setMessage(MessageConstants.D_LIST_VIEW_DELETE);
+			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			ape.setMessage(MessageConstants.Message.D_LIST_VIEW_DELETE);
 			ape.setDetails(rowID);
 			controller.handleAppEvent(ape);
 		}

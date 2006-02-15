@@ -33,6 +33,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Toolbox;
@@ -49,7 +50,7 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 	private boolean showDone = false;
 
 	/** The message for ok */
-	private String msgDone;
+	private Message msgDone;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -59,7 +60,7 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 	*/
 	protected boolean isUpdating = false;
 
-	public AEditView(String aTitle, ComponentOrientation aComponentOrientation, boolean aShowDelete, boolean aShowDone, String aMsgDone) {
+	public AEditView(String aTitle, ComponentOrientation aComponentOrientation, boolean aShowDelete, boolean aShowDone, Message aMsgDone) {
 		super(aTitle, aComponentOrientation);
 		this.showDelete = aShowDelete;
 		this.showDone = aShowDone;
@@ -169,25 +170,25 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 	//-----------------------------------------------------------------------
 
 	private void onApply() {
-		AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-		ape.setMessage(MessageConstants.D_EDIT_VIEW_APPLY);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_EDIT_VIEW_APPLY);
 		controller.handleAppEvent(ape);
 	} //END private void onApply()
 
 	private void onRevert() {
-		AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-		ape.setMessage(MessageConstants.D_EDIT_VIEW_REVERT);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_EDIT_VIEW_REVERT);
 		controller.handleAppEvent(ape);
 	} //END private void onRevert()
 
 	private void onDelete() {
-		AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-		ape.setMessage(MessageConstants.D_EDIT_VIEW_DELETE);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_EDIT_VIEW_DELETE);
 		controller.handleAppEvent(ape);
 	} //END private void onDelete()
 
 	private void onDone() {
-		AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
+		AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 		ape.setMessage(msgDone);
 		controller.handleAppEvent(ape);
 	} //END private void onDone()
@@ -195,8 +196,8 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 	protected void onChange() {
 		if (!isUpdating) {
 			//check for real changes
-			AppEvent ape = new AppEvent(AppEvent.DATA_EVENT);
-			ape.setMessage(MessageConstants.D_EDIT_VIEW_CHECK_CHANGE);
+			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			ape.setMessage(MessageConstants.Message.D_EDIT_VIEW_CHECK_CHANGE);
 			controller.handleAppEvent(ape);
 		}
 	} //END protected void onChange()

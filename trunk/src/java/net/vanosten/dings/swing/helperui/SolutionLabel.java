@@ -28,6 +28,7 @@ import java.awt.Color;
 import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class SolutionLabel extends JLabel {
+	private final static long serialVersionUID = 1L;
 	
 	/** Whether the text can be hidden at all */
 	private boolean hideable = false;

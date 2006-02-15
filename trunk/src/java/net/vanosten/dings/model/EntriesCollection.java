@@ -23,6 +23,8 @@ package net.vanosten.dings.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -44,7 +46,7 @@ public class EntriesCollection extends ACollection {
 	private Entry currentItem = null;
 
 	/** Acts as a key list (of Strings) when editing */
-	private ArrayList chosenKeys = null;
+	private List<String> chosenKeys = null;
 
 	/** the views served by this collection of models */
 	private IEntriesSelectionView selectionView = null;
@@ -58,13 +60,13 @@ public class EntriesCollection extends ACollection {
 	private UnitsCollection units = null;
 
 	//The holders of pointers to different scores
-	private ArrayList scoreOne;
-	private ArrayList scoreTwo;
-	private ArrayList scoreThree;
-	private ArrayList scoreFour;
-	private ArrayList scoreFive;
-	private ArrayList scoreSix;
-	private ArrayList scoreSeven;
+	private List<String> scoreOne;
+	private List<String> scoreTwo;
+	private List<String> scoreThree;
+	private List<String> scoreFour;
+	private List<String> scoreFive;
+	private List<String> scoreSix;
+	private List<String> scoreSeven;
 
 	//the selections in the IEntriesSelectionView
 	int selStatusChoice;
@@ -85,7 +87,8 @@ public class EntriesCollection extends ACollection {
 
 	public EntriesCollection(IAppEventHandler anEventHandler) {
 		super(anEventHandler);
-		chosenKeys = new ArrayList();
+		items = new HashMap<String,Entry>();
+		chosenKeys = new ArrayList<String>();
 	} //END public EntriesCollection(IAppEventHandler)
 
 	//implements ACollection
@@ -95,11 +98,11 @@ public class EntriesCollection extends ACollection {
 
 	//implements ACollection
 	protected void setMessageListView() {
-		msgListView = MessageConstants.N_VIEW_ENTRIES_LIST;
+		msgListView = MessageConstants.Message.N_VIEW_ENTRIES_LIST;
 	} //END protected void setMessageListView()
 
 	//implements ACollection
-	protected void setItems(HashMap theEntries) {
+	protected void setItems(Map theEntries) {
 		this.items = theEntries;
 
 		Set allKeys = items.keySet();
@@ -119,7 +122,7 @@ public class EntriesCollection extends ACollection {
 		if (iter.hasNext()) setCurrentItem((String)iter.next());
 
 		//set chosen keys
-		chosenKeys = new ArrayList(items.keySet());
+		chosenKeys = new ArrayList<String>(items.keySet());
 	} //END protected void setItems(HashMap)
 
 	protected Entry getCurrentItem() {
@@ -210,23 +213,23 @@ public class EntriesCollection extends ACollection {
 			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent()", evt.getMessage() + "; " + evt.getDetails());
 		}
 		if(evt.isDataEvent()) {
-			if (evt.getMessage().equals(MessageConstants.D_LIST_VIEW_NEW)) {
+			if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_NEW) {
 				newItem(evt.getDetails(), false);
 				//send navigation event
-				AppEvent ape = new AppEvent(AppEvent.NAV_EVENT);
-				ape.setMessage(MessageConstants.N_VIEW_ENTRY_EDIT);
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+				ape.setMessage(MessageConstants.Message.N_VIEW_ENTRY_EDIT);
 				parentController.handleAppEvent(ape);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_LIST_VIEW_DELETE)) deleteItem(evt.getDetails(), true);
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_DELETE)) deleteItem(currentItem.getId(), false);
-			else if (evt.getMessage().equals(MessageConstants.D_LIST_VIEW_REFRESH)) refreshListView();
+			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_DELETE) deleteItem(evt.getDetails(), true);
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_DELETE) deleteItem(currentItem.getId(), false);
+			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_REFRESH) refreshListView();
 			//selection
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_SELECTION_REFRESH)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_SELECTION_REFRESH) {
 				refreshSelection();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_SELECTION_APPLY)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_SELECTION_APPLY) {
 				//make selection
-				ArrayList foo = checkSelectionCriteria();
+				List<String> foo = checkSelectionCriteria();
 				if (0 < foo.size()) {
 					parentController.handleAppEvent(MessageConstants.getShowErrorListEvent(foo
 							, "The selection is not valid"));
@@ -238,21 +241,21 @@ public class EntriesCollection extends ACollection {
 				}
 			}
 			//edit learnOne view
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_NEXT)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_NEXT) {
 				nextLearnOne();
 				//send to get the view assigned to the new Entry
 				parentController.handleAppEvent(evt);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_INITIALIZE_LEARNING)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING) {
 				initializeScores();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_ALL)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_ALL) {
 				resetScores(true, evt.getDetails());
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_SEL)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_SEL) {
 				resetScores(false, evt.getDetails());
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) {
 				//get the details
 				StringTokenizer st = new StringTokenizer(evt.getDetails(), Constants.DELIMITTER_APP_EVENT);
 				String anEntryTypeId = st.nextToken();
@@ -290,30 +293,30 @@ public class EntriesCollection extends ACollection {
 							, defaultFourId);
 				}
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_APPLY)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_APPLY) {
 				checkCurrentItemSelection(false);
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_CHANGE_ENTRY_TYPE)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE) {
 				currentItem.setEntryType(entryTypes.getEntryType(evt.getDetails()), true);
 				sendSaveNeeded();
 				checkCurrentItemSelection(false);
 				//refresh the edit view
-				AppEvent newEvt = new AppEvent(AppEvent.NAV_EVENT);
-				newEvt.setMessage(MessageConstants.N_VIEW_ENTRY_EDIT);
+				AppEvent newEvt = new AppEvent(AppEvent.EventType.NAV_EVENT);
+				newEvt.setMessage(MessageConstants.Message.N_VIEW_ENTRY_EDIT);
 				parentController.handleAppEvent(newEvt);
 			}
 		}
 		else if (evt.isNavEvent()) {
-			if (evt.getMessage().equals(MessageConstants.N_VIEW_ENTRY_EDIT)) {
+			if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRY_EDIT) {
 				editItem(evt.getDetails());
 			}
 		}
 		//TODO: the parentController should be called explicitely after each AppEvent type as an "else"
 		//and eventually explicitely within an "else if" if the event has to be propagated even if
 		//it has been handled
-		if (false == evt.getMessage().equals(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) &&
-				false == evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_ALL) &&
-				false == evt.getMessage().equals(MessageConstants.D_ENTRIES_RESET_SCORE_SEL)) {
+		if (false == (evt.getMessage() == MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) &&
+				false == (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_ALL) &&
+				false == (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_SEL)) {
 			parentController.handleAppEvent(evt);
 		}
 	} //END public void handleAppEvent(AppEvent)
@@ -335,8 +338,8 @@ public class EntriesCollection extends ACollection {
 	} //END protected int countChosenEntries()
 
 	private void requestStatusBarUpdate() {
-		AppEvent evt = new AppEvent(AppEvent.DATA_EVENT);
-		evt.setMessage(MessageConstants.D_ENTRIES_TOTALS_CHANGED);
+		AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		evt.setMessage(MessageConstants.Message.D_ENTRIES_TOTALS_CHANGED);
 		parentController.handleAppEvent(evt);
 	} //END private void requestStatusBarUpdate()
 
@@ -358,9 +361,9 @@ public class EntriesCollection extends ACollection {
 
 	protected int[] getEntriesPerXStats(boolean onlyChosenEntries, String[] theIds, int type) {
 		int[] theStats = new int[theIds.length];
-		Set theKeys;
+		Set<String> theKeys;
 		if (onlyChosenEntries) {
-			theKeys = new HashSet(chosenKeys);
+			theKeys = new HashSet<String>(chosenKeys);
 		}
 		else {
 			theKeys = items.keySet();
@@ -431,7 +434,7 @@ public class EntriesCollection extends ACollection {
 		//place the selection based on the changed scores
 		placeSelection();
 		//refresh the current view, if it is EntriesListView
-		if (null != currentView && currentView.equals(MessageConstants.N_VIEW_ENTRIES_LIST)) {
+		if (null != currentView && currentView == MessageConstants.Message.N_VIEW_ENTRIES_LIST.name()) {
 			refreshListView();
 		}
 	} //END private void resetScores(boolean, String)
@@ -440,13 +443,13 @@ public class EntriesCollection extends ACollection {
 	 * Initializes the scores. This is needed before learning can be started.
 	 */
 	private void initializeScores() {
-		scoreOne = new ArrayList();
-		scoreTwo = new ArrayList();
-		scoreThree = new ArrayList();
-		scoreFour = new ArrayList();
-		scoreFive = new ArrayList();
-		scoreSix = new ArrayList();
-		scoreSeven = new ArrayList();
+		scoreOne = new ArrayList<String>();
+		scoreTwo = new ArrayList<String>();
+		scoreThree = new ArrayList<String>();
+		scoreFour = new ArrayList<String>();
+		scoreFive = new ArrayList<String>();
+		scoreSix = new ArrayList<String>();
+		scoreSeven = new ArrayList<String>();
 
 		//reset the current score
 		currentScore = 0;
@@ -639,14 +642,14 @@ public class EntriesCollection extends ACollection {
 		selMinMaxScore[1] = Entry.SCORE_MAX;
 		//TODO: find a nicer way to do this
 		String[] theIDs = new String[categories.items.size()];
-		Set keys = categories.items.keySet();
-		selCategoriesChoice = (String[])keys.toArray(theIDs);
+		Set<String> keys = categories.items.keySet();
+		selCategoriesChoice = keys.toArray(theIDs);
 		theIDs = new String[units.items.size()];
 		keys = units.items.keySet();
-		selUnitsChoice = (String[])keys.toArray(theIDs);
+		selUnitsChoice = keys.toArray(theIDs);
 		theIDs = new String[entryTypes.items.size()];
 		keys = entryTypes.items.keySet();
-		selTypesChoice = (String[])keys.toArray(theIDs);
+		selTypesChoice = keys.toArray(theIDs);
 	} //END public final void initializeSelection()
 
 	/**
@@ -702,8 +705,8 @@ public class EntriesCollection extends ACollection {
 	 *
 	 * @return ArrayList - If there are validation errors then a String for each error is included. Otherwise the List is empty.
 	 */
-	private ArrayList checkSelectionCriteria() {
-		ArrayList errors = new ArrayList();
+	private List<String> checkSelectionCriteria() {
+		List<String> errors = new ArrayList<String>();
 		//test whether value of lastLearnedBeforeTF is valid
 		try {
 			Integer.parseInt(selectionView.getLastLearnedBefore());
@@ -729,7 +732,7 @@ public class EntriesCollection extends ACollection {
 			errors.add("At least one entry type has to be chosen.");
 		}
 		return errors;
-	} //END private ArrayList checkSelectionCriteria()
+	} //END private List<String> checkSelectionCriteria()
 
 	/**
 	 * Checks whether the current item is still within the selection.

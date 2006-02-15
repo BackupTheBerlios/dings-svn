@@ -22,6 +22,7 @@
 package net.vanosten.dings.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
@@ -168,10 +169,10 @@ public class EntryType extends AIdItemModel {
 	/**
 	 * Tests the required fields for valid contents.
 	 * 
-	 * @return ArrayList - a list of validation errors. Size() = 0 means valid model.
+	 * @return List<String< - a list of validation errors. Size() = 0 means valid model.
 	 */
-	public static ArrayList validate(String anId, String aName) {
-		ArrayList errors = new ArrayList();
+	public static List<String> validate(String anId, String aName) {
+		List<String> errors = new ArrayList<String>();
 		String idError = validateId(Constants.PREFIX_ENTRYTYPE, anId);
 		if (null != idError) errors.add(idError);
 		if (false == validateString(aName,1)) {
@@ -185,7 +186,7 @@ public class EntryType extends AIdItemModel {
 		//get values from editView and trim them
 		String nameV = editView.getName().trim();
 		//validate where necessary
-		ArrayList errors = validate(id, nameV);
+		List<String> errors = validate(id, nameV);
 		//if validation is ok, save the new values.
 		if (0 ==  errors.size()) {
 			//update all entries
@@ -207,7 +208,7 @@ public class EntryType extends AIdItemModel {
 				else sb.append(Constants.NULL_STRING);
 			}
 			//rearrange new ids without nulls in the middle
-			ArrayList newAttribIds = new ArrayList(NUMBER_OF_ATTRIBUTES);
+			List<String> newAttribIds = new ArrayList<String>(NUMBER_OF_ATTRIBUTES);
 			for (i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
 				if (null != attributeIdsV[i]) {
 					newAttribIds.add(attributeIdsV[i]);
@@ -237,8 +238,8 @@ public class EntryType extends AIdItemModel {
 				else sb.append(Constants.NULL_STRING);
 			}			
 			//send AppEvent to update all Entries
-			AppEvent evt = new AppEvent(AppEvent.DATA_EVENT);
-			evt.setMessage(MessageConstants.D_ENTRY_TYPE_CHANGE_ATTRIBUTES);
+			AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			evt.setMessage(MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES);
 			evt.setDetails(sb.toString());
 			parentController.handleAppEvent(evt);
 			//save needed and reset

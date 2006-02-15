@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 -->
-<project name="Dings" basedir="." default="dist">
+<project name="DingsBums?!" basedir="." default="dist">
 	<property name="src" value="./src"/>
 	<property name="build" value="./build"/>
 	<property name="dist"  value="./dist"/>
@@ -57,7 +57,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		<unjar src="${lib}/xpp3.jar" dest="${dist}" />
 		<unjar src="${lib}/jfreechart.jar" dest="${dist}" />
 		<unjar src="${lib}/jcommon.jar" dest="${dist}" />
-		<!-- Make a dings.jar file -->
+		<!-- Make a dingsbums.jar file -->
 		<jar jarfile="./dingsbums.jar" basedir="${build}/classes">
 			<!-- <fileset dir="${build}" includes="net/**" /> -->
 			<fileset dir="${build}/classes">
@@ -72,7 +72,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		</jar>
 	</target>
 	
-	<target name="runjar" depends="dist">
+	<target name="runjar">
 		<java jar="dingsbums.jar" fork="true" />
 	</target>
 
@@ -82,21 +82,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		<delete dir="${dist}"/>
 	</target>
 	
-	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
+	<!--<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
 
 	<target name="pmd">
 		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
 		<pmd>
 			<ruleset>rulesets/imports.xml</ruleset>
 			<ruleset>rulesets/unusedcode.xml</ruleset>
-			<!--
-			<ruleset>rulesets/favorites.xml</ruleset>
 			<ruleset>rulesets/basic.xml</ruleset>
-			-->
 			<formatter type="html" toFile="pmd_report.html"/>
 			<fileset dir="${src}/java">
 				<include name="**/*.java"/>
 			</fileset>
 		</pmd>
-	</target>
+	</target> -->
 </project>

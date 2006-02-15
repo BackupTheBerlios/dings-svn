@@ -65,8 +65,8 @@ public abstract class AItemModel extends AModel {
 	 * Sends an AppEvent to set save neded.
 	 */
 	protected void sendSaveNeeded() {
-		AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-		ape.setMessage(MessageConstants.S_SAVE_NEEDED);
+		AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+		ape.setMessage(MessageConstants.Message.S_SAVE_NEEDED);
 		parentController.handleAppEvent(ape);
 	} //END protected void sendSaveNeeded()
 	
@@ -78,19 +78,19 @@ public abstract class AItemModel extends AModel {
 	//Overrides AModel
 	public void handleAppEvent(AppEvent evt) {
 		if (logger.isLoggable(Level.FINEST)) {
-			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent", evt.getMessage());
+			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent", evt.getMessage().name());
 		}
 		if (evt.isDataEvent()) {
-			if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_APPLY)) {
+			if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_APPLY) {
 				updateModel();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_REVERT)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_REVERT) {
 				updateGUI();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_CHECK_CHANGE)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_CHECK_CHANGE) {
 				checkChangeInGUI();
 			}
-			else if (evt.getMessage().equals(MessageConstants.D_EDIT_VIEW_DELETE)) {
+			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_DELETE) {
 				parentController.handleAppEvent(evt);
 			}
 		}

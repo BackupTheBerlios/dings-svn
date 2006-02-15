@@ -40,6 +40,8 @@ import net.vanosten.dings.model.Toolbox;
 import net.vanosten.dings.uiif.IWelcomeView;
 
 public class WelcomeView extends AViewWithButtons implements IWelcomeView {
+	private final static long serialVersionUID = 1L;
+
 	private JButton newB, openB;
 
 	public WelcomeView(ComponentOrientation aComponentOrientation) {
@@ -92,8 +94,8 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		newB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.new").charAt(0));
 		newB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-				ape.setMessage(MessageConstants.S_NEW_VOCABULARY);
+				AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+				ape.setMessage(MessageConstants.Message.S_NEW_VOCABULARY);
 				controller.handleAppEvent(ape);
 			}
 		});
@@ -103,8 +105,8 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		openB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.open").charAt(0));
 		openB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				AppEvent ape = new AppEvent(AppEvent.STATUS_EVENT);
-				ape.setMessage(MessageConstants.S_OPEN_VOCABULARY);
+				AppEvent ape = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+				ape.setMessage(MessageConstants.Message.S_OPEN_VOCABULARY);
 				controller.handleAppEvent(ape);
 			}
 		});

@@ -21,6 +21,7 @@
  */
 package net.vanosten.dings.model;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -44,16 +45,16 @@ public class Preferences extends AModel{
 
 	/** The comment in the properties file */
 	public final static String PROP_COMMENT = "Properties for DingsBums?!";
-	
+
 	/** The history of opened vocabulary files as a delimitted list of paths*/
 	public final static String PROP_FILE_HISTORY = "file_history";
-	
+
 	/** Whether or not the system specifc L&F is used. Default is TRUE */
 	public final static String PROP_SYSTEM_LAF = "system_laf";
-	
+
 	/** The delimitter of the file history */
 	private final static String FILE_HISTORY_DELIMITTER = "#";
-	
+
 	/** The maximum number of file names in the file history */
 	private final static int MAX_NUMBER_FILE_HISTORY = 5;
 
@@ -62,37 +63,37 @@ public class Preferences extends AModel{
 
 	/** Whether logging is to file or console (default) */
 	public final static String PROP_LOG_TO_FILE = "log_to_file";
-	
+
 	/** Whether the selection of an entry should be checked instantly when editing an entry */
 	public final static String PROP_SEL_UPD_INST_EDITING = "sel_upd_inst_editing";
-	
+
 	/** Whether the selection of an entry should be checked instantly when learning an entry */
 	public final static String PROP_SEL_UPD_INST_LEARNING = "sel_upd_inst_learning";
-	
+
 	/** The width of the application's main window */
 	public final static String PROP_APP_WINDOW_WIDTH = "app_window_width";
 
 	/** The height of the application's main window */
 	public final static String PROP_APP_WINDOW_HEIGHT = "app_window_height";
-	
+
 	/** The x location of the application's main window */
 	public final static String PROP_APP_LOCATION_X = "app_location_x";
 
 	/** The y location of the application's main window */
 	public final static String PROP_APP_LOCATION_Y = "app_location_y";
-	
+
 	/** The width of the preference dialog */
 	public final static String PROP_PREF_DIALOG_WIDTH = "pref_dialog_width";
 
 	/** The height of the preference dialog */
 	public final static String PROP_PREF_DIALOG_HEIGHT = "pref_dialog_height";
-	
+
 	/** Whether learning statistics should be saved on quit */
 	public final static String PROP_STATS_QUIT = "stats_quit";
-	
+
 	/** The Locale of the application */
 	public final static String PROP_LOCALE = "locale";
-	
+
 	/** The color of the hint text in learn one */
 	public final static String PROP_COLOR_HINT ="color_hint";
 
@@ -175,10 +176,10 @@ public class Preferences extends AModel{
 		props.setProperty(FILE_ENCODING, editView.getFileEncoding());
 		//look and feel
 		boolean oldLAF = Boolean.valueOf(props.getProperty(PROP_SYSTEM_LAF)).booleanValue();
-		if (oldLAF != editView.isSystemLookAndFeel()) { 
+		if (oldLAF != editView.isSystemLookAndFeel()) {
 			props.setProperty(PROP_SYSTEM_LAF, String.valueOf(editView.isSystemLookAndFeel()));
-			AppEvent ape1 = new AppEvent(AppEvent.STATUS_EVENT);
-			ape1.setMessage(MessageConstants.S_CHANGE_LAF);
+			AppEvent ape1 = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+			ape1.setMessage(MessageConstants.Message.S_CHANGE_LAF);
 			parentController.handleAppEvent(ape1);
 		}
 		//learn hints
@@ -195,8 +196,8 @@ public class Preferences extends AModel{
 		if (false == oldEnabled.equals(newEnabled) || false == oldToFile.equals(newToFile)) {
 			props.setProperty(PROP_LOGGING_ENABLED, newEnabled); //must come before event
 			props.setProperty(PROP_LOG_TO_FILE, newToFile); //must come before event
-			AppEvent ape2 = new AppEvent(AppEvent.STATUS_EVENT);
-			ape2.setMessage(MessageConstants.S_CHANGE_LOGGING);
+			AppEvent ape2 = new AppEvent(AppEvent.EventType.STATUS_EVENT);
+			ape2.setMessage(MessageConstants.Message.S_CHANGE_LOGGING);
 			parentController.handleAppEvent(ape2);
 		}
 		//resetting score
@@ -211,15 +212,15 @@ public class Preferences extends AModel{
 	//Overrides AModel
 	public void handleAppEvent(AppEvent evt) {
 		if (logger.isLoggable(Level.FINEST)) {
-			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent", evt.getMessage());
+			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent", evt.getMessage().name());
 		}
-		if (evt.getMessage().equals(MessageConstants.D_PREFERENCES_EDIT_APPLY)) {
+		if (evt.getMessage() == MessageConstants.Message.D_PREFERENCES_EDIT_APPLY) {
 			updateModel();
 		}
-		else if (evt.getMessage().equals(MessageConstants.D_PREFERENCES_EDIT_REVERT)) {
+		else if (evt.getMessage() == MessageConstants.Message.D_PREFERENCES_EDIT_REVERT) {
 			updateGUI();
 		}
-		else if (evt.getMessage().equals(MessageConstants.S_SAVE_DIALOG_SIZE)) {
+		else if (evt.getMessage() == MessageConstants.Message.S_SAVE_DIALOG_SIZE) {
 			saveDialogSize();
 		}
 		else parentController.handleAppEvent(evt);
@@ -278,7 +279,7 @@ public class Preferences extends AModel{
 						logger.logp(Level.FINEST, this.getClass().getName(), "readProperties()", e.getMessage());
 					}
 					//do nothing
-					
+
 				}
 			}
 		}
@@ -327,7 +328,7 @@ public class Preferences extends AModel{
 		//PROP_LOCALE is not set to a value. The value is set to the value of the underlying
 		//OS the first time the application is started
 	} //END private void readProperties()
-	
+
 	/**
 	 * Updates the file history either with a new file path or
 	 * a file path to delete and saves it in the preferences.
@@ -341,7 +342,7 @@ public class Preferences extends AModel{
 		//get the existing file history from preferences
 		//and load into ArryList
 		String[][] history = getFileHistoryPaths();
-		ArrayList newHistory = new ArrayList(MAX_NUMBER_FILE_HISTORY);
+		List<String> newHistory = new ArrayList<String>(MAX_NUMBER_FILE_HISTORY);
 		for (int i = 0; i < history.length; i++) {
 			if (!aFileName.equals(history[i][0])) {
 				newHistory.add(history[i][0]);
@@ -349,12 +350,12 @@ public class Preferences extends AModel{
 		}
 		if (isNew) {
 			//put new file into first position
-			newHistory.add(0, aFileName);		
+			newHistory.add(0, aFileName);
 		}
 		//remove file names if list too long
 		for (int i = MAX_NUMBER_FILE_HISTORY; i < newHistory.size(); i++) {
 			newHistory.remove(i);
-		}		
+		}
 		//save file history in preferences
 		StringBuffer historySB = new StringBuffer();
 		for (int i = 0; i < newHistory.size(); i++) {
@@ -365,13 +366,13 @@ public class Preferences extends AModel{
 		}
 		props.setProperty(PROP_FILE_HISTORY, historySB.toString());
 	} //END protected void updateFileHistory(String, boolean)
-	
+
 	/**
 	 * Gets the list of the recent opened files in a two dimensional array of Strings.
 	 * The first element is the real path, while the second element is a symbolic
-	 * path name that takes a maximal lenght into account to be easiliy displayable 
+	 * path name that takes a maximal lenght into account to be easiliy displayable
 	 * e.g. in a menu item.ds
-	 * 
+	 *
 	 * @return String[][] - the paths of the most recent opened files
 	 */
 	public String[][] getFileHistoryPaths() {
@@ -384,10 +385,10 @@ public class Preferences extends AModel{
 				history[i][0] = st.nextToken();
 				history[i][1] = getDisplayFilePath(history[i][0]);
 			}
-		}		
+		}
 		return history;
 	} //END public String[][] getFileHistoryPaths()
-	
+
 	/**
 	 * Return a file path name in a display friendly format.
 	 * The String begins with the file name and then an abbreviated form of the
@@ -395,7 +396,7 @@ public class Preferences extends AModel{
 	 * The abbreviated path contains the physical or logical drive name,
 	 * the first directory and the last directory.
 	 * The directories in between are - if existing - denoted by elipses (...)
-	 * 
+	 *
 	 * @param String aFilePath - the original name of the file path
 	 * @return String - the abbreviated file path
 	 */
@@ -405,9 +406,9 @@ public class Preferences extends AModel{
 		displaySB.append(aFilePath.substring(aFilePath.lastIndexOf(File.separator) + 1));
 		//add a blank and the opening bracket
 		displaySB.append(" [");
-		
+
 		//find all separators and add the positions to an ArrayList
-		ArrayList positions = new ArrayList();
+		List<Integer> positions = new ArrayList<Integer>();
 		int myPosition = -1;
 		do {
 			myPosition = aFilePath.indexOf(File.separator, myPosition + 1);
@@ -449,7 +450,7 @@ public class Preferences extends AModel{
 			//append last directory
 			displaySB.append(aFilePath.substring(separatorPositions[separatorPositions.length - 2] + 1, separatorPositions[separatorPositions.length - 1] + 1));
 		}
-		//else do nothing		
+		//else do nothing
 		//close the bracket and return the display file name as a String
 		displaySB.append("]");
 		return displaySB.toString();
@@ -482,7 +483,7 @@ public class Preferences extends AModel{
 						logger.logp(Level.FINEST, this.getClass().getName(), "save()", e.getMessage());
 					}
 					//do nothing
-					
+
 				}
 			}
 		}

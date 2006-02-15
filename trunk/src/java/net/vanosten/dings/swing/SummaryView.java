@@ -62,6 +62,7 @@ import org.jfree.data.CategoryDataset;
 import org.jfree.data.time.TimeSeriesCollection;
 
 public class SummaryView extends AViewWithButtons implements ISummaryView {
+	private final static long serialVersionUID = 1L;
 	
 	/** Lets the user choose the chart type / current statistic */
 	private JComboBox chartTypeCB;
@@ -107,7 +108,7 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		infoL.setHorizontalAlignment(SwingConstants.CENTER);
 		chartP.add(infoL, BorderLayout.CENTER);
 		
-		Vector items = new Vector();
+		Vector<String> items = new Vector<String>();
 		items.add("Entries by " + Toolbox.getInstance().getInfoPointer().getUnitLabel());
 		items.add("Entries by " + Toolbox.getInstance().getInfoPointer().getCategoryLabel());
 		items.add("Entries by Entry Type");
@@ -204,13 +205,13 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 	 */
 	private void showChart() {
 		this.setCursor(new Cursor(Cursor.WAIT_CURSOR)); //will be set back in placeChart()
-		AppEvent evt = new AppEvent(AppEvent.DATA_EVENT);
+		AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
 		switch(chartTypeCB.getSelectedIndex()) {
-			case 0: evt.setMessage(MessageConstants.D_SUMMARY_VIEW_DISPLAY_UNITS); break;
-			case 1: evt.setMessage(MessageConstants.D_SUMMARY_VIEW_DISPLAY_CATEGORIES); break;
-			case 2: evt.setMessage(MessageConstants.D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES); break;
-			case 3: evt.setMessage(MessageConstants.D_SUMMARY_VIEW_DISPLAY_SCORES); break;
-			default: evt.setMessage(MessageConstants.D_SUMMARY_VIEW_DISPLAY_TIMELINE); break;
+			case 0: evt.setMessage(MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_UNITS); break;
+			case 1: evt.setMessage(MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_CATEGORIES); break;
+			case 2: evt.setMessage(MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_ENTRYTYPES); break;
+			case 3: evt.setMessage(MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_SCORES); break;
+			default: evt.setMessage(MessageConstants.Message.D_SUMMARY_VIEW_DISPLAY_TIMELINE); break;
 		}
 		evt.setDetails(Boolean.toString(chosenCB.isSelected()));
 		controller.handleAppEvent(evt);

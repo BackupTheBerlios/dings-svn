@@ -27,12 +27,13 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.Toolbox;
 
 public class CategoriesListView extends ListView {
+	private final static long serialVersionUID = 1L;
 
 	public CategoriesListView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_categories"), aComponentOrientation);
 	} //END public CategoriesListView(ComponentOrientation)
 	
 	protected void setMessages() {
-		msgEdit = MessageConstants.N_VIEW_CATEGORY_EDIT;
+		msgEdit = MessageConstants.Message.N_VIEW_CATEGORY_EDIT;
 	} //END protected void setMessages()
 } //END public class CategoriesListView extends ListView

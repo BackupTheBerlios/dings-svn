@@ -28,6 +28,7 @@ import net.vanosten.dings.model.Toolbox;
 
 
 public class UnitsListView extends ListView {
+	private final static long serialVersionUID = 1L;
 
 	public UnitsListView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_units"), aComponentOrientation);
@@ -35,6 +36,6 @@ public class UnitsListView extends ListView {
 	
 	//implements ListView
 	protected void setMessages() {
-		msgEdit = MessageConstants.N_VIEW_UNIT_EDIT;
+		msgEdit = MessageConstants.Message.N_VIEW_UNIT_EDIT;
 	} //END protected void setMessages()
 } //END public class UnitsListView extends ListView
