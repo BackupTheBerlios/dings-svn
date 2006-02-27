@@ -28,14 +28,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		<!-- Create the time stamp -->
 		<tstamp/>
 		<!-- Create the build directory structure used by compile and dist-->
-		<mkdir dir="${build}/classes"/>
 		<mkdir dir="${dist}"/>
 	</target>
 
-	<target name="compile" depends="init">
-		<!-- Compile the java code with version 1.4 compatibility -->
-		<javac srcdir="${src}/java" destdir="${build}/classes" excludes="net/vanosten/dings/gnome/**" 
-			source="1.4" deprecation="on">
+	<target name="resources">
+		<!-- Change the encoding of the properties files to ascii and copy it to the build files -->
+		<native2ascii encoding="utf-8" src="${src}/conf" dest="${build}" includes="**/*.properties"/>
+		<!-- Copy the image files to prepare for runtime -->
+		<copy todir="${build}">
+			<fileset dir="${src}" includes="images/**" />
+		</copy>
+	</target>
+
+	<target name="compile">
+		<!-- Compile the java code with version 1.5 compatibility -->
+		<javac srcdir="${src}/java" destdir="${build}" excludes="net/vanosten/dings/gnome/**" 
+			source="1.5" deprecation="on">
 			<classpath>
 				<pathelement path="${classpath}"/>
 				<fileset dir="${lib}">
@@ -44,24 +52,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 				<pathelement location="external"/>
 			</classpath>
 		</javac>
-		<!-- Change the encoding of the properties files to ascii and copy it to the build files -->
-		<native2ascii encoding="utf-8" src="${src}/conf" dest="${build}/classes" includes="**/*.properties"/>
-		<!-- Copy the image files to prepare for runtime -->
-		<copy todir="${build}">
-			<fileset dir="${src}" includes="images/**" />
-		</copy>
 	</target>
 
-	<target name="dist" depends="compile">
+	<target name="dist" depends="compile,resources">
 		<!-- Unjar the external libraries -->
 		<unjar src="${lib}/xpp3.jar" dest="${dist}" />
 		<unjar src="${lib}/jfreechart.jar" dest="${dist}" />
 		<unjar src="${lib}/jcommon.jar" dest="${dist}" />
 		<!-- Make a dingsbums.jar file -->
-		<jar jarfile="./dingsbums.jar" basedir="${build}/classes">
+		<jar jarfile="./dingsbums.jar" basedir="${build}">
 			<!-- <fileset dir="${build}" includes="net/**" /> -->
-			<fileset dir="${build}/classes">
-				<include name="net/**" />
+			<fileset dir="${build}">
+				<include name="net/*.class" />
 				<include name="**/*.properties" />
 			</fileset>
 			<fileset dir="${src}" includes="images/**" />

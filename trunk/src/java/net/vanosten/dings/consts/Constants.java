@@ -180,7 +180,7 @@ public class Constants  {
 	public final static int WARNING_MESSAGE = 103;
 	public final static int QUESTION_MESSAGE = 104;
 	
-	//option Type
+	//option Choicetype
 	public final static int YES_NO_OPTION = 201;
 	public final static int YES_NO_CANCEL_OPTION = 202;
 	

@@ -28,16 +28,17 @@ import net.vanosten.dings.event.AppEvent;
 public class MessageConstants {
 
 	/**
-	 * Private constructor so it can not be called
+	 * Private constructor so it can not be initialized
 	 */
 	private MessageConstants() {
 		//nothing to initialize
-	}
+	} //END private MessageConstants()
 
 	public enum Message {		
 		//Navigation
 		N_VIEW_ENTRIES_SELECTION
 		, N_VIEW_ENTRY_LEARNONE
+		, N_VIEW_LEARN_BY_CHOICE
 		, N_VIEW_ENTRIES_LIST
 		, N_VIEW_ENTRY_EDIT
 		, N_VIEW_UNITS_LIST
@@ -116,7 +117,7 @@ public class MessageConstants {
 		//other
 		, D_ENTRIES_RESET_SCORE_ALL
 		, D_ENTRIES_RESET_SCORE_SEL
-	}
+	} //END public enum Message
 
 	/**
 	 * Returns an AppEvent to show a list of errors, which are contained in a ArrayList.
@@ -140,5 +141,4 @@ public class MessageConstants {
 		ape.setDetails(validationErrors.toString());
 		return ape;
 	} //END public final static AppEvent getShowErrorListEvent(ArrayList, String)
-
-}   //END public class MessageConstants
+} //END public class MessageConstants

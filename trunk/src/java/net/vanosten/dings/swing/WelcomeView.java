@@ -57,12 +57,7 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		GridBagConstraints mgbc = new GridBagConstraints();
 		mainP.setLayout(mgbl);
 		
-		JLabel label = new JLabel("");
-		label.setText(
-			"<html><p>DingsBums?! is a flashcard (vocabulary) trainer programmed by vanosten using Java.</p>"
-			+ "<p>To start open an existing learning stack file or create a new one by using one of the buttons below or one of the menu options in the file menu.</p>"
-			+ "<p>Have fun :-)</p></html>"
-		);
+		JLabel label = new JLabel(Toolbox.getInstance().getLocalizedString("text.welcome_view.howto"));
 
 		//make the gui
 		mgbc.weightx = 1.0;

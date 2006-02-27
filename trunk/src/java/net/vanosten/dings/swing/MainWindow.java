@@ -26,8 +26,7 @@ package net.vanosten.dings.swing;
  * program written in Java. It uses XML as its native format to store the
  * vocabularies.
  *
- * @author Rick Gruber
- * @version
+ * @author vanosten
  */
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -101,6 +100,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	private EntryTypeAttributeEditView entryTypeAttributeEditView;
 	private EntryLearnOneView entryLearnOneView;
 	private EntriesSelectionView entriesSelectionView;
+	private LearnByChoiceView learnByChoiceView;
 
 	private IAppEventHandler parentController;
 
@@ -134,6 +134,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	private JMenuItem categoriesMI;    //a table of available categories
 	private JMenuItem entriesMI;    //a table of the currently chosen entries
 	private JMenuItem learnOneByOneMI;
+	private JMenuItem learnByChoiceMI;
 
 	//The menu items for the toolsMenu
 	private JMenuItem selectMI; //to choose the current selection
@@ -506,6 +507,11 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		return entriesSelectionView;
 	} //END public IEntriesSelectionView getEntriesSelectionView()
 
+	public ILearnByChoiceView getLearnByChoiceView() {
+		learnByChoiceView = new LearnByChoiceView(this.guiOrientation);
+		return learnByChoiceView;
+	} //END public ILearnByChoiceView getLearnByChoiceView()
+
 	public void showView(Message aView) {
 		//clear the contents panel from other views
 		mainP.removeAll();
@@ -554,6 +560,9 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		}
 		else if (aView == MessageConstants.Message.N_VIEW_ENTRIES_SELECTION) {
 			mainP.add(BorderLayout.CENTER, entriesSelectionView);
+		}
+		else if (aView == MessageConstants.Message.N_VIEW_LEARN_BY_CHOICE) {
+			mainP.add(BorderLayout.CENTER, learnByChoiceView);
 		}
 		else {
 			if (logger.isLoggable(Level.FINEST)) {
@@ -759,7 +768,17 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 				parentController.handleAppEvent(ape);
 			}
 		});
+		learnByChoiceMI = new JMenuItem(Toolbox.getInstance().getLocalizedString("label.menuitem.learn_by_choice"));
+		learnByChoiceMI.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.menuitem.learn_by_choice").charAt(0));
+		learnByChoiceMI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+				ape.setMessage(MessageConstants.Message.N_VIEW_LEARN_BY_CHOICE);
+				parentController.handleAppEvent(ape);
+			}
+		});
 		learnMenu.add(learnOneByOneMI);
+		learnMenu.add(learnByChoiceMI);
 
 		//tools menu
 		toolsMenu = new JMenu(Toolbox.getInstance().getLocalizedString("label.menu.tools"));
@@ -918,6 +937,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	//implements IDingsMainWindow
 	public void setLearningMIsEnabled(boolean aLearnOneStatus) {
 		learnOneByOneMI.setEnabled(aLearnOneStatus);
+		learnByChoiceMI.setEnabled(aLearnOneStatus); //FIXME: this is evt. not true due to need for more entries
 	} //END ppublic void setLearningMIsEnabled(boolean)
 
 	//implements IDingsMainWindow

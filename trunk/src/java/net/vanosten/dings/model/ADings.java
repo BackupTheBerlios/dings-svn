@@ -398,6 +398,11 @@ public abstract class ADings implements IAppEventHandler {
 				selectionView.init(entries);
 				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRIES_SELECTION);
 			}
+			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_LEARN_BY_CHOICE) {
+				ILearnByChoiceView learnByChoiceView = mainWindow.getLearnByChoiceView();
+				learnByChoiceView.init(this);
+				mainWindow.showView(MessageConstants.Message.N_VIEW_LEARN_BY_CHOICE);
+			}
 			//set the current View
 			currentView = evt.getMessage();
 			checkMIsStatus();

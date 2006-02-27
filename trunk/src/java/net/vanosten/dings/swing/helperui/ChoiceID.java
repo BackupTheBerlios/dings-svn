@@ -33,7 +33,8 @@ public class ChoiceID extends JComboBox {
 	} //END public ChoiceID()
 
 	/**
-	 * Error handling needed
+	 * 
+	 * @param theItems array of Strings with id in position 0 and display in position 1
 	 */
 	public void setItems(String[][] theItems) {
 		removeAllItems();

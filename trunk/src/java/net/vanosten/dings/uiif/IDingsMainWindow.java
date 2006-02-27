@@ -63,5 +63,6 @@ public interface IDingsMainWindow {
 	public IEntryTypeAttributeEditView getEntryTypeAttributeEditView();
 	public IEntryLearnOneView getEntryLearnOneView();
 	public IEntriesSelectionView getEntriesSelectionView();
+	public ILearnByChoiceView getLearnByChoiceView();
 	public void showView(Message aView);
 } //END public interface IDingsMainWindow
