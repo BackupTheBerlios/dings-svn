@@ -401,6 +401,7 @@ public abstract class ADings implements IAppEventHandler {
 			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_LEARN_BY_CHOICE) {
 				ILearnByChoiceView learnByChoiceView = mainWindow.getLearnByChoiceView();
 				learnByChoiceView.init(this);
+				learnByChoiceView.setEntriesCollection(entries);
 				mainWindow.showView(MessageConstants.Message.N_VIEW_LEARN_BY_CHOICE);
 			}
 			//set the current View

@@ -22,14 +22,19 @@
 package net.vanosten.dings.swing;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
-import java.util.Map;
+import java.awt.Rectangle;
+import java.awt.geom.Line2D;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import net.vanosten.dings.consts.RandomUtil;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Entry;
 import net.vanosten.dings.swing.helperui.TextRectangle;
@@ -41,14 +46,10 @@ import net.vanosten.dings.swing.helperui.TextRectangle.Status;
 public class LearnByChoicePane extends JPanel {
 	private final static long serialVersionUID = 1L;
 	
-	/** A map of all current choices on the left side for mapping or all for the rest */
-	//Map<String, TextRectangle> leftChoices = null;
-	
-	/** A map of all current choices on the right side for ChoiceType.MAPPING. Not used for others */
-	//Map<String, TextRectangle> rightChoices = null;
-	
 	/** The id of the current Entry to be learned. Not used for type.MAPPING */
 	private String currentId = null;
+	
+	private TextRectangle currentlyMapped = null;
 		
 	public enum ChoiceType {
 		SET
@@ -57,37 +58,116 @@ public class LearnByChoicePane extends JPanel {
 	}
 	private ChoiceType type = ChoiceType.SET;
 	
+	/** The learning direction */
+	private boolean baseToTargetDirection = true;
+	
+	/** The number of columns for MULTI */
+	private int numberOfColumns;
+	
+	/** The horizontal gap between TextRectangles in MAPPING */
+	private static int H_GAP = 100; //TODO: this should be configurable in Preferences
+	/** The vertical gap between TextRectangles. The double is taken between to and from in SET and MULTI */
+	private static int V_GAP = 50; //TODO: this should be configurable in Preferences
+	
+	/** Pointers to the TextRectangles only for Mapping */
+	TextRectangle[] fromRects = null;
+	/** Array of "questions" */
+	String[] questionStrings = null;
+	/** Pointers to the TextRectangles for all */
+	TextRectangle[] toRects = null;
+	
 	IAppEventHandler controller;
 	
 	public LearnByChoicePane(IAppEventHandler controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
-		
-		//no layout manager as laying out components is done with absolute coordinates
-		this.setLayout(null);
-		initializeChoices(null);
 	} //END public LearnByChoicePane()
 	
-	public void setType(ChoiceType type) {
+	public void setType(ChoiceType type, boolean baseToTarget, int numberOfColumns) {
 		this.type = type;
+		this.baseToTargetDirection = baseToTarget;
+		this.numberOfColumns = numberOfColumns;
 	} //END public void setType(ChoiceType)
 
-	public void initializeChoices(Entry[] entries) {
-		TextRectangle foo = new TextRectangle(this);
-		foo.setText("this is Foo :-");
-		foo.setId("1");
-		TextRectangle goo = new TextRectangle(this);
-		goo.setText("this is another text for you from Goo");
-		goo.setId("2");
+	public void nextChoices(Entry[] entries) {
+		//there is no need to initialize questionStrings for MAPPING and fromRects for all others
+		//but it makes the code easier to read and this is not a big waste
+		//of resources
+		toRects = new TextRectangle[entries.length];
+		fromRects = new TextRectangle[entries.length];
+		questionStrings = new String[entries.length];
 		
-		currentId = foo.getId();
+		TextRectangle rectTo, rectFrom;
+
+		int[] randomPositions = RandomUtil.getRandomInts(entries.length);
+		for (int i = 0; i < entries.length; i++)  {
+			rectTo = new TextRectangle(this);
+			rectFrom = new TextRectangle(this);
+			if (baseToTargetDirection) {
+				rectTo.setText(entries[i].getTarget());
+				rectFrom.setText(entries[i].getBase());
+				questionStrings[i] = entries[i].getBase();
+			} else {
+				rectTo.setText(entries[i].getBase());
+				rectFrom.setText(entries[i].getTarget());
+				questionStrings[i] = entries[i].getTarget();
+			}
+			rectTo.setId(entries[i].getId());
+			rectFrom.setId(entries[i].getId());
+			toRects[randomPositions[i]] = rectTo;
+			if (type == ChoiceType.MAPPING) {
+				fromRects[i] = rectFrom;
+			}
+		}
 		
-		Dimension size = foo.getPreferredSize();
-		foo.setBounds(100, 200, size.width, size.height);
-		add(foo);
-		size = goo.getPreferredSize();
-		goo.setBounds(100, 400, size.width, size.height);
-		add(goo);
+		currentId = entries[0].getId();
+		
+		int rows = 0;
+		int columns = 0;
+		switch(type) {
+		case SET:
+			rows = entries.length;
+			columns = 1;
+			break;
+		case MAPPING:
+			rows = entries.length;
+			columns = 2;
+			break;
+		default: //MULTI
+			columns = numberOfColumns;
+			rows = 0; //for GridLayout(int) 0 menas as many as needed. Math.ceil(entries.length / columns);
+			break;
+		}
+		JPanel gridPanel = new JPanel();
+		gridPanel.setOpaque(false);
+		GridLayout grid = new GridLayout(rows,columns, H_GAP, V_GAP);
+		gridPanel.setLayout(grid);
+		for (int i = 0; i < entries.length; i++) {
+			if (type == ChoiceType.MAPPING) {
+				gridPanel.add(fromRects[i]);
+			}
+			gridPanel.add(toRects[i]);
+		}
+		//The overall layout
+		this.removeAll();
+		
+		GridBagLayout gbl = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		this.setLayout(gbl);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.fill = GridBagConstraints.NONE;
+		if (type != ChoiceType.MAPPING) {
+			JLabel fromL = new JLabel(questionStrings[0]);
+			gbl.setConstraints(fromL, gbc);
+			this.add(fromL);
+			gbc.gridy = 1;
+			gbc.insets = new Insets(2* V_GAP,0,0,0);
+		}
+		gbl.setConstraints(gridPanel, gbc);
+		this.add(gridPanel);
 	} //END private void initializeChoices()
 
 	/* (non-Javadoc)
@@ -98,7 +178,7 @@ public class LearnByChoicePane extends JPanel {
 		super.paintComponent(g);
 		
 		//only do custom drawing if we are mapping
-		if (ChoiceType.MAPPING == type) {
+		if (ChoiceType.MAPPING == type && null != currentlyMapped) {
 			//get the actual width and height of the drawable area
 			//which is the component minus its border
 			//Insets insets = getInsets();
@@ -109,7 +189,10 @@ public class LearnByChoicePane extends JPanel {
 			//should have the same state when you're finished painting as it had when started.
 			Graphics2D g2 = (Graphics2D)g.create(); //copy g
 			
-			//the real stuff of painting the TextRectangles
+			g2.setPaint(Color.darkGray);
+			Rectangle r = currentlyMapped.getBounds();
+			g2.draw(new Line2D.Double(r.x + r.width, r.y + r.getCenterY()
+					, getMousePosition().getX(), getMousePosition().getY()));
 			
 			//release the copy's resources
 			g2.dispose();
@@ -124,5 +207,20 @@ public class LearnByChoicePane extends JPanel {
 				rect.changeStatus(Status.WRONG, false);
 			}
 		}
-	}
+	} //ENd public void setChosen(TextRectangle)
+	
+	/**
+	 * Tells the pane to paint ongoing mapping between a base and a target
+	 * @param rect
+	 */
+	public void paintMapping(TextRectangle rect) {
+		currentlyMapped = rect;
+		repaint();
+	} //END public void paintMapping(...)
+	
+	public void checkMapping(TextRectangle rect) {
+		currentlyMapped = null;
+		repaint();
+	} //END public void checkMapping(TextRectangle)
+	
 } //END public class LearnByChoicePane extends JComponent

@@ -22,6 +22,7 @@
 package net.vanosten.dings.uiif;
 
 import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.model.EntriesCollection;
 
 /**
  * Displays a view to learn by choosing the right solution among
@@ -30,5 +31,5 @@ import net.vanosten.dings.event.IAppEventHandler;
  * @author vanosten
  */
 public interface ILearnByChoiceView extends IView, IAppEventHandler {
-
+	public void setEntriesCollection(EntriesCollection entries);
 } //END public interface ILearnByChoiceView extends IView

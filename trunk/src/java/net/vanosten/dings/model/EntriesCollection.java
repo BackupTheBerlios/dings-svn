@@ -336,6 +336,16 @@ public class EntriesCollection extends ACollection {
 	protected int countChosenEntries() {
 		return chosenKeys.size();
 	} //END protected int countChosenEntries()
+	
+	/**
+	 * 
+	 * @param minimum
+	 * @return true if the number of chosen entries is greater than or
+	 *          equal to the minimum input parameter
+	 */
+	public boolean hasEnoughChosenEntries(int minimum) {
+		return chosenKeys.size() >= minimum;
+	} //END public boolean hasEnoughChosenEntries(int)
 
 	private void requestStatusBarUpdate() {
 		AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
@@ -784,4 +794,19 @@ public class EntriesCollection extends ACollection {
 		}
 		return false;
 	} //END protected boolean isSelectionItemUsed(String)
+	
+	/**
+	 * 
+	 * @param number
+	 * @return an array of Entries with the number of elements as specified by the 
+	 *          input parameter and randomly chosen among all entries in the current selection
+	 */
+	public Entry[] getNextChoiceSet(int number) {
+		//FIXME: get a random set of entries
+		Entry[] randomSet = new Entry[number];
+		for (int x = 0; x < number; x++) {
+			randomSet[x] = (Entry)items.get(chosenKeys.get(x));
+		}
+		return randomSet;
+	} //END public Entry[] getNextChoiceSet(int)
 } //END public class EntriesCollection

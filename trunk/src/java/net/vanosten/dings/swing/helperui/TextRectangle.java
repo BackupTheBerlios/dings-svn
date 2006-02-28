@@ -21,15 +21,17 @@
  */
 package net.vanosten.dings.swing.helperui;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import net.vanosten.dings.swing.LearnByChoicePane;
 
-public class TextRectangle extends JLabel implements MouseListener{
+public class TextRectangle extends JLabel implements MouseListener, MouseMotionListener {
 	private final static long serialVersionUID = 1L;
 	
 	/** The parent component in charge of drawing etc. */
@@ -37,6 +39,10 @@ public class TextRectangle extends JLabel implements MouseListener{
 	
 	//the id of the corresponding Entry
 	private String id = null;
+	
+	//TODO: these should be configurable in Preferences
+	private static int MIN_WIDTH = 50;
+	private static int MIN_HEIGHT = 50;
 
 	private final static Color BACKGROUND_OUT = Color.green;
 	private final static Color BACKGROUND_IN = Color.pink;
@@ -62,6 +68,7 @@ public class TextRectangle extends JLabel implements MouseListener{
 	public TextRectangle(LearnByChoicePane parent) {
 		this.parent = parent;
 		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
 		this.setOpaque(true); //otherwise the background is not painted
 		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
 		this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,6 +132,16 @@ public class TextRectangle extends JLabel implements MouseListener{
 		//do nothing
 	} //END public void mouseReleased(MouseEvent)
 
+	//implements MouseMotionListener
+	public void mouseDragged(MouseEvent e) {
+		parent.paintMapping(this);
+	} //END public void mouseDragged(MouseEvent)
+
+	//implements MouseMotionListener
+	public void mouseMoved(MouseEvent e) {
+		//do nothing		
+	} //END public void mouseMoved(MouseEvent)
+
 	/**
 	 * Sets the text to contain html tags in order to have the text wrap etc
 	 */
@@ -140,4 +157,14 @@ public class TextRectangle extends JLabel implements MouseListener{
 	public void setId(String id) {
 		this.id = id;
 	} //END public void setId(String)
-} //END public class TextRectangle extends JLabel
+
+	/**
+	 * To have an area which is easy to hit with a mouse and at least
+	 * as big as the minimum of super
+	 */
+	@Override
+	public Dimension getMinimumSize() {
+		Dimension superDim = super.getMinimumSize();
+		return new Dimension(Math.max(superDim.width, MIN_WIDTH), Math.max(superDim.width, MIN_HEIGHT));
+	} //END public Dimension getMinimumSize()
+} //END public class TextRectangle extends JLabel implements MouseListener, MouseMotionListener

@@ -731,4 +731,13 @@ public final class Entry extends AIdItemModel {
 		}
 		//else do nothing
 	} //END protected void changeEntryTypeAttributes(...)
+
+	public String getBase() {
+		return base;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+	
 } //END public abstract class Entrz implements DingsItem

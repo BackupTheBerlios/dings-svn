@@ -1,9 +1,9 @@
 /*
- * WelcomeView.java
+ * LearnByChoiceView.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2006 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,7 +43,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import net.vanosten.dings.event.AppEvent;
-import net.vanosten.dings.model.Entry;
+import net.vanosten.dings.model.EntriesCollection;
 import net.vanosten.dings.model.Toolbox;
 
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
@@ -54,6 +54,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 
 	private JButton startB;
 	private JButton doneB;
+	
+	private EntriesCollection entries = null;
 	
 	//the card panels
 	/** Configuration information */
@@ -90,9 +92,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	JSlider pauseIntervalS;
 	JLabel pauseIntervalL;
 	
-	/** Choose the number of rows for CARD_MULTI */
-	JComboBox numberOfRowsCB;
-	JLabel numberOfRowsL;
+	/** Choose the number of columns for CARD_MULTI */
+	JComboBox numberOfColumnsCB;
+	JLabel numberOfColumnsL;
 
 	public LearnByChoiceView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.learn_by_choice"), aComponentOrientation);
@@ -100,6 +102,10 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		this.setGUIOrientation();
 	} //END public WelcomeView(ComponentOrientation)
 	
+	public void setEntriesCollection(EntriesCollection entries) {
+		this.entries = entries;
+	} //END public void setEntriesCollection(EntriesCollection)
+
 	//implements AViewWithButtons
 	protected void initializeMainP() {
 		mainP = new JPanel();
@@ -159,13 +165,13 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			pauseIntervalL.setLabelFor(pauseIntervalS);
 			
 			//number of rows for CARD_MULTI; must be defined before multiRB
-			numberOfRowsCB = new JComboBox();
+			numberOfColumnsCB = new JComboBox();
 			for (int i = 1; i <= 5; i++) {
-				numberOfRowsCB.addItem(Integer.valueOf(i));
+				numberOfColumnsCB.addItem(Integer.valueOf(i));
 			}
-			numberOfRowsL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.numberofrows.label"));
-			numberOfRowsL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.numberofrows.mnemonic").charAt(0));
-			numberOfRowsL.setLabelFor(numberOfRowsCB);
+			numberOfColumnsL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.numberofcolumns.label"));
+			numberOfColumnsL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.numberofcolumns.mnemonic").charAt(0));
+			numberOfColumnsL.setLabelFor(numberOfColumnsCB);
 			
 			numberOfChoicesCB = new JComboBox();
 			for (int i = 2; i <= 20; i++) {
@@ -216,7 +222,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 						.add(directionL)
 						.add(numberOfChoicesL)
 						.add(pauseIntervalL)
-						.add(numberOfRowsL)
+						.add(numberOfColumnsL)
 					)
 					.addPreferredGap(LayoutStyle.RELATED)
 					.add(layout.createParallelGroup(GroupLayout.LEADING, false)
@@ -227,11 +233,11 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 						.add(targetBaseRB)
 						.add(numberOfChoicesCB)
 						.add(pauseIntervalS)
-						.add(numberOfRowsCB)
+						.add(numberOfColumnsCB)
 					)
 				)
 			);
-			layout.linkSize(new Component[] {numberOfChoicesCB, numberOfRowsCB}, GroupLayout.HORIZONTAL);
+			layout.linkSize(new Component[] {numberOfChoicesCB, numberOfColumnsCB}, GroupLayout.HORIZONTAL);
 			
 			layout.setVerticalGroup(layout.createSequentialGroup()
 				.add(howtoL)
@@ -263,8 +269,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 				)
 				.addPreferredGap(LayoutStyle.UNRELATED)
 				.add(layout.createParallelGroup(GroupLayout.BASELINE)
-					.add(numberOfRowsL)
-					.add(numberOfRowsCB)
+					.add(numberOfColumnsL)
+					.add(numberOfColumnsCB)
 				)
 			);
 			
@@ -282,8 +288,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	private void showMultiProperties(boolean doShow) {
 		pauseIntervalS.setEnabled(doShow);
 		pauseIntervalL.setEnabled(doShow);
-		numberOfRowsCB.setEnabled(doShow);
-		numberOfRowsL.setEnabled(doShow);
+		numberOfColumnsCB.setEnabled(doShow);
+		numberOfColumnsL.setEnabled(doShow);
 	} //END private void showMultiProperties(boolean)
 	
 	/**
@@ -293,15 +299,21 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		if (null == choicePane) {
 			choicePane = new LearnByChoicePane(this);
 			if (setRB.isSelected()) {
-				choicePane.setType(ChoiceType.SET);
+				choicePane.setType(ChoiceType.SET
+						, baseTargetRB.isSelected()
+						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 			} else if (mappingRB.isSelected()) {
-				choicePane.setType(ChoiceType.MAPPING);
-			} else {
-				choicePane.setType(ChoiceType.MULTI);
+				choicePane.setType(ChoiceType.MAPPING
+						, baseTargetRB.isSelected()
+						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
+				} else {
+				choicePane.setType(ChoiceType.MULTI
+						, baseTargetRB.isSelected()
+						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 			}
 			mainP.add(choicePane, Card.CARD_SET.name());
 		}
-		
+		next();
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_SET.name());
 	} //private void showChoicePane()
@@ -311,19 +323,26 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	 * based on the chosen type
 	 */
 	private void actionStart() {
-		//FIXME: check whether there are enough entries in the current selection.
-		//if not, display a Warning telling either to change selection, change
-		//the number of displayed choices or add new entries first.
-		//Use buttons in the dialog to access the options directly
-		showChoicePane();
-		startB.setVisible(false);
-		doneB.setVisible(true);
+		//Check whether there are enough entries in the current selection.
+		if (entries.hasEnoughChosenEntries(((Integer)numberOfChoicesCB.getSelectedItem()).intValue())) {
+			showChoicePane();
+			startB.setVisible(false);
+			doneB.setVisible(true);
+		} else {
+			//FIXME: if not, display a Warning telling either to change selection, change
+			//the number of displayed choices or add new entries first.
+			//Use buttons in the dialog to access the options directly
+		}
 	} //END private void actionStart()
 
+	//implements IAppEventHandler in ILearnedByChoiceView
 	public void handleAppEvent(AppEvent evt) {
 	} //END public void handleAppEvent(AppEvent)
-
-	public void setChoiceSet(Entry[] theEntries) {
-		
-	}
-} //END public class LearnByChoiceView extends AViewWithButtons implements ILearnbyChoiceView
+	
+	/**
+	 * Shows the next set of choices for learning
+	 */
+	private void next() {
+		choicePane.nextChoices(entries.getNextChoiceSet(((Integer)numberOfChoicesCB.getSelectedItem()).intValue()));
+	} //END private void next()
+} //END public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoiceView
