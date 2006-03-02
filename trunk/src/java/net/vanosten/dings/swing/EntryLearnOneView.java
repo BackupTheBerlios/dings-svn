@@ -45,6 +45,7 @@ import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.swing.helperui.HintLabel;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
@@ -65,8 +66,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	private LabeledSeparator attributesLS, othersLS;
 	private JButton hintB, showB, knowB, notKnowB;
 
-	private boolean hintUsed = false; //did it require a hint
-	private boolean success = false; //entry known?
+	/** the result of the learning */
+	private Result result = Result.SUCCESS;
 	
 	/** The learning direction is true, if target is asked */
 	private boolean targetAsked = true;
@@ -597,7 +598,9 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		knowB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.know").charAt(0));
 		knowB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				success = true;
+				if (result != Result.HELPED) {
+					result = Result.SUCCESS;
+				}
 				sendGetResults();
 				sendNext();
 			}
@@ -607,7 +610,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		notKnowB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.dont_know").charAt(0));
 		notKnowB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				success = false;
+				result = Result.WRONG;
 				sendGetResults();
 				sendNext();
 			}
@@ -653,7 +656,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 					hintHL.doShuffle();
 					break;
 			}
-			hintUsed = true;
+			result = Result.HELPED;
 		}
 		catch (NumberFormatException e) {
 			//TODO: this should never happen, but ...
@@ -717,8 +720,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	//implements IEntryLearnOneView
 	public void reset() {
 		//reset scoring
-		hintUsed = false;
-		success = false;
+		result = Result.SUCCESS;
 		//reset the helps
 		hintHL.doHide();
 		hintHL.resetLetters();
@@ -747,14 +749,15 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		attributeFourCh.removeAllItems();
 		attributeFourCh.setEnabled(false);
 	} //END public void reset()
-
-	public boolean isHintUsed() {
-		return hintUsed;
-	} //END public boolean isHintUsed()
-
-	public boolean isSuccess() {
-		return success;
-	} //END public boolean isSuccess()
+	
+	/**
+	 * 
+	 * @return the result of this learning. If didn't know, then Result.WRONG.
+	 *          If known without help then Result.SUCCESS, else Result.HELPED
+	 */
+	public Result getResult() {
+		return result;
+	} //END public Result getResult()
 
 	//---Setters and Getters
 	

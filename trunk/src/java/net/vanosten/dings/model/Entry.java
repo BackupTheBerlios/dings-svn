@@ -42,6 +42,13 @@ public final class Entry extends AIdItemModel {
 	public final static int SCORE_MIN = 1;
 	/** The maximal score an Entry can have */
 	public final static int SCORE_MAX = 7;  //if you change this, you also have to adapt EntriesCollection, EntryEditVIew, LevelTableCellRenderer
+	
+	/** An enumeration for the learning result */
+	public enum Result {
+		SUCCESS
+		, HELPED
+		, WRONG
+	}
 
 	//Constants for status for making selection
 	public final static int STATUS_SELECT_ALL = 0;
@@ -230,7 +237,7 @@ public final class Entry extends AIdItemModel {
 	 * Checks the bounds before setting the score.
 	 * @param aScore
 	 */
-	protected void setScore(int aScore) {
+	private void setScore(int aScore) {
 		if (aScore > SCORE_MAX) {
 			this.score = SCORE_MAX;
 		}
@@ -238,7 +245,31 @@ public final class Entry extends AIdItemModel {
 			this.score = SCORE_MIN;
 		}
 		else this.score = aScore;
-	} //END protected void setScore(int)
+	} //END private void setScore(int)
+	
+	/**
+	 * Changes the score of this entry based on the learning result.
+	 * also changes lastLearned and sets safe needed
+	 * @param result
+	 */
+	protected void updateScore(Result result) {
+		switch(result) {
+		case SUCCESS: setScore(getScore() + 1); break;
+		case WRONG: setScore(getScore() -1); break;
+		default: break;
+		}
+		//set lastLearned to current time
+		lastLearned = new Date();
+		//safe needed
+		sendSaveNeeded();
+	} //END protected void updateScore(Result)
+	
+	/**
+	 * Resets the score to the minimum
+	 */
+	protected void resetScore() {
+		setScore(SCORE_MIN);
+	} //END protected void resetScore()
 
 	protected int getScore() {
 		return score;
@@ -329,18 +360,7 @@ public final class Entry extends AIdItemModel {
 		//update status
 		status = learnOneView.getStatus();
 		//set the new score
-		int rate = -1;  //failed
-		if (learnOneView.isSuccess()) {
-			if (learnOneView.isHintUsed()) {
-				rate = 0;
-			}
-			else rate = 1;
-		}
-		setScore(score + rate); //method checks boundaries for score
-		//set lastLearned to current time
-		lastLearned = new Date();
-		//safe needed
-		sendSaveNeeded();
+		updateScore(learnOneView.getResult());
 	} //END private void getResultLearnOneView();
 
 	//implements AModel

@@ -28,15 +28,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.geom.Line2D;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.vanosten.dings.consts.RandomUtil;
-import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Entry;
+import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.swing.helperui.TextRectangle;
 import net.vanosten.dings.swing.helperui.TextRectangle.Status;
 
@@ -47,9 +47,12 @@ public class LearnByChoicePane extends JPanel {
 	private final static long serialVersionUID = 1L;
 	
 	/** The id of the current Entry to be learned. Not used for type.MAPPING */
-	private String currentId = null;
+	private TextRectangle currentQuestion = null;
 	
 	private TextRectangle currentlyMapped = null;
+	
+	/** The panel containing the potential answer TextRectangles */
+	private JPanel gridPanel = null;
 		
 	public enum ChoiceType {
 		SET
@@ -67,18 +70,19 @@ public class LearnByChoicePane extends JPanel {
 	/** The horizontal gap between TextRectangles in MAPPING */
 	private static int H_GAP = 100; //TODO: this should be configurable in Preferences
 	/** The vertical gap between TextRectangles. The double is taken between to and from in SET and MULTI */
-	private static int V_GAP = 50; //TODO: this should be configurable in Preferences
+	private static int V_GAP = 20; //TODO: this should be configurable in Preferences
 	
 	/** Pointers to the TextRectangles only for Mapping */
-	TextRectangle[] fromRects = null;
-	/** Array of "questions" */
-	String[] questionStrings = null;
-	/** Pointers to the TextRectangles for all */
-	TextRectangle[] toRects = null;
+	TextRectangle[] questionRects = null;
+	/** Pointers to the TextRectangles for answers */
+	TextRectangle[] answerRects = null;
 	
-	IAppEventHandler controller;
+	/** The learning results */
+	Map<String,Result> results = null;
 	
-	public LearnByChoicePane(IAppEventHandler controller) {
+	LearnByChoiceView controller;
+	
+	public LearnByChoicePane(LearnByChoiceView controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
 	} //END public LearnByChoicePane()
@@ -90,37 +94,35 @@ public class LearnByChoicePane extends JPanel {
 	} //END public void setType(ChoiceType)
 
 	public void nextChoices(Entry[] entries) {
-		//there is no need to initialize questionStrings for MAPPING and fromRects for all others
+		//there is no need to initialize questionStrings for MAPPING and questionRects for all others
 		//but it makes the code easier to read and this is not a big waste
 		//of resources
-		toRects = new TextRectangle[entries.length];
-		fromRects = new TextRectangle[entries.length];
-		questionStrings = new String[entries.length];
+		answerRects = new TextRectangle[entries.length];
+		questionRects = new TextRectangle[entries.length];
 		
-		TextRectangle rectTo, rectFrom;
+		TextRectangle rectAnswer, rectQuestion;
 
 		int[] randomPositions = RandomUtil.getRandomInts(entries.length);
 		for (int i = 0; i < entries.length; i++)  {
-			rectTo = new TextRectangle(this);
-			rectFrom = new TextRectangle(this);
+			rectAnswer = new TextRectangle(this);
+			rectQuestion = new TextRectangle(this);
 			if (baseToTargetDirection) {
-				rectTo.setText(entries[i].getTarget());
-				rectFrom.setText(entries[i].getBase());
-				questionStrings[i] = entries[i].getBase();
+				rectAnswer.setText(entries[i].getTarget());
+				rectQuestion.setText(entries[i].getBase());
 			} else {
-				rectTo.setText(entries[i].getBase());
-				rectFrom.setText(entries[i].getTarget());
-				questionStrings[i] = entries[i].getTarget();
+				rectAnswer.setText(entries[i].getBase());
+				rectQuestion.setText(entries[i].getTarget());
 			}
-			rectTo.setId(entries[i].getId());
-			rectFrom.setId(entries[i].getId());
-			toRects[randomPositions[i]] = rectTo;
-			if (type == ChoiceType.MAPPING) {
-				fromRects[i] = rectFrom;
-			}
+			rectAnswer.setId(entries[i].getId());
+			rectQuestion.setId(entries[i].getId());
+			answerRects[randomPositions[i]] = rectAnswer;
+			questionRects[i] = rectQuestion;
 		}
 		
-		currentId = entries[0].getId();
+		currentQuestion = new TextRectangle(this);
+		currentQuestion.setId(questionRects[0].getId());
+		currentQuestion.setText(questionRects[0].getText());
+		currentQuestion.changeStatus(Status.QUESTION, false);
 		
 		int rows = 0;
 		int columns = 0;
@@ -138,19 +140,19 @@ public class LearnByChoicePane extends JPanel {
 			rows = 0; //for GridLayout(int) 0 menas as many as needed. Math.ceil(entries.length / columns);
 			break;
 		}
-		JPanel gridPanel = new JPanel();
+		//The overall layout
+		this.removeAll();
+		
+		gridPanel = new JPanel();
 		gridPanel.setOpaque(false);
 		GridLayout grid = new GridLayout(rows,columns, H_GAP, V_GAP);
 		gridPanel.setLayout(grid);
 		for (int i = 0; i < entries.length; i++) {
 			if (type == ChoiceType.MAPPING) {
-				gridPanel.add(fromRects[i]);
+				gridPanel.add(questionRects[i]);
 			}
-			gridPanel.add(toRects[i]);
+			gridPanel.add(answerRects[i]);
 		}
-		//The overall layout
-		this.removeAll();
-		
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setLayout(gbl);
@@ -160,9 +162,8 @@ public class LearnByChoicePane extends JPanel {
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
 		if (type != ChoiceType.MAPPING) {
-			JLabel fromL = new JLabel(questionStrings[0]);
-			gbl.setConstraints(fromL, gbc);
-			this.add(fromL);
+			gbl.setConstraints(currentQuestion, gbc);
+			this.add(currentQuestion);
 			gbc.gridy = 1;
 			gbc.insets = new Insets(2* V_GAP,0,0,0);
 		}
@@ -190,24 +191,46 @@ public class LearnByChoicePane extends JPanel {
 			Graphics2D g2 = (Graphics2D)g.create(); //copy g
 			
 			g2.setPaint(Color.darkGray);
-			Rectangle r = currentlyMapped.getBounds();
-			g2.draw(new Line2D.Double(r.x + r.width, r.y + r.getCenterY()
-					, getMousePosition().getX(), getMousePosition().getY()));
+			int myX = currentlyMapped.getX() + currentlyMapped.getWidth() + gridPanel.getX();
+			int myY = currentlyMapped.getY() + currentlyMapped.getHeight()/2 + gridPanel.getY();
+			g2.draw(new Line2D.Double(myX, myY, getMousePosition().getX(), getMousePosition().getY()));
 			
 			//release the copy's resources
 			g2.dispose();
 		}
 	} //END protected void paintComponent(Graphics)
 	
-	public void setChosen(TextRectangle rect) {
+	/** 
+	 * checks whether the chosen/picked answer corresponds to the question for
+	 * SET and MULTI
+	 * @param answer
+	 */
+	public void checkChosen(TextRectangle answer) {
+		if (null == results) {
+			results = new HashMap<String,Result>();
+		}
 		if (ChoiceType.SET == type) {
-			if (currentId != null && rect.getId().equals(currentId)) {
-				//FIXME: display next choice
+			if (answer.getId().equals(currentQuestion.getId())) {
+				results.put(answer.getId(), Result.SUCCESS);
+				controller.processLearningResults(results);
+				results = null;
+				controller.next();
 			} else {
-				rect.changeStatus(Status.WRONG, false);
+				results.put(answer.getId(), Result.WRONG);
+				results.put(currentQuestion.getId(), Result.WRONG);
+				controller.processLearningResults(results);
+				results = null;
+				answer.changeStatus(Status.WRONG_RESULT, false);
+				for (int i = 0; i < answerRects.length; i++) {
+					if (answerRects[i].getId().equals(currentQuestion.getId())) {
+						answerRects[i].changeStatus(Status.CORRECT_RESULT, false);
+						break;
+					}
+				}
+				controller.showNext();
 			}
 		}
-	} //ENd public void setChosen(TextRectangle)
+	} //ENd public void checkChosen(TextRectangle)
 	
 	/**
 	 * Tells the pane to paint ongoing mapping between a base and a target

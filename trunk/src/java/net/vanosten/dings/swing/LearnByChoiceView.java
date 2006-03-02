@@ -23,6 +23,7 @@ package net.vanosten.dings.swing;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,15 +37,17 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Map;
 
+import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.EntriesCollection;
 import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.model.Entry.Result;
 
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
 import net.vanosten.dings.uiif.ILearnByChoiceView;
@@ -54,6 +57,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 
 	private JButton startB;
 	private JButton doneB;
+	private JButton nextB;
 	
 	private EntriesCollection entries = null;
 	
@@ -62,12 +66,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	private JPanel configureP;
 	//private JPanel resultP;
 	
+	/** Learning */
 	private LearnByChoicePane choicePane;
-	/** Choose the right solution among a set of choices */
-	//private JPanel setP;
-	/** Map a set of terms with a set of definitions */
-	//private JPanel mapP;
-	//private JPanel multiP;
+	
 	//keys for the card panels
 	private enum Card {
 		CARD_CONFIGURE
@@ -118,18 +119,23 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	protected final void initializeButtonP() {
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
-		buttonsP.setLayout(new GridLayout(1,2, DingsSwingConstants.SP_H_C, 0));
-
 		
+		buttonsP.add(nextB);
 		buttonsP.add(startB);
 		buttonsP.add(doneB);
 	} //END protected final void initializeButtonP()
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		startB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.start")
-				//FIXME, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_NEW_BTN, "FIXME")
-				);
+		nextB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.next"));
+		nextB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.next").charAt(0));
+		nextB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				next();
+			}
+		});
+		nextB.setVisible(false);
+		startB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.start"));
 		startB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.start").charAt(0));
 		startB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -137,12 +143,11 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			}
 		});
 		
-		doneB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.done")
-				//, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_NEW_BTN, "FIXME")
-				);
+		doneB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.done"));
 		doneB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.done").charAt(0));
 		doneB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
+				showConfigureP(); //FIXME: the results should be shown
 			}
 		});
 		doneB.setVisible(false);
@@ -174,10 +179,11 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			numberOfColumnsL.setLabelFor(numberOfColumnsCB);
 			
 			numberOfChoicesCB = new JComboBox();
-			for (int i = 2; i <= 20; i++) {
+			for (int i = 2; i <= 50; i++) {
 				numberOfChoicesCB.addItem(Integer.valueOf(i));
 			}
 			JLabel numberOfChoicesL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.numberofchoices.label"));
+			numberOfChoicesL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.numberofchoices.mnemonic").charAt(0));
 			numberOfChoicesL.setLabelFor(numberOfChoicesCB);
 			
 			//type of learning game
@@ -263,7 +269,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 					.add(numberOfChoicesCB)
 				)
 				.addPreferredGap(LayoutStyle.UNRELATED)
-				.add(layout.createParallelGroup(GroupLayout.CENTER)
+				.add(layout.createParallelGroup(GroupLayout.LEADING)
 					.add(pauseIntervalL)
 					.add(pauseIntervalS)
 				)
@@ -279,6 +285,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		}
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_CONFIGURE.name());
+		startB.setVisible(true);
+		doneB.setVisible(false);
+		nextB.setVisible(false);
 	} //END private void showConfigureP()
 	
 	/**
@@ -316,6 +325,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		next();
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_SET.name());
+		startB.setVisible(false);
+		doneB.setVisible(true);
+		nextB.setVisible(false);
 	} //private void showChoicePane()
 	
 	/**
@@ -326,12 +338,30 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		//Check whether there are enough entries in the current selection.
 		if (entries.hasEnoughChosenEntries(((Integer)numberOfChoicesCB.getSelectedItem()).intValue())) {
 			showChoicePane();
-			startB.setVisible(false);
-			doneB.setVisible(true);
 		} else {
-			//FIXME: if not, display a Warning telling either to change selection, change
-			//the number of displayed choices or add new entries first.
-			//Use buttons in the dialog to access the options directly
+			Object[] options = {Toolbox.getInstance().getLocalizedString("lbcv.dialog.addentries")
+					, Toolbox.getInstance().getLocalizedString("lbcv.dialog.changeselection")
+					, Toolbox.getInstance().getLocalizedString("lbcv.dialog.numberofchoices")};
+			JLabel messageL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.dialog.missingentries"));
+			int answer = JOptionPane.showOptionDialog(this
+					, messageL
+					, Toolbox.getInstance().getLocalizedString("lbcv.dialog.missingentries_title")
+					, JOptionPane.YES_NO_CANCEL_OPTION
+					, JOptionPane.ERROR_MESSAGE
+					, null
+					, options
+					, options[2]);
+			if (JOptionPane.YES_OPTION == answer) {
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+				ape.setMessage(MessageConstants.Message.N_VIEW_ENTRIES_LIST);
+				controller.handleAppEvent(ape);
+			} else if (JOptionPane.NO_OPTION == answer) {
+				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
+				ape.setMessage(MessageConstants.Message.N_VIEW_ENTRIES_SELECTION);
+				controller.handleAppEvent(ape);
+			} else { //CANCEL_OPTION
+				//do nothng
+			}
 		}
 	} //END private void actionStart()
 
@@ -340,9 +370,22 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	} //END public void handleAppEvent(AppEvent)
 	
 	/**
+	 * Get the results of learning stored
+	 * @param results
+	 */
+	protected void processLearningResults(Map<String,Result> results) {
+		entries.setLearningResults(results);
+	} //END protected void processLearningResults(Map<String,Result>
+	
+	/**
 	 * Shows the next set of choices for learning
 	 */
-	private void next() {
+	protected void next() {
 		choicePane.nextChoices(entries.getNextChoiceSet(((Integer)numberOfChoicesCB.getSelectedItem()).intValue()));
-	} //END private void next()
+		nextB.setVisible(false);
+	} //END protected void next()
+	
+	protected void showNext() {
+		nextB.setVisible(true);
+	} //END protected void showNext()
 } //END public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoiceView

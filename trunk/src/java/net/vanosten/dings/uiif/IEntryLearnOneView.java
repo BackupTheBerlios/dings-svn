@@ -21,6 +21,8 @@
  */
 package net.vanosten.dings.uiif;
 
+import net.vanosten.dings.model.Entry.Result;
+
 public interface IEntryLearnOneView extends IView {
 	/**
 	 * Resets the view in order to be prepared for the next learn entry
@@ -45,6 +47,5 @@ public interface IEntryLearnOneView extends IView {
 	public boolean getStatus();
 	public void setStatus(boolean aStatus);
 	public void setScore(int aScore);
-	public boolean isSuccess();
-	public boolean isHintUsed();
+	public Result getResult();
 } //END public interface IEntryLearnOneView extends IDetailsView

@@ -21,13 +21,14 @@
  */
 package net.vanosten.dings.swing.helperui;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import net.vanosten.dings.swing.LearnByChoicePane;
 
@@ -40,28 +41,30 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	//the id of the corresponding Entry
 	private String id = null;
 	
-	//TODO: these should be configurable in Preferences
-	private static int MIN_WIDTH = 50;
-	private static int MIN_HEIGHT = 50;
-
-	private final static Color BACKGROUND_OUT = Color.green;
-	private final static Color BACKGROUND_IN = Color.pink;
-	private final static Color BACKGROUND_CHOSEN = Color.blue;
-	private final static Color BACKGROUND_WRONG = Color.red;
-	private Color[] background = {BACKGROUND_OUT, BACKGROUND_IN, BACKGROUND_CHOSEN, BACKGROUND_WRONG};
+	private final static Color BG_OUT = Color.yellow;
+	private final static Color BG_IN = Color.pink;
+	private final static Color BG_CHOSEN = Color.blue;
+	private final static Color BG_CORRECT_RESULT = Color.green;
+	private final static Color BG_WRONG_RESULT = Color.red;
+	private final static Color BG_QUESTION = Color.white;
+	private Color[] background = {BG_OUT, BG_IN, BG_CHOSEN, BG_CORRECT_RESULT, BG_WRONG_RESULT, BG_QUESTION};
 	
-	private final static Color FOREGROUND_OUT = Color.black;
-	private final static Color FOREGROUND_IN = Color.black;
-	private final static Color FOREGROUND_CHOSEN = Color.white;
-	private final static Color FOREGROUND_WRONG = Color.white;
+	private final static Color FG_OUT = Color.black;
+	private final static Color FG_IN = Color.black;
+	private final static Color FG_CHOSEN = Color.white;
+	private final static Color FG_CORRECT_RESULT = Color.white;
+	private final static Color FG_WRONG_RESULT = Color.white;
+	private final static Color FG_QUESTION = Color.black;
 	/** True if the mouse is within this Shape */
-	private Color[] foreground = {FOREGROUND_OUT, FOREGROUND_IN, FOREGROUND_CHOSEN, FOREGROUND_WRONG};
+	private Color[] foreground = {FG_OUT, FG_IN, FG_CHOSEN, FG_CORRECT_RESULT, FG_WRONG_RESULT, FG_QUESTION};
 
 	public enum Status {
 		OUT
 		, IN
 		, CHOSEN
-		, WRONG
+		, CORRECT_RESULT
+		, WRONG_RESULT
+		, QUESTION
 	}
 	private Status status = Status.OUT;
 	
@@ -73,6 +76,9 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setVerticalAlignment(SwingConstants.CENTER);
+		Border emptyB = BorderFactory.createEmptyBorder(10,10,10,10);
+		Border lineB = BorderFactory.createLineBorder(Color.black, 3);
+		this.setBorder(BorderFactory.createCompoundBorder(lineB, emptyB));
 	} //END public TextRectangle(JComponent)
 	
 	/**
@@ -87,12 +93,12 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 			status = newStatus;
 			this.setBackground(background[status.ordinal()]);
 			this.setForeground(foreground[status.ordinal()]);
-		} else if (status != Status.CHOSEN && status != Status.WRONG && status != newStatus) {
+		} else if (status != newStatus && newStatus.ordinal() <= Status.CHOSEN.ordinal()) {
 			status = newStatus;
 			this.setBackground(background[status.ordinal()]);
 			this.setForeground(foreground[status.ordinal()]);
 			if (status == Status.CHOSEN) {
-				parent.setChosen(this);
+				parent.checkChosen(this);
 			}
 		}
 	} //END public void changeStatus(int, boolean)
@@ -147,7 +153,11 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	 */
 	@Override
 	public void setText(String text) {
-		super.setText("<html>" + text + "</html>");
+		if (0 == text.trim().indexOf("<html>")) {
+			super.setText(text.trim());
+		} else {
+			super.setText("<html>" + text.trim() + "</html>");
+		}
 	} //END public void setText(String)
 
 	public String getId() {
@@ -157,14 +167,4 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	public void setId(String id) {
 		this.id = id;
 	} //END public void setId(String)
-
-	/**
-	 * To have an area which is easy to hit with a mouse and at least
-	 * as big as the minimum of super
-	 */
-	@Override
-	public Dimension getMinimumSize() {
-		Dimension superDim = super.getMinimumSize();
-		return new Dimension(Math.max(superDim.width, MIN_WIDTH), Math.max(superDim.width, MIN_HEIGHT));
-	} //END public Dimension getMinimumSize()
 } //END public class TextRectangle extends JLabel implements MouseListener, MouseMotionListener

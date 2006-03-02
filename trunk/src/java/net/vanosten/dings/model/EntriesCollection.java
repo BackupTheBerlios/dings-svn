@@ -32,6 +32,7 @@ import java.util.StringTokenizer;
 import java.util.Date;
 import java.util.Calendar;
 
+import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.uiif.IEntriesSelectionView;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
@@ -114,6 +115,7 @@ public class EntriesCollection extends ACollection {
 			thisId = (String)iter.next();
 			//give a point er to the EntryType
 			thisEntry = (Entry)items.get(thisId);
+			thisEntry.setParentController(this);
 			thisEntry.setEntryType(entryTypes.getEntryType(thisEntry.getEntryTypeId()), false);
 		}
 
@@ -140,7 +142,6 @@ public class EntriesCollection extends ACollection {
 		}
 		else if (items.containsKey(anID)) {
 			currentItem = (Entry)items.get(anID);
-			currentItem.setParentController(this);
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.logp(Level.FINEST, this.getClass().getName(), "setCurrentItem", anID);
 			}
@@ -181,6 +182,7 @@ public class EntriesCollection extends ACollection {
 	//implements ACollection
 	protected void newItem(String aType, boolean isDefault) {
 		Entry newEntry = Entry.newItem(aType);
+		newEntry.setParentController(this);
 		items.put(newEntry.getId(), newEntry);
 		newEntry.setEntryType(entryTypes.getEntryType(newEntry.getEntryTypeId()), false);
 		setCurrentItem(newEntry.getId());
@@ -435,7 +437,7 @@ public class EntriesCollection extends ACollection {
 			if (Entry.SCORE_MIN < thisEntry.getScore()) {
 				scoreChanged = true;
 			}
-			thisEntry.setScore(Entry.SCORE_MIN);
+			thisEntry.resetScore();
 		}
 		//send save needed if at least one score has changed
 		if (scoreChanged) {
@@ -809,4 +811,17 @@ public class EntriesCollection extends ACollection {
 		}
 		return randomSet;
 	} //END public Entry[] getNextChoiceSet(int)
+	
+	/**
+	 * Sets the learning results for a collection of entries represented by their ids
+	 * by updating their scores.
+	 * @param results
+	 */
+	public void setLearningResults(Map<String,Result> results) {
+		Entry anEntry;
+		for (String anId : results.keySet()) {
+			anEntry = (Entry) items.get(anId); //TODO: direct access when generics
+			anEntry.updateScore(results.get(anId));
+		}
+	} //END public void setLearningResults(Map<String,Result>)
 } //END public class EntriesCollection
