@@ -169,6 +169,7 @@ public class LearnByChoicePane extends JPanel {
 		}
 		gbl.setConstraints(gridPanel, gbc);
 		this.add(gridPanel);
+		repaint();
 	} //END private void initializeChoices()
 
 	/* (non-Javadoc)
@@ -210,6 +211,9 @@ public class LearnByChoicePane extends JPanel {
 			results = new HashMap<String,Result>();
 		}
 		if (ChoiceType.SET == type) {
+			for (int i = 0; i < answerRects.length; i++) {
+				answerRects[i].setSensitive(false);
+			}
 			if (answer.getId().equals(currentQuestion.getId())) {
 				results.put(answer.getId(), Result.SUCCESS);
 				controller.processLearningResults(results);

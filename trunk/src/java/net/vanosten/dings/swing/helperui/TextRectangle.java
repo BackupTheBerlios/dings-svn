@@ -41,6 +41,9 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	//the id of the corresponding Entry
 	private String id = null;
 	
+	/** Sensitive on user interaction */
+	private boolean sensitive = true;
+	
 	private final static Color BG_OUT = Color.yellow;
 	private final static Color BG_IN = Color.pink;
 	private final static Color BG_CHOSEN = Color.blue;
@@ -93,7 +96,7 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 			status = newStatus;
 			this.setBackground(background[status.ordinal()]);
 			this.setForeground(foreground[status.ordinal()]);
-		} else if (status != newStatus && newStatus.ordinal() <= Status.CHOSEN.ordinal()) {
+		} else if (status != newStatus && status.ordinal() < Status.CHOSEN.ordinal() && sensitive) {
 			status = newStatus;
 			this.setBackground(background[status.ordinal()]);
 			this.setForeground(foreground[status.ordinal()]);
@@ -167,4 +170,8 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	public void setId(String id) {
 		this.id = id;
 	} //END public void setId(String)
+
+	public void setSensitive(boolean sensitive) {
+		this.sensitive = sensitive;
+	} //ENd public void setSensitive(boolean)
 } //END public class TextRectangle extends JLabel implements MouseListener, MouseMotionListener

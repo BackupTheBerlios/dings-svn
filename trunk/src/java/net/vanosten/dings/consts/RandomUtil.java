@@ -24,6 +24,9 @@ package net.vanosten.dings.consts;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import net.vanosten.dings.model.Entry;
 
 /**
  * Provides convenience methods to work with random sets
@@ -58,5 +61,29 @@ public class RandomUtil {
 		}
 		return randInts;
 	} //END public static int[] getRandomInts(int)
+	
+	/**
+	 * @return a random score based on a random number and the weighted factors for each score
+	 */
+	public static int getWeightedRandomScore() {
+		int foo = rand.nextInt(100);
+		int score;
+		for (score = Entry.SCORE_MIN; score <= Entry.SCORE_MAX; score++) {
+			if (foo < Entry.RANDOM_SCORE_WEIGHT[score-1]) {
+				break;
+			}
+		}
+		return score;
+	} //END public static int getWeightedRandomScore()
+	
+	/**
+	 * Convenience for not having to initialize Random objects in code
+	 * @param maxExclusive
+	 * @return The same as java.util.Random.nextInt(int) based on the current
+	 *          random instance
+	 */
+	public static int getRandomPosition(int maxExclusive) {
+		return rand.nextInt(maxExclusive);
+	} //END public static int getRandomPosition(int)
 
 } //END public class RandomUtil

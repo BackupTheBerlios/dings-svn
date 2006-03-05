@@ -42,7 +42,8 @@ public final class Entry extends AIdItemModel {
 	public final static int SCORE_MIN = 1;
 	/** The maximal score an Entry can have */
 	public final static int SCORE_MAX = 7;  //if you change this, you also have to adapt EntriesCollection, EntryEditVIew, LevelTableCellRenderer
-	
+	/** The weighted random value for a score. Index is SCORE minus 1 */
+	public final static int[] RANDOM_SCORE_WEIGHT = {30, 55, 75, 80, 90, 96, 100};
 	/** An enumeration for the learning result */
 	public enum Result {
 		SUCCESS

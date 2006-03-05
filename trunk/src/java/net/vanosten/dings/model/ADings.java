@@ -459,6 +459,8 @@ public abstract class ADings implements IAppEventHandler {
 				DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Toolbox.getInstance().getCurrentLocalePointer());
 				Date timestamp = stats.addNewStatisticSet();
 				mainWindow.showMessageDialog("", "Learning statistics saved: " + df.format(timestamp), Constants.INFORMATION_MESSAGE);
+			} else if (evt.getMessage() == MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING) {
+				entries.handleAppEvent(evt);
 			}
 		}
 		else if (evt.isHelpEvent()) {

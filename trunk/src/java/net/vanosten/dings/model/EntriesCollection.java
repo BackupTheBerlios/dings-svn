@@ -31,11 +31,15 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.uiif.IEntriesSelectionView;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.consts.RandomUtil;
+import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 
@@ -60,14 +64,8 @@ public class EntriesCollection extends ACollection {
 
 	private UnitsCollection units = null;
 
-	//The holders of pointers to different scores
-	private List<String> scoreOne;
-	private List<String> scoreTwo;
-	private List<String> scoreThree;
-	private List<String> scoreFour;
-	private List<String> scoreFive;
-	private List<String> scoreSix;
-	private List<String> scoreSeven;
+	/** Holds the scores fore the entries based on the score in lists */
+	private Map<Integer,List<String>> scorePointers;
 
 	//the selections in the IEntriesSelectionView
 	int selStatusChoice;
@@ -244,7 +242,7 @@ public class EntriesCollection extends ACollection {
 			}
 			//edit learnOne view
 			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_NEXT) {
-				nextLearnOne();
+				getNextLearnOne();
 				//send to get the view assigned to the new Entry
 				parentController.handleAppEvent(evt);
 			}
@@ -318,7 +316,8 @@ public class EntriesCollection extends ACollection {
 		//it has been handled
 		if (false == (evt.getMessage() == MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) &&
 				false == (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_ALL) &&
-				false == (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_SEL)) {
+				false == (evt.getMessage() == MessageConstants.Message.D_ENTRIES_RESET_SCORE_SEL) &&
+				false == (evt.getMessage() == MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING)) {
 			parentController.handleAppEvent(evt);
 		}
 	} //END public void handleAppEvent(AppEvent)
@@ -455,13 +454,10 @@ public class EntriesCollection extends ACollection {
 	 * Initializes the scores. This is needed before learning can be started.
 	 */
 	private void initializeScores() {
-		scoreOne = new ArrayList<String>();
-		scoreTwo = new ArrayList<String>();
-		scoreThree = new ArrayList<String>();
-		scoreFour = new ArrayList<String>();
-		scoreFive = new ArrayList<String>();
-		scoreSix = new ArrayList<String>();
-		scoreSeven = new ArrayList<String>();
+		scorePointers = new TreeMap<Integer,List<String>>();
+		for (int i = Entry.SCORE_MIN; i <= Entry.SCORE_MAX; i++) {
+			scorePointers.put(i, new ArrayList<String>());
+		}
 
 		//reset the current score
 		currentScore = 0;
@@ -478,16 +474,14 @@ public class EntriesCollection extends ACollection {
 			thisID = (String)iter.next();
 			thisEntry = (Entry)items.get(thisID);
 			thisScore = thisEntry.getScore();
-			if (1 >= thisScore) scoreOne.add(thisID);
-			else if (2 == thisScore) scoreTwo.add(thisID);
-			else if (3 == thisScore) scoreThree.add(thisID);
-			else if (4 == thisScore) scoreFour.add(thisID);
-			else if (5 <= thisScore) scoreFive.add(thisID);
-			else if (6 <= thisScore) scoreSix.add(thisID);
-			else if (7 <= thisScore) scoreSeven.add(thisID);
+			if (Entry.SCORE_MIN > thisScore) {
+				thisScore = Entry.SCORE_MIN;
+			}
+			scorePointers.get(thisScore).add(thisID);
 		}
 		//set the first random item
-		nextLearnOne();
+		//TODO: this should be called independently outside of this method
+		getNextLearnOne();
 	} //END private void initializeScores()
 
 	/**
@@ -500,77 +494,38 @@ public class EntriesCollection extends ACollection {
 	 * (a) uses less memory and is possibly faster, but (b) allows for easy visualization of stats. Therefore (b)
 	 * is chosen.
 	 */
-	private void nextLearnOne() {
+	private void getNextLearnOne() {
 		//Set the current item into the right scoreList
 		reassignScoreList();
 
+		//set the new currentItem
+		Entry randomChosen = (Entry)items.get(getWeightedRandomId());
+		setCurrentItem(randomChosen.getId());
+		currentScore = randomChosen.getScore();
+	} //END private void getNextLearnOne()
+	
+	/**
+	 * @return an id of an entry in the current selection, which has been chosen
+	 *          randomly: first weighted random by score and then randomly within the same score
+	 */
+	private String getWeightedRandomId() {
 		//get new score and index position
 		int nextScore = 0;
 		int myIndex = 0;
 		boolean goOn = true;
-		double scoreRand = 0.0d;
 		while(goOn) {
-			scoreRand = Math.random();
-			if (scoreRand < 0.30) {
-				nextScore = 1;
-				if (scoreOne.size() > 0) goOn = false;
-			}
-			else if (scoreRand < 0.55) {
-				nextScore = 2;
-				if (scoreTwo.size() > 0) goOn = false;
-			}
-			else if (scoreRand < 0.75) {
-				nextScore = 3;
-				if (scoreThree.size() > 0) goOn = false;
-			}
-			else if (scoreRand < 0.80) {
-				nextScore = 4;
-				if (scoreFour.size() > 0) goOn = false;
-			}
-			else if (scoreRand < 0.90) {
-				nextScore = 5;
-				if (scoreFive.size() > 0) goOn = false;
-			}
-			else if (scoreRand < 0.96) {
-				nextScore = 6;
-				if (scoreSix.size() > 0) goOn = false;
-			}
-			else {
-				nextScore = 7;
-				if (scoreSeven.size() > 0) goOn = false;
+			nextScore = RandomUtil.getWeightedRandomScore();
+			//check whether there actually are elements for this score
+			if (scorePointers.get(nextScore).size() > 0) {
+				goOn = false;
 			}
 		}
-
-		switch(nextScore) {
-			case 1: myIndex = (int)Math.floor(Math.random()*scoreOne.size()); break;
-			case 2: myIndex = (int)Math.floor(Math.random()*scoreTwo.size()); break;
-			case 3: myIndex = (int)Math.floor(Math.random()*scoreThree.size()); break;
-			case 4: myIndex = (int)Math.floor(Math.random()*scoreFour.size()); break;
-			case 5: myIndex = (int)Math.floor(Math.random()*scoreFive.size()); break;
-			case 6: myIndex = (int)Math.floor(Math.random()*scoreSix.size()); break;
-			default: myIndex = (int)Math.floor(Math.random()*scoreSeven.size()); break;
-		}
+		myIndex = RandomUtil.getRandomPosition(scorePointers.get(nextScore).size());
 		if (logger.isLoggable(Level.FINEST)) {
-			logger.logp(Level.FINEST, this.getClass().getName(), "nextLearnOne()", "Index= " + myIndex + "; score= " + nextScore + "; scoreRand= " + scoreRand);
+			logger.logp(Level.FINEST, this.getClass().getName(), "nextLearnOne()", "Index= " + myIndex + "; score= " + nextScore);
 		}
-		//set the new currentItem
-		setCurrentLearnEntry(myIndex, nextScore);
-		currentScore = nextScore;
-	} //END private void nextLearnOne()
-
-	private void setCurrentLearnEntry(int pos, int score) {
-		String thisId = null;
-		switch (score) {
-			case 1: thisId = (String)scoreOne.get(pos); break;
-			case 2: thisId = (String)scoreTwo.get(pos); break;
-			case 3: thisId = (String)scoreThree.get(pos); break;
-			case 4: thisId = (String)scoreFour.get(pos); break;
-			case 5: thisId = (String)scoreFive.get(pos); break;
-			case 6: thisId = (String)scoreSix.get(pos); break;
-			case 7: thisId = (String)scoreSeven.get(pos); break;
-		}
-		setCurrentItem(thisId);
-	} //END private void setCurrentLearnEntry(int, int)
+		return scorePointers.get(nextScore).get(myIndex);
+	} //END private String getWeightedRandomId()
 
 	/**
 	 * Moves the currentItem into another holder, if the score has changed.
@@ -593,43 +548,11 @@ public class EntriesCollection extends ACollection {
 			//if currentScore and current score from old entry are different
 			//then move the ID from one arrayList to the other
 			if (currentScore != currentEntryScore) {
-				boolean fooB = true;
-				//remove
-				removeCurrentItemFromScoreList();
-				//add
-				switch(currentEntryScore) {
-					case 1: fooB = scoreOne.add(currentItem.getId()); break;
-					case 2: fooB = scoreTwo.add(currentItem.getId()); break;
-					case 3: fooB = scoreThree.add(currentItem.getId()); break;
-					case 4: fooB = scoreFour.add(currentItem.getId()); break;
-					case 5: fooB = scoreFive.add(currentItem.getId()); break;
-					case 6: fooB = scoreSix.add(currentItem.getId()); break;
-					case 7: fooB = scoreSeven.add(currentItem.getId()); break;
-				}
-				if (false == fooB && logger.isLoggable(Level.FINEST)) {
-					logger.logp(Level.FINEST, this.getClass().getName(), "nextLearnOne()", "Could not add entry: " + currentEntryScore);
-				}
+				scorePointers.get(currentItem.getScore()).remove(currentItem.getId());
+				scorePointers.get(currentEntryScore).add(currentItem.getId());
 			}
 		}
 	} //END private void reassignScoreList()
-
-	//utility method: is called from reassignScoreList
-	private void removeCurrentItemFromScoreList() {
-		boolean fooB = true; //whether the item could be removed
-
-		switch(currentItem.getScore()) {
-			case 1: fooB = scoreOne.remove(currentItem.getId()); break;
-			case 2: fooB = scoreTwo.remove(currentItem.getId()); break;
-			case 3: fooB = scoreThree.remove(currentItem.getId()); break;
-			case 4: fooB = scoreFour.remove(currentItem.getId()); break;
-			case 5: fooB = scoreFive.remove(currentItem.getId()); break;
-			case 6: fooB = scoreSix.remove(currentItem.getId()); break;
-			case 7: fooB = scoreSeven.remove(currentItem.getId()); break;
-		}
-		if (false == fooB && logger.isLoggable(Level.FINEST)) {
-			logger.logp(Level.FINEST, this.getClass().getName(), "nextLearnOne()", "Could not remove entry: " + currentScore);
-		}
-	} //END private void removeCurrentItemFromScoreList()
 
 	//utility method
 	private Date getLastLearnedBeforeDate() {
@@ -763,7 +686,7 @@ public class EntriesCollection extends ACollection {
 					, selUnitsChoice, selCategoriesChoice, selTypesChoice)) {
 				//remove from score list if isLEarning == true
 				if (isLearning) {
-					removeCurrentItemFromScoreList();
+					scorePointers.get(currentItem.getScore()).remove(currentItem.getId());
 				}
 				//remove from current selection
 				chosenKeys.remove(currentItem.getId());
@@ -804,12 +727,17 @@ public class EntriesCollection extends ACollection {
 	 *          input parameter and randomly chosen among all entries in the current selection
 	 */
 	public Entry[] getNextChoiceSet(int number) {
-		//FIXME: get a random set of entries
-		Entry[] randomSet = new Entry[number];
-		for (int x = 0; x < number; x++) {
-			randomSet[x] = (Entry)items.get(chosenKeys.get(x));
+		Entry[] randomArray = new Entry[number];
+		Set<String> check = new TreeSet<String>(); //makes sure that there are unique ids in the returned array
+		int pos = 0;
+		while (pos < number) {
+			randomArray[pos] = (Entry)items.get(getWeightedRandomId());
+			//make sure that
+			if (check.add(randomArray[pos].getId())) {
+				pos++;
+			}
 		}
-		return randomSet;
+		return randomArray;
 	} //END public Entry[] getNextChoiceSet(int)
 	
 	/**

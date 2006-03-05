@@ -67,13 +67,13 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	//private JPanel resultP;
 	
 	/** Learning */
-	private LearnByChoicePane choicePane;
+	private LearnByChoicePane learningPane;
 	
 	//keys for the card panels
 	private enum Card {
 		CARD_CONFIGURE
 		, CARD_RESULT
-		, CARD_SET
+		, CARD_LEARNING
 	}
 	
 	//components of configureP
@@ -118,7 +118,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	//implements AViewWithButtons
 	protected final void initializeButtonP() {
 		buttonsP = new JPanel();
-		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
+		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, DingsSwingConstants.SP_H_C, 0));
 		
 		buttonsP.add(nextB);
 		buttonsP.add(startB);
@@ -304,31 +304,31 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	/**
 	 * Shows the card with set type of learning
 	 */
-	private void showChoicePane() {
-		if (null == choicePane) {
-			choicePane = new LearnByChoicePane(this);
+	private void showLearningPane() {
+		if (null == learningPane) {
+			learningPane = new LearnByChoicePane(this);
 			if (setRB.isSelected()) {
-				choicePane.setType(ChoiceType.SET
+				learningPane.setType(ChoiceType.SET
 						, baseTargetRB.isSelected()
 						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 			} else if (mappingRB.isSelected()) {
-				choicePane.setType(ChoiceType.MAPPING
+				learningPane.setType(ChoiceType.MAPPING
 						, baseTargetRB.isSelected()
 						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 				} else {
-				choicePane.setType(ChoiceType.MULTI
+				learningPane.setType(ChoiceType.MULTI
 						, baseTargetRB.isSelected()
 						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 			}
-			mainP.add(choicePane, Card.CARD_SET.name());
+			mainP.add(learningPane, Card.CARD_LEARNING.name());
 		}
 		next();
 		CardLayout cl = (CardLayout)(mainP.getLayout());
-		cl.show(mainP, Card.CARD_SET.name());
+		cl.show(mainP, Card.CARD_LEARNING.name());
 		startB.setVisible(false);
 		doneB.setVisible(true);
 		nextB.setVisible(false);
-	} //private void showChoicePane()
+	} //private void showLearningPane()
 	
 	/**
 	 * Changes the displayed learning game after pressing the start button
@@ -337,7 +337,10 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	private void actionStart() {
 		//Check whether there are enough entries in the current selection.
 		if (entries.hasEnoughChosenEntries(((Integer)numberOfChoicesCB.getSelectedItem()).intValue())) {
-			showChoicePane();
+			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+			ape.setMessage(MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING);
+			controller.handleAppEvent(ape);			
+			showLearningPane();
 		} else {
 			Object[] options = {Toolbox.getInstance().getLocalizedString("lbcv.dialog.addentries")
 					, Toolbox.getInstance().getLocalizedString("lbcv.dialog.changeselection")
@@ -381,7 +384,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	 * Shows the next set of choices for learning
 	 */
 	protected void next() {
-		choicePane.nextChoices(entries.getNextChoiceSet(((Integer)numberOfChoicesCB.getSelectedItem()).intValue()));
+		learningPane.nextChoices(entries.getNextChoiceSet(((Integer)numberOfChoicesCB.getSelectedItem()).intValue()));
 		nextB.setVisible(false);
 	} //END protected void next()
 	
