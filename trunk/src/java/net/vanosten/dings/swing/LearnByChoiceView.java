@@ -82,18 +82,18 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	
 	/** Choose the type of choices */
 	JRadioButton setRB;
-	JRadioButton mappingRB;
+	JRadioButton matchingRB;
 	JRadioButton multiRB;
 	
 	/** Choose the direction of learning */
 	JRadioButton baseTargetRB;
 	JRadioButton targetBaseRB;
 	
-	/** Choose the pause interval in number of seconds between questions for CARD_MULTI */
+	/** Choose the pause interval in number of seconds between questions for MULTI */
 	JSlider pauseIntervalS;
 	JLabel pauseIntervalL;
 	
-	/** Choose the number of columns for CARD_MULTI */
+	/** Choose the number of columns for MULTI */
 	JComboBox numberOfColumnsCB;
 	JLabel numberOfColumnsL;
 
@@ -190,8 +190,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			JLabel typeL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.type.label"));
 			setRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.setrb.label"));
 			setRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.setrb.mnemonic").charAt(0));
-			mappingRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.mappingrb.label"));
-			mappingRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.mappingrb.mnemonic").charAt(0));
+			matchingRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.matchingrb.label"));
+			matchingRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.matchingrb.mnemonic").charAt(0));
 			multiRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.multirb.label"));
 			multiRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.multirb.mnemonic").charAt(0));
 			multiRB.addItemListener(new ItemListener() {
@@ -201,7 +201,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			});
 			ButtonGroup typeOfChoiceBG = new ButtonGroup();
 			typeOfChoiceBG.add(setRB);
-			typeOfChoiceBG.add(mappingRB);
+			typeOfChoiceBG.add(matchingRB);
 			typeOfChoiceBG.add(multiRB);
 			setRB.setSelected(true); this.showMultiProperties(false);
 			
@@ -233,7 +233,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 					.addPreferredGap(LayoutStyle.RELATED)
 					.add(layout.createParallelGroup(GroupLayout.LEADING, false)
 						.add(setRB)
-						.add(mappingRB)
+						.add(matchingRB)
 						.add(multiRB)
 						.add(baseTargetRB)
 						.add(targetBaseRB)
@@ -253,7 +253,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 					.add(setRB)
 				)
 				.addPreferredGap(LayoutStyle.RELATED)
-				.add(mappingRB)
+				.add(matchingRB)
 				.addPreferredGap(LayoutStyle.RELATED)
 				.add(multiRB)
 				.addPreferredGap(LayoutStyle.UNRELATED)
@@ -311,8 +311,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 				learningPane.setType(ChoiceType.SET
 						, baseTargetRB.isSelected()
 						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
-			} else if (mappingRB.isSelected()) {
-				learningPane.setType(ChoiceType.MAPPING
+			} else if (matchingRB.isSelected()) {
+				learningPane.setType(ChoiceType.MATCH
 						, baseTargetRB.isSelected()
 						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 				} else {

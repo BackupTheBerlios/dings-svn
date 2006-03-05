@@ -143,7 +143,7 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 
 	//implements MouseMotionListener
 	public void mouseDragged(MouseEvent e) {
-		parent.paintMapping(this);
+		parent.paintMatching(this);
 	} //END public void mouseDragged(MouseEvent)
 
 	//implements MouseMotionListener

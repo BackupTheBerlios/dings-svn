@@ -46,17 +46,17 @@ import net.vanosten.dings.swing.helperui.TextRectangle.Status;
 public class LearnByChoicePane extends JPanel {
 	private final static long serialVersionUID = 1L;
 	
-	/** The id of the current Entry to be learned. Not used for type.MAPPING */
+	/** The id of the current Entry to be learned. Not used for type.MATCHING */
 	private TextRectangle currentQuestion = null;
 	
-	private TextRectangle currentlyMapped = null;
+	private TextRectangle currentlyMatched = null;
 	
 	/** The panel containing the potential answer TextRectangles */
 	private JPanel gridPanel = null;
 		
 	public enum ChoiceType {
 		SET
-		, MAPPING
+		, MATCH
 		, MULTI
 	}
 	private ChoiceType type = ChoiceType.SET;
@@ -67,12 +67,12 @@ public class LearnByChoicePane extends JPanel {
 	/** The number of columns for MULTI */
 	private int numberOfColumns;
 	
-	/** The horizontal gap between TextRectangles in MAPPING */
+	/** The horizontal gap between TextRectangles in MATCH */
 	private static int H_GAP = 100; //TODO: this should be configurable in Preferences
 	/** The vertical gap between TextRectangles. The double is taken between to and from in SET and MULTI */
 	private static int V_GAP = 20; //TODO: this should be configurable in Preferences
 	
-	/** Pointers to the TextRectangles only for Mapping */
+	/** Pointers to the TextRectangles only for MATCH */
 	TextRectangle[] questionRects = null;
 	/** Pointers to the TextRectangles for answers */
 	TextRectangle[] answerRects = null;
@@ -94,7 +94,7 @@ public class LearnByChoicePane extends JPanel {
 	} //END public void setType(ChoiceType)
 
 	public void nextChoices(Entry[] entries) {
-		//there is no need to initialize questionStrings for MAPPING and questionRects for all others
+		//there is no need to initialize questionStrings for MATCH and questionRects for all others
 		//but it makes the code easier to read and this is not a big waste
 		//of resources
 		answerRects = new TextRectangle[entries.length];
@@ -131,7 +131,7 @@ public class LearnByChoicePane extends JPanel {
 			rows = entries.length;
 			columns = 1;
 			break;
-		case MAPPING:
+		case MATCH:
 			rows = entries.length;
 			columns = 2;
 			break;
@@ -148,7 +148,7 @@ public class LearnByChoicePane extends JPanel {
 		GridLayout grid = new GridLayout(rows,columns, H_GAP, V_GAP);
 		gridPanel.setLayout(grid);
 		for (int i = 0; i < entries.length; i++) {
-			if (type == ChoiceType.MAPPING) {
+			if (type == ChoiceType.MATCH) {
 				gridPanel.add(questionRects[i]);
 			}
 			gridPanel.add(answerRects[i]);
@@ -161,7 +161,7 @@ public class LearnByChoicePane extends JPanel {
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
-		if (type != ChoiceType.MAPPING) {
+		if (type != ChoiceType.MATCH) {
 			gbl.setConstraints(currentQuestion, gbc);
 			this.add(currentQuestion);
 			gbc.gridy = 1;
@@ -179,8 +179,8 @@ public class LearnByChoicePane extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		//only do custom drawing if we are mapping
-		if (ChoiceType.MAPPING == type && null != currentlyMapped) {
+		//only do custom drawing if we are matching
+		if (ChoiceType.MATCH == type && null != currentlyMatched) {
 			//get the actual width and height of the drawable area
 			//which is the component minus its border
 			//Insets insets = getInsets();
@@ -192,8 +192,8 @@ public class LearnByChoicePane extends JPanel {
 			Graphics2D g2 = (Graphics2D)g.create(); //copy g
 			
 			g2.setPaint(Color.darkGray);
-			int myX = currentlyMapped.getX() + currentlyMapped.getWidth() + gridPanel.getX();
-			int myY = currentlyMapped.getY() + currentlyMapped.getHeight()/2 + gridPanel.getY();
+			int myX = currentlyMatched.getX() + currentlyMatched.getWidth() + gridPanel.getX();
+			int myY = currentlyMatched.getY() + currentlyMatched.getHeight()/2 + gridPanel.getY();
 			g2.draw(new Line2D.Double(myX, myY, getMousePosition().getX(), getMousePosition().getY()));
 			
 			//release the copy's resources
@@ -237,17 +237,17 @@ public class LearnByChoicePane extends JPanel {
 	} //ENd public void checkChosen(TextRectangle)
 	
 	/**
-	 * Tells the pane to paint ongoing mapping between a base and a target
+	 * Tells the pane to paint ongoing matching between a base and a target
 	 * @param rect
 	 */
-	public void paintMapping(TextRectangle rect) {
-		currentlyMapped = rect;
+	public void paintMatching(TextRectangle rect) {
+		currentlyMatched = rect;
 		repaint();
-	} //END public void paintMapping(...)
+	} //END public void paintMatching(...)
 	
-	public void checkMapping(TextRectangle rect) {
-		currentlyMapped = null;
+	public void checkMatching(TextRectangle rect) {
+		currentlyMatched = null;
 		repaint();
-	} //END public void checkMapping(TextRectangle)
+	} //END public void checkMatching(TextRectangle)
 	
 } //END public class LearnByChoicePane extends JComponent
