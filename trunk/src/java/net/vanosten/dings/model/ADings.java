@@ -34,6 +34,7 @@ import net.vanosten.dings.io.VocabularyXMLReader;
 import net.vanosten.dings.io.VocabularyXMLWriter;
 
 import net.vanosten.dings.uiif.*;
+import net.vanosten.dings.utils.Toolbox;
 
 //Logging with java.util.logging
 import java.util.logging.Logger;

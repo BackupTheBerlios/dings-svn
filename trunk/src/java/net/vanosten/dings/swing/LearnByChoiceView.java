@@ -46,7 +46,7 @@ import java.util.Map;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.EntriesCollection;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.model.Entry.Result;
 
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;

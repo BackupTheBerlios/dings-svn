@@ -51,7 +51,7 @@ import net.vanosten.dings.swing.helperui.IDEditableTableModel;
 import net.vanosten.dings.swing.helperui.ValidStringTableCellRenderer;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.model.EntryTypeAttributeItem;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 
 public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeAttributeEditView, TableModelListener {
 	private final static long serialVersionUID = 1L;

@@ -50,7 +50,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.IDTableModel;
 import net.vanosten.dings.swing.helperui.LevelTableCellRenderer;
 import net.vanosten.dings.uiif.IListView;

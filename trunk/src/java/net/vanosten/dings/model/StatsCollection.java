@@ -32,6 +32,7 @@ import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.uiif.ISummaryView;
+import net.vanosten.dings.utils.Toolbox;
 
 import org.jfree.data.DefaultCategoryDataset;
 import org.jfree.data.time.Minute;

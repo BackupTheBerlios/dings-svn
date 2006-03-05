@@ -46,7 +46,7 @@ import java.util.Vector;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.uiif.ISummaryView;
 
 import org.jfree.chart.ChartFactory;

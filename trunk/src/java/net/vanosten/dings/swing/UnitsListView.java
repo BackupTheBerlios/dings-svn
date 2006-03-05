@@ -24,7 +24,7 @@ package net.vanosten.dings.swing;
 import java.awt.ComponentOrientation;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 
 
 public class UnitsListView extends ListView {

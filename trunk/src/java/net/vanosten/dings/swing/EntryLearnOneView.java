@@ -44,7 +44,7 @@ import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.swing.helperui.HintLabel;
 import net.vanosten.dings.swing.helperui.ChoiceID;

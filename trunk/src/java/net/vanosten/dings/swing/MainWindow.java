@@ -66,7 +66,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.Preferences;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.XMLFileFilter;
 import net.vanosten.dings.swing.helperui.StatusBar;
 import net.vanosten.dings.uiif.*;

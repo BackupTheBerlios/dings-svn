@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IEntriesListView;
 

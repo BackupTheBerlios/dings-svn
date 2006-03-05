@@ -19,13 +19,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-package net.vanosten.dings.model;
+package net.vanosten.dings.utils;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.model.InfoVocab;
+import net.vanosten.dings.model.Preferences;
 
 /**
  * Singleton to handle singleton-like access to unique classes in this application.

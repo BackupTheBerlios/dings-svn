@@ -33,6 +33,7 @@ import net.vanosten.dings.event.AppEvent;
 
 import net.vanosten.dings.uiif.IEntryEditView;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
+import net.vanosten.dings.utils.Toolbox;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;

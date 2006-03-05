@@ -32,7 +32,7 @@ import java.awt.event.ItemEvent;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.EntryType;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IEntryTypeEditView;

@@ -40,7 +40,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Entry;
-import net.vanosten.dings.model.Toolbox;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.ListID;
 import net.vanosten.dings.swing.helperui.ListIDModel;
 import net.vanosten.dings.uiif.IEntriesSelectionView;

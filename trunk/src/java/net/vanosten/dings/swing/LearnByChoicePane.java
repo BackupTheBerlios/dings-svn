@@ -34,7 +34,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import net.vanosten.dings.consts.RandomUtil;
+import net.vanosten.dings.utils.RandomUtil;
 import net.vanosten.dings.model.Entry;
 import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.swing.helperui.TextRectangle;
