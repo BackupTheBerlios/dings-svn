@@ -307,21 +307,19 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	private void showLearningPane() {
 		if (null == learningPane) {
 			learningPane = new LearnByChoicePane(this);
-			if (setRB.isSelected()) {
-				learningPane.setType(ChoiceType.SET
-						, baseTargetRB.isSelected()
-						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
-			} else if (matchingRB.isSelected()) {
-				learningPane.setType(ChoiceType.MATCH
-						, baseTargetRB.isSelected()
-						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
-				} else {
-				learningPane.setType(ChoiceType.MULTI
-						, baseTargetRB.isSelected()
-						, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
-			}
 			mainP.add(learningPane, Card.CARD_LEARNING.name());
 		}
+		ChoiceType chosen;
+		if (setRB.isSelected()) {
+			chosen = ChoiceType.SET;
+		} else if (matchingRB.isSelected()) {
+			chosen = ChoiceType.MATCH;
+		} else {
+			chosen = ChoiceType.MULTI;
+		}
+		learningPane.setType(chosen
+				, baseTargetRB.isSelected()
+				, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue());
 		next();
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_LEARNING.name());

@@ -23,7 +23,6 @@ package net.vanosten.dings.swing.helperui;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -32,7 +31,7 @@ import javax.swing.border.Border;
 
 import net.vanosten.dings.swing.LearnByChoicePane;
 
-public class TextRectangle extends JLabel implements MouseListener, MouseMotionListener {
+public class TextRectangle extends JLabel implements MouseListener {
 	private final static long serialVersionUID = 1L;
 	
 	/** The parent component in charge of drawing etc. */
@@ -74,7 +73,6 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	public TextRectangle(LearnByChoicePane parent) {
 		this.parent = parent;
 		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
 		this.setOpaque(true); //otherwise the background is not painted
 		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
 		this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -143,7 +141,7 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 
 	//implements MouseMotionListener
 	public void mouseDragged(MouseEvent e) {
-		parent.paintMatching(this);
+		//do nothing
 	} //END public void mouseDragged(MouseEvent)
 
 	//implements MouseMotionListener
@@ -174,4 +172,4 @@ public class TextRectangle extends JLabel implements MouseListener, MouseMotionL
 	public void setSensitive(boolean sensitive) {
 		this.sensitive = sensitive;
 	} //ENd public void setSensitive(boolean)
-} //END public class TextRectangle extends JLabel implements MouseListener, MouseMotionListener
+} //END public class TextRectangle extends JLabel implements MouseListener
