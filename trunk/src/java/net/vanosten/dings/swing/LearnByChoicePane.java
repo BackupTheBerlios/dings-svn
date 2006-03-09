@@ -312,9 +312,19 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 						int questionIndex = getIndexPos(currentQuestion.getId(), questionRects);
 						int answerIndex = getIndexPos(currentQuestion.getId(), answerRects);
 						matchedIndex.put(questionIndex, answerIndex);
-						//TODO: learning results
+						//learning results
+						if (matchedIndex.size() == questionRects.length) {
+							//do nothing as the matching was obvious
+						} else if (false == results.containsKey(currentQuestion.getId())) {
+							results.put(currentQuestion.getId(), Result.SUCCESS);
+						} else {//the result was wrong but now correct so we use HELPED
+							results.put(currentQuestion.getId(), Result.HELPED);
+						}
+						//prepare painting
 						if (matchedIndex.size() == questionRects.length) {
 							controller.showNext();
+							controller.processLearningResults(results);
+							results = null;
 						}
 						currentQuestion.setSensitive(false);
 						currentQuestion.changeStatus(Status.CORRECT_RESULT, false);
@@ -326,7 +336,9 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 						currentQuestion.changeStatus(Status.OUT, false);
 						answer.setSensitive(true);
 						answer.changeStatus(Status.OUT, false);
-						//TODO: learning results
+						//learning results
+						results.put(currentQuestion.getId(), Result.WRONG);
+						results.put(answer.getId(), Result.WRONG);
 					}
 					currentQuestion = null;
 				}

@@ -747,7 +747,7 @@ public class EntriesCollection extends ACollection {
 	 * @param results
 	 */
 	public void setLearningResults(Map<String,Result> results) {
-		Entry anEntry;
+		Entry anEntry = null;
 		for (String anId : results.keySet()) {
 			anEntry = (Entry) items.get(anId); //TODO: direct access when generics
 			anEntry.updateScore(results.get(anId));
