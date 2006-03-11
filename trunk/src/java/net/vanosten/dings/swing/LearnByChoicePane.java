@@ -143,6 +143,8 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		case MATCH:
 			initializeMatching();
 			break;
+		case MULTI:
+			initializeSet();
 		default: break; //do nothing
 		}
 		
@@ -195,7 +197,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	} //END private void initializeChoices()
 	
 	/**
-	 * Initialize stuff related to type SET
+	 * Initialize stuff related to type SET and MULTI
 	 */
 	private void initializeSet() {
 		currentQuestion = new TextRectangle(this);
@@ -267,84 +269,128 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			results = new HashMap<String,Result>();
 		}
 		if (ChoiceType.SET == type) {
-			for (int i = 0; i < answerRects.length; i++) {
-				answerRects[i].setSensitive(false);
-			}
-			if (answer.getId().equals(currentQuestion.getId())) {
-				results.put(answer.getId(), Result.SUCCESS);
-				controller.processLearningResults(results);
-				results = null;
-				controller.next();
-			} else {
-				results.put(answer.getId(), Result.WRONG);
-				results.put(currentQuestion.getId(), Result.WRONG);
-				controller.processLearningResults(results);
-				results = null;
-				answer.changeStatus(Status.WRONG_RESULT, false);
-				for (int i = 0; i < answerRects.length; i++) {
-					if (answerRects[i].getId().equals(currentQuestion.getId())) {
-						answerRects[i].changeStatus(Status.CORRECT_RESULT, false);
-						break;
-					}
-				}
-				controller.showNext();
-			}
+			checkChosenForSet(answer);
 		} else if (ChoiceType.MATCH == type) {
-			//check whether part of questions
-			boolean isQuestion = false;
-			for (int i = 0; i < questionRects.length; i++) {
-				if (questionRects[i] == answer) {
-					isQuestion = true;
-					if (null != currentQuestion) {
-						currentQuestion.changeStatus(Status.OUT, false);
-					}
-					currentQuestion = answer;
+			checkChosenForMatch(answer);
+		} else if (ChoiceType.MULTI == type) {
+			checkChosenForMulti(answer);
+		}
+	} //END public void checkChosen(TextRectangle)
+	
+	private void checkChosenForSet(TextRectangle answer) {
+		for (int i = 0; i < answerRects.length; i++) {
+			answerRects[i].setSensitive(false);
+		}
+		if (answer.getId().equals(currentQuestion.getId())) {
+			results.put(answer.getId(), Result.SUCCESS);
+			getNextQuestions();
+		} else {
+			results.put(answer.getId(), Result.WRONG);
+			results.put(currentQuestion.getId(), Result.WRONG);
+			controller.processLearningResults(results);
+			results = null;
+			answer.changeStatus(Status.WRONG_RESULT, false);
+			for (int i = 0; i < answerRects.length; i++) {
+				if (answerRects[i].getId().equals(currentQuestion.getId())) {
+					answerRects[i].changeStatus(Status.CORRECT_RESULT, false);
 					break;
 				}
 			}
-			//if not part of questions, then it is an answer
-			if (false == isQuestion) {
-				if (null == currentQuestion) {
-					answer.changeStatus(Status.IN, false);
-				} else {
-					//we have a new match
-					if (answer.getId().equals(currentQuestion.getId())) {
-						int questionIndex = getIndexPos(currentQuestion.getId(), questionRects);
-						int answerIndex = getIndexPos(currentQuestion.getId(), answerRects);
-						matchedIndex.put(questionIndex, answerIndex);
-						//learning results
-						if (matchedIndex.size() == questionRects.length) {
-							//do nothing as the matching was obvious
-						} else if (false == results.containsKey(currentQuestion.getId())) {
-							results.put(currentQuestion.getId(), Result.SUCCESS);
-						} else {//the result was wrong but now correct so we use HELPED
-							results.put(currentQuestion.getId(), Result.HELPED);
-						}
-						//prepare painting
-						if (matchedIndex.size() == questionRects.length) {
-							controller.showNext();
-							controller.processLearningResults(results);
-							results = null;
-						}
-						currentQuestion.setSensitive(false);
-						currentQuestion.changeStatus(Status.CORRECT_RESULT, false);
-						answer.setSensitive(false);
-						answer.changeStatus(Status.CORRECT_RESULT, false);
-						repaint();
-					} else { //there was no match between question and answer
-						currentQuestion.setSensitive(true);
-						currentQuestion.changeStatus(Status.OUT, false);
-						answer.setSensitive(true);
-						answer.changeStatus(Status.OUT, false);
-						//learning results
-						results.put(currentQuestion.getId(), Result.WRONG);
-						results.put(answer.getId(), Result.WRONG);
+			controller.showNext();
+		}
+	} //END private void checkChosenForSet(TextRectangle)
+	
+	private void checkChosenForMatch(TextRectangle answer) {
+		//check whether part of questions
+		boolean isQuestion = false;
+		for (int i = 0; i < questionRects.length; i++) {
+			if (questionRects[i] == answer) {
+				isQuestion = true;
+				if (null != currentQuestion) {
+					currentQuestion.changeStatus(Status.OUT, false);
+				}
+				currentQuestion = answer;
+				break;
+			}
+		}
+		//if not part of questions, then it is an answer
+		if (false == isQuestion) {
+			if (null == currentQuestion) {
+				answer.changeStatus(Status.IN, false);
+			} else {
+				//we have a new match
+				if (answer.getId().equals(currentQuestion.getId())) {
+					int questionIndex = getIndexPos(currentQuestion.getId(), questionRects);
+					int answerIndex = getIndexPos(currentQuestion.getId(), answerRects);
+					matchedIndex.put(questionIndex, answerIndex);
+					//learning results
+					if (matchedIndex.size() == questionRects.length) {
+						//do nothing as the matching was obvious
+					} else if (false == results.containsKey(currentQuestion.getId())) {
+						results.put(currentQuestion.getId(), Result.SUCCESS);
+					} else {//the result was wrong but now correct so we use HELPED
+						results.put(currentQuestion.getId(), Result.HELPED);
 					}
-					currentQuestion = null;
+					//prepare painting
+					if (matchedIndex.size() == questionRects.length) {
+						getNextQuestions();
+					}
+					currentQuestion.setSensitive(false);
+					currentQuestion.changeStatus(Status.CORRECT_RESULT, false);
+					answer.setSensitive(false);
+					answer.changeStatus(Status.CORRECT_RESULT, false);
+					repaint();
+				} else { //there was no match between question and answer
+					currentQuestion.setSensitive(true);
+					currentQuestion.changeStatus(Status.OUT, false);
+					answer.setSensitive(true);
+					answer.changeStatus(Status.OUT, false);
+					//learning results
+					results.put(currentQuestion.getId(), Result.WRONG);
+					results.put(answer.getId(), Result.WRONG);
+				}
+				currentQuestion = null;
+			}
+		}
+	} //END private void checkChosenForMatch(TextRectangle)
+	
+	private void checkChosenForMulti(TextRectangle answer) {
+		int questPos = getIndexPos(currentQuestion.getId(), questionRects);
+		if (answer.getId().equals(currentQuestion.getId())) {
+			questionRects[questPos] = null;
+			answer.setSensitive(false);
+			answer.changeStatus(Status.CORRECT_RESULT, false);
+			int notNulls = countNotNull(questionRects);
+			if (0 == notNulls) {
+				results.put(answer.getId(), Result.HELPED);
+				getNextQuestions();
+			} else if (false == results.containsKey(currentQuestion.getId())) {
+				results.put(answer.getId(), Result.SUCCESS);
+			} else {
+				results.put(answer.getId(), Result.HELPED);
+			}
+		} else {
+			results.put(answer.getId(), Result.WRONG);
+			results.put(currentQuestion.getId(), Result.WRONG);
+			answer.changeStatus(Status.OUT, false);
+		}
+		if (questPos < (questionRects.length -1)) {
+			for (int i = questPos + 1; i < questionRects.length; i++) {
+				if (null != questionRects[i]) {
+					currentQuestion.setId(questionRects[i].getId());
+					currentQuestion.setText(questionRects[i].getText());
+					return;
 				}
 			}
 		}
-	} //END public void checkChosen(TextRectangle)
+		for (int i = 0; i < questPos; i++) {
+			if (null != questionRects[i]) {
+				currentQuestion.setId(questionRects[i].getId());
+				currentQuestion.setText(questionRects[i].getText());
+				return;
+			}
+		}
+	} //END private void checkChosenForMulti(TextRectangle)
 
 	/**
 	 * 
@@ -353,14 +399,29 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	 * @return the index position of the TextRectangle with id = anId within the
 	 *          submitted array of TextRectangles. -1 if not found
 	 */
-	private int getIndexPos(String anId, TextRectangle[] rectangles) {
+	private static int getIndexPos(String anId, TextRectangle[] rectangles) {
 		for (int i = 0; i < rectangles.length; i++) {
-			if (rectangles[i].getId().equals(anId)) {
+			if (null != rectangles[i] && rectangles[i].getId().equals(anId)) {
 				return i;
 			}
 		}
 		return -1;
-	} //END private int getIndexPos(String, TextRectangle[])
+	} //END private static int getIndexPos(String, TextRectangle[])
+	
+	/**
+	 * 
+	 * @param rectangles
+	 * @return The number of array elements, which are not null
+	 */
+	private static int countNotNull(TextRectangle[] rectangles) {
+		int counter = 0;
+		for (int i = 0; i < rectangles.length; i++) {
+			if (null != rectangles[i]) {
+				counter++;
+			}
+		}
+		return counter;
+	} //END private static int countNotNull(TextRectangle[])
 
 	//implements MouseMotionListener
 	public void mouseDragged(MouseEvent e) {
@@ -371,4 +432,35 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		this.repaint();	
 	} //END public void mouseMoved(MouseEvent)
+	
+	/**
+	 * Prepares to show the next questions after
+	 * sending learning results to processing.
+	 */
+	private void getNextQuestions() {
+		controller.processLearningResults(results);
+		results = null;
+		if (ChoiceType.MATCH == type) {
+			controller.showNext();
+		} else {
+			controller.next();
+		}
+	} //END private void getNextQuestions()
+	
+	/*
+	private void wait() {
+		//create timer
+		Timer timer = new Timer(flashTime, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				setShownText(originalText, false, false);
+			}
+		});
+		timer.setRepeats(false);
+		//show
+		setShownText(originalText, true, false);
+		//wait and hide
+		timer.start();
+
+	}
+	*/
 } //END public class LearnByChoicePane extends JPanel implements MouseMotionListener

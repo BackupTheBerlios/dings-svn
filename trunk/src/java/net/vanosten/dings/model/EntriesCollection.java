@@ -40,7 +40,6 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.utils.RandomUtil;
 import net.vanosten.dings.utils.Toolbox;
-import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 
