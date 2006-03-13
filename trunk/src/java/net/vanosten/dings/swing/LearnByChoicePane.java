@@ -29,6 +29,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
@@ -37,6 +39,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import net.vanosten.dings.utils.RandomUtil;
 import net.vanosten.dings.model.Entry;
@@ -69,6 +72,9 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	/** The number of columns for MULTI */
 	private int numberOfColumns;
 	
+	/** The number of seconds to wait before displaying next question in MULTI */
+	private int pauseInterval;
+	
 	/** The horizontal gap between TextRectangles in MATCH */
 	private static int H_GAP = 100; //TODO: this should be configurable in Preferences
 	/** The vertical gap between TextRectangles. The double is taken between to and from in SET and MULTI */
@@ -81,6 +87,9 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	
 	/** Indexes in questionRects and answerRects, that are solved for MATCH */
 	private Map<Integer,Integer> matchedIndex;
+	
+	/** Timer for displaying next question after some time in MULTI */
+	private Timer multiTimer;
 	
 	/** The learning results */
 	Map<String,Result> results = null;
@@ -103,11 +112,12 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		this.addMouseMotionListener(this);
 	} //END public LearnByChoicePane()
 	
-	public void setType(ChoiceType type, boolean baseToTarget, int numberOfColumns) {
+	public void setType(ChoiceType type, boolean baseToTarget, int numberOfColumns, int pauseInterval) {
 		this.type = type;
 		this.baseToTargetDirection = baseToTarget;
 		this.numberOfColumns = numberOfColumns;
-	} //END public void setType(ChoiceType)
+		this.pauseInterval = pauseInterval;
+	} //END public void setType(...)
 
 	public void nextChoices(Entry[] entries) {
 		//there is no need to initialize questionStrings for MATCH and questionRects for all others
@@ -144,7 +154,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			initializeMatching();
 			break;
 		case MULTI:
-			initializeSet();
+			initializeMulti();
 		default: break; //do nothing
 		}
 		
@@ -210,6 +220,12 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		currentQuestion = null;
 		matchedIndex = new TreeMap<Integer,Integer>();
 	} //END private void initializeMatching()
+	
+	private void initializeMulti() {
+		currentQuestion = new TextRectangle(this);
+		currentQuestion.changeStatus(Status.QUESTION, false);
+		setNextQuestionForMulti(-1);
+	} //END private void initializeMulti()
 
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
@@ -273,6 +289,9 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		} else if (ChoiceType.MATCH == type) {
 			checkChosenForMatch(answer);
 		} else if (ChoiceType.MULTI == type) {
+			if (multiTimer != null) {
+				multiTimer.stop();
+			}
 			checkChosenForMulti(answer);
 		}
 	} //END public void checkChosen(TextRectangle)
@@ -374,23 +393,53 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			results.put(currentQuestion.getId(), Result.WRONG);
 			answer.changeStatus(Status.OUT, false);
 		}
+		setNextQuestionForMulti(questPos);
+	} //END private void checkChosenForMulti(TextRectangle)
+	
+	/**
+	 * Sets the next question to be displayed for MULTI. I.e. the next 
+	 * question within the same set of questions != getNextQuetions()
+	 * @param questPos the position of the actual question in questionRects.
+	 *         If -1 then get position from the currentQuestion.getId()
+	 */
+	private void setNextQuestionForMulti(int questPos) {
+		boolean found = false;
 		if (questPos < (questionRects.length -1)) {
 			for (int i = questPos + 1; i < questionRects.length; i++) {
 				if (null != questionRects[i]) {
 					currentQuestion.setId(questionRects[i].getId());
 					currentQuestion.setText(questionRects[i].getText());
-					return;
+					found = true;
+					break;
 				}
 			}
 		}
-		for (int i = 0; i < questPos; i++) {
-			if (null != questionRects[i]) {
-				currentQuestion.setId(questionRects[i].getId());
-				currentQuestion.setText(questionRects[i].getText());
-				return;
+		if (false == found) {
+			for (int i = 0; i < questPos; i++) {
+				if (null != questionRects[i]) {
+					currentQuestion.setId(questionRects[i].getId());
+					currentQuestion.setText(questionRects[i].getText());
+					break;
+				}
 			}
 		}
-	} //END private void checkChosenForMulti(TextRectangle)
+		multiTimer = new Timer(pauseInterval * 1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				setNextQuestionForMultiTimer();
+			}
+		});
+		multiTimer.setRepeats(false);
+		//wait and hide
+		multiTimer.start();
+	} //END private void setNextQuestionForMulti(int)
+	
+	/**
+	 * Convenience method because multiTimer.actionPerformed has not
+	 * access to currentQuestion
+	 */
+	private void setNextQuestionForMultiTimer() {
+		setNextQuestionForMulti(getIndexPos(currentQuestion.getId(), questionRects));
+	} //END private void setNextQuestionForMultiTimer()
 
 	/**
 	 * 
@@ -446,21 +495,4 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			controller.next();
 		}
 	} //END private void getNextQuestions()
-	
-	/*
-	private void wait() {
-		//create timer
-		Timer timer = new Timer(flashTime, new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				setShownText(originalText, false, false);
-			}
-		});
-		timer.setRepeats(false);
-		//show
-		setShownText(originalText, true, false);
-		//wait and hide
-		timer.start();
-
-	}
-	*/
 } //END public class LearnByChoicePane extends JPanel implements MouseMotionListener
