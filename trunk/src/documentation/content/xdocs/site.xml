@@ -26,11 +26,13 @@ entitled "GNU Free Documentation License".
 		<faq label="FAQ" href="faq.html" description="Frequently asked questions and answers" />
 		<credits label="Credits" href="credits.html" description="Credits to others" />
 		<links label="Links" href="links.html" description="Links to related software" />
+		<contact label="Contact" href="contact.html" description="Contact the authors" />
 	</about>
 
 	<documentation label="Documentation">
 		<getting_started label="Getting Started" href="getting_started.html" description="Getting started with using DingsBums?!" />
-		<learning label="Learning" href="learning.html" description="Learning with DingsBums?!" />
+		<learning label="Learning One by One" href="learning.html" description="Learning one entry at a time" />
+		<learningchoice label="Learning By Choice" href="learningchoice.html" description="Learning one entry at a time" />
 		<editing label="Editing" href="editing.html" description="Editing the contents of a learning stack" />
 		<selection label="Selection" href="select.html" description="Selecting entries to work with" />
 		<preferences label="Preferences and Properties" href="preferences.html" description="Preferences and roperties in DingsBums?!" />
@@ -39,8 +41,7 @@ entitled "GNU Free Documentation License".
 
 	<project label="Get involved">
 		<contribute label="Contribute" href="contribute.html" description="How to contribute to the project" />
-		<project_home label="Project homepage" href="project.html" description="Project homepage" />
-		<contact label="Contact" href="contact.html" description="Contact the authors" />
+		<project_home label="Project Home" href="project.html" description="Project Homepage and Code Repository" />
 		<todo label="Todo" href="todo.html" description="Todo List" />
 		<references label="References" href="references.html" description="Links to software, documentation and ideas" />
 	</project>

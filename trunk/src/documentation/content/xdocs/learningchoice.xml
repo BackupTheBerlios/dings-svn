@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2006  Rick Gruber-Riemer (rick@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Learning by Choice</title>
+	</header>
+	<body>
+		<section id="configuration">
+			<title>Configuration</title>
+			<p>All learning is done in menu <code>Learn</code>. &quot;Learning by choice&quot; means learning several entries in a learning stack at the same time by picking or matching a question with an answer. This gives the possibility to learn in three game-like environments.</p>
+
+			<p>When starting learning a dialog is presented to allow you to choose the learning direction. E.g. in a vocabulary you do not want to learn always from German to Danish, but also from Danish to German (however the entry type details will alway be of the target.</p>
+			<figure src="images/learn_direction.png" alt="screenshot of DingsBums?! showing the dialog for choosing the direction of learning" />
+
+		</section>
+		<section id="set">
+			<title>Learning One Entry at a Time</title>
+		</section>
+	</body>
+</document>

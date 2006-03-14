@@ -29,16 +29,16 @@ entitled "GNU Free Documentation License".
 			<ul>
 				<li><a href="http://www.extreme.indiana.edu/xgws/xsoap/xpp/">XML Pull Parser (XPP)</a></li>
 				<li><a href="http://www.jfree.org/jfreechart/">JFreeChart</a> for generating statistics charts.</li>
-				<li><a href="http://forrest.apache.org/">Apache Forrest</a> is used to render this website.</li>
+				<li><a href="http://swing-layout.dev.java.net">Swing Layout Extensions</a> for providing <code>GroupLayout</code>.</li>
 				<li>The icons are taken from <a href="http://www.icon-king.com/index.php?p=23">Nuvola</a> by David Vignoni.</li>
 			</ul>
 		</section>
 		<section id="tools">
 			<title>Tools</title>
-			<p>among others the following open source tools are used for documentation and programming</p>
+			<p>Among others the following open source tools are used for documentation and programming</p>
 			<ul>
-				<li><a href="http://forrest.apache.org">Apache Forrest</a> for ducumentation</li>
-				<li><a href="http://ant.apache.org">Ant</a> for building</li>
+				<li><a href="http://forrest.apache.org">Apache Forrest</a> for documentation and rendering this website.</li>
+				<li><a href="http://ant.apache.org">Ant</a> for building the code.</li>
 				<li><a href="http://pmd.sourceforge.net/">PMD</a> to scan Java source code and looks for potential problems</li>
 			</ul>
 		</section>

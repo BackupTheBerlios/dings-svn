@@ -21,9 +21,10 @@ entitled "GNU Free Documentation License".
 	<body>
 		<section id="flashcard">
 			<title>Links to other flashcard programs</title>
-			<p>The following list is a collection of links to ohter flashcard programs I am a aware of - and which I think are worth mentioning. Some of them have been an inspiration to <code>DingsBums?!</code>.</p>
-			<p>If <code>DingsBums?!</code> cannot provide what you are looking for. Try one of those. Or tell me, what is missing, so I can improve the application!.</p>
+			<p>The following list is a collection of links to other flashcard programs I am a aware of - and which I think are worth mentioning. Some of them have been an inspiration to <code>DingsBums?!</code>.</p>
+			<p>If <code>DingsBums?!</code> cannot provide what you are looking for, try one of those. Or <a href="site:contact">tell me</a> what is missing, so I can improve the application!.</p>
 			<ul>
+				<li>The <a href="http://www.wikipedia.org">Wikipedia</a> entry for <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a> contains a lot of links to both programs and backgruond material.</li>
 				<li><a href="http://www.flashcardexchange.com/index.php">Flashcard Exchange</a></li>
 				<li><a href="http://theory.cs.iitm.ernet.in/~arvindn/gretools/">Gretools: GNOME Vocabulary Builder</a></li>
 				<li><a href="http://www.peterandlinda.com/kwordquiz/">KWordQuiz - Flashcards and more for KDE</a></li>

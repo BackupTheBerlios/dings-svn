@@ -4,7 +4,7 @@ COPYRIGHT AND WARRANTY
 
 DingsBums?! A flexible flashcard application written in Java.
 
-Copyright (c)  2004, 2005  Rick Gruber-Riemer (rick@vanosten.net).
+Copyright (c)  2004 - 2006  Rick Gruber-Riemer (rick@vanosten.net).
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.2
@@ -22,8 +22,10 @@ entitled "GNU Free Documentation License".
 
 	<changes>
 		<!-- Add new releases here -->
-		<release version="0.3.2" date="TODO: ????">
+		<release version="0.4" date="2006-03-15">
 			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
+			<action type="add" context="feature" dev="vanosten">Three game like learning modes.</action>
+			<action type="update" context="code" dev="vanosten">Uses JDK 5.0 with Generics. Changed build.xml to force building with 1.5.</action>
 			<action type="add" context="doc" dev="vanosten">Uses GNU Free Documentation License, Version 1.2</action>
 			<action type="update" context="refactor" dev="vanosten">Use Toolbox singleton for Preferences, Properties and ResourceBundles</action>
 			<action type="update" context="refactor" dev="vanosten">Changed to more accurate check of JVM version</action>
@@ -71,49 +73,49 @@ entitled "GNU Free Documentation License".
 
 	<todo>
 		<actions priority="next release">
-			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics.</action>
+			<action context="doc" dev="vanosten">Check all external links.</action>
 		</actions>
 		<actions priority="high">
+			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics.</action>
+			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
 			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
 			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
 			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation</action><!-- ## Enable orientation in EntryEdit and EntryLearn -->
-			<action context="tools" dev="vanosten">Change from CVS to Subversion.</action>
+			<action context="feature" dev="vanosten">Make sure that learning results are reflected in the selection for learning by choice</action>
 			<action context="tools" dev="vanosten">Use XPlanner.org</action>
 			<action context="feature" dev="vanosten">Make ready for Java Webstart</action>
 			<action context="feature" dev="vanosten">Show Window with error text instead of Usage on command line</action>
-			<action context="gui" dev="vanosten">Disable menu items when page is shown (e.g. in Go menu).</action>
 			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
+			<action context="doc" dev="vanosten">Add description about architecture and data architecture.</action>
+			<action context="doc" dev="vanosten">Add text about support for furmulae (e.g. MathML) etc..</action>
 		</actions>
 		<actions priority="medium">
 			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
 			<action context="other" dev="vanosten">Promote application in e.g. SwingSightings, nordicos.org, freshmeat.net, www.jars.com, java.com.</action>
 			<action context="doc" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
 			<action context="doc" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
-			<action context="code" dev="vanosten">Use JDK 5.0 with Generics. Change build.xml to force building with 1.4. See <a href="http://www-106.ibm.com/developerworks/library/j-forin.html?ca=drs-j5004">Enhance looping in Java 5.0</a> amongst others.</action>
-			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. E.g. <a href="http://hsqldb.sourceforge.net/">HSQL</a> or <a href="http://incubator.apache.org/derby/">Apache Derby</a></action>
+			<action context="doc" dev="vanosten">Add author and revision control to JavaDoc.</action>
+			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. <a href="http://incubator.apache.org/derby/">Apache Derby</a></action>
 		</actions>
 		<actions priority="low">
 			<!-- GUI -->
-			<action context="gui" dev="vanosten">Decide whether to switch to other widget set. E.g. <a href="http://swingwt.sourceforge.net">SwingWT</a>. Evt. make a parallel GNOME release using <a href="http://java-gnome.sourceforge.net">Java-Gnome</a> and GJC.</action>
 			<action context="gui" dev="vanosten">Show EntryType in EntryEdit or LearnOne only if more than one EntryType.</action>
 			<action context="gui" dev="vanosten">Change the alignment of the column header to match the alignment of the cell contents in ListViews.</action>
 			<action context="gui" dev="vanosten">Adapt Insets to text orientation</action>
 			<action context="gui" dev="vanosten">Editor for pronounciation.</action><!-- Fonts: http://www.joconner.com/javai18n/articles/TextDisplay.html -->
-			<action context="gui" dev="vanosten">Add possibility for Mnemonics to labels.</action>
+			<action context="gui" dev="vanosten">Add possibility for Mnemonics to user configurable field labels. Potentially automatically generate mnemonics for those labels, which are configured in the properties/info. The theory is that most people will not be able to do it correctly or even understand it. It could be done by giving a method the label names and the preconfigured mnemonics for the view and menus. The function should then make a pool of remaining letters from the labels and find a distribution, where as many as possible can get a mnemonic, preferably the first letter(s).</action>
 			<action context="gui" dev="vanosten">Preferences for background color of valid/invalid input.</action>
 			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a>.</action>
-			<action context="gui" dev="vanosten">Automatically generate mnemonics for those labels, which are configured in the properties/info. The theory is that most people will not be able to do it correctly or even understnad it. It could be done by giving a method the label names and the preconfigured mnemonics for the view and menus. the function should then make a pool of remaining letters from the labels and find a distribution, where as many as possible can get a mnemonic, preferably the first letter(s).</action>
 			<!-- FEATURE -->
 			<action context="feature" dev="vanosten">Use a codewrapper for Windows executable. See Heise IX 4/2005: <a href="http://www.ucware.com">Jexecreator</a> and <a href="http://www.duckware.com/jexepack/index.html">Jexepack</a>.</action>
 			<action context="feature" dev="vanosten">Spell checker: E.g. ASPELL for spell checking (see <a href="http://jedit.org">JEdit</a>, <a href="http://vocabulala.sourceforge.net/deutsch/deutsch.html">Vocabulala</a>, <a href="http://linux.org.mt/projects/jtextcheck/index.html">JTextCheck</a>) or the <a href="http://jazzy.sourceforge.net">Jazzy</a> open source Java spell checker <!-- see also http://www-106.ibm.com/developerworks/library/j-jazzy -->.</action>
 			<action context="feature">If file name postfix is ".gz" then assume GZIPped and use java.util.zip.GZIPxStream.</action>
 			<action context="feature" dev="vanosten">Search of words using Levenshtein-Algorithm allowing for unsharp search strings.</action>
-			<action context="web" dev="vanosten">Add link to usage statistics of website: http://dings.berlios.de/usage/ (reqires passwd)</action>
 			<!-- REFACTOR -->
 			<action context="refactor" dev="vanosten">Evt. replace IDTableModel, IDEditableTableModel with one, where ID is simply not shown in the table, but there is no need to hold an array of IDs.</action>
 			<action context="refactor" dev="vanosten">Make sure application can be compiled using <a href="http://gcc.gnu.org/java/">GCJ (the GNU compuiler for the Java language)</a>.</action>
 			<!-- gcj - -classpath=/usr/share/gcc-data/i686-pc-linux-gnu/3.3/java:. dings.jar -->
-			<action context="code" dev="vanosten">Try JVM test from Jonas</action>
+			<action context="code" dev="vanosten">Try JVM test from JOnAS J2EE container</action>
 			<!--         try {
             Package p = Package.getPackage("java.lang");
             if (!p.isCompatibleWith("1.4")) {
@@ -132,10 +134,7 @@ entitled "GNU Free Documentation License".
 			<action context="feature" dev="vanosten">Voice recording/playing</action>
 			<action context="feature" dev="vanosten">Synchronization of files from different sources.</action>
 			<action context="feature" dev="vanosten">Printing of lists for offline learning, statistics, ...</action>
-			<action context="gui" dev="vanosten">Use new JDK 1.5 functionality for placing window first time (i.e. without preferences).</action>
-			<!--     gui.setLocationByPlatform(true); // since JDK 1.5
-	gui.setAlwaysOnTop(true);        // since JDK 1.5
--->
+			<action context="gui" dev="vanosten">Use new JDK 1.5 functionality for placing window first time (i.e. without preferences): <code>gui.setLocationByPlatform(true)</code> and <code>gui.setAlwaysOnTop(true)</code></action>
 		</actions>
 <!--
 ++++++++++++++++++++++++++++++++++++++++++++++

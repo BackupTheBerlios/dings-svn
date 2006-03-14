@@ -16,16 +16,10 @@ entitled "GNU Free Documentation License".
 -->
 <document>
 	<header>
-		<title>Project</title>
+		<title>Project Homepage and Code Repository</title>
 	</header>
 	<body>
-		<section id="location">
-			<title>Project Homepage</title>
-			<p>The project <a href="http://developer.berlios.de/projects/dings">homepage</a> is hosted by <a href="http://www.berlios.de">www.berlios.de</a>.</p>
-		</section>
-		<section id="repository">
-			<title>Code Repository</title>
-			<p>The projects code is stored in a <a href="http://developer.berlios.de/svn/?group_id=844">version controlled repository</a>. You need to be familiar with <a href="http://subversion.tigris.org/">Subversion</a>.</p>
-		</section>
+		<p>The project <a href="http://developer.berlios.de/projects/dings">homepage</a> is hosted by <a href="http://www.berlios.de">www.berlios.de</a>.</p>
+		<p>This project's code is stored in a <a href="http://developer.berlios.de/svn/?group_id=844">version controlled repository</a>. You need to be familiar with <a href="http://subversion.tigris.org/">Subversion</a>.</p>
 	</body>
 </document>

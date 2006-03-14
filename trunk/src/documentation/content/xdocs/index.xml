@@ -21,18 +21,19 @@ entitled "GNU Free Documentation License".
 	<body>
 		<section id="about">
 			<title>About</title>
-			<p><code>DingsBums?!</code> is a flashcard trainer originally concepted for vocabularies, but can be used for any kind of content, that can be memorized using flashcards. See <a href="features.html">features</a> for an extensive overview, take a look at the <a href="screenshots.html">screenshots</a>, or <a href="download.html">download</a> it right away.</p>
+			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning tool originally concepted for vocabularies, but can be used for any kind of content, that can be memorized using flashcards. <code>Dingsbums?!</code>a ims to be an application which makes memorizing both fun and efficient.</p>
+			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away.</p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
 			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and should therefore run on most popular operating systems including Linux, MacOS-X, Windows and Solaris.</p>
 		</section>
 		<section id="evaluating">
 			<title>Is this for you?</title>
-			<p><code>DingsBums?!</code> is written with flexibility in mind. So it can be adapted to many different needs. It is open source and you can therefore try and later use it free of charge. If you miss a feature in the current version, then there is a chance that it is on the <a href="todo.html">todo list</a>.</p>
+			<p><code>DingsBums?!</code> is written with flexibility in mind. So it can be adapted to many different needs. It is open source and you can therefore try and later use it free of charge. If you miss a feature in the current version, then there is a chance that it is on the <a href="todo.html">todo list</a> or a <a href="site:features">planned feature</a>.</p>
 			<p><code>DingsBums?!</code> is for you if:</p>
 			<ul>
 				<li>you want to be able to memorize stuff in the classical way (item by item)</li>
-				<li>you would like to have the possibility to define the level of details by yourself. E.g. grammatical details for language training depend both on your level and the actual language. <code>DingsBums?!</code> supports both sophisticated categorization / level of details and a very basic approach.</li>
-				<li>a bit of fun should be part of learning. <code>DingsBums?!</code> provides different help methods. Learning games coming soon.</li>
+				<li>you would like to have the possibility to define the level of details by yourself. E.g. grammatical details for language training depend both on your skill level and the actual language. <code>DingsBums?!</code> supports both sophisticated categorization / level of details and a very basic approach.</li>
+				<li>a bit of fun should be part of learning. <code>DingsBums?!</code> provides different help methods for <a href="site:learning">learning one by one</a> plus three <a href="site:learningchoice">game-like learning environments</a>.</li>
 				<li>learning statistics is something you are looking for.</li>
 				<li>the application should present the hard to remember items more often then the ones you already know by heart. After all the computer should both help you to save time and make learning less boring, shouldn&apos;t it?</li>
 				<li>you want to define the learning items yourself - no matter whether you are learning the stuff or you are a teacher.</li>
@@ -45,15 +46,16 @@ entitled "GNU Free Documentation License".
 				<li>you want to have audio support. <code>DingsBums?!</code> in its current form is only about memorizing visually (reading and eventually writing). Audio support is a feature with low priority, so do not rely on it in the near future.</li>
 				<li>you need extensive support for cunjugation</li>
 				<li>you are a teacher and want to have a framework to write exercises and tests.</li>
-				<li>you need PDA or mobile phone support right now. The possibility to use a PDA or the mobile phone to memorize stuff while sitting in the bus, waiting in the restaurant etc. is a high priority for me, too. So chances are good that this will be an option somewhen in 2005.</li>
+				<li>you need PDA or mobile phone support right now. The possibility to use a PDA or the mobile phone to memorize stuff while sitting in the bus, waiting in the restaurant etc. is a high priority for me, too. Due to time restrictions I cannot tell when I will implement this - it won't happen in 2006.</li>
 				<li>a great looking application is more important to you then functionality. I know that <code>DingsBums?!</code> needs som final touch.</li>
 			</ul>
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="links.xml">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title><code>DingsBums?!</code> 0.3.1 released</title>
-			<p>Version 0.3.1 is a minor update of version 0.3.0, which was the third public release of <code>DingsBums?!</code> See <a href="site:changes">changes</a> for a list over the updates and additions since the last version.</p>
-			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then have a look at the <a href="site:todo">todo-list</a> and <a href="site:contact">contact</a> me.</p>
+			<title><code>DingsBums?!</code> 0.4 released</title>
+			<p>Version 0.4 is a major update of version 0.3.1. The most important new feature is the possibility to learn in three <a href="site:learningchoice">game-like environments</a>. See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
+			<p>the next release will feature &quot;memory&quot; (the pattern card game) as a forth game-like learning environment.</p>
+			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then have a look at the <a href="site:features">features</a> and <a href="site:todo">todo-list</a> and <a href="site:contact">contact</a> me.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
 	</body>
