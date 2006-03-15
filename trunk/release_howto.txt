@@ -15,7 +15,7 @@ specified
 	$ cd build/site
 	$ tar zcf ../site.tar.gz .
 	$ cd ..
-	$ sc site.tar.gz vanosten@shell.berlios.de:/home/groups/dings/htdocs
+	$ scp site.tar.gz vanosten@shell.berlios.de:/home/groups/dings/htdocs
 	$ ssh -l vanosten shell.berlios.de
 	vanosten@hornet> cd /home/groups/dings/htdocs
 	vanosten@hornet> \rm -R images
