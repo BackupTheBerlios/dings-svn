@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2006  Rick Gruber-Riemer (rick@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Learning Algorithm</title>
+	</header>
+	<body>
+		<p><code>Dingsbums?!</code> is a computer adied learning tool and as such helps you to be more efficient with learning. <code>Dingsbums?!</code> has an intelligent learning algorithm which shows those entries, which you do not know that well, most often.</p>
+		<p>The central concept here is a score per entry: the minimum score is seven and the maximum is 7. In <a href="site:learning">learning one by one</a> you earn a point, whenever you know an entry, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</p>
+		<p>When <a href="site:learningchoice">learning by choice</a> the earning of scores is depending on the type of learning:</p>
+		<ul>
+			<li>Picking one in a set: if the answer is right, the score is augmented by one for the entry. If the answer is wrong, both the entry behind the question and the entry behind the wrong answer loose one point in their score.</li>
+			<li>Match of pairs: if a pair is found directly the entry gets a point. If either the question or the answer has been used in a wrong matching attempt, then no point is given. the last matching pair never gets a point because the answer is obvious.</li>
+			<li>Shifting questions: the same as for <code>match</code>.</li>
+		</ul>
+		<note>The learning algorithm described above is my own invention of <a href="http://en.wikipedia.org/wiki/Spaced_repetition">spaced repetition</a>. It is not based on the <a href="http://en.wikipedia.org/wiki/Sebastian_Leitner">Leitner System</a> - this option is planned in a later release.</note>
+	</body>
+</document>

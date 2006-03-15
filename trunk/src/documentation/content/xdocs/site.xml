@@ -18,21 +18,21 @@ entitled "GNU Free Documentation License".
 <site label="DingsBums?!" href="" xmlns="http://apache.org/forrest/linkmap/1.0" tab="about">
 	<about label="About">
 		<index label="Introduction" href="index.html" description="Welcome to DingsBums?!"/>
-		<licenses label="Licenses" href="license.html" description="The License for using DingsBums?!" />
-		<screenshots label="Screenshots" href="screenshots.html" description="Various screenshots with explanation of DingsBums?!" />
 		<features label="Features" href="features.html" description="Overview of features of DingsBums?!" />
+		<screenshots label="Screenshots" href="screenshots.html" description="Various screenshots with explanation of DingsBums?!" />
 		<download label="Download" href="download.html" description="Download and installation instructions" />
-		<changes label="Changes" href="changes.html" description="History of Changes" />
 		<faq label="FAQ" href="faq.html" description="Frequently asked questions and answers" />
+		<licenses label="Licenses" href="license.html" description="The License for using DingsBums?!" />
+		<contact label="Contact" href="contact.html" description="Contact the authors" />
 		<credits label="Credits" href="credits.html" description="Credits to others" />
 		<links label="Links" href="links.html" description="Links to related software" />
-		<contact label="Contact" href="contact.html" description="Contact the authors" />
 	</about>
 
 	<documentation label="Documentation">
 		<getting_started label="Getting Started" href="getting_started.html" description="Getting started with using DingsBums?!" />
 		<learning label="Learning One by One" href="learning.html" description="Learning one entry at a time" />
 		<learningchoice label="Learning By Choice" href="learningchoice.html" description="Learning one entry at a time" />
+		<learningalgo label="Learning Algorithm" href="learningalgo.html" description="Intelligent score based learning algorithm" />
 		<editing label="Editing" href="editing.html" description="Editing the contents of a learning stack" />
 		<selection label="Selection" href="select.html" description="Selecting entries to work with" />
 		<preferences label="Preferences and Properties" href="preferences.html" description="Preferences and roperties in DingsBums?!" />
@@ -44,6 +44,7 @@ entitled "GNU Free Documentation License".
 		<project_home label="Project Home" href="project.html" description="Project Homepage and Code Repository" />
 		<todo label="Todo" href="todo.html" description="Todo List" />
 		<references label="References" href="references.html" description="Links to software, documentation and ideas" />
+		<changes label="Changes" href="changes.html" description="History of Changes" />
 	</project>
 
 </site>

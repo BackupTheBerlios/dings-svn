@@ -22,7 +22,7 @@ entitled "GNU Free Documentation License".
 
 	<changes>
 		<!-- Add new releases here -->
-		<release version="0.4" date="2006-03-15">
+		<release version="0.4 (svn 36)" date="2006-03-15">
 			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
 			<action type="add" context="feature" dev="vanosten">Three game like learning modes.</action>
 			<action type="update" context="code" dev="vanosten">Uses JDK 5.0 with Generics. Changed build.xml to force building with 1.5.</action>
@@ -88,6 +88,7 @@ entitled "GNU Free Documentation License".
 			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
 			<action context="doc" dev="vanosten">Add description about architecture and data architecture.</action>
 			<action context="doc" dev="vanosten">Add text about support for furmulae (e.g. MathML) etc..</action>
+			<action context="doc" dev="vanosten">Update download documentation to have pictures of JVM 1.5</action>
 		</actions>
 		<actions priority="medium">
 			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
@@ -95,7 +96,7 @@ entitled "GNU Free Documentation License".
 			<action context="doc" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
 			<action context="doc" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
 			<action context="doc" dev="vanosten">Add author and revision control to JavaDoc.</action>
-			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. <a href="http://incubator.apache.org/derby/">Apache Derby</a></action>
+			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. <a href="http://db.apache.org/derby/">Apache Derby</a></action>
 		</actions>
 		<actions priority="low">
 			<!-- GUI -->
@@ -105,7 +106,7 @@ entitled "GNU Free Documentation License".
 			<action context="gui" dev="vanosten">Editor for pronounciation.</action><!-- Fonts: http://www.joconner.com/javai18n/articles/TextDisplay.html -->
 			<action context="gui" dev="vanosten">Add possibility for Mnemonics to user configurable field labels. Potentially automatically generate mnemonics for those labels, which are configured in the properties/info. The theory is that most people will not be able to do it correctly or even understand it. It could be done by giving a method the label names and the preconfigured mnemonics for the view and menus. The function should then make a pool of remaining letters from the labels and find a distribution, where as many as possible can get a mnemonic, preferably the first letter(s).</action>
 			<action context="gui" dev="vanosten">Preferences for background color of valid/invalid input.</action>
-			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a>.</action>
+			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a> and <a href="http://community.java.net/mac/">Mac Java community</a>.</action>
 			<!-- FEATURE -->
 			<action context="feature" dev="vanosten">Use a codewrapper for Windows executable. See Heise IX 4/2005: <a href="http://www.ucware.com">Jexecreator</a> and <a href="http://www.duckware.com/jexepack/index.html">Jexepack</a>.</action>
 			<action context="feature" dev="vanosten">Spell checker: E.g. ASPELL for spell checking (see <a href="http://jedit.org">JEdit</a>, <a href="http://vocabulala.sourceforge.net/deutsch/deutsch.html">Vocabulala</a>, <a href="http://linux.org.mt/projects/jtextcheck/index.html">JTextCheck</a>) or the <a href="http://jazzy.sourceforge.net">Jazzy</a> open source Java spell checker <!-- see also http://www-106.ibm.com/developerworks/library/j-jazzy -->.</action>

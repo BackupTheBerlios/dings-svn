@@ -37,7 +37,7 @@ entitled "GNU Free Documentation License".
 		<section id="list">
 			<title>List of Entries</title>
 			<p>From the list of entries new entries can be added to the training stack by pressing the <code>Add</code> button. In the upcoming dialog you are able to choose one of the defined entry types to be assigned to the new entry. (This dialog does not show up, if only one entry type is defined!).</p>
-			<p>The score of each entry is shown with a different color. The score range is between 1 and 7.</p>
+			<p>The score of each entry is shown with a different color (see <a href="site:learningalgo">learningn algorithm</a>).</p>
 			<figure src="images/entries_new.png" alt="screenshot of DingsBums?! showing the entries list" />
 			<warning>If some of your entries &quot;suddenly are disappeared&quot; chances are that you have made a <a href="site:selection">selection</a>. You can see the number of selected entries vs. the total number of entries at the buttom of the screen.</warning>
 		</section>

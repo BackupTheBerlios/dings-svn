@@ -69,7 +69,7 @@ entitled "GNU Free Documentation License".
 		<faq id="accessibility">
 			<question>Could you please make the application better accessible?</question>
 			<answer>
-				<p>Sorry, I agree this is not good enough. This is one of the areas, where you could <a href="contribute.xml">contribute</a> without any knowledge of programming. As I (a) am so fortunate not to have any fysical disabilities, and (b) as the author of the <code>DingsBums?!</code> know the application by heart, I tend to be unaware of accessibility problems :-(</p>
+				<p>Sorry, I agree this is not good enough. This is one of the areas, where you could <a href="site:contribute">contribute</a> without any knowledge of programming. As I (a) am so fortunate not to have any fysical disabilities, and (b) as the author of the <code>DingsBums?!</code> know the application by heart, I tend to be unaware of accessibility problems :-(</p>
 			</answer>
 		</faq>
 		<faq id="not_native">
@@ -111,7 +111,7 @@ entitled "GNU Free Documentation License".
 			<question>Why does the application only run with a Java Virtual Machine 1.5 or later?</question>
 			<answer>
 				<p>Some parts of the code (e.g. the user interface) relies on features, that are only available in recent Java versions. Due to the fact, that there are up to date Java Virtual Machines for the most common operating systems (see above), I guess that pretty much everyone can use the application.</p>
-				<p>However I am aware of the fact, that not everybody updates the Java Virtual Machine with the latest and greatest release. Therefore I will try to keep the requirements conservative (e.g. not updating to Java version 6 in 2006.</p>
+				<p>However I am aware of the fact, that not everybody updates the Java Virtual Machine with the latest and greatest release. Therefore I will try to keep the requirements conservative (e.g. not updating to Java version 6 in 2006).</p>
 			</answer>
 		</faq>
 		<faq id="alternatives">

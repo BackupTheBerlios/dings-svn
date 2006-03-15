@@ -19,7 +19,7 @@ entitled "GNU Free Documentation License".
 		<title>Statistics</title>
 	</header>
 	<body>
-		<p><code>DingsBums?!</code> can display statistics about the entries in the learning stack. Most of the statistics are static and show the current distribution of entries for a criteria. E.g. the following screenshot shows the distribution of entries over the scores. The more you learn the better your score should become.</p>
+		<p><code>DingsBums?!</code> can display statistics about the entries in the learning stack. Most of the statistics are static and show the current distribution of entries for a criteria. E.g. the following screenshot shows the distribution of entries over the scores. The more you learn the better your score should become (see <a href="site:learningalgo">learning algorithm</a>).</p>
 		<figure src="images/stats_scores.png" alt="screenshot of DingsBums?! showing statistics over the distribution of scores" />
 		<p>To be able to see the evolution of the number of entries and the average score over the learning period a chart with time series statistics can be shown (see below). There are two possibilities to save the current statistics for later comparision in a time series:</p>
 		<ul>

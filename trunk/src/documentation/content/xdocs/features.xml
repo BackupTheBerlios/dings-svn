@@ -33,7 +33,7 @@ entitled "GNU Free Documentation License".
 				<li>The labels in the GUI can be changed to suit the learning stack card purpose (e.g. different language for a vocabulary trainer)</li>
 				<li>The visibility of unit, category, and other fields can be influenced.</li>
 				<li>Decide whether changes in an Entry (e.g. the score, the category) while editing or learning are checked immediately against the current selection criteria, and eventually remove the Entry from the current selection.</li>
-				<li>Hints of remembrance for learning. By this I mean help, if you do not quite recall a term, but might remember it, if you could get a hint. The hints are:
+				<li>Hints of remembrance for <a href="site:learning">learning on by one</a>. By this I mean help, if you do not quite recall a term, but might remember it, if you could get a hint. The hints are:
 					<ul>
 						<li>Letters: displays more and more letters, starting with the first letter of the word.</li>
 						<li>Flash: displays the entire term for less than a second. You might not be able to read the term, but recognize it.</li>
@@ -48,7 +48,7 @@ entitled "GNU Free Documentation License".
 						<li>Choose the correct answer among lots of possibilities with questions shifting after a few seconds</li>
 					</ul>
 				</li>
-				<li>An intelligent learning algorithm that shows those entries, which you do not know that well, most often. The main idea is that you earn a point, whenever you know the word, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</li>
+				<li>An intelligent <a href="site:learningalgo">learning algorithm</a> that shows those entries, which you do not know that well, most often. The main idea is that you earn a point, whenever you know the word, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</li>
 				<li>The scores can be reset to the minimum for either all entries or the current selection.</li>
 				<li>The time in milliseconds of the flash hint and the coverage in percents can be dynamically be changed in the properties.</li>
 				<li>Window positions and sizes are saved</li>
@@ -64,6 +64,7 @@ entitled "GNU Free Documentation License".
 				<li>Internationalization including bi-directional text</li>
 				<li>Search facilities</li>
 				<li>Spell checking</li>
+				<li>Option for learning algorithm based on <a href="http://en.wikipedia.org/wiki/Sebastian_Leitner">Leitner System</a></li>
 				<li>An editor for the pronunciation using the international phonetic alphabet</li>
 				<li>PDA or mobile phone support to memorize stuff while sitting in the bus, waiting in the restaurant etc.</li>
 				<li>A comprehensive user guide and a FAQ</li>
