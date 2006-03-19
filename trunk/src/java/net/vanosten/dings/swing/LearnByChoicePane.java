@@ -53,8 +53,10 @@ import net.vanosten.dings.swing.helperui.TextRectangle.Status;
 public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	private final static long serialVersionUID = 1L;
 	
-	/** The id of the current Entry to be learned. Not used for type.MATCHING */
+	/** The TextRectangle for the current Entry to be learned. Not used for type.MATCHING */
 	private TextRectangle currentQuestion = null;
+	/** The TextRectangle currently chosen for matching in type.MEMORY */
+	private TextRectangle currentAnswer = null;
 	
 	/** The panel containing the potential answer TextRectangles */
 	private JPanel gridPanel = null;
@@ -63,6 +65,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		SET
 		, MATCH
 		, MULTI
+		, MEMORY
 	}
 	private ChoiceType type = ChoiceType.SET;
 	
@@ -75,6 +78,9 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	/** The number of seconds to wait before displaying next question in MULTI */
 	private int pauseInterval;
 	
+	/** The number of seconds to wait before hiding wrong matches for MEMORY */
+	private int waitHide;
+	
 	/** The horizontal gap between TextRectangles in MATCH */
 	private static int H_GAP = 100; //TODO: this should be configurable in Preferences
 	/** The vertical gap between TextRectangles. The double is taken between to and from in SET and MULTI */
@@ -82,14 +88,14 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	
 	/** Pointers to the TextRectangles only for MATCH */
 	private TextRectangle[] questionRects = null;
-	/** Pointers to the TextRectangles for answers */
+	/** Pointers to the TextRectangles for answers (and questions for MEMORY) */
 	private TextRectangle[] answerRects = null;
 	
 	/** Indexes in questionRects and answerRects, that are solved for MATCH */
 	private Map<Integer,Integer> matchedIndex;
 	
-	/** Timer for displaying next question after some time in MULTI */
-	private Timer multiTimer;
+	/** Timer for displaying next question after some time in MULTI and resets for MEMORY */
+	private Timer myTimer;
 	
 	/** The learning results */
 	Map<String,Result> results = null;
@@ -112,26 +118,32 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		this.addMouseMotionListener(this);
 	} //END public LearnByChoicePane()
 	
-	public void setType(ChoiceType type, boolean baseToTarget, int numberOfColumns, int pauseInterval) {
+	public void setType(ChoiceType type, boolean baseToTarget, int numberOfColumns, int pauseInterval, int waitHide) {
 		this.type = type;
 		this.baseToTargetDirection = baseToTarget;
 		this.numberOfColumns = numberOfColumns;
 		this.pauseInterval = pauseInterval;
+		this.waitHide = waitHide;
 	} //END public void setType(...)
 
 	public void nextChoices(Entry[] entries) {
 		//there is no need to initialize questionStrings for MATCH and questionRects for all others
 		//but it makes the code easier to read and this is not a big waste
 		//of resources
-		answerRects = new TextRectangle[entries.length];
-		questionRects = new TextRectangle[entries.length];
-		
 		TextRectangle rectAnswer, rectQuestion;
-
-		int[] randomPositions = RandomUtil.getRandomInts(entries.length);
+		if (ChoiceType.MEMORY == type) {
+			answerRects = new TextRectangle[entries.length * 2];
+		} else {
+			answerRects = new TextRectangle[entries.length];
+			questionRects = new TextRectangle[entries.length];
+		}
+		int[] randomPositions = RandomUtil.getRandomInts(answerRects.length);
+		
 		for (int i = 0; i < entries.length; i++)  {
 			rectAnswer = new TextRectangle(this);
 			rectQuestion = new TextRectangle(this);
+			rectAnswer.setQuestion(false);
+			rectQuestion.setQuestion(true);
 			if (baseToTargetDirection) {
 				rectAnswer.setText(entries[i].getTarget());
 				rectQuestion.setText(entries[i].getBase());
@@ -141,39 +153,43 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			}
 			rectAnswer.setId(entries[i].getId());
 			rectQuestion.setId(entries[i].getId());
-			answerRects[randomPositions[i]] = rectAnswer;
-			questionRects[i] = rectQuestion;
+			rectAnswer.setType(type);
+			rectQuestion.setType(type);
+			if (ChoiceType.MEMORY == type) {
+				answerRects[randomPositions[i*2]] = rectAnswer;
+				answerRects[randomPositions[i*2+1]] = rectQuestion;
+			} else {
+				answerRects[randomPositions[i]] = rectAnswer;
+				questionRects[i] = rectQuestion;
+			}
 		}
 		
 		//do initialization stuff depending on type
-		switch(type) {
-		case SET:
-			initializeSet();
-			break;
-		case MATCH:
-			initializeMatching();
-			break;
-		case MULTI:
-			initializeMulti();
-		default: break; //do nothing
-		}
-		
 		int rows = 0;
 		int columns = 0;
 		switch(type) {
 		case SET:
+			initializeSet();
 			rows = entries.length;
 			columns = 1;
 			break;
 		case MATCH:
+			initializeMatching();
 			rows = entries.length;
 			columns = 2;
 			break;
-		default: //MULTI
+		case MULTI:
+			initializeMulti();
 			columns = numberOfColumns;
-			rows = 0; //for GridLayout(int) 0 menas as many as needed. Math.ceil(entries.length / columns);
+			rows = 0; //for GridLayout(int) 0 means as many as needed. Math.ceil(entries.length / columns);
 			break;
+		case MEMORY:
+			initializeMemory();
+			columns = numberOfColumns;
+			rows = 0; //for GridLayout(int) 0 means as many as needed. Math.ceil(entries.length / columns);
+		default: break; //do nothing
 		}
+		
 		//The overall layout
 		this.removeAll();
 		
@@ -181,7 +197,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		gridPanel.setOpaque(false);
 		GridLayout grid = new GridLayout(rows,columns, H_GAP, V_GAP);
 		gridPanel.setLayout(grid);
-		for (int i = 0; i < entries.length; i++) {
+		for (int i = 0; i < answerRects.length; i++) {
 			if (type == ChoiceType.MATCH) {
 				gridPanel.add(questionRects[i]);
 			}
@@ -195,7 +211,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		gbc.gridy = 0;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.fill = GridBagConstraints.NONE;
-		if (type != ChoiceType.MATCH) {
+		if (ChoiceType.SET == type || ChoiceType.MULTI == type) {
 			gbl.setConstraints(currentQuestion, gbc);
 			this.add(currentQuestion);
 			gbc.gridy = 1;
@@ -222,10 +238,26 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	} //END private void initializeMatching()
 	
 	private void initializeMulti() {
+		myTimer = new Timer(pauseInterval * 1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				setNextQuestionForMultiTimer();
+			}
+		});
+		myTimer.setRepeats(false);
 		currentQuestion = new TextRectangle(this);
 		currentQuestion.changeStatus(Status.QUESTION, false);
 		setNextQuestionForMulti(-1);
 	} //END private void initializeMulti()
+	
+	private void initializeMemory() {
+		currentQuestion = null;
+		myTimer = new Timer(waitHide * 1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				resetCurrentMemoryChoice();
+			}
+		});
+		myTimer.setRepeats(false);
+	} //END private void initializeMemory()
 
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
@@ -289,10 +321,12 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		} else if (ChoiceType.MATCH == type) {
 			checkChosenForMatch(answer);
 		} else if (ChoiceType.MULTI == type) {
-			if (multiTimer != null) {
-				multiTimer.stop();
+			if (myTimer != null) {
+				myTimer.stop();
 			}
 			checkChosenForMulti(answer);
+		} else if (ChoiceType.MEMORY == type) {
+			checkChosenForMemory(answer);
 		}
 	} //END public void checkChosen(TextRectangle)
 	
@@ -396,6 +430,57 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		setNextQuestionForMulti(questPos);
 	} //END private void checkChosenForMulti(TextRectangle)
 	
+	private void checkChosenForMemory(TextRectangle answer) {
+		if (null != currentAnswer) {
+			//the matching was wrong and the user started to pick new cards
+			//before the timer has resetted the currently selected
+			if (myTimer.isRunning()) {
+				myTimer.stop();
+			}
+			resetCurrentMemoryChoice();
+		}
+		if (null == currentQuestion) {
+			currentQuestion = answer;
+			currentQuestion.setSensitive(false);
+			currentQuestion.changeStatus(Status.QUESTION, false);
+		} else {
+			currentAnswer = answer;
+			if (currentQuestion.getId().equals(answer.getId())) {
+				//set them to right answer
+				currentQuestion.changeStatus(Status.CORRECT_RESULT, false);
+				currentAnswer.changeStatus(Status.CORRECT_RESULT, false);
+				currentAnswer.setSensitive(false);
+				results.put(currentQuestion.getId(), Result.HELPED); //MEMORY does not influence score
+				currentQuestion = null;
+				currentAnswer = null;
+				if (results.size() == (answerRects.length / 2)) {
+					getNextQuestions();
+				}
+			} else {
+				//set them to wrong
+				currentQuestion.changeStatus(Status.WRONG_RESULT, false);
+				currentAnswer.changeStatus(Status.WRONG_RESULT, false);
+				currentQuestion.setSensitive(false);
+				currentAnswer.setSensitive(false);
+				//wait a bit
+				myTimer.start();
+			}
+		}
+	} //END private void checkChosenForMemory(TextRectangle)
+	
+	private synchronized void resetCurrentMemoryChoice() {
+		if (null != currentQuestion) {
+			currentQuestion.changeStatus(Status.OUT, false);
+			currentQuestion.setSensitive(true);
+			currentQuestion = null;
+		}
+		if (null != currentAnswer) {
+			currentAnswer.changeStatus(Status.OUT, false);
+			currentAnswer.setSensitive(true);
+			currentAnswer = null;
+		}
+	} //END private void resetCurrentMemoryChoice()
+	
 	/**
 	 * Sets the next question to be displayed for MULTI. I.e. the next 
 	 * question within the same set of questions != getNextQuetions()
@@ -423,18 +508,12 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 				}
 			}
 		}
-		multiTimer = new Timer(pauseInterval * 1000, new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				setNextQuestionForMultiTimer();
-			}
-		});
-		multiTimer.setRepeats(false);
 		//wait and hide
-		multiTimer.start();
+		myTimer.start();
 	} //END private void setNextQuestionForMulti(int)
 	
 	/**
-	 * Convenience method because multiTimer.actionPerformed has not
+	 * Convenience method because myTimer.actionPerformed has not
 	 * access to currentQuestion
 	 */
 	private void setNextQuestionForMultiTimer() {
@@ -489,7 +568,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	private void getNextQuestions() {
 		controller.processLearningResults(results);
 		results = null;
-		if (ChoiceType.MATCH == type) {
+		if (ChoiceType.MATCH == type || ChoiceType.MEMORY == type) {
 			controller.showNext();
 		} else {
 			controller.next();

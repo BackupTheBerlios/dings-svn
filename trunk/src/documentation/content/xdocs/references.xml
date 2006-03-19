@@ -43,6 +43,17 @@ entitled "GNU Free Documentation License".
 				<li><a href="http://www.gnu.org/prep/maintain/html_node/index.html">Information For Maintainers of GNU Software</a>.</li>
 			</ul>
 		</section>
+		<section id="arch">
+			<title>Application Architecture</title>
+			<p>Below are some pointers to discussion about how to archtect a (rich client) application. Actually I have never found a book which goes beyond the basic principles with very primitive applications. But how to make advanced applications with several business objects, several views on same data, several &quot;unrelated&quot; user interface pieces, state machines for handling enabling/disabling menu items etc.</p>
+			<ul>
+				<li><a href="http://weblogs.java.net/blog/zixle/archive/2006/01/architecting_ap.html">Architecting Applications 1: the model</a>, <a href="http://weblogs.java.net/blog/zixle/archive/2006/01/architecting_ap_1.html">Architecting Applications 2: the Application class</a> and <a href="http://weblogs.java.net/blog/zixle/archive/2006/03/architecting_ap_2.html">Architecting Applications 3: the Controller</a>.</li>
+				<li><a href="http://www.nakedobjects.org/static.php?content=no-approach.html">The naked objects approach short intro</a> and <a href="http://www.nakedobjects.org/book/content.html">Naked Objects (book)</a>.</li>
+				<li>Cédric Beust's <a href="http://www.beust.com/weblog/archives/000022.html">Holub is at it again</a> reaction to <a href="http://www.holub.com/publications/articles/">Alan Holubs</a> <a href="http://www.javaworld.com/javaworld/jw-09-2003/jw-0905-toolbox.html"> Why getter and setter methods are evil</a> (which builds upon his Holubs own series of <a href="http://www.javaworld.com/javaworld/jw-07-1999/jw-07-toolbox.html"> Building user interfaces for object-oriented systems</a>.</li>
+				<li><a href="http://www.javaworld.com/javaworld/jw-07-2000/jw-0721-hmvc.html">HMVC: The layered pattern for developing strong client tiers</a></li>
+				<li><a href="http://www.javaworld.com/javaworld/jw-06-2005/jw-0620-tikeswing.html">Use high-level MVC and POJOs with Swing: An introduction to the TikeSwing framework</a></li>
+			</ul>
+		</section>
 		<section id="other">
 			<title>Others</title>
 			<ul>

@@ -51,4 +51,12 @@ directory with the name dingsbums-0.x.x
 		1. choose the right file in step 2 and press the button
 		2. in step 3 change the processor anf file type and press the button
 just beneath the file type
+
+Freshmeat.net
+-------------
+# Login as vanosten
+# Change to http://freshmeat.net/projects/dingsbums/
+# In toolbar choose "Add release"
+# Copy text from release notes on DingsBums?! homepage
+# Eventually add a new screenshot (in toolbar choose "add screenshot"
 	

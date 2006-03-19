@@ -18,15 +18,21 @@ entitled "GNU Free Documentation License".
 		<person name="Rick Gruber-Riemer" email="rick@vanosten.net" id="vanosten" />
 	</developers>
 
-	<!-- Context: doc, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
+	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
 		<!-- Add new releases here -->
+		<release version="0.4.1 (svn 39)" date="2006-03-19">
+			<action type="add" context="feature" dev="vanosten">New learning game &quot;Memory&quot;</action>
+			<action type="fix" context="code" dev="vanosten">Bug #6823 &quot;Can't create new Learning Stack&quot;.</action>
+			<action type="add" context="documentation" dev="vanosten">References to application architecture</action>
+			<action type="update" context="documentation" dev="vanosten">Windows screenshots for Java information updated to Java 5.</action>
+		</release>
 		<release version="0.4 (svn 36)" date="2006-03-15">
 			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
 			<action type="add" context="feature" dev="vanosten">Three game like learning modes.</action>
 			<action type="update" context="code" dev="vanosten">Uses JDK 5.0 with Generics. Changed build.xml to force building with 1.5.</action>
-			<action type="add" context="doc" dev="vanosten">Uses GNU Free Documentation License, Version 1.2</action>
+			<action type="add" context="documentation" dev="vanosten">Uses GNU Free Documentation License, Version 1.2</action>
 			<action type="update" context="refactor" dev="vanosten">Use Toolbox singleton for Preferences, Properties and ResourceBundles</action>
 			<action type="update" context="refactor" dev="vanosten">Changed to more accurate check of JVM version</action>
 			<action type="fix" context="gui" dev="vanosten">Use correct labels in statistics</action>
@@ -73,29 +79,36 @@ entitled "GNU Free Documentation License".
 
 	<todo>
 		<actions priority="next release">
-			<action context="doc" dev="vanosten">Check all external links.</action>
+			<action context="gui" dev="vanosten">Multiline fields for editing base and target</action>
+			<action context="gui" dev="vanosten">Learn by choice: add type/environment to the title</action>
+			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
+			<action context="feature" dev="vanosten">Make sure that learning results are reflected in the selection for learning by choice</action>
+			<action context="documentation" dev="vanosten">Update download documentation to have pictures of JVM 1.5</action>
+			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
+			<action context="feature" dev="vanosten">LearnByChoicePane should support preference for colors.</action>
+			<action context="feature" dev="vanosten">Memory should show matching pairs with different border (and evt. text) colors</action>
+			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
 		</actions>
 		<actions priority="high">
 			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics.</action>
-			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
 			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
 			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
 			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation</action><!-- ## Enable orientation in EntryEdit and EntryLearn -->
-			<action context="feature" dev="vanosten">Make sure that learning results are reflected in the selection for learning by choice</action>
 			<action context="tools" dev="vanosten">Use XPlanner.org</action>
 			<action context="feature" dev="vanosten">Make ready for Java Webstart</action>
 			<action context="feature" dev="vanosten">Show Window with error text instead of Usage on command line</action>
 			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
-			<action context="doc" dev="vanosten">Add description about architecture and data architecture.</action>
-			<action context="doc" dev="vanosten">Add text about support for furmulae (e.g. MathML) etc..</action>
-			<action context="doc" dev="vanosten">Update download documentation to have pictures of JVM 1.5</action>
+			<action context="documentation" dev="vanosten">Add description about architecture and data architecture.</action>
+			<action context="documentation" dev="vanosten">Add text about support for furmulae (e.g. MathML) etc..</action>
 		</actions>
 		<actions priority="medium">
+			<action context="feature" dev="vanosten">Show summary of learning session after learn one by one and learn by choice.</action>
+			<action context="feature" dev="vanosten">Add actual statistics to window status field</action>
 			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
-			<action context="other" dev="vanosten">Promote application in e.g. SwingSightings, nordicos.org, freshmeat.net, www.jars.com, java.com.</action>
-			<action context="doc" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
-			<action context="doc" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
-			<action context="doc" dev="vanosten">Add author and revision control to JavaDoc.</action>
+			<action context="other" dev="vanosten">Promote application in e.g. SwingSightings, www.jars.com, java.com.</action>
+			<action context="documentation" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
+			<action context="documentation" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
+			<action context="documentation" dev="vanosten">Add author and revision control to JavaDoc.</action>
 			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. <a href="http://db.apache.org/derby/">Apache Derby</a></action>
 		</actions>
 		<actions priority="low">
@@ -136,6 +149,7 @@ entitled "GNU Free Documentation License".
 			<action context="feature" dev="vanosten">Synchronization of files from different sources.</action>
 			<action context="feature" dev="vanosten">Printing of lists for offline learning, statistics, ...</action>
 			<action context="gui" dev="vanosten">Use new JDK 1.5 functionality for placing window first time (i.e. without preferences): <code>gui.setLocationByPlatform(true)</code> and <code>gui.setAlwaysOnTop(true)</code></action>
+			<action context="refactor" dev="vanosten">Use javax.swing import for GroupLayout when switching to JDK 6 instead of external class library</action>
 		</actions>
 <!--
 ++++++++++++++++++++++++++++++++++++++++++++++

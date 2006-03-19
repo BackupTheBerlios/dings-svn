@@ -41,11 +41,12 @@ entitled "GNU Free Documentation License".
 						<li>Shuffle: shuffles the letters within each word</li>
 					</ul>
 				</li>
-				<li>Three <a href="site:learningchoice">game-like learning environments</a> (&quot;learning by choice&quot;):
+				<li>Four game-like learning environments (&quot;<a href="site:learningchoice">learning by choice</a>&quot;):
 					<ul>
 						<li>Pick one in a set of answers: e.g. pick the right ansewr out of 4 possible answers for a given question.</li>
 						<li>Match base/term with target/definition as pairs of choices by moving the mouse pointer from the question to the matching answer</li>
 						<li>Choose the correct answer among lots of possibilities with questions shifting after a few seconds</li>
+						<li>The popular &quot;Memory&quot; card game</li>
 					</ul>
 				</li>
 				<li>An intelligent <a href="site:learningalgo">learning algorithm</a> that shows those entries, which you do not know that well, most often. The main idea is that you earn a point, whenever you know the word, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</li>

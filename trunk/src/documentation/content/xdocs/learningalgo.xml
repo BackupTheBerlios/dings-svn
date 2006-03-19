@@ -26,6 +26,7 @@ entitled "GNU Free Documentation License".
 			<li>Picking one in a set: if the answer is right, the score is augmented by one for the entry. If the answer is wrong, both the entry behind the question and the entry behind the wrong answer loose one point in their score.</li>
 			<li>Match of pairs: if a pair is found directly the entry gets a point. If either the question or the answer has been used in a wrong matching attempt, then no point is given. the last matching pair never gets a point because the answer is obvious.</li>
 			<li>Shifting questions: the same as for <code>match</code>.</li>
+			<li>Memory: there is no influence on the score. After all it is part of the game to fail. But the learning is registred.</li>
 		</ul>
 		<note>The learning algorithm described above is my own invention of <a href="http://en.wikipedia.org/wiki/Spaced_repetition">spaced repetition</a>. It is not based on the <a href="http://en.wikipedia.org/wiki/Sebastian_Leitner">Leitner System</a> - this option is planned in a later release.</note>
 	</body>

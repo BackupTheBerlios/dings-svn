@@ -64,15 +64,12 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	//the card panels
 	/** Configuration information */
 	private JPanel configureP;
-	//private JPanel resultP;
-	
 	/** Learning */
 	private LearnByChoicePane learningPane;
 	
 	//keys for the card panels
 	private enum Card {
 		CARD_CONFIGURE
-		, CARD_RESULT
 		, CARD_LEARNING
 	}
 	
@@ -84,10 +81,12 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	JRadioButton setRB;
 	JRadioButton matchingRB;
 	JRadioButton multiRB;
+	JRadioButton memoryRB;
 	
 	/** Choose the direction of learning */
 	JRadioButton baseTargetRB;
 	JRadioButton targetBaseRB;
+	JLabel directionL;
 	
 	/** Choose the pause interval in number of seconds between questions for MULTI */
 	JSlider pauseIntervalS;
@@ -96,6 +95,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	/** Choose the number of columns for MULTI */
 	JComboBox numberOfColumnsCB;
 	JLabel numberOfColumnsL;
+	
+	JSlider waitHideS;
+	JLabel waitHideL;
 
 	public LearnByChoiceView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.learn_by_choice"), aComponentOrientation);
@@ -159,7 +161,7 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			
 			JLabel howtoL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.howto"));
 			
-			//pause interval for CARD_MULTI; must be defined before multiRB
+			//pause interval for MULTI; must be defined before multiRB
 			pauseIntervalS = new JSlider(JSlider.HORIZONTAL, 0,60,5);
 			pauseIntervalS.setMajorTickSpacing(10);
 			pauseIntervalS.setMinorTickSpacing(1);
@@ -169,7 +171,17 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			pauseIntervalL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.pauseinterval.mnemonic").charAt(0));
 			pauseIntervalL.setLabelFor(pauseIntervalS);
 			
-			//number of rows for CARD_MULTI; must be defined before multiRB
+			//wait before hide for MEMORY; must be defined before memoryRB
+			waitHideS = new JSlider(JSlider.HORIZONTAL, 0,10,2);
+			waitHideS.setMajorTickSpacing(5);
+			waitHideS.setMinorTickSpacing(1);
+			waitHideS.setPaintLabels(true);
+			waitHideS.setPaintTicks(true);
+			waitHideL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.waithide.label"));
+			waitHideL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.waithide.mnemonic").charAt(0));
+			waitHideL.setLabelFor(waitHideS);
+			
+			//number of rows for MULTI; must be defined before multiRB
 			numberOfColumnsCB = new JComboBox();
 			for (int i = 1; i <= 5; i++) {
 				numberOfColumnsCB.addItem(Integer.valueOf(i));
@@ -186,6 +198,17 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			numberOfChoicesL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.numberofchoices.mnemonic").charAt(0));
 			numberOfChoicesL.setLabelFor(numberOfChoicesCB);
 			
+			//Choose the direction of learning
+			directionL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.direction.label"));
+			baseTargetRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.basetargetrb.label"));
+			baseTargetRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.basetargetrb.mnemonic").charAt(0));
+			targetBaseRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.targetbaserb.label"));
+			targetBaseRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.targetbaserb.mnemonic").charAt(0));
+			ButtonGroup directionBG = new ButtonGroup();
+			directionBG.add(baseTargetRB);
+			directionBG.add(targetBaseRB);
+			baseTargetRB.setSelected(true);
+			
 			//type of learning game
 			JLabel typeL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.type.label"));
 			setRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.setrb.label"));
@@ -196,26 +219,23 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			multiRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.multirb.mnemonic").charAt(0));
 			multiRB.addItemListener(new ItemListener() {
 				public void itemStateChanged(ItemEvent evt) {
-					showMultiProperties(multiRB.isSelected());
+					showOptionalProperties();
+				}
+			});
+			memoryRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.memoryrb.label"));
+			memoryRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.memoryrb.mnemonic").charAt(0));
+			memoryRB.addItemListener(new ItemListener() {
+				public void itemStateChanged(ItemEvent evt) {
+					showOptionalProperties();
 				}
 			});
 			ButtonGroup typeOfChoiceBG = new ButtonGroup();
 			typeOfChoiceBG.add(setRB);
 			typeOfChoiceBG.add(matchingRB);
 			typeOfChoiceBG.add(multiRB);
-			setRB.setSelected(true); this.showMultiProperties(false);
+			typeOfChoiceBG.add(memoryRB);
+			setRB.setSelected(true); this.showOptionalProperties();
 			
-			//Choose the direction of learning
-			JLabel directionL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.direction.label"));
-			baseTargetRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.basetargetrb.label"));
-			baseTargetRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.basetargetrb.mnemonic").charAt(0));
-			targetBaseRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.targetbaserb.label"));
-			targetBaseRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.targetbaserb.mnemonic").charAt(0));
-			ButtonGroup directionBG = new ButtonGroup();
-			directionBG.add(baseTargetRB);
-			directionBG.add(targetBaseRB);
-			baseTargetRB.setSelected(true);
-
 			//make the gui
 			GroupLayout layout = new GroupLayout(configureP);
 			configureP.setLayout(layout);
@@ -227,19 +247,22 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 						.add(typeL)
 						.add(directionL)
 						.add(numberOfChoicesL)
-						.add(pauseIntervalL)
 						.add(numberOfColumnsL)
+						.add(pauseIntervalL)
+						.add(waitHideL)
 					)
 					.addPreferredGap(LayoutStyle.RELATED)
 					.add(layout.createParallelGroup(GroupLayout.LEADING, false)
 						.add(setRB)
 						.add(matchingRB)
 						.add(multiRB)
+						.add(memoryRB)
 						.add(baseTargetRB)
 						.add(targetBaseRB)
 						.add(numberOfChoicesCB)
-						.add(pauseIntervalS)
 						.add(numberOfColumnsCB)
+						.add(pauseIntervalS)
+						.add(waitHideS)
 					)
 				)
 			);
@@ -256,6 +279,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 				.add(matchingRB)
 				.addPreferredGap(LayoutStyle.RELATED)
 				.add(multiRB)
+				.addPreferredGap(LayoutStyle.RELATED)
+				.add(memoryRB)
 				.addPreferredGap(LayoutStyle.UNRELATED)
 				.add(layout.createParallelGroup(GroupLayout.BASELINE)
 					.add(directionL)
@@ -269,14 +294,19 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 					.add(numberOfChoicesCB)
 				)
 				.addPreferredGap(LayoutStyle.UNRELATED)
+				.add(layout.createParallelGroup(GroupLayout.BASELINE)
+					.add(numberOfColumnsL)
+					.add(numberOfColumnsCB)
+				)
+				.addPreferredGap(LayoutStyle.UNRELATED)
 				.add(layout.createParallelGroup(GroupLayout.LEADING)
 					.add(pauseIntervalL)
 					.add(pauseIntervalS)
 				)
 				.addPreferredGap(LayoutStyle.UNRELATED)
-				.add(layout.createParallelGroup(GroupLayout.BASELINE)
-					.add(numberOfColumnsL)
-					.add(numberOfColumnsCB)
+				.add(layout.createParallelGroup(GroupLayout.LEADING)
+					.add(waitHideL)
+					.add(waitHideS)
 				)
 			);
 			
@@ -291,15 +321,23 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	} //END private void showConfigureP()
 	
 	/**
-	 * Shows or hides the properties for CARD_MULTI
-	 * @param doShow
+	 * Shows or hides some of the optional properties
 	 */
-	private void showMultiProperties(boolean doShow) {
-		pauseIntervalS.setEnabled(doShow);
-		pauseIntervalL.setEnabled(doShow);
-		numberOfColumnsCB.setEnabled(doShow);
-		numberOfColumnsL.setEnabled(doShow);
-	} //END private void showMultiProperties(boolean)
+	private void showOptionalProperties() {
+		boolean showNOC = multiRB.isSelected() || memoryRB.isSelected();
+		boolean showPI = multiRB.isSelected();
+		boolean showWH = memoryRB.isSelected();
+		boolean showLD = (false == memoryRB.isSelected());
+		directionL.setEnabled(showLD);
+		baseTargetRB.setEnabled(showLD);
+		targetBaseRB.setEnabled(showLD);
+		numberOfColumnsCB.setEnabled(showNOC);
+		numberOfColumnsL.setEnabled(showNOC);
+		pauseIntervalS.setEnabled(showPI);
+		pauseIntervalL.setEnabled(showPI);
+		waitHideS.setEnabled(showWH);
+		waitHideL.setEnabled(showWH);
+	} //END private void showOptionalProperties()
 	
 	/**
 	 * Shows the card with set type of learning
@@ -314,13 +352,16 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			chosen = ChoiceType.SET;
 		} else if (matchingRB.isSelected()) {
 			chosen = ChoiceType.MATCH;
-		} else {
+		} else if (multiRB.isSelected()) {
 			chosen = ChoiceType.MULTI;
+		} else {
+			chosen = ChoiceType.MEMORY;
 		}
 		learningPane.setType(chosen
 				, baseTargetRB.isSelected()
 				, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue()
-				, pauseIntervalS.getValue());
+				, pauseIntervalS.getValue()
+				, waitHideS.getValue());
 		next();
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_LEARNING.name());

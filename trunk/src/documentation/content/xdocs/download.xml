@@ -60,7 +60,7 @@ entitled "GNU Free Documentation License".
 			<figure alt="Run in Start menu" src="images/start_run.png"/>
 			<figure alt="Typing cmd into Run dialog" src="images/run_prompt.png"/>
 			<figure alt="Testing for Java in command window" src="images/windows_cmd.png"/>
-			<p>Yet another possibility is to look for a &quot;Java Plugin&quot; control panel and if you find one look at the information in the &quot;About&quot; tab.</p>
+			<p>Yet another possibility is to look for a &quot;Java&quot; control panel and if you find one look at the information in the &quot;About&quot; section of the &quot;General&quot; tab.</p>
 			<figure alt="Find the Java plugin control panel" src="images/jre_plugin.png"/>
 			<figure alt="Java version information in the about tab" src="images/jre_ctrl_panel.png"/>
 		</section>

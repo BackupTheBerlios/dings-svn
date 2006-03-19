@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import net.vanosten.dings.swing.LearnByChoicePane;
+import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
 
 public class TextRectangle extends JLabel implements MouseListener {
 	private final static long serialVersionUID = 1L;
@@ -37,12 +38,19 @@ public class TextRectangle extends JLabel implements MouseListener {
 	/** The parent component in charge of drawing etc. */
 	private LearnByChoicePane parent;
 	
-	//the id of the corresponding Entry
+	/** The id of the corresponding Entry */
 	private String id = null;
 	
 	/** Sensitive on user interaction */
 	private boolean sensitive = true;
 	
+	/** Used as a question? */
+	private boolean question = false;
+	
+	/** Used in memory ? */
+	private ChoiceType type;
+	
+	//the card background
 	private final static Color BG_OUT = Color.yellow;
 	private final static Color BG_IN = Color.pink;
 	private final static Color BG_CHOSEN = Color.blue;
@@ -51,6 +59,7 @@ public class TextRectangle extends JLabel implements MouseListener {
 	private final static Color BG_QUESTION = Color.white;
 	private Color[] background = {BG_OUT, BG_IN, BG_CHOSEN, BG_CORRECT_RESULT, BG_WRONG_RESULT, BG_QUESTION};
 	
+	//the text color for SET, MULTI and MATCH
 	private final static Color FG_OUT = Color.black;
 	private final static Color FG_IN = Color.black;
 	private final static Color FG_CHOSEN = Color.white;
@@ -59,6 +68,15 @@ public class TextRectangle extends JLabel implements MouseListener {
 	private final static Color FG_QUESTION = Color.black;
 	/** True if the mouse is within this Shape */
 	private Color[] foreground = {FG_OUT, FG_IN, FG_CHOSEN, FG_CORRECT_RESULT, FG_WRONG_RESULT, FG_QUESTION};
+	//the text color for MEMORY
+	private final static Color FG_M_OUT = BG_OUT; //must be the same as BG_OUT
+	private final static Color FG_M_IN = BG_IN; //must be the same as BG_IN
+	private final static Color FG_M_CHOSEN = BG_CHOSEN; //must be the same as BG_CHOSEN
+	private final static Color FG_M_CORRECT_RESULT = Color.white;
+	private final static Color FG_M_WRONG_RESULT = Color.white;
+	private final static Color FG_M_QUESTION = Color.black;
+	/** True if the mouse is within this Shape */
+	private Color[] foregroundMemory = {FG_M_OUT, FG_M_IN, FG_M_CHOSEN, FG_M_CORRECT_RESULT, FG_M_WRONG_RESULT, FG_M_QUESTION};
 
 	public enum Status {
 		OUT
@@ -92,17 +110,29 @@ public class TextRectangle extends JLabel implements MouseListener {
 	public void changeStatus(Status newStatus, boolean userInteraction) {
 		if (false == userInteraction) {
 			status = newStatus;
-			this.setBackground(background[status.ordinal()]);
-			this.setForeground(foreground[status.ordinal()]);
+			changeAppearance();
 		} else if (status != newStatus && status.ordinal() < Status.CHOSEN.ordinal() && sensitive) {
 			status = newStatus;
-			this.setBackground(background[status.ordinal()]);
-			this.setForeground(foreground[status.ordinal()]);
+			changeAppearance();
 			if (status == Status.CHOSEN) {
 				parent.checkChosen(this);
 			}
 		}
 	} //END public void changeStatus(int, boolean)
+	
+	/**
+	 * changes the background and foreground color.
+	 * Depending on whether this is used in memory context or not a different 
+	 * foreground color is used.
+	 */
+	private void changeAppearance() {
+		this.setBackground(background[status.ordinal()]);
+		if (ChoiceType.MEMORY == type) {
+			this.setForeground(foregroundMemory[status.ordinal()]);
+		} else {
+			this.setForeground(foreground[status.ordinal()]);
+		}
+	} //END private void changeAppearance()
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
@@ -172,4 +202,18 @@ public class TextRectangle extends JLabel implements MouseListener {
 	public void setSensitive(boolean sensitive) {
 		this.sensitive = sensitive;
 	} //ENd public void setSensitive(boolean)
+
+	public boolean isQuestion() {
+		return question;
+	} //END public boolean isQuestion()
+
+	public void setQuestion(boolean question) {
+		this.question = question;
+	} //END public void setQuestion(boolean)
+
+	public void setType(ChoiceType type) {
+		this.type = type;
+		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
+	} //END public void setType(ChoiceType)
+
 } //END public class TextRectangle extends JLabel implements MouseListener

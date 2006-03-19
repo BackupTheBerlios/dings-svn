@@ -33,7 +33,7 @@ entitled "GNU Free Documentation License".
 			<ul>
 				<li>you want to be able to memorize stuff in the classical way (item by item)</li>
 				<li>you would like to have the possibility to define the level of details by yourself. E.g. grammatical details for language training depend both on your skill level and the actual language. <code>DingsBums?!</code> supports both sophisticated categorization / level of details and a very basic approach.</li>
-				<li>a bit of fun should be part of learning. <code>DingsBums?!</code> provides different help methods for <a href="site:learning">learning one by one</a> plus three <a href="site:learningchoice">game-like learning environments</a>.</li>
+				<li>a bit of fun should be part of learning. <code>DingsBums?!</code> provides different help methods for <a href="site:learning">learning one by one</a> plus four <a href="site:learningchoice">game-like learning environments</a>.</li>
 				<li>learning statistics is something you are looking for.</li>
 				<li>the application should present the hard to remember items more often then the ones you already know by heart. After all the computer should both help you to save time and make learning less boring, shouldn&apos;t it?</li>
 				<li>you want to define the learning items yourself - no matter whether you are learning the stuff or you are a teacher.</li>
@@ -52,9 +52,9 @@ entitled "GNU Free Documentation License".
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="site:links">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title><code>DingsBums?!</code> 0.4 released</title>
-			<p>Version 0.4 is a major update of version 0.3.1. The most important new feature is the possibility to learn in three <a href="site:learningchoice">game-like environments</a>. See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
-			<p>the next release will feature &quot;memory&quot; (the pattern card game) as a forth game-like learning environment.</p>
+			<title><code>DingsBums?!</code> 0.4.1 released</title>
+			<p>Version 0.4.1 is a minor update of version 0.4.0. The most important new feature is the possibility to learn with a forth possibility &quot;Memory&quot; in the <a href="site:learningchoice">game-like learning environments</a>. See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
+			<p>The next minor release will contain more options for preferences and multiline input for base/term and target/definition.</p>
 			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then have a look at the <a href="site:features">features</a> and <a href="site:todo">todo-list</a> and <a href="site:contact">contact</a> me.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
