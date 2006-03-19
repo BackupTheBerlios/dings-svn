@@ -53,7 +53,7 @@ entitled "GNU Free Documentation License".
 		</section>
 		<section id="released">
 			<title><code>DingsBums?!</code> 0.4.1 released</title>
-			<p>Version 0.4.1 is a minor update of version 0.4.0. The most important new feature is the possibility to learn with a forth possibility &quot;Memory&quot; in the <a href="site:learningchoice">game-like learning environments</a>. See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
+			<p>Version 0.4.1 is a minor update of version 0.4.0. The most important new feature is the possibility to learn with a forth possibility &quot;Memory&quot; in the <a href="site:learningchoice">game-like learning environments</a>. Also a critical bug preventing the creation of new learning stacks has been fixed. See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
 			<p>The next minor release will contain more options for preferences and multiline input for base/term and target/definition.</p>
 			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then have a look at the <a href="site:features">features</a> and <a href="site:todo">todo-list</a> and <a href="site:contact">contact</a> me.</p>
 		</section>

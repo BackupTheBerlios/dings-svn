@@ -33,7 +33,8 @@ $ java -jar dingsbums.jar (to see whether it works and all images are copied)
 Release-file
 ------------
 # copy dingsbums.jar, CHANGES, README and the folder samples into a
-directory with the name dingsbums-0.x.x
+directory with the name dingsbums-0.x.x.
+# remove .svn subfolders
 # make a zip-file with the name dingsbums-0.x.x.zip
 #
 	$ cd temprick
@@ -48,8 +49,9 @@ directory with the name dingsbums-0.x.x
 	* goto project
 	* goto admin
 	* Edit / release files
+		0. Choose "add release" for package "binary" for a major relaease. Otherwise choose "edit release"
 		1. choose the right file in step 2 and press the button
-		2. in step 3 change the processor anf file type and press the button
+		2. in step 3 change the processor and file type and press the button
 just beneath the file type
 
 Freshmeat.net
