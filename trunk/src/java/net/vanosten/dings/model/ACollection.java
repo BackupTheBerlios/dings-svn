@@ -21,6 +21,7 @@
  */
 package net.vanosten.dings.model;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
@@ -54,6 +55,7 @@ public abstract class ACollection implements IAppEventHandler {
 		this.parentController = anEventHandler;
 		setTagName();
 		setMessageListView();
+		items = new HashMap();
 	} //END public ACollection;
 
 	/**
