@@ -451,6 +451,8 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 				currentAnswer.changeStatus(Status.CORRECT_RESULT, false);
 				currentAnswer.setSensitive(false);
 				results.put(currentQuestion.getId(), Result.HELPED); //MEMORY does not influence score
+				currentQuestion.setMemoryColorForCorrect(results.size());
+				currentAnswer.setMemoryColorForCorrect(results.size());
 				currentQuestion = null;
 				currentAnswer = null;
 				if (results.size() == (answerRects.length / 2)) {

@@ -45,6 +45,7 @@ entitled "GNU Free Documentation License".
 		<section id="memory">
 			<title>Memory</title>
 			<p>Memory is <code>DingsBums?!</code>'s implementation of the popular &quot;Memory&quot; card game, where you have to find matching pairs with cards turned with their face down and a maximum of 2 cards turned up. The option &quot;wait before hide&quot; indicates the number of seconds before not matching cards are hidden again.</p>
+			<p>Each correctly matched pair gets a different color.</p>
 			<figure src="images/learn_choice_memory.png" alt="screenshot of DingsBums?! showing learning by finding matching pairs in the memory card game" />
 		</section>
 	</body>

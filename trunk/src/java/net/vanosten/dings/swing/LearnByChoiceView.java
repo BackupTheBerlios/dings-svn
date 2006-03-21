@@ -315,6 +315,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		}
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_CONFIGURE.name());
+		this.setViewTitle(Toolbox.getInstance().getLocalizedString("viewtitle.learn_by_choice") 
+				+ Toolbox.getInstance().getLocalizedString("lbcv.viewtitle.config"));
 		startB.setVisible(true);
 		doneB.setVisible(false);
 		nextB.setVisible(false);
@@ -365,10 +367,27 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		next();
 		CardLayout cl = (CardLayout)(mainP.getLayout());
 		cl.show(mainP, Card.CARD_LEARNING.name());
+		changeViewTitleForLearning(chosen);
 		startB.setVisible(false);
 		doneB.setVisible(true);
 		nextB.setVisible(false);
 	} //private void showLearningPane()
+	
+	/**
+	 * Changes the title of the view based on the currently selected ChoiceType for learning
+	 * @param type
+	 */
+	private void changeViewTitleForLearning(ChoiceType type) {
+		String viewTitle = null;
+		switch(type) {
+		case SET: viewTitle = Toolbox.getInstance().getLocalizedString("lbcv.viewtitle.set"); break;
+		case MATCH: viewTitle = Toolbox.getInstance().getLocalizedString("lbcv.viewtitle.match"); break;
+		case MULTI: viewTitle = Toolbox.getInstance().getLocalizedString("lbcv.viewtitle.multi"); break;
+		default: viewTitle = Toolbox.getInstance().getLocalizedString("lbcv.viewtitle.memory"); break;
+		}
+		this.setViewTitle(Toolbox.getInstance().getLocalizedString("viewtitle.learn_by_choice") 
+				+ viewTitle);
+	} //END private void changeViewTitleForLearning(ChoiceType)
 	
 	/**
 	 * Changes the displayed learning game after pressing the start button

@@ -21,7 +21,10 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
-		<!-- Add new releases here -->
+		<release version="0.4.2 (svn ??)" date="???">
+			<action type="update" context="gui" dev="vanosten">View title for learn by choice reflects current view type.</action>
+			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice -&gt; Memory.</action>
+		</release>
 		<release version="0.4.1 (svn 39)" date="2006-03-19">
 			<action type="add" context="feature" dev="vanosten">New learning game &quot;Memory&quot;</action>
 			<action type="fix" context="code" dev="vanosten">Bug #6823 &quot;Can't create new Learning Stack&quot;.</action>
@@ -80,13 +83,10 @@ entitled "GNU Free Documentation License".
 	<todo>
 		<actions priority="next release">
 			<action context="gui" dev="vanosten">Multiline fields for editing base and target</action>
-			<action context="gui" dev="vanosten">Learn by choice: add type/environment to the title</action>
 			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
-			<action context="feature" dev="vanosten">Make sure that learning results are reflected in the selection for learning by choice</action>
-			<action context="documentation" dev="vanosten">Update download documentation to have pictures of JVM 1.5</action>
+			<action context="feature" dev="vanosten">Make sure that learning results (scores) are reflected in the selection for learning by choice</action>
 			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
 			<action context="feature" dev="vanosten">LearnByChoicePane should support preference for colors.</action>
-			<action context="feature" dev="vanosten">Memory should show matching pairs with different border (and evt. text) colors</action>
 			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
 		</actions>
 		<actions priority="high">

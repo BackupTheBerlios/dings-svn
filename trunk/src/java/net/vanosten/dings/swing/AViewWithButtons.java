@@ -36,6 +36,8 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 	protected JPanel mainP;
 	protected JPanel buttonsP;
 	
+	private JLabel titleL;
+	
 	/** The title of this list */
 	private String title;
 	
@@ -70,7 +72,7 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		
 		initializeMainP();
 				
-		JLabel titleL = new JLabel(title);
+		titleL = new JLabel(title);
 		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
 		titleL.setEnabled(false);
 				
@@ -138,4 +140,15 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 	protected final void setGUIOrientation() {
 		this.applyComponentOrientation(this.guiOrientation);
 	} //END protected final void setGUIOrientation()
+	
+	/**
+	 * (Se)sets the title of the view
+	 * @param title
+	 */
+	protected final void setViewTitle(String title) {
+		this.title = title;
+		if (null != titleL) {
+			titleL.setText(title);
+		}
+	} //ENd protected final void setViewTitle(String)
 } //END public abstract class AViewWithButtons

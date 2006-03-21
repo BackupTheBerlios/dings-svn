@@ -28,6 +28,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 import net.vanosten.dings.swing.LearnByChoicePane;
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
@@ -56,7 +57,7 @@ public class TextRectangle extends JLabel implements MouseListener {
 	private final static Color BG_CHOSEN = Color.blue;
 	private final static Color BG_CORRECT_RESULT = Color.green;
 	private final static Color BG_WRONG_RESULT = Color.red;
-	private final static Color BG_QUESTION = Color.white;
+	private final static Color BG_QUESTION = Color.lightGray;
 	private Color[] background = {BG_OUT, BG_IN, BG_CHOSEN, BG_CORRECT_RESULT, BG_WRONG_RESULT, BG_QUESTION};
 	
 	//the text color for SET, MULTI and MATCH
@@ -88,6 +89,32 @@ public class TextRectangle extends JLabel implements MouseListener {
 	}
 	private Status status = Status.OUT;
 	
+	private final static int[][] COLORS = {
+		{0,0,128} //blå (OpenOffice 2.0 standard palette)
+		, {0,128,0} //grøn
+		, {0,128,128} //turkis
+		, {128,0,0} //rød
+		, {128,0,128} //magentarød
+		, {128,128,0} //brun
+		, {128,128,128} //grå
+		, {192,192,192} //lysegrå
+		, {0,0,255} //lyseblå
+		, {0,255,0} //lysegrøn
+		, {0,255,255} //lys turkis
+		, {255,0,0} //lyserød
+		, {255,0,255} //lys magentarød
+		, {255,255,0} //gul
+		, {0,184,255} //blå 7
+		, {0,174,0} //grøn 5
+		, {71,184,184} //turkis 4
+		, {255,102,51} //orange 2
+		, {148,71,148} //magentarød 3
+		, {255,255,101} //gul 3
+		, {128,76,25} //brun 3
+		, {255,153,102} //orange 3
+		, {102,102,153} //sun 2
+	};
+	
 	public TextRectangle(LearnByChoicePane parent) {
 		this.parent = parent;
 		this.addMouseListener(this);
@@ -95,10 +122,14 @@ public class TextRectangle extends JLabel implements MouseListener {
 		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
 		this.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setVerticalAlignment(SwingConstants.CENTER);
-		Border emptyB = BorderFactory.createEmptyBorder(10,10,10,10);
-		Border lineB = BorderFactory.createLineBorder(Color.black, 3);
-		this.setBorder(BorderFactory.createCompoundBorder(lineB, emptyB));
+		setLineBorder(Color.black);
 	} //END public TextRectangle(JComponent)
+	
+	private void setLineBorder(Color borderColor) {
+		Border emptyB = BorderFactory.createEmptyBorder(10,10,10,10);
+		LineBorder lineB = new LineBorder(borderColor, 3);
+		this.setBorder(BorderFactory.createCompoundBorder(lineB, emptyB));
+	} //END private void setLineBorder(Color)
 	
 	/**
 	 * Changes the status of the component depending on mouse events.
@@ -121,18 +152,42 @@ public class TextRectangle extends JLabel implements MouseListener {
 	} //END public void changeStatus(int, boolean)
 	
 	/**
-	 * changes the background and foreground color.
+	 * Changes the background and foreground color.
 	 * Depending on whether this is used in memory context or not a different 
 	 * foreground color is used.
 	 */
 	private void changeAppearance() {
 		this.setBackground(background[status.ordinal()]);
 		if (ChoiceType.MEMORY == type) {
-			this.setForeground(foregroundMemory[status.ordinal()]);
+			if (Status.CORRECT_RESULT == status) {
+				//do nothing as this gets overridden by setMemoryColorForCorrect(int)
+			} else {	
+				this.setForeground(foregroundMemory[status.ordinal()]);
+				this.setBackground(background[status.ordinal()]);
+			}
 		} else {
 			this.setForeground(foreground[status.ordinal()]);
+			this.setBackground(background[status.ordinal()]);
 		}
 	} //END private void changeAppearance()
+	
+	/**
+	 * Sets the color of the border and the text different for each
+	 * pair of correct matches in MEMORY.
+	 * If there are no more colors in the COLORS array,
+	 * then use the first one.
+	 * @param position 
+	 */
+	public void setMemoryColorForCorrect(int position) {
+		this.setBackground(Color.white);
+		int colorArrayPos = position -1;
+		if (position > COLORS.length) {
+			colorArrayPos = 0;
+		}
+		Color fg = new Color(COLORS[colorArrayPos][0],COLORS[colorArrayPos][1],COLORS[colorArrayPos][2]);
+		this.setLineBorder(fg);
+		this.setForeground(fg);
+	} //END public void setMemoryColorForCorrect(int
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
