@@ -112,6 +112,37 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
             BasicStroke.JOIN_MITER, 
             10.0f, MATCHING_DASH, 0.0f);
 	
+	/** The line and text colors for showing pairs of matches for MATCH and MEMORY */
+	private final static int[][] COLORS = {
+		{0,0,128} //blå (OpenOffice 2.0 standard palette)
+		, {0,128,0} //grøn
+		, {0,128,128} //turkis
+		, {128,0,0} //rød
+		, {128,0,128} //magentarød
+		, {128,128,0} //brun
+		, {128,128,128} //grå
+		, {192,192,192} //lysegrå
+		, {0,0,255} //lyseblå
+		, {0,255,0} //lysegrøn
+		, {0,255,255} //lys turkis
+		, {255,0,0} //lyserød
+		, {255,0,255} //lys magentarød
+		, {255,255,0} //gul
+		, {0,184,255} //blå 7
+		, {0,174,0} //grøn 5
+		, {71,184,184} //turkis 4
+		, {255,102,51} //orange 2
+		, {148,71,148} //magentarød 3
+		, {255,255,101} //gul 3
+		, {128,76,25} //brun 3
+		, {255,153,102} //orange 3
+		, {102,102,153} //sun 2
+	};
+
+	/**
+	 * Constructor
+	 * @param controller
+	 */
 	public LearnByChoicePane(LearnByChoiceView controller) {
 		this.controller = controller;
 		this.setBackground(Color.WHITE);
@@ -276,10 +307,10 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			
 			//draw the lines for the existing matches
 			if (0 != matchedIndex.size()) {
-				g2.setPaint(Color.green);
 				g2.setStroke(MATCHED_STROKE);
 				int answerPos;
 				for (int questPos : matchedIndex.keySet()) {
+					g2.setPaint(questionRects[questPos].getForeground());
 					answerPos = matchedIndex.get(questPos);
 					startX = questionRects[questPos].getX() + questionRects[questPos].getWidth() + gridPanel.getX();
 					startY = questionRects[questPos].getY() + questionRects[questPos].getHeight()/2 + gridPanel.getY();
@@ -388,10 +419,13 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 					if (matchedIndex.size() == questionRects.length) {
 						getNextQuestions();
 					}
+					Color myColor = getColorForPosition(matchedIndex.size());
 					currentQuestion.setSensitive(false);
 					currentQuestion.changeStatus(Status.CORRECT_RESULT, false);
+					currentQuestion.setColorForPair(myColor);
 					answer.setSensitive(false);
 					answer.changeStatus(Status.CORRECT_RESULT, false);
+					answer.setColorForPair(myColor);
 					repaint();
 				} else { //there was no match between question and answer
 					currentQuestion.setSensitive(true);
@@ -451,8 +485,9 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 				currentAnswer.changeStatus(Status.CORRECT_RESULT, false);
 				currentAnswer.setSensitive(false);
 				results.put(currentQuestion.getId(), Result.HELPED); //MEMORY does not influence score
-				currentQuestion.setMemoryColorForCorrect(results.size());
-				currentAnswer.setMemoryColorForCorrect(results.size());
+				Color myColor = getColorForPosition(results.size());
+				currentQuestion.setColorForPair(myColor);
+				currentAnswer.setColorForPair(myColor);
 				currentQuestion = null;
 				currentAnswer = null;
 				if (results.size() == (answerRects.length / 2)) {
@@ -576,4 +611,18 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			controller.next();
 		}
 	} //END private void getNextQuestions()
+	
+	/** 
+	 * 
+	 * @param position
+	 * @return A Color based anon the Colors in <code>COLORS</code> array. If the position is
+	 *         higher then the number of available colors then the Color at position 0 is used.
+	 */
+	private Color getColorForPosition(int position) {
+		int colorArrayPos = position -1;
+		if (position > COLORS.length) {
+			colorArrayPos = 0;
+		}
+		return new Color(COLORS[colorArrayPos][0],COLORS[colorArrayPos][1],COLORS[colorArrayPos][2]);
+	} //END private Color getColorForPosition(int
 } //END public class LearnByChoicePane extends JPanel implements MouseMotionListener

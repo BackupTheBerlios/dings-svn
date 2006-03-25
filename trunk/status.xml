@@ -23,7 +23,7 @@ entitled "GNU Free Documentation License".
 	<changes>
 		<release version="0.4.2 (svn ??)" date="???">
 			<action type="update" context="gui" dev="vanosten">View title for learn by choice reflects current view type.</action>
-			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice -&gt; Memory.</action>
+			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice for <code>Match</code> and <code>Memory</code>.</action>
 		</release>
 		<release version="0.4.1 (svn 39)" date="2006-03-19">
 			<action type="add" context="feature" dev="vanosten">New learning game &quot;Memory&quot;</action>
