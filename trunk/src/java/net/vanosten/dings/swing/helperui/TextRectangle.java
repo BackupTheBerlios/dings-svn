@@ -57,7 +57,7 @@ public class TextRectangle extends JLabel implements MouseListener {
 	private final static Color BG_CHOSEN = Color.blue;
 	private final static Color BG_CORRECT_RESULT = Color.green;
 	private final static Color BG_WRONG_RESULT = Color.red;
-	private final static Color BG_QUESTION = Color.lightGray;
+	private final static Color BG_QUESTION = new Color(210,210,210);
 	private Color[] background = {BG_OUT, BG_IN, BG_CHOSEN, BG_CORRECT_RESULT, BG_WRONG_RESULT, BG_QUESTION};
 	
 	//the text color for SET, MULTI and MATCH
