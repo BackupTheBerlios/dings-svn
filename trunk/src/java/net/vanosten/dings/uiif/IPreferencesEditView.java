@@ -74,4 +74,13 @@ public interface IPreferencesEditView extends IView {
 	public void setHintTextColor(Color aColor);
 	public Color getResultTextColor();
 	public void setResultTextColor(Color aColor);
+	//text lines
+	public Integer getLinesBase();
+	public void setLinesBase(Integer numberOfLines);
+	public Integer getLinesTarget();
+	public void setLinesTarget(Integer numberOfLines);
+	public Integer getLinesExplanation();
+	public void setLinesExplanation(Integer numberOfLines);
+	public Integer getLinesExample();
+	public void setLinesExample(Integer numberOfLines);
 } //END public interface IPreferencesEditView extends IDetailsView

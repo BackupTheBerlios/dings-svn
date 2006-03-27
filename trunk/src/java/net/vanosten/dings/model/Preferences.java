@@ -115,6 +115,15 @@ public class Preferences extends AModel{
 	//public final static String LEARN_HINT_COVER_PERCENT = "learn_hint_cover_percent";
 	public final static String LEARN_HINT_FLASH_TIME = "learn_hint_flash_time";
 	public final static String LEARN_HINT_SHUFFLE_WORD = "learn_hint_shuffle_word";
+	
+	/** The number of lines for entry field base */
+	public final static String PROP_LINES_BASE = "lines_base";
+	/** The number of lnes for entry field target */
+	public final static String PROP_LINES_TARGET = "lines_target";
+	/** The number of lines for entry field explanation */
+	public final static String PROP_LINES_EXPLANATION = "lines_explanation";
+	/** The number of lnes for entry field example */
+	public final static String PROP_LINES_EXAMPLE = "lines_example";
 
 	/** The edit view */
 	private IPreferencesEditView editView;
@@ -164,6 +173,11 @@ public class Preferences extends AModel{
 			editView.setStatsOnQuit(Boolean.valueOf(props.getProperty(PROP_STATS_QUIT)).booleanValue());
 			//locale
 			editView.setApplicationLocale(props.getProperty(PROP_LOCALE));
+			//text lines
+			editView.setLinesBase(Integer.valueOf(props.getProperty(PROP_LINES_BASE)));
+			editView.setLinesTarget(Integer.valueOf(props.getProperty(PROP_LINES_TARGET)));
+			editView.setLinesExplanation(Integer.valueOf(props.getProperty(PROP_LINES_EXPLANATION)));
+			editView.setLinesExample(Integer.valueOf(props.getProperty(PROP_LINES_EXAMPLE)));
 		}
 		catch (NumberFormatException e) {
 			//TODO: log this
@@ -207,6 +221,11 @@ public class Preferences extends AModel{
 		props.setProperty(PROP_STATS_QUIT, String.valueOf(editView.isStatsOnQuit()));
 		//locale
 		props.setProperty(PROP_LOCALE, editView.getApplicationLocale());
+		//text lines
+		props.setProperty(PROP_LINES_BASE, editView.getLinesBase().toString());
+		props.setProperty(PROP_LINES_TARGET, editView.getLinesTarget().toString());
+		props.setProperty(PROP_LINES_EXPLANATION, editView.getLinesExplanation().toString());
+		props.setProperty(PROP_LINES_EXAMPLE, editView.getLinesExample().toString());
 	} //END protected void updateModel()
 
 	//Overrides AModel
@@ -324,6 +343,18 @@ public class Preferences extends AModel{
 		}
 		if (!props.containsKey(PROP_STATS_QUIT)) {
 			props.setProperty(PROP_STATS_QUIT, Boolean.toString(false));
+		}
+		if (!props.containsKey(PROP_LINES_BASE)) {
+			props.setProperty(PROP_LINES_BASE, Integer.toString(3));
+		}
+		if (!props.containsKey(PROP_LINES_TARGET)) {
+			props.setProperty(PROP_LINES_TARGET, Integer.toString(3));
+		}
+		if (!props.containsKey(PROP_LINES_EXPLANATION)) {
+			props.setProperty(PROP_LINES_EXPLANATION, Integer.toString(3));
+		}
+		if (!props.containsKey(PROP_LINES_EXAMPLE)) {
+			props.setProperty(PROP_LINES_EXAMPLE, Integer.toString(3));
 		}
 		//PROP_LOCALE is not set to a value. The value is set to the value of the underlying
 		//OS the first time the application is started

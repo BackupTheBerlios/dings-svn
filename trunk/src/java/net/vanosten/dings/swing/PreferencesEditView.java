@@ -47,13 +47,19 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.border.EmptyBorder;
+
+import org.jdesktop.layout.GroupLayout;
+import org.jdesktop.layout.LayoutStyle;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
@@ -64,7 +70,7 @@ import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IPreferencesEditView;
 
-public class PreferencesEditView extends JDialog implements IPreferencesEditView {
+public class PreferencesEditView extends JDialog implements IPreferencesEditView, ChangeListener {
 	private final static long serialVersionUID = 1L;
 
 	private IAppEventHandler controller;
@@ -75,13 +81,14 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JList choiceLi; //the list of preferences to choose from in the left panel
 	private JLabel titleL; //the title on the right for the preferences
 	private JLabel descriptionL; //the description of the preference to be displayed on the right side
-	private final static String LAF = "Look and Feel";
-	private final static String LH = "Learn Hints";
-	private final static String FILEENC = "File Encoding";
-	private final static String LOGGING = "Logging";
-	private final static String SELECTION_UPDATE = "Selection Update";
-	private final static String STATS = "Statistics";
-	private final static String LOCALE = "Locale";
+	private final static String LAF = Toolbox.getInstance().getLocalizedString("pev.laf.panel");
+	private final static String LH = Toolbox.getInstance().getLocalizedString("pev.lh.panel");
+	private final static String FILEENC = Toolbox.getInstance().getLocalizedString("pev.fileenc.panel");
+	private final static String LOGGING = Toolbox.getInstance().getLocalizedString("pev.logging.panel");
+	private final static String SELECTION_UPDATE = Toolbox.getInstance().getLocalizedString("pev.selection_update.panel");
+	private final static String STATS = Toolbox.getInstance().getLocalizedString("pev.stats.panel");
+	private final static String LOCALE = Toolbox.getInstance().getLocalizedString("pev.locale.panel");
+	private final static String TEXT_LINES = Toolbox.getInstance().getLocalizedString("pev.text_lines.panel");
 
 	private JPanel learnHintP;
 	private JSlider learnHintFlashTimeSL;
@@ -107,6 +114,12 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	
 	private JPanel localeP;
 	private ChoiceID localeCh;
+	
+	private JPanel textLinesP;
+	private JSpinner baseSP;
+	private JSpinner targetSP;
+	private JSpinner explanationSP;
+	private JSpinner exampleSP;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -118,7 +131,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	protected boolean isUpdating = false;
 
 	public PreferencesEditView(JFrame parentF, ComponentOrientation aComponentOrientation) {
-		super(parentF, "Preferences", false);
+		super(parentF, Toolbox.getInstance().getLocalizedString("viewtitle.preferences"), false);
 		super.setComponentOrientation(aComponentOrientation);
 		initializeGUI();
 		this.applyComponentOrientation(aComponentOrientation);
@@ -155,9 +168,9 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagConstraints gbc = new GridBagConstraints();
 		leftP.setLayout(gbl);
 		
-		JLabel categoryL = new JLabel();
-		categoryL.setText("Categories:");
-		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE};
+		JLabel categoryL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.categories.label"));
+		categoryL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.categories.mnemonic").charAt(0));
+		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE, TEXT_LINES};
 		choiceLi = new JList(choices);
 		choiceLi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		choiceLi.addListSelectionListener(new ListSelectionListener() {
@@ -165,6 +178,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 				switchPreferencePanel();
 			}
 		});
+		categoryL.setLabelFor(choiceLi);
 		JScrollPane listScroller = new JScrollPane(choiceLi);
 		//listScroller.setPreferredSize(new Dimension(250, 80));
 		gbc.gridx = 0;
@@ -224,6 +238,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		mainP.add(statsP, STATS);
 		initializeLocalePanel();
 		mainP.add(localeP, LOCALE);
+		initializeTextLinesPanel();
+		mainP.add(textLinesP, TEXT_LINES);
 		
 		//layout
 		gbc.gridx = 0;
@@ -328,6 +344,10 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 					+ " supported. The changes are only visible after a restart of the application."
 					+ "</html>"
 				);
+				break;
+			case 7: //text lines
+				titleL.setText(Toolbox.getInstance().getLocalizedString("pev.text_lines.title"));
+				descriptionL.setText(Toolbox.getInstance().getLocalizedString("pev.text_lines.description"));
 				break;
 			default: //file encoding
 				titleL.setText("File Encoding");
@@ -624,6 +644,66 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbl.setConstraints(localeCh, gbc);
 		localeP.add(localeCh);
 	} //END private void initializeLocalePanel()
+	
+	private void initializeTextLinesPanel() {
+		textLinesP = new JPanel();
+		SpinnerModel baseModel = new SpinnerNumberModel(3,1,20,1);
+		SpinnerModel targetModel = new SpinnerNumberModel(3,1,20,1);
+		SpinnerModel explanationModel = new SpinnerNumberModel(3,1,20,1);
+		SpinnerModel exampleModel = new SpinnerNumberModel(3,1,20,1);
+		baseSP = new JSpinner(baseModel);
+		baseSP.addChangeListener(this);
+		targetSP = new JSpinner(targetModel);
+		targetSP.addChangeListener(this);
+		explanationSP = new JSpinner(explanationModel);
+		explanationSP.addChangeListener(this);
+		exampleSP = new JSpinner(exampleModel);
+		exampleSP.addChangeListener(this);
+		JLabel baseL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.text_lines.label.base"));
+		baseL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.text_lines.mnemonic.base").charAt(0));
+		baseL.setLabelFor(baseSP);
+		JLabel targetL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.text_lines.label.target"));
+		targetL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.text_lines.mnemonic.target").charAt(0));
+		targetL.setLabelFor(targetSP);
+		JLabel explanationL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.text_lines.label.explanation"));
+		explanationL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.text_lines.mnemonic.explanation").charAt(0));
+		explanationL.setLabelFor(explanationSP);
+		JLabel exampleL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.text_lines.label.example"));
+		exampleL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.text_lines.mnemonic.example").charAt(0));
+		exampleL.setLabelFor(exampleSP);
+		
+		//make the gui
+		GroupLayout layout = new GroupLayout(textLinesP);
+		textLinesP.setLayout(layout);
+		
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+				.add(layout.createParallelGroup(GroupLayout.TRAILING)
+						.add(baseL).add(targetL).add(explanationL).add(exampleL)
+				)
+				.addPreferredGap(LayoutStyle.RELATED)
+				.add(layout.createParallelGroup(GroupLayout.LEADING)
+						.add(baseSP).add(targetSP).add(explanationSP).add(exampleSP)
+				)
+		);
+		
+		layout.setVerticalGroup(layout.createSequentialGroup()
+				.add(layout.createParallelGroup(GroupLayout.BASELINE)
+						.add(baseL).add(baseSP)
+				)
+				.addPreferredGap(LayoutStyle.UNRELATED)
+				.add(layout.createParallelGroup(GroupLayout.BASELINE)
+						.add(targetL).add(targetSP)
+				)
+				.addPreferredGap(LayoutStyle.UNRELATED)
+				.add(layout.createParallelGroup(GroupLayout.BASELINE)
+						.add(explanationL).add(explanationSP)
+				)
+				.addPreferredGap(LayoutStyle.UNRELATED)
+				.add(layout.createParallelGroup(GroupLayout.BASELINE)
+						.add(exampleL).add(exampleSP)
+				)
+		);
+	} //END private void initializeTextLinesPanel()
 
 	//Implements IView
 	public boolean init(IAppEventHandler aController) {
@@ -638,6 +718,11 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		ape.setMessage(MessageConstants.Message.D_PREFERENCES_EDIT_REVERT);
 		controller.handleAppEvent(ape);
 	} //END private void onRevert()
+
+	//implements ChangeListener
+	public void stateChanged(ChangeEvent e) {
+		onChange();	
+	} //END public void stateChanged(ChangeEvent)
 
 	private void onChange() {
 		if (!isUpdating) {
@@ -830,4 +915,52 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		resultTextChangeB.setForeground(aColor);
 		isUpdating = false;
 	} //public void setResultTextColor(Color)
+
+	//implements IPreferencesEditView
+	public Integer getLinesBase() {
+		return (Integer)baseSP.getValue();
+	} //ENd public int getLinesBase()
+
+	//implements IPreferencesEditView
+	public Integer getLinesExample() {
+		return (Integer)exampleSP.getValue();
+	} //END public int getLinesExample()
+
+	//implements IPreferencesEditView
+	public Integer getLinesExplanation() {
+		return (Integer)explanationSP.getValue();
+	} //END public int getLinesExplanation()
+
+	//implements IPreferencesEditView
+	public Integer getLinesTarget() {
+		return (Integer)targetSP.getValue();
+	} //END public int getLinesTarget()
+
+	//implements IPreferencesEditView
+	public void setLinesBase(Integer numberOfLines) {
+		isUpdating = true;
+		baseSP.setValue(numberOfLines);
+		isUpdating = false;
+	} //END public void setLinesBase(int)
+
+	//implements IPreferencesEditView
+	public void setLinesExample(Integer numberOfLines) {
+		isUpdating = true;
+		exampleSP.setValue(numberOfLines);
+		isUpdating = false;
+	} //END public void setLinesExample(int)
+
+	//implements IPreferencesEditView
+	public void setLinesExplanation(Integer numberOfLines) {
+		isUpdating = true;
+		explanationSP.setValue(numberOfLines);
+		isUpdating = false;
+	} //END public void setLinesExplanation(int)
+
+	//implements IPreferencesEditView
+	public void setLinesTarget(Integer numberOfLines) {
+		isUpdating = true;
+		targetSP.setValue(numberOfLines);
+		isUpdating = false;
+	} //END public void setLinesTarget(int)
 } //END public class PreferencesEditView extends JPanel implements IPreferencesEditView
