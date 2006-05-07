@@ -38,8 +38,6 @@ public class ValidatedTextField extends JTextField {
 	/**
 	 * Constructor
 	 * @param columns The number of visible colums
-	 * @param validColor The background color if the value is valid
-	 * @param invalidColor The background color if the value is invalid
 	 */
 	public ValidatedTextField(int columns) {
 		super(columns);

@@ -176,10 +176,10 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		int locationY = 0;
 		if (preferences.containsKey(Preferences.PROP_APP_WINDOW_WIDTH) && preferences.containsKey(Preferences.PROP_APP_WINDOW_HEIGHT)) {
 			try {
-				windowWidth = Integer.parseInt(preferences.getProperty(Preferences.PROP_APP_WINDOW_WIDTH));
-				windowHeight = Integer.parseInt(preferences.getProperty(Preferences.PROP_APP_WINDOW_HEIGHT));
-				locationX = Integer.parseInt(preferences.getProperty(Preferences.PROP_APP_LOCATION_X));
-				locationY = Integer.parseInt(preferences.getProperty(Preferences.PROP_APP_LOCATION_Y));
+				windowWidth = preferences.getIntProperty(Preferences.PROP_APP_WINDOW_WIDTH);
+				windowHeight = preferences.getIntProperty(Preferences.PROP_APP_WINDOW_HEIGHT);
+				locationX = preferences.getIntProperty(Preferences.PROP_APP_LOCATION_X);
+				locationY = preferences.getIntProperty(Preferences.PROP_APP_LOCATION_Y);
 			}
 			catch (NumberFormatException e) {
 				//do nothing because default values ok
@@ -264,10 +264,10 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		Dimension d = this.getSize();
 		Point p = this.getLocationOnScreen();
 		Preferences preferences = Toolbox.getInstance().getPreferencesPointer(); //locale Preferences pointer
-		preferences.setProperty(Preferences.PROP_APP_WINDOW_WIDTH, Integer.toString(d.width));
-		preferences.setProperty(Preferences.PROP_APP_WINDOW_HEIGHT, Integer.toString(d.height));
-		preferences.setProperty(Preferences.PROP_APP_LOCATION_X, Integer.toString(p.x));
-		preferences.setProperty(Preferences.PROP_APP_LOCATION_Y, Integer.toString(p.y));
+		preferences.setIntProperty(Preferences.PROP_APP_WINDOW_WIDTH, d.width);
+		preferences.setIntProperty(Preferences.PROP_APP_WINDOW_HEIGHT, d.height);
+		preferences.setIntProperty(Preferences.PROP_APP_LOCATION_X, p.x);
+		preferences.setIntProperty(Preferences.PROP_APP_LOCATION_Y, p.y);
 	} //END public void saveWindowLocationAndSize()
 
 	/**
@@ -280,8 +280,8 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 		Preferences preferences = Toolbox.getInstance().getPreferencesPointer(); //locale Preferences pointer
 		if (preferences.containsKey(Preferences.PROP_PREF_DIALOG_WIDTH) && preferences.containsKey(Preferences.PROP_PREF_DIALOG_HEIGHT)) {
 			try {
-				dialogWidth = Integer.parseInt(preferences.getProperty(Preferences.PROP_PREF_DIALOG_WIDTH));
-				dialogHeight = Integer.parseInt(preferences.getProperty(Preferences.PROP_PREF_DIALOG_HEIGHT));
+				dialogWidth = preferences.getIntProperty(Preferences.PROP_PREF_DIALOG_WIDTH);
+				dialogHeight = preferences.getIntProperty(Preferences.PROP_PREF_DIALOG_HEIGHT);
 			}
 			catch (NumberFormatException e) {
 				//if exception do nothing, because default width will be taken

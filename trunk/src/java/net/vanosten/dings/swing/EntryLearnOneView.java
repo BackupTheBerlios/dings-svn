@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 06 Rick Gruber-Riemer (rick@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,9 +26,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
+import javax.swing.ScrollPaneConstants;
 
 import java.awt.Color;
 import java.awt.ComponentOrientation;
@@ -59,7 +61,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	private JCheckBox statusCB;
 	private ChoiceID modeCh; //Which hint mode should be used
 	private SolutionLabel baseSL, explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
-	private JTextField targetTF;
+	private JTextArea targetTA;
 	private HintLabel hintHL;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL;
 	private JLabel baseL, hintL, targetL, explanationL, exampleL, pronunciationL, relationL, unitL, categoryL, scoreL;
@@ -92,7 +94,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		hintHL = new HintLabel(Color.BLUE, Color.RED);
 		//target
 		targetL = new JLabel(Toolbox.getInstance().getInfoPointer().getTargetLabel() + ":");
-		targetTF = new JTextField();
+		targetTA = new JTextArea();
+		targetTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
+		targetTA.setWrapStyleWord(true);
+		targetTA.setLineWrap(true);
 		//status
 		statusCB = new JCheckBox("up-to-date");
 		//score
@@ -146,6 +151,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		Insets vthg = new Insets(DingsSwingConstants.SP_V_T, DingsSwingConstants.SP_H_G, 0, 0);
 		JLabel emptyL = new JLabel(); //an empty label for layout purposes
 		
+		JScrollPane targetSP = new JScrollPane(targetTA);
+		targetSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		targetSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
 		//set the visibility after everything has been initialized
 		setVisibilities();
 		
@@ -197,8 +206,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(targetTF, gbc);
-		editP.add(targetTF);
+		gbl.setConstraints(targetSP, gbc);
+		editP.add(targetSP);
 		//----hint
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -625,8 +634,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		Color hintC = null;
 		Color resultC = null;
 		try {
-			hintC = new Color(Integer.parseInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_COLOR_HINT)));
-			resultC = new Color(Integer.parseInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_COLOR_RESULT)));
+			hintC = new Color(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_COLOR_HINT));
+			resultC = new Color(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_COLOR_RESULT));
 		}
 		catch(NumberFormatException e) {
 			hintC = Color.BLUE;
@@ -644,7 +653,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			int helperMode = Integer.parseInt(modeCh.getSelectedID());
 			switch(helperMode) {
 				case HintLabel.MODE_FLASH:
-					hintHL.doFlash(Integer.parseInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.LEARN_HINT_FLASH_TIME)));
+					hintHL.doFlash(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.LEARN_HINT_FLASH_TIME));
 					break;
 				case HintLabel.MODE_LETTER:
 					if (false == hintHL.doLetters()) {

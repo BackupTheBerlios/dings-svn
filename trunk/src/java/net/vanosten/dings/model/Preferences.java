@@ -261,10 +261,29 @@ public class Preferences extends AModel{
 	public String getProperty(String thePropertyKey) {
 		return props.getProperty(thePropertyKey);
 	} //END public String getProperty(String)
+	
+	/**
+	 * Parses the property as an int value
+	 * @param thePropertyKey
+	 * @return the value as an int. -1 if the property could not be parsed
+	 */
+	public int getIntProperty(String thePropertyKey) {
+		int myInt = -1;
+		try {
+			myInt = Integer.parseInt(props.getProperty(thePropertyKey));
+		} catch (NumberFormatException e) {
+			logger.warning("Property = " + thePropertyKey + " could not be parsed as an int.");
+		}
+		return myInt;
+	} //END public int getIntProperty(String)
 
 	public Object setProperty(String thePropertyKey, String theValue) {
 		return props.setProperty(thePropertyKey, theValue);
 	} //END public Object setProperty(String, String)
+	
+	public void setIntProperty(String thePropertyKey, int theValue) {
+		props.setProperty(thePropertyKey, Integer.toString(theValue));
+	}
 
 	public boolean containsKey(String aKey) {
 		return props.containsKey(aKey);

@@ -24,6 +24,7 @@ entitled "GNU Free Documentation License".
 		<release version="0.4.2 (svn ??)" date="???">
 			<action type="update" context="gui" dev="vanosten">View title for learn by choice reflects current view type.</action>
 			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice for <code>Match</code> and <code>Memory</code>.</action>
+			<action type="update" context="gui" dev="vanosten">The base, target, explanation and example fields in entry can now have multiple lines, the number of which can be configured in preferences.</action>
 		</release>
 		<release version="0.4.1 (svn 39)" date="2006-03-19">
 			<action type="add" context="feature" dev="vanosten">New learning game &quot;Memory&quot;</action>
@@ -82,7 +83,6 @@ entitled "GNU Free Documentation License".
 
 	<todo>
 		<actions priority="next release">
-			<action context="gui" dev="vanosten">Multiline fields for editing base and target</action>
 			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
 			<action context="feature" dev="vanosten">Make sure that learning results (scores) are reflected in the selection for learning by choice</action>
 			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
@@ -151,151 +151,5 @@ entitled "GNU Free Documentation License".
 			<action context="gui" dev="vanosten">Use new JDK 1.5 functionality for placing window first time (i.e. without preferences): <code>gui.setLocationByPlatform(true)</code> and <code>gui.setAlwaysOnTop(true)</code></action>
 			<action context="refactor" dev="vanosten">Use javax.swing import for GroupLayout when switching to JDK 6 instead of external class library</action>
 		</actions>
-<!--
-++++++++++++++++++++++++++++++++++++++++++++++
-Documentation:
-++++++++++++++++++++++++++++++++++++++++++++++
-* When edit entry view or learn one then reset scores not available
-* When to use category / unit vs. attributes vs. example:
-	o fields = free text vs. predefined choice
-	o category /unit = same choice for all entries
-	o attributes = choice depends on entry type
-* Command line arguments
-* Apply selection:
-	o when reset scores then always instant apply
-* File name:
-	o do not use # in file names, as the program uses this character as a delimitter in the properties
-* Files in user directory:
-	o properties
-	o log
-* Entry Type change:
-	o defaults get assigned to attributes. They do not survive
-* Matrix of what features (label, visibility, bidi) can be assigned to which field
-* All edit views have apply / revert. In preferences direct apply on change
-* Statistics:
-	o not removed when reset of scores to null -> remove with command in menuitems (not implemented yet)
-
-++++++++++++++++++++++++++++++++++++++++++++++
-Other releases:
-++++++++++++++++++++++++++++++++++++++++++++++
-0.3 "View the Stats":
-* printUsage:
-	o document in INSTALL
-	o make dependent on Swing/Gnome -> abstract in ADings.java
-* First user documentation on web:
-	-> FAQ
-	-> mock-up for multi-learn
-* Correct sizing of table in scroll pane
-* InfoVocabView should show in middle of screen
-* Replace images for dialogs and icons for entry learn one
-* Replace TextFields with TextAreas and have # of lines for textareas in preferences
-* Status bar: status for saving: underly blue color when boolean (new parameter) set to true
-* Set Labels as keyboard accessors to Choice, Textfields etc.:
-	o everywhere if possible
-	o for dynamic labels add definition in InfoVocab
-* Menu items for current view should be disabled
-* 1 + 4 some første learn multiple:
-	o preference for antal af mulige svar, counter?
-	o menuitem
-	o ny view
-	o EntryDetailsDialog
-* Alternative learning algorithm (learn alle i stack med laveste score, lær i samme rækkefølge, gå så videre til næste stack):
-	o preferences
-	o EntriesCollection
-* Use labels for Unit and Category in View titles and menu entries
-
-0.4 "Comfort":
-* i18n (European, left to right)
-* Accessibility (SetLabelFor(), keyboard shortcuts, ...)
-* Code documentation incl. HOWTO code
-* Check code artifacts like not used error conditions
-* Comply to GNOME HIG (and other UI standards)
-* Editor for properties
-	* number of entries for learn multiple (eventually show dialog)
-* Help implemented (evt. different for GNOME and others)
-
-0.4 "Game Learning":
-* Memory, Connect, Crosswords
-
-0.5 "Refactoring"
-* Fallback to default if attribute gets deleted
-* Global replace for EntryTypeAttributeItems and EntryTypes.
-* Separer score, last learned fra rest i entries plus tilføj nyt felt "Note"
-	o forandre ReadXML
-	o Entry.getXMLString -> getXMLCoreString, getXMLLearnString
-	o tilføj mulighed for at editere "Note" i EntryLearnOne og EntryEditView
-
-
-0.x:
-* i18n (non-european, right-to-left BIDI support)
-* Validation alternative:  http://www-106.ibm.com/developerworks/java/library/j-dynproxies.html
-* Replace hard coded validation rules with more flexible framework (e.g. read rules from XML)
-* Export of language structure
-* Import:
-	* tab separated vocabulary lists
-	* Import other vocabulary formats (e.g. KVocabTrainer)
-	* Wizard for statistics/frequency based vocabulary file generation, evt. directly coupled with dictionary for fast generation of both origin and target.
-* Advanced learning algorithm; Number of learning levels, probability influence
-* Statistics:
-	o when automatic statistics, then only add StatisticsSet, if actually something has been learned
-	o possibility to remove StatisticSets older than Date
-
-++++++++++++++++++++++++++++++++++++++++++++++
-Other things, enhancements, todos:
-++++++++++++++++++++++++++++++++++++++++++++++
-* Validate Model from constructor info with validate functions. Reuse existing validate functions, but give possibility to correct on-the-fly
-* Error handling:
-	* All handleEvents(): error, if evt is not handled
-	* Catch exception when calling System.getProperty()
-* Edit button in Learn to directly edit an entry
-* "Duplicate" button in EntryEditView and EntryList
-* Preserve choice in EntriesChooserView
-* Design and State patterns: http://www.javaworld.com/javaworld/jw-02-2001/jw-0216-jhotdraw_p.html
-* Eventually it is performance wise not very good to have casts from String to int and vice versa in Preferences
-* More features in FileChooser -> http://www.javaworld.com/javaworld/javatips/jw-javatip100.html?
-* Why has AEditView its own IAppEventHandler and init()? -> Just inherit from AViewWithButtons?
-* Corrective Feedback Paradigm (CFP)
-* validate EntryType for entry (already done?)
-http://msdn.microsoft.com/Longhorn/default.aspx?pull=/library/en-us/dnsoftware/h
-tml/software08052004.asp
-* Schoolbus project (http://today.java.net/pub/a/today/2004/09/02/quaestio.htm)
-
-
-Features: Learning and Entry
-++++++++++++++++++++++++++++++++++++++++++++++
-* When game learning, then show realtion, pronunciation, relation ... only on demand in dialog to save place
-* classification for Relation as combobox: synonym, antonym, false friend. Eventually use pointer instead of writing
-* When start of learn (one to one or many to many) then show dialog to ask direction
-* Preference: give points for many-tomany learning?
-* Chooser: possibility to choose by last learned
-
-Features: Professional Application
-++++++++++++++++++++++++++++++++++++++++++++++
-* Make available through Java Webstart
-* Provide an Installer as e.g. JEdit
-* Bundling for Mac: http://www.borderlandconsulting.com/bc/articles/swt_app_bundle.php
-* Desktop integration and installer : https://jdic.dev.java.net/ and http://today.java.net/pub/a/today/2004/10/14/jdic1.html
-
-Code Cleanups and Architecture
-++++++++++++++++++++++++++++++++++++++++++++++
-* Read item21 of EffectiveJavaProgLangGuide
-* Unify as much as possible IEntryEditView and IEntryLearnOneView
-* Use pointers in models instead of String id references
-* Use array of attributes instead of several fields
-* Make as many methods final as possible for performance
-* Put IAppEventHandler into Interface instead??
-* Check use of resetViews()
-* Use Actions like described in http://www.javadesktop.org/articles/actions/index.html
-* Find a way to combine the titleLabel in ListView and AViewWithButtons
-* Preferences/PreferencesEditView: evt. add to onChange() what was changed to minimize processing time.
-* Move to a multi-tier application in order to have the GUI abstracted (-> mobile phone, webpage etc.) and to allow for other types of applications (-> Instant messaging)
-* Use an inner class for KeyBoardListeners -> Adapter
-* why is initializeGUI not called directly in AViewWithButton??
-* Set accessor to methods in dings.model to protected as far as possible
-
-User Interface General
-++++++++++++++++++++++++++++++++++++++++++++++
-* EntriesSelectionView: add buttons to the right of lists to select all / diselect all
--->
 	</todo>
 </status>

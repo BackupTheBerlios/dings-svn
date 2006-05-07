@@ -24,12 +24,15 @@ package net.vanosten.dings.swing;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
+import javax.swing.ScrollPaneConstants;
 
 import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
@@ -43,11 +46,12 @@ import java.awt.event.ActionListener;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.InfoVocab;
+import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
-import net.vanosten.dings.swing.helperui.ValidatedTextField;
+import net.vanosten.dings.swing.helperui.ValidatedTextArea;
 import net.vanosten.dings.uiif.IEntryEditView;
 import net.vanosten.dings.event.AppEvent;
 
@@ -56,8 +60,9 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 
 	private ChoiceID unitsCh, categoriesCh, attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh;
 	private JCheckBox statusCB;
-	private ValidatedTextField baseVTF, targetVTF;
-	private JTextField explanationTF, pronunciationTF, exampleTF, relationTF;
+	private ValidatedTextArea baseVTA, targetVTA;
+	private JTextArea explanationTA, exampleTA;
+	private JTextField pronunciationTF, relationTF;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL; //populated based on entry type
 	private JLabel baseL, targetL, unitL, categoryL, explanationL, exampleL; //populated based on InfoVocab
 	private JLabel pronunciationL, relationL; //visible based on InfoVocab
@@ -98,13 +103,13 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		attributeFourL.setEnabled(false);		
 		
 		//base
-		baseVTF = new ValidatedTextField(50);
-		baseVTF.setToolTipText("May not be empty");
-		baseVTF.addKeyListener(this);
+		baseVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_BASE));
+		baseVTA.setToolTipText("May not be empty");
+		baseVTA.addKeyListener(this);
 		//target
-		targetVTF = new ValidatedTextField(50);
-		targetVTF.setToolTipText("May not be empty");
-		targetVTF.addKeyListener(this);
+		targetVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
+		targetVTA.setToolTipText("May not be empty");
+		targetVTA.addKeyListener(this);
 		//entry type
 		changeEntryTypeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.change_entry_type"));
 		changeEntryTypeB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.change_entry_type").charAt(0));
@@ -167,15 +172,20 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		});
 		attributeFourCh.setEnabled(false);
 		//explanation
-		explanationTF = new JTextField();
-		explanationTF.addKeyListener(this);
+		explanationTA = new JTextArea();
+		explanationTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_EXPLANATION));
+		explanationTA.addKeyListener(this);
+		explanationTA.setWrapStyleWord(true);
+		explanationTA.setLineWrap(true);
 		//example
-		exampleTF = new JTextField();
-		exampleTF.addKeyListener(this);
+		exampleTA = new JTextArea();
+		exampleTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_EXAMPLE));
+		exampleTA.addKeyListener(this);
+		exampleTA.setWrapStyleWord(true);
+		exampleTA.setLineWrap(true);
 		//pronunciation
 		pronunciationTF = new JTextField();
 		pronunciationTF.addKeyListener(this);
-
 		//relation
 		relationTF = new JTextField();
 		relationTF.addKeyListener(this);	
@@ -202,6 +212,20 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		entryTypeP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_G, 0)));
 		entryTypeP.add(changeEntryTypeB);
 		entryTypeP.add(Box.createHorizontalGlue());
+		
+		//scroll panes for text areas
+		JScrollPane baseSP = new JScrollPane(baseVTA);
+		baseSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		baseSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane targetSP = new JScrollPane(targetVTA);
+		targetSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		targetSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane explanationSP = new JScrollPane(explanationTA);
+		explanationSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		explanationSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane exampleSP = new JScrollPane(exampleTA);
+		exampleSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		exampleSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		//set the visibility after everything has been initialized
 		setVisibilities();
@@ -237,8 +261,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(baseVTF, gbc);
-		editP.add(baseVTF);
+		gbl.setConstraints(baseSP, gbc);
+		editP.add(baseSP);
 		//----target
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -254,8 +278,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(targetVTF, gbc);
-		editP.add(targetVTF);
+		gbl.setConstraints(targetSP, gbc);
+		editP.add(targetSP);
 		//----entrytype
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -373,8 +397,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(explanationTF, gbc);
-		editP.add(explanationTF);
+		gbl.setConstraints(explanationSP, gbc);
+		editP.add(explanationSP);
 		//----example
 		gbc.gridx = 0;
 		gbc.gridy = 9;
@@ -390,8 +414,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(exampleTF, gbc);
-		editP.add(exampleTF);
+		gbl.setConstraints(exampleSP, gbc);
+		editP.add(exampleSP);
 		//----pronunciation
 		gbc.gridx = 0;
 		gbc.gridy = 10;
@@ -505,11 +529,11 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		//others
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityExplanation()) {
 			explanationL.setVisible(false);
-			explanationTF.setVisible(false);
+			explanationTA.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityExample()) {
 			exampleL.setVisible(false);
-			exampleTF.setVisible(false);
+			exampleTA.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation()) {
 			pronunciationL.setVisible(false);
@@ -572,21 +596,21 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	} //END private void onChangeEntryType()
 
 	public void setBase(String aBase) {
-		if (null == aBase) baseVTF.setText("");
-		else baseVTF.setText(aBase);
+		if (null == aBase) baseVTA.setText("");
+		else baseVTA.setText(aBase);
 	} //END public void setBase(String)
 
 	public String getBase() {
-		return baseVTF.getText();
+		return baseVTA.getText();
 	} //END public String getBase()
 
 	public void setTarget(String aTarget) {
-		if (null == aTarget) targetVTF.setText("");
-		else targetVTF.setText(aTarget);
+		if (null == aTarget) targetVTA.setText("");
+		else targetVTA.setText(aTarget);
 	} //END public void setTarget(String)
 
 	public String getTarget() {
-		return targetVTF.getText();
+		return targetVTA.getText();
 	} //END public String getTarget()
 	
 	public void setEntryType(String aLabel, String anId) {
@@ -595,12 +619,12 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	} //END public void setEntryType(String, String)
 
 	public void setExplanation(String aExplanation) {
-		if (null == aExplanation) explanationTF.setText("");
-		else explanationTF.setText(aExplanation);
+		if (null == aExplanation) explanationTA.setText("");
+		else explanationTA.setText(aExplanation);
 	} //END public void setExplanation(String)
 
 	public String getExplanation() {
-		return explanationTF.getText();
+		return explanationTA.getText();
 	} //END public String getExplanation()
 
 	public void setPronunciation(String aPronunciation) {
@@ -613,12 +637,12 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	} //END public String getPronunciation()
 
 	public void setExample(String anExample) {
-		if (null == anExample) exampleTF.setText("");
-		else exampleTF.setText(anExample);
+		if (null == anExample) exampleTA.setText("");
+		else exampleTA.setText(anExample);
 	} //END public void setExample(String)
 
 	public String getExample() {
-		return exampleTF.getText();
+		return exampleTA.getText();
 	} //END public String getExample()
 
 	public void setRelation(String aRelation) {
@@ -774,11 +798,11 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	
 	//implements IEntryEditView
 	public void setBaseIsValueValid(boolean valid) {
-		baseVTF.isValueValid(valid);
+		baseVTA.isValueValid(valid);
 	} //END public void setBaseIsValueValid(boolean)
 	
 	//implements IEntryEditView
 	public void setTargetIsValueValid(boolean valid) {
-		targetVTF.isValueValid(valid);
+		targetVTA.isValueValid(valid);
 	} //END public void setTrargetIsValueValid(boolean)
 } //END public class EntryEditView extends AEditView implements IEntryEditView
