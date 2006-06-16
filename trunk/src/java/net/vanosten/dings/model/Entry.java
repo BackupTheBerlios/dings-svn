@@ -357,6 +357,16 @@ public final class Entry extends AIdItemModel {
 			}
 		}
 	} //END protected void updateModel()
+	
+	/**
+	 * 
+	 * @return an array of boolean with the results of the answer check indexed as follows:
+	 */
+	private boolean[] checkAnswerLearnOne() {
+		boolean[]answersCorrect = new boolean[5];
+		sdfsdfsdf
+		return answersCorrect;
+	}
 
 	private void getResultLearnOneView() {
 		//update status

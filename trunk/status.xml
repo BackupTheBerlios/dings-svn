@@ -83,6 +83,8 @@ entitled "GNU Free Documentation License".
 
 	<todo>
 		<actions priority="next release">
+			<action context="code" dev="vanosten">Check in learn one whether user has typed/chosen correct: case sensitive? include attributes? whitespace sensitive? point sensitive? =&gt; Preferences; button in GUI; event; check-method in model; documentation</action>
+			<action context="code" dev="vanosten">Evt. replace Boolean.valueOf(String).booleanValue() with Boolean.TRUE.equals(Boolean.valueOf(String))</action>
 			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
 			<action context="feature" dev="vanosten">Make sure that learning results (scores) are reflected in the selection for learning by choice</action>
 			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
