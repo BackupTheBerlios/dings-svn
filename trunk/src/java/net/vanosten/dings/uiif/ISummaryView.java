@@ -21,7 +21,7 @@
  */
 package net.vanosten.dings.uiif;
 
-import org.jfree.data.CategoryDataset;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.time.TimeSeriesCollection;
 
 public interface ISummaryView extends IView {

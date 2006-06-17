@@ -364,7 +364,7 @@ public final class Entry extends AIdItemModel {
 	 */
 	private boolean[] checkAnswerLearnOne() {
 		boolean[]answersCorrect = new boolean[5];
-		sdfsdfsdf
+		//sdfsdfsdf
 		return answersCorrect;
 	}
 

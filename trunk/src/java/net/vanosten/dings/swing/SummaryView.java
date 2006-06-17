@@ -56,9 +56,9 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.BarRenderer;
-import org.jfree.chart.renderer.StandardXYItemRenderer;
-import org.jfree.data.CategoryDataset;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.time.TimeSeriesCollection;
 
 public class SummaryView extends AViewWithButtons implements ISummaryView {

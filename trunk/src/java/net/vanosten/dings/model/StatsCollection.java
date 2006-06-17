@@ -34,7 +34,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.uiif.ISummaryView;
 import net.vanosten.dings.utils.Toolbox;
 
-import org.jfree.data.DefaultCategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.time.Minute;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;

@@ -56,10 +56,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 	<target name="dist" depends="compile,resources">
 		<!-- Unjar the external libraries -->
-		<unjar src="${lib}/xpp3.jar" dest="${dist}" />
-		<unjar src="${lib}/jfreechart.jar" dest="${dist}" />
-		<unjar src="${lib}/jcommon.jar" dest="${dist}" />
-		<unjar src="${lib}/swing-layout.jar" dest="${dist}" />
+		<unjar src="${lib}/xpp3.jar" dest="${dist}" /><!-- 1.1.3_8 -->
+		<unjar src="${lib}/jfreechart.jar" dest="${dist}" /><!-- 1.0.1 -->
+		<unjar src="${lib}/jcommon.jar" dest="${dist}" /><!-- 1.0.0 -->
+		<unjar src="${lib}/swing-layout.jar" dest="${dist}" /><!-- 1.0.1 -->
 		<!-- Make a dingsbums.jar file -->
 		<jar jarfile="./dingsbums.jar" basedir="${build}">
 			<!-- <fileset dir="${build}" includes="net/**" /> -->
