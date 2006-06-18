@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -101,20 +101,20 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 
 	private JPanel loggingP;
 	private JCheckBox loggingEnabledCB, loggingToFileCB;
-	
+
 	private JPanel lookAndFeelP;
 	private JCheckBox lookAndFeelCB;
-	
+
 	private JPanel selectionUpdateP;
 	private JCheckBox selUpdInstEditingCB;
 	private JCheckBox selUpdInstLearningCB;
 
 	private JPanel statsP;
 	private JCheckBox statsOnQuitCB;
-	
+
 	private JPanel localeP;
 	private ChoiceID localeCh;
-	
+
 	private JPanel textLinesP;
 	private JSpinner baseSP;
 	private JSpinner targetSP;
@@ -150,7 +150,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		//the choice area
 		initializeLeftPanel();
 		getContentPane().add(leftP, BorderLayout.BEFORE_LINE_BEGINS);
-		
+
 		//the preferences area on the right
 		initializeRightPanel();
 		getContentPane().add(rightP, BorderLayout.CENTER);
@@ -159,7 +159,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		initializeButtonPanel();
 		getContentPane().add(buttonP, BorderLayout.SOUTH);
 	} //END private void initializeGUI()
-	
+
 	private void initializeLeftPanel() {
 		leftP = new JPanel();
 		EmptyBorder border = new EmptyBorder(DingsSwingConstants.SP_D_TOP, DingsSwingConstants.SP_D_LEFT, 0, 0);
@@ -167,7 +167,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		leftP.setLayout(gbl);
-		
+
 		JLabel categoryL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.categories.label"));
 		categoryL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.categories.mnemonic").charAt(0));
 		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE, TEXT_LINES};
@@ -199,7 +199,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbl.setConstraints(listScroller, gbc);
 		leftP.add(listScroller);
 	} //END private void initializeLeftPanel()
-	
+
 	private void initializeRightPanel() {
 		rightP = new JPanel();
 		EmptyBorder border = new EmptyBorder(
@@ -212,15 +212,15 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		rightP.setLayout(gbl);
-		
+
 		//the title area
 		titleL = new JLabel();
 		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
 		titleL.setEnabled(false);
-				
+
 		//the description area
 		descriptionL = new JLabel();
-		
+
 		//the area with preferences
 		mainP = new JPanel();
 		mainP.setLayout(new CardLayout());
@@ -240,7 +240,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		mainP.add(localeP, LOCALE);
 		initializeTextLinesPanel();
 		mainP.add(textLinesP, TEXT_LINES);
-		
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -264,7 +264,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbl.setConstraints(mainP, gbc);
 		rightP.add(mainP);
 	} //END private void initializeRightPanel()
-	
+
 	private void initializeButtonPanel() {
 		buttonP = new JPanel();
 		EmptyBorder border = new EmptyBorder(
@@ -289,7 +289,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	/**
 	 * Shows a new view of preferences.
 	 */
-	private void switchPreferencePanel() {		
+	private void switchPreferencePanel() {
 		//set the title and description
 		switch(choiceLi.getSelectedIndex()) {
 			//the cases have to be synchronized with the declaration of
@@ -374,7 +374,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		fileEncodingP.setLayout(gbl);
-		
+
 		JLabel fileEncodingL = new JLabel("File encoding:");
 		fileEncodingCB = new JComboBox(Preferences.FILE_ENCODINGS);
 		fileEncodingCB.addActionListener(new ActionListener() {
@@ -383,7 +383,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		fileEncodingL.setLabelFor(fileEncodingCB);
-			
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -406,7 +406,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		lookAndFeelP.setLayout(gbl);
-		
+
 		lookAndFeelCB = new JCheckBox("Use system specific look and feel");
 		lookAndFeelCB.setMnemonic(("U").charAt(0));
 		lookAndFeelCB.addActionListener(new ActionListener() {
@@ -414,7 +414,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 				onChange();
 			}
 		});
-		
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -426,7 +426,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbl.setConstraints(lookAndFeelCB, gbc);
 		lookAndFeelP.add(lookAndFeelCB);
 	} //END private void initializeLookAndFeelPanel()
-	
+
 	private void initializeLearnHintPanel() {
 		learnHintP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
@@ -450,7 +450,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		visibleL.setLabelFor(learnHintFlashTimeSL);
-		
+
 		learnHintShuffleByWordCB = new JCheckBox("Shuffle Word by Word");
 		learnHintShuffleByWordCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -458,7 +458,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		learnHintShuffleByWordCB.setMnemonic(("W").charAt(0));
-		
+
 		GridLayout gl = new GridLayout(2,0,0,DingsSwingConstants.SP_V_C);
 		JPanel changeP = new JPanel(); //to display the buttons in the same size
 		changeP.setLayout(gl);
@@ -478,7 +478,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		});
 		changeP.add(hintTextChangeB);
 		changeP.add(resultTextChangeB);
-			
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -513,7 +513,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		loggingP.setLayout(gbl);
-		
+
 		loggingEnabledCB = new JCheckBox("Enable Logging");
 		loggingEnabledCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -521,7 +521,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		loggingEnabledCB.setMnemonic(("L").charAt(0));
-		
+
 		loggingToFileCB = new JCheckBox("Log to file \"" + Constants.LOGGING_FILE_NAME + "\" in your home directory");
 		loggingToFileCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -529,7 +529,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		loggingToFileCB.setMnemonic(("F").charAt(0));
-		
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -552,7 +552,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		selectionUpdateP.setLayout(gbl);
-		
+
 		selUpdInstEditingCB = new JCheckBox("Update selection instantly when editing");
 		selUpdInstEditingCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -560,7 +560,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		selUpdInstEditingCB.setMnemonic(("e").charAt(0));
-		
+
 		selUpdInstLearningCB = new JCheckBox("Update selection instantly when learning (score change)");
 		selUpdInstLearningCB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -568,7 +568,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		selUpdInstLearningCB.setMnemonic(("l").charAt(0));
-		
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -591,7 +591,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		statsP.setLayout(gbl);
-		
+
 		statsOnQuitCB = new JCheckBox("Save learning statistics on quit");
 		statsOnQuitCB.setMnemonic(("S").charAt(0));
 		statsOnQuitCB.addActionListener(new ActionListener() {
@@ -599,7 +599,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 				onChange();
 			}
 		});
-		
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -617,7 +617,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		localeP.setLayout(gbl);
-		
+
 		JLabel localeL = new JLabel("Locale of the application:");
 		localeCh = new ChoiceID();
 		localeCh.setItems(Constants.getSupportedLocales(null)); //TODO replace null with real RessourceBundle
@@ -627,7 +627,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			}
 		});
 		localeL.setLabelFor(localeCh);
-			
+
 		//layout
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -644,7 +644,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		gbl.setConstraints(localeCh, gbc);
 		localeP.add(localeCh);
 	} //END private void initializeLocalePanel()
-	
+
 	private void initializeTextLinesPanel() {
 		textLinesP = new JPanel();
 		SpinnerModel baseModel = new SpinnerNumberModel(3,1,20,1);
@@ -671,11 +671,11 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		JLabel exampleL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.text_lines.label.example"));
 		exampleL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.text_lines.mnemonic.example").charAt(0));
 		exampleL.setLabelFor(exampleSP);
-		
+
 		//make the gui
 		GroupLayout layout = new GroupLayout(textLinesP);
 		textLinesP.setLayout(layout);
-		
+
 		layout.setHorizontalGroup(layout.createSequentialGroup()
 				.add(layout.createParallelGroup(GroupLayout.TRAILING)
 						.add(baseL).add(targetL).add(explanationL).add(exampleL)
@@ -685,7 +685,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 						.add(baseSP).add(targetSP).add(explanationSP).add(exampleSP)
 				)
 		);
-		
+
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.add(layout.createParallelGroup(GroupLayout.BASELINE)
 						.add(baseL).add(baseSP)
@@ -721,7 +721,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 
 	//implements ChangeListener
 	public void stateChanged(ChangeEvent e) {
-		onChange();	
+		onChange();
 	} //END public void stateChanged(ChangeEvent)
 
 	private void onChange() {
@@ -734,18 +734,18 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			controller.handleAppEvent(ape);
 		}
 	} //END private void onChange()
-	
+
 	/**
 	 * Shows a color chooser dialog and changes the foreground
 	 * color of the button which is initiating the dialog.
-	 * 
+	 *
 	 * @param aButton The button initiating the dialog
 	 */
 	private void showColorChooser(JButton aButton) {
 		Color newColor = JColorChooser.showDialog(
-                this,
-                "Choose Text Color",
-                aButton.getForeground());
+				this,
+				"Choose Text Color",
+				aButton.getForeground());
 		if (null != newColor) {
 			aButton.setForeground(newColor);
 			onChange();
@@ -785,14 +785,14 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public int getLearnHintFlashTime() {
 		return learnHintFlashTimeSL.getValue();
 	} //END public int getLearnHintFlashTime()
-	
+
 	//implements IPreferencesEditView
 	public void setLearnHintShuffleByWord(String isSelected) {
 		isUpdating = true;
 		learnHintShuffleByWordCB.setSelected(Boolean.valueOf(isSelected).booleanValue());
-		isUpdating = false;		
+		isUpdating = false;
 	} //END public void setLearnHintShuffleByWord(String)
-	
+
 	//implements IPreferencesEditView
 	public String getLearnHintShuffleByWord() {
 		return Boolean.toString(learnHintShuffleByWordCB.isSelected());
@@ -837,29 +837,29 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		returnSize[1] = d.height;
 		return returnSize;
 	} //END public int[] getDialogSize()
-	
+
 	//implements IPreferencesEditView
 	public void setSystemLookAndFeel(boolean isSystem) {
 		isUpdating = true;
 		lookAndFeelCB.setSelected(isSystem);
 		isUpdating = false;
 	} //END public void setSystemLookAndFeel(boolean)
-	
+
 	//implements IPreferencesEditView
 	public boolean isSystemLookAndFeel() {
 		return lookAndFeelCB.isSelected();
 	} //END public boolean isSystemLookAndFeel()
-	
+
 	//implements IPreferencesEditView
 	public boolean isSelUpdInstEditing() {
 		return selUpdInstEditingCB.isSelected();
 	} //END public boolean isSelUpdInstEdit()
-	
-	//implements IPreferencesEditView	
+
+	//implements IPreferencesEditView
 	public boolean isSelUpdInstLearning() {
 		return selUpdInstLearningCB.isSelected();
 	} //END public boolean isSelUpdInstLearning()
-	
+
 	//implements IPreferencesEditView
 	public void setSelUpdInst(boolean editingEnabled, boolean learningEnabled) {
 		isUpdating = true;
@@ -867,7 +867,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		selUpdInstLearningCB.setSelected(learningEnabled);
 		isUpdating = false;
 	} //END public void setSelUpdInst(boolean, boolean)
-	
+
 	//implements IPreferencesEditView
 	public void setStatsOnQuit(boolean isOn) {
 		isUpdating = true;
@@ -879,12 +879,12 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public boolean isStatsOnQuit() {
 		return statsOnQuitCB.isSelected();
 	} //END public boolean isStatsOnQuit()
-	
+
 	//implements IPreferencesEditView
 	public String getApplicationLocale() {
 		return localeCh.getSelectedID();
 	} //END public String getApplicationLocale()
-	
+
 	//implements IPreferenceEditView
 	public void setApplicationLocale(String aLocale) {
 		isUpdating = true;
@@ -896,7 +896,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public Color getHintTextColor() {
 		return hintTextChangeB.getForeground();
 	} //END public Color getHintTextColor()
-	
+
 	//implements IPreferencesEditView
 	public void setHintTextColor(Color aColor) {
 		isUpdating = true;
@@ -908,7 +908,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public Color getResultTextColor() {
 		return resultTextChangeB.getForeground();
 	} //END public Color getResultTextColor()
-	
+
 	//implements IPreferencesEditView
 	public void setResultTextColor(Color aColor) {
 		isUpdating = true;

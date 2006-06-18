@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,7 @@ import javax.swing.JComboBox;
 
 public class ChoiceID extends JComboBox {
 	private final static long serialVersionUID = 1L;
-	
+
 	private String itemID[] = {};
 
 	public ChoiceID () {
@@ -33,7 +33,7 @@ public class ChoiceID extends JComboBox {
 	} //END public ChoiceID()
 
 	/**
-	 * 
+	 *
 	 * @param theItems array of Strings with id in position 0 and display in position 1
 	 */
 	public void setItems(String[][] theItems) {
@@ -62,10 +62,10 @@ public class ChoiceID extends JComboBox {
 			}
 		}
 	} //END public void setSelectedID(String)
-	
+
 	/**
 	 * Based on the current selected item returns an ID.
-	 * 
+	 *
 	 * @return String - the ID of the selected item or null if nothing is slected.
 	 */
 	public String getSelectedID() {
@@ -75,7 +75,7 @@ public class ChoiceID extends JComboBox {
 		}
 		return itemID[getSelectedIndex()];
 	} //END public String getSelectedID()
-	
+
 	/**
 	 * Removes all Items in the underlying JComboBox and the ids
 	 * by overriding to method in JComboBox

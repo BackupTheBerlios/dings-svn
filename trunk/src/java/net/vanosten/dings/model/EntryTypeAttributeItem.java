@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -52,7 +52,7 @@ public class EntryTypeAttributeItem {
 	protected String getId() {
 		return id;
 	} //END protected String getId()
-	
+
 	protected String getName() {
 		return name;
 	} //END protected String getName()
@@ -64,7 +64,7 @@ public class EntryTypeAttributeItem {
 		maxId++;
 		return (Constants.PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM + maxId);
 	} //END private String getNewId()
-	
+
 	private static void setMaxId(String anId) {
 		maxId = Math.max(maxId, Integer.parseInt(anId.substring(Constants.PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM.length(),anId.length())));
 	} //END private void setMaxId(String)
@@ -100,10 +100,10 @@ public class EntryTypeAttributeItem {
 	 * Translates an array of Object to an instance.
 	 * It is assumed that the array has two Strings and a Boolean in the end.
 	 * The function is the inverse to method <code>tranlateToObjectArray()</code>.
-	 * 
+	 *
 	 * @param Object[] theObjectItem
 	 * @return EntryTypeAttributeItem - a new instance based on the (3) input objects
-	 */	
+	 */
 	protected static EntryTypeAttributeItem translateFromObjectArray(Object theObjectItem[]) {
 		//get the id as String, the name as String and the irregular as Boolean
 		String objId = null;
@@ -119,11 +119,11 @@ public class EntryTypeAttributeItem {
 		}
 		return new EntryTypeAttributeItem(objId, objName, objIrregular);
 	} //END protected static EntryTypeAttributeItem translateFromObjectArray(Object[])
-	
+
 	/**
 	 * Translates this instance to an array of Objects.
 	 * The function is the inverse to method <code>translateFromObjectArray(Object[])</code>.
-	 * 
+	 *
 	 * @return Object[] - this instance as an array of three objects (String, String, Boolean)
 	 */
 	public Object[] getTableDisplay() {
@@ -134,12 +134,12 @@ public class EntryTypeAttributeItem {
 		returnObj[2] = Boolean.valueOf(irregular);
 		return returnObj;
 	} //END public Object[] getTableDisplay()
-    
+
 	public static String[] getTableDisplayTitles() {
 		String[] titles = {"Name", "Irregular"};
 		return titles;
 	} //END public static String[] getTableDisplayTitles()
-	
+
 	protected static boolean[] getTableColumnFixedWidth() {
 		boolean fixed[] = {false, false};
 		return fixed;

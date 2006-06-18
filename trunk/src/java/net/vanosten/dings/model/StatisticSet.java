@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -26,10 +26,10 @@ import java.util.Date;
 import net.vanosten.dings.consts.Constants;
 
 public final class StatisticSet {
-	
+
 	private final Date timeStamp;
 	private final int[] numberOfEntries;
-	
+
 	public StatisticSet(Date aTimeStamp, int[] aNumberOfEntries) {
 		this.timeStamp = aTimeStamp;
 		this.numberOfEntries = aNumberOfEntries;
@@ -45,12 +45,12 @@ public final class StatisticSet {
 			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_SCORE, Integer.toString(i+1)));
 			xml.append(">");
 			xml.append(numberOfEntries[i]);
-			xml.append("</").append(Constants.XML_STATS_NOF_ENTRIES).append(">");			
+			xml.append("</").append(Constants.XML_STATS_NOF_ENTRIES).append(">");
 		}
 		xml.append("</").append(Constants.XML_STATS_SET).append(">");
 		return xml.toString();
 	} //END public String getXMLString()
-	
+
 	public int getTotalNumberofEntries() {
 		int totalNumberOfEntries = 0;
 		for (int i = 0; i < Entry.SCORE_MAX; i++) {
@@ -58,11 +58,11 @@ public final class StatisticSet {
 		}
 		return totalNumberOfEntries;
 	} //END public int getTotalNumberofEntries()
-	
+
 	public Date getTimeStamp() {
 		return timeStamp;
 	} //END public Date getTimeStamp()
-	
+
 	/**
 	 * Calculates the arithmetic average score of the entries in this set
 	 * @return

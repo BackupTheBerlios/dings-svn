@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,7 +47,7 @@ import net.vanosten.dings.uiif.IEntriesSelectionView;
 
 public class EntriesSelectionView extends AViewWithButtons implements IEntriesSelectionView {
 	private final static long serialVersionUID = 1L;
-	
+
 	private JButton applyB;
 	private ListID unitsLi, categoriesLi, typesLi;
 	private JComboBox statusCB;
@@ -73,14 +73,14 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		statusL = new JLabel("Status:");
 		statusL.setDisplayedMnemonic(("S").charAt(0));
 		statusL.setLabelFor(statusCB);
-		
+
 		lastLearnedBeforeTF = new JTextField();
 		lastLearnedBeforeTF.setText(Integer.toString(0));
 		lastLearnedBeforeTF.setColumns(5);
 		lastLearnedBeforeL = new JLabel("Last learned before (days):");
 		lastLearnedBeforeL.setDisplayedMnemonic(("A").charAt(0));
 		lastLearnedBeforeL.setLabelFor(lastLearnedBeforeTF);
-		
+
 		minScoreCB = new JComboBox();
 		maxScoreCB = new JComboBox();
 		for (int i = Entry.SCORE_MIN; i <= Entry.SCORE_MAX; i++) {
@@ -95,40 +95,40 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		maxScoreL = new JLabel("Maximal Score:");
 		maxScoreL.setDisplayedMnemonic(("x").charAt(0));
 		maxScoreL.setLabelFor(maxScoreCB);
-		
+
 		//units
 		unitsLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		unitsL = new JLabel(Toolbox.getInstance().getInfoPointer().getUnitLabel() + ":");
 		//unitsL.setDisplayedMnemonic(("U").charAt(0));
 		unitsL.setLabelFor(unitsLi);
-		
+
 		//categories
 		categoriesLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		categoriesL = new JLabel(Toolbox.getInstance().getInfoPointer().getCategoryLabel() + ":");
 		//categoriesL.setDisplayedMnemonic(("C").charAt(0));
 		categoriesL.setLabelFor(categoriesL);
-		
+
 		//EntryTypes
 		typesLi = new ListID(4, ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		typesL = new JLabel("Selected Entry Types:");
 		typesL.setDisplayedMnemonic(("Y").charAt(0));
 		typesL.setLabelFor(typesLi);
 	} //END private final void initComponents()
-	
+
 	//implements A ViewWithButtons
 	protected void initializeMainP() {
 		initComponents();
-		
+
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		mainP = new JPanel();
 		mainP.setLayout(gbl);
-		
+
 		Insets vghz = new Insets(DingsSwingConstants.SP_V_G, 0, 0, 0);
 		Insets vghg = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_G, 0, 0);
 		Insets vght = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_T, 0, 0);
 		Insets vzhg = new Insets(0, DingsSwingConstants.SP_H_G, 0, 0);
-		
+
 		//----status
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbl.setConstraints(statusL, gbc);
@@ -150,7 +150,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		mainP.add(lastLearnedBeforeL);
 		//-----
 		gbc.gridx = 1;
-		gbc.gridwidth = 3; 
+		gbc.gridwidth = 3;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
 		gbl.setConstraints(lastLearnedBeforeTF, gbc);
@@ -231,15 +231,15 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		gbl.setConstraints(typesLi, gbc);
 		mainP.add(typesLi);
 	} //END protected void initializeMainP()
-	
+
 	//implements AViewWithButtons
 	protected final void initializeButtonP() {
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
-		
+
 		buttonsP.add(applyB);
 	} //END protected final void initializeButtonP()
-	
+
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
 		applyB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.apply_selection")
@@ -251,83 +251,83 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 			}
 		});
 	} //END protected final void initButtonComponents()
-	
+
 	//overrides AViewWithButtons
 	public final boolean init(IAppEventHandler aHandler) {
 		boolean foo = super.init(aHandler);
-        AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
-        ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_REFRESH);
-        controller.handleAppEvent(ape);
-        return foo;
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_REFRESH);
+		controller.handleAppEvent(ape);
+		return foo;
 	} //END public final boolean init(IAppEventHandler)
-	
+
 	private final void onApply() {
-        AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
-        ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_APPLY);
-        controller.handleAppEvent(ape);
+		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_APPLY);
+		controller.handleAppEvent(ape);
 	} //END private final void onApply()
-	
+
 	//implements IEntriesSelectionView
 	public void setUnitsList(String[][] theUnits) {
 		unitsLi.setListIDModel(new ListIDModel(theUnits));
 		unitsLi.setSelectionInterval(0,theUnits.length-1);
 	} //END public void setUnitsList(String[])
-	
+
 	//implements IEntriesSelectionView
 	public void setCategoriesList(String[][] theCategories) {
 		categoriesLi.setListIDModel(new ListIDModel(theCategories));
 		categoriesLi.setSelectionInterval(0,theCategories.length-1);
 	} //END public void setCategoriesList(String[])
-	
+
 	//implements IEntriesSelectionView
 	public void setTypesList(String[][] theEntryTypes) {
 		typesLi.setListIDModel(new ListIDModel(theEntryTypes));
 		typesLi.setSelectionInterval(0,theEntryTypes.length-1);
 	} //END public void setTypesList(String[])
-	
+
 	//implements IEntriesSelectionView
 	public int getStatusChoice() {
-		return statusCB.getSelectedIndex(); 
+		return statusCB.getSelectedIndex();
 	} //END public int getStatusChoice()
-	
+
 	//implements IEntriesSelectionView
 	public void setStatusChoice(int aStatusChoice) {
 		statusCB.setSelectedIndex(aStatusChoice);
 	} //END public void setStatusChoice(int)
-	
+
 	//implements IEntriesSelectionView
 	public String[] getUnitsChoice() {
 		return unitsLi.getSelectedIDs();
 	} //END public String[] getUnitsChoice()
-	
+
 	//implements IEntriesSelectionView
 	public void setUnitsChoice(String[] theIds) {
 		unitsLi.clearSelection();
 		unitsLi.setSelectedIDs(theIds);
 	} //END public void setUnitsChoice(String[])
-	
+
 	//implements IEntriesSelectionView
 	public String[] getCategoriesChoice() {
 		return categoriesLi.getSelectedIDs();
 	} //END public String[] geCategoriesChoice()
-	
+
 	//implements IEntriesSelectionView
 	public void setCategoriesChoice(String[] theIds) {
 		categoriesLi.clearSelection();
 		categoriesLi.setSelectedIDs(theIds);
 	} //END public void setCategoriesChoice(String[])
-	
+
 	//implements IEntriesSelectionView
 	public String[] getTypesChoice() {
 		return typesLi.getSelectedIDs();
 	} //END public String[] getTypesChoice()
-	
+
 	//implements IEntriesSelectionView
 	public void setTypesChoice(String[] theIds) {
 		typesLi.clearSelection();
 		typesLi.setSelectedIDs(theIds);
 	} //END public void setTypesChoice(String[])
-	
+
 	//implements IEntriesSelectionView
 	public String getLastLearnedBefore() {
 		return lastLearnedBeforeTF.getText();
@@ -337,7 +337,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	public void setLastLearnedBefore(int aNumberOfDays) {
 		lastLearnedBeforeTF.setText(Integer.toString(aNumberOfDays));
 	} //END public void setLastLearnedBefore(int)
-	
+
 	//implements IEntriesSelectionView
 	public int[] getMinMaxScore() {
 		int[] scores = new int[2];

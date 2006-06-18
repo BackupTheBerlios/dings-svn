@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,8 +43,8 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 	private ValidatedTextField nameVTF;
 	private JCheckBox attribOneEnabledCB, attribTwoEnabledCB, attribThreeEnabledCB, attribFourEnabledCB;
 	private ChoiceID attribOneTypeCh, attribTwoTypeCh, attribThreeTypeCh, attribFourTypeCh;
-	
-	
+
+
 	public EntryTypeEditView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry_type")
 				, aComponentOrientation
@@ -65,7 +65,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		nameVTF.setToolTipText("Name may not be empty");
 		nameL.setLabelFor(nameVTF);
 		nameVTF.addKeyListener(this);
-		
+
 		attribOneEnabledCB = new JCheckBox("Attribute 1:");
 		attribOneEnabledCB.setMnemonic(("1").charAt(0));
 		attribOneEnabledCB.addItemListener(new ItemListener() {
@@ -217,17 +217,17 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		//set focus
 		nameVTF.requestFocus();
 	} //END protected void initializeEditP()
-	
+
 	//implements IEntryTypeEditView
 	public void setName(String aName) {
 		nameVTF.setText(aName);
 	} //END public void setUnitName(String)
-	
+
 	//	implements IEntryTypeEditView
 	public String getName() {
 		return nameVTF.getText();
 	} //END public String getName()
-	
+
 	//	implements IEntryTypeEditView
 	public void setAttributeChoices(String[][] theAttributes) {
 		isUpdating = true;
@@ -237,11 +237,11 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		attribFourTypeCh.setItems(theAttributes);
 		isUpdating = false;
 	} //END public void setAttributeChoices(String[][])
-		
+
 	//	implements IEntryTypeEditView
 	public void setAttributes(String[] anId) {
 		isUpdating = true;
-		
+
 		attribOneEnabledCB.setSelected(false);
 		attribOneTypeCh.setEnabled(false);
 		attribOneTypeCh.setSelectedID(null);
@@ -257,7 +257,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		attribFourEnabledCB.setSelected(false);
 		attribFourTypeCh.setEnabled(false);
 		attribFourTypeCh.setSelectedID(null);
-		
+
 		if (null != anId[0]) {
 			attribOneEnabledCB.setSelected(true);
 			attribOneTypeCh.setEnabled(true);
@@ -299,11 +299,11 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		if (attribFourEnabledCB.isSelected()) {
 			theIds[3] = attribFourTypeCh.getSelectedID();
 		}
-		return theIds; 
+		return theIds;
 	} //END public String[] getAttributes()
-	
+
 	//-------------------------------------------
-	
+
 	private void onEnabled(int attribNo) {
 		switch (attribNo) {
 			case 1:
@@ -315,7 +315,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 				attribOneTypeCh.setSelectedID(null);
 			}
 			break;
-			
+
 			case 2:
 			attribTwoTypeCh.setEnabled(attribTwoEnabledCB.isSelected());
 			if (attribTwoEnabledCB.isSelected()) {
@@ -325,7 +325,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 				attribTwoTypeCh.setSelectedID(null);
 			}
 			break;
-			
+
 			case 3:
 			attribThreeTypeCh.setEnabled(attribThreeEnabledCB.isSelected());
 			if (attribThreeEnabledCB.isSelected()) {
@@ -335,7 +335,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 				attribThreeTypeCh.setSelectedID(null);
 			}
 			break;
-			
+
 			case 4:
 			attribFourTypeCh.setEnabled(attribFourEnabledCB.isSelected());
 			if (attribFourEnabledCB.isSelected()) {
@@ -349,7 +349,7 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 		//set to changed
 		onChange();
 	} //END private void onEnabled(int)
-	
+
 	//implements IEntryTypeEditView
 	public void setNameIsValueValid(boolean valid) {
 		nameVTF.isValueValid(valid);

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,15 +35,15 @@ import net.vanosten.dings.uiif.IView;
 public abstract class AViewWithButtons extends JPanel implements IView {
 	protected JPanel mainP;
 	protected JPanel buttonsP;
-	
+
 	private JLabel titleL;
-	
+
 	/** The title of this list */
 	private String title;
-	
+
 	/** The component/gui orientation for international apps */
 	protected ComponentOrientation guiOrientation;
-	
+
 	protected IAppEventHandler controller;
 
 	public AViewWithButtons(String aTitle, ComponentOrientation aComponentOrientation) {
@@ -51,7 +51,7 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		this.title = aTitle;
 		this.guiOrientation = aComponentOrientation;
 	} //END public AViewWithButtons(String, ComponentOrientation)
-		
+
 	/**
 	 * Sets up the initial GUI.
 	 */
@@ -66,16 +66,16 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 			, DingsSwingConstants.SP_D_RIGHT
 		);
 		this.setBorder(border);
-		
+
 		initButtonComponents();
 		initializeButtonP();
-		
+
 		initializeMainP();
-				
+
 		titleL = new JLabel(title);
 		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
 		titleL.setEnabled(false);
-				
+
 		//make gui
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -113,15 +113,15 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 	 * Sets the panel with the buttons up.
 	 */
 	protected abstract void initializeButtonP();
-	
+
 	/**
 	 * Initializes the buttons for the button panel
 	 */
 	protected abstract void initButtonComponents();
-		
+
 	/**
 	 * Initialize the view.
-	 * 
+	 *
 	 * @param aController - the controller (and model) of this view
 	 */
 	public boolean init(IAppEventHandler aController) {
@@ -129,7 +129,7 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 		if (null == controller) return false;
 		return true;
 	} //END public boolean init()
-	
+
 	/**
 	 * Sets the component orientation according to the guiOrientation variable.
 	 * The method has to be called as the last one in the constructor of
@@ -140,7 +140,7 @@ public abstract class AViewWithButtons extends JPanel implements IView {
 	protected final void setGUIOrientation() {
 		this.applyComponentOrientation(this.guiOrientation);
 	} //END protected final void setGUIOrientation()
-	
+
 	/**
 	 * (Se)sets the title of the view
 	 * @param title

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,10 +29,10 @@ import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class SolutionLabel extends JLabel {
 	private final static long serialVersionUID = 1L;
-	
+
 	/** Whether the text can be hidden at all */
 	private boolean hideable = false;
-	
+
 	/**
 	 * The only contructor. All other constructors are hidden and
 	 * must be simulated by means of method calls
@@ -41,7 +41,7 @@ public class SolutionLabel extends JLabel {
 		super();
 		this.setFont(DingsSwingConstants.SOLUTION_FONT);
 	} //END public SolutionLabel()
-	
+
 	/**
 	 * Whether the text should be unreadable.
 	 * @param boolean - true if the text should be invisible (same color as background)
@@ -54,10 +54,10 @@ public class SolutionLabel extends JLabel {
 		}
 		else {
 			//set foreground color to foreground color of the container
-			this.setForeground(this.getParent().getForeground());	
+			this.setForeground(this.getParent().getForeground());
 		}
 	} //END public void setHidden(boolean hidden)
-	
+
 	/**
 	 * Whether the text can be made hidden by calling <code>setHidden(true)
 	 * @param hideable
@@ -65,12 +65,12 @@ public class SolutionLabel extends JLabel {
 	public void setHideable(boolean hideable) {
 		this.hideable = hideable;
 	} //END public void setHideable(boolean)
-	
+
 	/**
 	 * Overrides JLabel.setText(String) by setting the text as an
 	 * html text and thereby allow multiple lines.
 	 */
 	public void setText(String text) {
-		super.setText("<html>" + text + "</html>");		
+		super.setText("<html>" + text + "</html>");
 	} //END public void setText(String text)
 } //END public class SolutionLabel extends JLabel

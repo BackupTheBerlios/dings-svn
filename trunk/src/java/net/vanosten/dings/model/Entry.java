@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -248,7 +248,7 @@ public final class Entry extends AIdItemModel {
 		}
 		else this.score = aScore;
 	} //END private void setScore(int)
-	
+
 	/**
 	 * Changes the score of this entry based on the learning result.
 	 * also changes lastLearned and sets safe needed
@@ -265,7 +265,7 @@ public final class Entry extends AIdItemModel {
 		//safe needed
 		sendSaveNeeded();
 	} //END protected void updateScore(Result)
-	
+
 	/**
 	 * Resets the score to the minimum
 	 */
@@ -357,9 +357,9 @@ public final class Entry extends AIdItemModel {
 			}
 		}
 	} //END protected void updateModel()
-	
+
 	/**
-	 * 
+	 *
 	 * @return an array of boolean with the results of the answer check indexed as follows:
 	 */
 	private boolean[] checkAnswerLearnOne() {
@@ -771,5 +771,5 @@ public final class Entry extends AIdItemModel {
 	public String getTarget() {
 		return target;
 	}
-	
+
 } //END public abstract class Entrz implements DingsItem

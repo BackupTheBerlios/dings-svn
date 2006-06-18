@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,16 +38,16 @@ import net.vanosten.dings.swing.DingsSwingConstants;
  */
 public class ValidStringTableCellRenderer extends JLabel implements TableCellRenderer {
 	private final static long serialVersionUID = 1L;
-	
+
 	/** The string to compare to to test for invalidity */
 	private String invalid;
-	
+
 	public ValidStringTableCellRenderer() {
 		super();
 		setOpaque(true);
 		setHorizontalAlignment(SwingConstants.LEADING);
 	} //END public ValidStringTableCellRenderer()
-	
+
 	/**
 	 * Implements the interface. If the value of the cell is not a string, then nothing happens
 	 */
@@ -67,7 +67,7 @@ public class ValidStringTableCellRenderer extends JLabel implements TableCellRen
 		}
 		return this;
 	} //END public Component getTableCellRendereComponent(...)
-	
+
 	/**
 	 * Sets the String to denote an invalid String
 	 * @param invalid

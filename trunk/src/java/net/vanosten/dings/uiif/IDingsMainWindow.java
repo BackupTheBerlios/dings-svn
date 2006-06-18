@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ public interface IDingsMainWindow {
 	public void setStatusBarStatusText(String aStatusText, String aSelectionText);
 	public void hideMainWindow();
 	public void setWaitCursor(boolean enable);
-	
+
 	//status of menu items
 	public void setEntriesMIEnabled(boolean doEnable);
 	public void setEntriesOkEnabled(boolean doEnable);
@@ -46,7 +46,7 @@ public interface IDingsMainWindow {
 	public void setResetScoreMIsEnabled(boolean doEnable);
 	public void setOpenVocabEnabled(boolean doEnable);
 	public void setFileHistory(String[][] filePaths);
-	
+
 	//show views
 	public IWelcomeView getWelcomeView();
 	public ISummaryView getSummaryView();

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,21 +30,21 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
 public abstract class AViewWithScrollPane extends AViewWithButtons {
-	
+
 	/** The central panel with the widgets for editing */
-	protected JPanel editP; 
+	protected JPanel editP;
 
 	public AViewWithScrollPane(String aTitle, ComponentOrientation aComponentOrientation) {
 		super(aTitle, aComponentOrientation);
 	} //END public AViewWithScrollPane(String, ComponentOrientation)
-	
+
 	//Implements AEditView
 	protected void initializeMainP() {
 		mainP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		mainP.setLayout(gbl);
-		
+
 		//editP
 		editP = new JPanel();
 		EmptyBorder border = new EmptyBorder(
@@ -56,7 +56,7 @@ public abstract class AViewWithScrollPane extends AViewWithButtons {
 		editP.setBorder(border);
 		initializeEditP();
 		JScrollPane scrollP = new JScrollPane(editP);
-		
+
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		gbc.fill = GridBagConstraints.BOTH;
@@ -65,6 +65,6 @@ public abstract class AViewWithScrollPane extends AViewWithButtons {
 		gbl.setConstraints(scrollP, gbc);
 		mainP.add(scrollP);
 	} //END protected void initializeMainP()
-	
+
 	protected abstract void initializeEditP();
 } //END public abstract class AViewWithScrollPane

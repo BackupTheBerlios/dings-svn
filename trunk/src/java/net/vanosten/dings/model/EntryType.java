@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,12 +33,12 @@ import java.util.logging.Logger;
 
 public class EntryType extends AIdItemModel {
 	private String name;
-	
+
 	private String[] attributeIds;
 
 	/** Defines the maximal number of an item until now */
 	private static int maxId = 0;
-	
+
 	/** Defines the number of attributes */
 	public final static int NUMBER_OF_ATTRIBUTES = 4;
 
@@ -139,7 +139,7 @@ public class EntryType extends AIdItemModel {
 	/**
 	 * Get theEntryTypeAttribute of a specific position.
 	 * Null is retruned if the position is not available.
-	 * 
+	 *
 	 * @param int - the position of the attribute
 	 * @return EntryTypeAttribute
 	 */
@@ -150,7 +150,7 @@ public class EntryType extends AIdItemModel {
 		String anId = attributeIds[aNumber - 1];
 		return attributes.getEntryTypeAttribute(anId);
 	} //END protected EntryTypeAttribute getAttribute(int)
-	
+
 	protected static String[] getTableDisplayTitles() {
 		String[] titles = {"Name", "Attribute 1", "Attribute 2", "Attribute 3", "Attribute 4"};
 		return titles;
@@ -165,10 +165,10 @@ public class EntryType extends AIdItemModel {
 	protected void releaseViews() {
 		editView = null;
 	} //END protected void releaseViews()
-	
+
 	/**
 	 * Tests the required fields for valid contents.
-	 * 
+	 *
 	 * @return List<String< - a list of validation errors. Size() = 0 means valid model.
 	 */
 	public static List<String> validate(String anId, String aName) {
@@ -190,12 +190,12 @@ public class EntryType extends AIdItemModel {
 		//if validation is ok, save the new values.
 		if (0 ==  errors.size()) {
 			//update all entries
-			//validated values			
+			//validated values
 			name = nameV;
-			
-			//not validated values			
+
+			//not validated values
 			String[] attributeIdsV = editView.getAttributes();
-			
+
 			StringBuffer sb = new StringBuffer();
 			sb.append(id);
 			int i; //an index in arrays to save some memory and GC
@@ -212,7 +212,7 @@ public class EntryType extends AIdItemModel {
 			for (i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
 				if (null != attributeIdsV[i]) {
 					newAttribIds.add(attributeIdsV[i]);
-				}				
+				}
 			}
 			//set the attribute ids
 			attributeIds = new String[NUMBER_OF_ATTRIBUTES];
@@ -224,7 +224,7 @@ public class EntryType extends AIdItemModel {
 				sb.append(Constants.DELIMITTER_APP_EVENT);
 				if (null != attributeIds[i]) {
 					sb.append(attributeIds[i]);
-				}				
+				}
 				else sb.append(Constants.NULL_STRING);
 			}
 			//append default item ids
@@ -234,9 +234,9 @@ public class EntryType extends AIdItemModel {
 				if (null != attributeIds[i]) {
 					defaultItemId = attributes.getEntryTypeAttribute(attributeIds[i]).getDefaultItem();
 					sb.append(defaultItemId);
-				}				
+				}
 				else sb.append(Constants.NULL_STRING);
-			}			
+			}
 			//send AppEvent to update all Entries
 			AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
 			evt.setMessage(MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES);
@@ -295,11 +295,11 @@ public class EntryType extends AIdItemModel {
 		editView.setEditing(false, true);
 		editView.setNameIsValueValid(true);
 	} //END protected void resetView()
-	
+
 	/**
-	 * The number of assigned attributes is determined by 
+	 * The number of assigned attributes is determined by
 	 * checking, if the id pointers are not null.
-	 * 
+	 *
 	 * @return int
 	 */
 	protected int getNumberOfAttributes() {

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,22 +29,22 @@ public abstract class AIdItemModel extends AItemModel {
 
 	/** The id of this model. In xml the id has a prefix <code>PREFIX</code> to allow for a valid xml-id */
 	protected String id;
-	
+
 	/** The date of the last update */
 	protected Date lastUpd;
-	
+
 	/**
 	 * Sets the last update date by converting a String representation of the date.
 	 * If something goes wrong, then the current date is used.
-	 * 
+	 *
 	 * @param String aDateString - the last updated date as a String (YYYYMMDD HH24:MI:SS)
 	 */
 	protected final void setLastUpd(String aDateString) {
 		lastUpd = Constants.getDateFromString(aDateString, new Date(), logger);
 	} //END protected final void setLastUpd(String)
-	
+
 	/**
-	 * Formats the last update date as a String with the format 
+	 * Formats the last update date as a String with the format
 	 * YYYYMMDD HH24:MI:SS.
 	 * @return String date - the date of last update as a formatted String
 	 */
@@ -60,7 +60,7 @@ public abstract class AIdItemModel extends AItemModel {
 	public final String getId() {
 		return id;
 	} //END public String getId()
-	
+
 	/**
 	 * Overrides <code>AItemModel.sendSaveNeeded()</code> to set the last update date.
 	 */

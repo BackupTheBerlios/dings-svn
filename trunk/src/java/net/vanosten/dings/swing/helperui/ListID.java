@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,28 +25,28 @@ import javax.swing.JList;
 
 public class ListID extends JList {
 	private final static long serialVersionUID = 1L;
-	
+
 	private ListIDModel listModel;
-	
+
 	public ListID (int rows, int mode) {
 		super();
 		setVisibleRowCount(rows);
 		setSelectionMode(mode);
 	} //END public ListID(int)
-	
+
 	public void setListIDModel(ListIDModel aListModel) {
-		this.listModel = aListModel; 
+		this.listModel = aListModel;
 		setModel(aListModel);
 	} //END public setModel(ListIDModel)
-	
+
 	public void setSelectedIDs(String[] theIDs) {
 		int[] indices = new int[theIDs.length];
-		for (int i = 0; i < theIDs.length; i++) {	
+		for (int i = 0; i < theIDs.length; i++) {
 			indices[i] = listModel.getIDIndexPos(theIDs[i]);
 		}
 		this.setSelectedIndices(indices);
 	} //END public void setSelectedIDs(String[])
-	
+
 	public void selectID(String anID) {
 		int myPos = listModel.getIDIndexPos(anID) ;
 		if (myPos >= 0) {
@@ -54,11 +54,11 @@ public class ListID extends JList {
 		}
 		//TODO: else ???????
 	} //END public void selectID(String)
-	
+
 	public String getSelectedID() {
 		return listModel.getIDAt(getSelectedIndex());
 	} //END public String getSelectedID()
-	
+
 	public String[] getSelectedIDs() {
 		int [] indices = this.getSelectedIndices();
 		return listModel.getIDsAt(indices);

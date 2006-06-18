@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,17 +34,17 @@ package net.vanosten.dings.swing.helperui;
  */
 public class IDEditableTableModel extends IDTableModel {
 	private final static long serialVersionUID = 1L;
-		
+
 	/** Determines whether a column is editable or not.
 	 * The first row should always be non-editable, as it is the ID
 	 */
 	private boolean[] columnEditable = null;
-	
+
 	public IDEditableTableModel(String[] theColumnNames, Object[][] theData, boolean[] theEditableColumns) {
 		super(theColumnNames, theData);
 		columnEditable = theEditableColumns;
 	} //END public IDEditableTableModel(String[], Object[][], boolean[])
-	
+
 	/**
 	 * Tells the renderer in JTable whether or not the current
 	 * cell is editable. The implementation is only based on
@@ -57,7 +57,7 @@ public class IDEditableTableModel extends IDTableModel {
 		}
 		return columnEditable[col+1];
 	} //END public boolean isCellEditable(int, int)
-	
+
 	/**
 	 * Allows the JTable to set a value in the model.
 	 * Actually everybody can use this method to change the content.
@@ -66,10 +66,10 @@ public class IDEditableTableModel extends IDTableModel {
 		data[row][col+1] = value;
 		fireTableDataChanged();
 	} //END public void setValueAt(...)
-	
+
 	/**
 	 * Deletes a specific row.
-	 * 
+	 *
 	 * @param int aRow - the position of the row to be deleted
 	 */
 	public void deleteRow(int aRow) {
@@ -83,10 +83,10 @@ public class IDEditableTableModel extends IDTableModel {
 		data = theData;
 		fireTableDataChanged();
 	} //END public void deleteRow()
-	
+
 	/**
 	 * Adds a new row of data at the last position.
-	 * 
+	 *
 	 * @param Object[] newData - the data to be inserted
 	 */
 	public void addRow(Object[] newData) {
@@ -96,14 +96,14 @@ public class IDEditableTableModel extends IDTableModel {
 		}
 		theData[data.length] = newData;
 		data = theData;
-		fireTableDataChanged();		
+		fireTableDataChanged();
 	} //END public void addRow(int, Object[])
-	
+
 	/**
 	 * Moves a row up or down in the sequence.
 	 * Upwards means towards a smaller index number, i.e.
 	 * more to the top of the table.
-	 * 
+	 *
 	 * @param int rowToMove - the position of the row to move
 	 * @param boolean upWards - true if the row has to be moved upwards
 	 */

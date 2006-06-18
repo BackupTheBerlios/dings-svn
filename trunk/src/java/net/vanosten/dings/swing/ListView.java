@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -60,11 +60,11 @@ public abstract class ListView extends JPanel implements IListView {
 	private IDTableModel model;
 	private JPanel buttonsP, mainP;
 	private JButton newB, deleteB, editB;
-    private IAppEventHandler controller;
-    
+	private IAppEventHandler controller;
+
 	/** The message for edit */
 	protected Message msgEdit;
-	
+
 	/** The title of this list */
 	private String title;
 
@@ -94,13 +94,13 @@ public abstract class ListView extends JPanel implements IListView {
 			, DingsSwingConstants.SP_D_RIGHT
 		);
 		this.setBorder(border);
-		
+
 		initButtonComponents();
 		initializeButtonP();
-		
+
 		mainP = new JPanel();
 		initializeMainP();
-				
+
 		JLabel titleL = new JLabel(title);
 		titleL.setFont(DingsSwingConstants.TITLE_ONE_FONT);
 		titleL.setEnabled(false);
@@ -132,21 +132,21 @@ public abstract class ListView extends JPanel implements IListView {
 		gbl.setConstraints(buttonsP, gbc);
 		add(buttonsP);
 	} //END private void initializeGUI()
-	
+
 	private void initializeButtonP() {
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
-		
+
 		JPanel myButtonsP = new JPanel();
 		myButtonsP.setLayout(new GridLayout(1,3, DingsSwingConstants.SP_H_C, 0));
-		
+
 		myButtonsP.add(newB);
 		myButtonsP.add(deleteB);
 		myButtonsP.add(editB);
-		
+
 		buttonsP.add(myButtonsP);
 	} //END private void initializeButtonP()
-	
+
 	private final void initButtonComponents() {
 		newB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.add")
 				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_ADD_BTN, "FIXME"));
@@ -156,7 +156,7 @@ public abstract class ListView extends JPanel implements IListView {
 				onNew();
 			}
 		});
-		
+
 		deleteB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.remove")
 				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_REMOVE_BTN, "FIXME"));
 		deleteB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.remove").charAt(0));
@@ -165,20 +165,20 @@ public abstract class ListView extends JPanel implements IListView {
 				String rowID = getSelectedRowID();
 				if (rowID != null) {
 					onDelete();
-				}         
+				}
 			}
 		});
-		
+
 		editB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.edit")
 				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_EDIT_BTN, "FIXME"));
 		editB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.edit").charAt(0));
 		editB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				onEdit();         
+				onEdit();
 			}
 		});
 	} //END private final void initButtonComponents()
-	
+
 	private void initializeMainP() {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -226,17 +226,17 @@ public abstract class ListView extends JPanel implements IListView {
 		gbl.setConstraints(listPane, gbc);
 		mainP.add(listPane);
 	} //END private initializeMainP()
-    
-    /**
-     * Gets the ID of the selected row
-     * 
-     * return String - the ID of the selcted row.
-     */
-    private String getSelectedRowID() {
-    	return model.getIDAt(listT.getSelectedRow());
-    } //END private String getSelectedRowID()
 
-	
+	/**
+	 * Gets the ID of the selected row
+	 *
+	 * return String - the ID of the selcted row.
+	 */
+	private String getSelectedRowID() {
+		return model.getIDAt(listT.getSelectedRow());
+	} //END private String getSelectedRowID()
+
+
 	/**
 	 * Updates the entries in the list and selects one item
 	 */
@@ -248,12 +248,12 @@ public abstract class ListView extends JPanel implements IListView {
 		controller.handleAppEvent(ape);
 		return true;
 	} //END public boolean init()
-	
+
 	public void setList(String theTitles[], Object theData[][], boolean[] columnFixedWidth) {
 		model = new IDTableModel(theTitles, theData);
 		listT.setModel(model);
 		setTableColumnFixedWidths(columnFixedWidth);
-		
+
 		//enable/disable buttons
 		if (0 == model.getRowCount()) {
 			deleteB.setEnabled(false);
@@ -263,7 +263,7 @@ public abstract class ListView extends JPanel implements IListView {
 			deleteB.setEnabled(true);
 			editB.setEnabled(true);
 		}
-		listT.requestFocus();		
+		listT.requestFocus();
 	} //END public void setList(String[], String[], Object[][], boolean[])
 
 	public void setSelected(String anID) {
@@ -273,7 +273,7 @@ public abstract class ListView extends JPanel implements IListView {
 			listT.scrollRectToVisible(listT.getCellRect(row, 0, true));
 		}
 	} //END public void setSelected(String)
-	
+
 	/**
 	 * Sets the width of the table columns. Gets called from setList(...)
 	 */
@@ -281,49 +281,49 @@ public abstract class ListView extends JPanel implements IListView {
 		TableColumn column = null;
 		Component comp = null;
 		int headerWidth = 0;
-		
+
 		TableCellRenderer headerRenderer = listT.getTableHeader().getDefaultRenderer();
 		for (int i = 0; i < fixed.length; i++) {
 			//get column
 			column = listT.getColumnModel().getColumn(i);
 			comp = headerRenderer.getTableCellRendererComponent(
-                                     null, column.getHeaderValue(), 
-                                     false, false, 0, 0);
-            if (fixed[i]) {
+									 null, column.getHeaderValue(),
+									 false, false, 0, 0);
+			if (fixed[i]) {
 				headerWidth = comp.getPreferredSize().width + 4;
 				//Set the width. Need to set min and max also!
 				column.setPreferredWidth(headerWidth);
 				column.setMinWidth(headerWidth);
 				column.setMaxWidth(headerWidth);
-            }
+			}
 			column.setResizable(!fixed[i]);
 		}
 	} //END private void setTableColumnFixedWidths()
-	
+
 	/**
 	 * Assigns the concrete messages.
 	 */
 	protected abstract void setMessages();
-	
+
 	/**
 	 * Override this method tho return an appropriate Id for the detail of a new item.
 	 * Currently only used for entries.
 	 * If null is returned, then this means that no new item should be created.
-	 * 
-	 * @return String - the id of 
+	 *
+	 * @return String - the id of
 	 */
 	protected String getIdTypeForNew() {
 		return Constants.EMPTY_STRING;
 	} //END protected String getIdTypeForNew()
 
 	//-----------------------------------------------------------------------
-	
+
 	/**
 	 * Requests a new entry by asking, which entry type that should be chosen.
 	 */
 	private void onNew() {
 		String type = getIdTypeForNew();
-		
+
 		if (null != type) {
 			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
 			ape.setMessage(MessageConstants.Message.D_LIST_VIEW_NEW);
@@ -332,7 +332,7 @@ public abstract class ListView extends JPanel implements IListView {
 		}
 		//else do nothing
 	} //END private void onNew()
-	
+
 	/**
 	 * Shows an edit view for en entry.
 	 */
@@ -342,10 +342,10 @@ public abstract class ListView extends JPanel implements IListView {
 			AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 			ape.setMessage(msgEdit);
 			ape.setDetails(rowID);
-			controller.handleAppEvent(ape);  
-		}       
+			controller.handleAppEvent(ape);
+		}
 	} //END private void onEdit()
-	
+
 	private void onDelete() {
 		String rowID = getSelectedRowID();
 		if (rowID != null) {
@@ -355,13 +355,13 @@ public abstract class ListView extends JPanel implements IListView {
 			controller.handleAppEvent(ape);
 		}
 	} //END private void onDelete()
-	
+
 	private void onTableSelection(ListSelectionEvent evt) {
 		ListSelectionModel lsm = (ListSelectionModel)evt.getSource();
 		if (lsm.isSelectionEmpty()) {
 			editB.setEnabled(false);
 			deleteB.setEnabled(false);
-		} 
+		}
 		else {
 			editB.setEnabled(true);
 			deleteB.setEnabled(true);

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,23 +36,23 @@ public class StatusBar extends JPanel {
 
 	/** The status of saving */
 	private JLabel statusL;
-	
+
 	/** The numbers of entries and chosen entries */
 	private JLabel selectionL;
-	
+
 	public StatusBar() {
 		super();
 		initializeGUI();
 	} //END public StatusBar()
-	
+
 	private void initializeGUI() {
 		statusL = new JLabel(" ");
 		selectionL = new JLabel(" "); //needs to have a blank for display
-		
+
 		//set fonts
 		statusL.setFont(DingsSwingConstants.STATUS_BAR_FONT);
 		selectionL.setFont(DingsSwingConstants.STATUS_BAR_FONT);
-		
+
 		//panels
 		JPanel statusP = new JPanel(new FlowLayout(FlowLayout.LEADING, DingsSwingConstants.SP_H_C,0));
 		JPanel selectionP = new JPanel(new FlowLayout(FlowLayout.LEADING, DingsSwingConstants.SP_H_C,0));
@@ -60,13 +60,13 @@ public class StatusBar extends JPanel {
 		selectionP.setBorder(new SoftBevelBorder(BevelBorder.LOWERED));
 		statusP.add(statusL);
 		selectionP.add(selectionL);
-		
+
 		//layout
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
-		
+
 		this.setLayout(gbl);
-		
+
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.weightx = 1.0d;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -78,19 +78,19 @@ public class StatusBar extends JPanel {
 		gbl.setConstraints(selectionP,gbc);
 		this.add(selectionP);
 	} //END private void initializeGUI()
-		
+
 	public void setStatusText(String aStatusText, String aSelectionText) {
 		if(null == aStatusText || 1 > aStatusText.length()) {
 			statusL.setText(" "); //make sure statusbar height is ok
 		}
 		else {
-			statusL.setText(aStatusText);			
+			statusL.setText(aStatusText);
 		}
 		if(null == aSelectionText || 1 > aSelectionText.length()) {
 			selectionL.setText(" ");
 		}
 		else {
-			selectionL.setText(aSelectionText);			
+			selectionL.setText(aSelectionText);
 		}
 	} //END public void setStatusText(String, String)
 } //END public class StatusBar extends JPanel

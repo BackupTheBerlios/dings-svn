@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,10 +67,10 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	private JTable itemsTable;
 	private IDEditableTableModel itemsModel;
 	private ValidStringTableCellRenderer validStringRenderer;
-		
+
 	/** If the table with items has changes, then this is true */
 	private boolean itemTableEdited = false;
-	
+
 	public EntryTypeAttributeEditView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry_type_attribute")
 				, aComponentOrientation
@@ -149,7 +149,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		//set focus
 		nameVTF.requestFocus();
 	} //END protected void initializeEditP()
-	
+
 	private void initializeItemsP() {
 		itemsP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
@@ -173,7 +173,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 			}
 		});
 		JScrollPane itemsPane = new JScrollPane(itemsTable);
-		
+
 		//put together
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -195,7 +195,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		gbl.setConstraints(itemsTableButtonP, gbc);
 		itemsP.add(itemsTableButtonP);
 	} //END private void initializeItemsP()
-		
+
 	private void initializeItemsTableButtonP() {
 		itemsTableButtonP = new JPanel();
 		itemsTableButtonP.setLayout(new GridLayout(4,1,0,DingsSwingConstants.SP_V_C));
@@ -240,17 +240,17 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		itemsTableButtonP.add(moveItemUpB);
 		itemsTableButtonP.add(moveItemDownB);
 	} //END private void initializeItemsTableButtonP()
-	
+
 	//implements IEntryTypeAttributeEditView
 	public void setName(String aName) {
 		nameVTF.setText(aName);
 	} //END public void setUnitName(String)
-	
+
 	//implements IEntryTypeAttributeEditView
 	public String getName() {
 		return nameVTF.getText();
 	} //END public String getName()
-	
+
 	//implements IEntryTypeAttributeEditView
 	public void setDefaultItem(String anId) {
 		isUpdating = true;
@@ -258,14 +258,14 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		defaultItemCh.setSelectedID(anId);
 		isUpdating = false;
 	} //END public void setDefaultItem(String)
-	
+
 	//implements IEntryTypeAttributeEditView
 	public String getDefaultItem() {
 		return defaultItemCh.getSelectedID();
 	} //END public String getDefaultItem()
-	
+
 	//implements IEntryTypeAttributeEditView
-	public void setItems(Object[][] theItems) {		
+	public void setItems(Object[][] theItems) {
 		//items table
 		boolean[] editableColumns = new boolean[3];
 		editableColumns[1] = true;
@@ -275,16 +275,16 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 			, editableColumns);
 		itemsTable.setModel(itemsModel);
 		setSelectedItemRow(0);
-		itemsModel.addTableModelListener(this);	
-		
+		itemsModel.addTableModelListener(this);
+
 		//editors and renderers (must be applied after valid model
-        TableColumn namesColumn = itemsTable.getColumnModel().getColumn(0);
-        namesColumn.setCellRenderer(validStringRenderer);
+		TableColumn namesColumn = itemsTable.getColumnModel().getColumn(0);
+		namesColumn.setCellRenderer(validStringRenderer);
 
 		//default item
 		setDefaultItemItems();
 	} //END public void setItems(Object[][])
-	
+
 	private void setDefaultItemItems() {
 		//save the current selection
 		String currentSelectedDefaultItemID = defaultItemCh.getSelectedID();
@@ -301,24 +301,24 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		if (null != currentSelectedDefaultItemID) {
 			defaultItemCh.setSelectedID(currentSelectedDefaultItemID);
 		}
-		isUpdating = false;		
+		isUpdating = false;
 	} //END private void setDefaultItemItems(Object[][])
-	
+
 	//implements IEntryTypeAttributeEditView
 	public Object[][] getItems() {
 		return itemsModel.getData();
 	} //END public Object[][] getItems()
-	
+
 	//implements IEntryTypeAttributeEditView
 	public boolean isItemTableEdited() {
 		return itemTableEdited;
 	} //END public boolean isItemTableEdited()
-	
+
 	//implements IEntryTypeAttributeEditView
 	public void setItemTableNotEdited() {
 		itemTableEdited = false;
 	} //END public void setItemTableNotEdited()
-	
+
 	//implements TableModelListener
 	public void tableChanged(TableModelEvent evt) {
 		//setEditing(true, true);
@@ -330,8 +330,8 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	private void setSelectedItemRow(int pos) {
 		itemsTable.setRowSelectionInterval(pos, pos);
 		itemsTable.scrollRectToVisible(itemsTable.getCellRect(pos, 0, true));
-	} //END public void setSelected(String)	
-	
+	} //END public void setSelected(String)
+
 	private void checkDeleteItemB() {
 		int theSelectedRow = itemsTable.getSelectedRow();
 		if (0 > theSelectedRow) {
@@ -348,36 +348,36 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	} //END private void checkDeleteItemB()
 
 	//-----------------------------------------------------------------------
-	
+
 	/**
 	 * Checks whether the deleteItemB
 	 */
 	private void onDefaultChange() {
 		checkDeleteItemB();
-		
+
 		//set changed
 		onChange();
 	} //END private void onDefaultChange()
-	
+
 	private void onNewItem() {
 		Object[] newItem = (EntryTypeAttributeItem.newItem()).getTableDisplay();
 		itemsModel.addRow(newItem);
 		setSelectedItemRow(itemsModel.getRowCount() - 1);
-		
+
 		//set changed
 		onChange();
 	} //END private void onNewItem()
-	
+
 	private void onDeleteItem() {
 		int lineToDelete = itemsTable.getSelectedRow();
-		setSelectedItemRow(0); //this statement has to precede the next, 
+		setSelectedItemRow(0); //this statement has to precede the next,
 		//otherwise Nullpointer exception in checkDeletedItemB() -> anID
 		itemsModel.deleteRow(lineToDelete);
-		
+
 		//set changed
 		onChange();
 	} //END private void onDeleteItem()
-	
+
 	private void onMoveItem(boolean upwards) {
 		int newSelectionPos = itemsTable.getSelectedRow();
 		itemsModel.moveRow(itemsTable.getSelectedRow(), upwards);
@@ -387,19 +387,19 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 		else {
 			newSelectionPos++;
 		}
-		setSelectedItemRow(newSelectionPos);	
-		
+		setSelectedItemRow(newSelectionPos);
+
 		//set changed
 		onChange();
 	} //END private void onMoveItem(boolean)
-	
+
 	private void onTableSelection(ListSelectionEvent evt) {
 		ListSelectionModel lsm = (ListSelectionModel)evt.getSource();
 		if (lsm.isSelectionEmpty()) {
 			deleteItemB.setEnabled(false);
 			moveItemUpB.setEnabled(false);
 			moveItemDownB.setEnabled(false);
-		} 
+		}
 		else {
 			//check deleteItemB
 			checkDeleteItemB();
@@ -420,12 +420,12 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 			}
 		}
 	} //END private void onTableSelection(ListSelectionEvent)
-	
+
 	//implements IEntryTypeAttributeEditView
 	public void setNameIsValueValid(boolean valid) {
 		nameVTF.isValueValid(valid);
 	} //END public void setNameIsValueValid(boolean)
-	
+
 	//implements IEntryTypeAttributeEditView
 	public void setItemNameIsValueValid(String invalidId) {
 		String invalid;

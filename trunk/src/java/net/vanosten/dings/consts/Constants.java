@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,14 +27,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import java.util.logging.Logger; 
+import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
  * Defines the constants for the ADings application.
  * Has static methods to convert from numbers as Strings to boolean values and vice versa.
  *
- * @author  Rick Gruber, <a href="mailto:rick@vanosten.net">rick@vanosten.net</a>
+ * @author  Rick Gruber, <a href="mailto:dingsbums@vanosten.net">dingsbums@vanosten.net</a>
  * @version 1.0.0
  */
 public class Constants  {
@@ -63,12 +63,12 @@ public class Constants  {
 		}
 		return lineSeparator;
 	} //END public static String getLineSeparator()
-	
+
 	/**
 	 * Returns a String as a null value, if the input
 	 * String equals to the <code>NULL_STRING</code> constant.
 	 * Otherwise the original String is returned.
-	 * 
+	 *
 	 * @param String aString - the original String
 	 * @return String - null if the original String equals to a specific Constant
 	 */
@@ -93,7 +93,7 @@ public class Constants  {
 		xml.append("</").append(aTag).append(">");
 		return xml.toString();
 	} //END public static Sting getXMLTaggedValue(String, String)
-	
+
 	/**
 	 * Makes an XML-tagged string with an int as variable
 	 *
@@ -102,7 +102,7 @@ public class Constants  {
 	 * @return String _ XML start and end tag around value
 	 */
 	 public static String getXMLTaggedValue(String aTag, int aValue) {
-	 	return getXMLTaggedValue(aTag, Integer.toString(aValue));
+		return getXMLTaggedValue(aTag, Integer.toString(aValue));
 	 } //END public static String getXMLTaggedValue(String, int)
 
 	/**
@@ -149,47 +149,47 @@ public class Constants  {
 	} //END public static String getXMLEntitiesReplacedString(String)
 
 	/*-------------------------Exception printing------------------------------------------------*/
-    
-    /**
-     * Returns the message and the stack trace elements of a Throwable in a single String.
-     *
-     * @param e The original Throwable
-     * @return The message and stack trace elements delimitted by a line-feed character
-     */
-    public static String getThrowableStackTrace(Throwable e) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("Stack trace of error:\n");
-        sb.append(e.toString()).append("\n");
-        sb.append(e.getMessage()).append("\n");
-        StackTraceElement[] elements = e.getStackTrace();
-        for (int i = 0; i < elements.length; i++) {
-            sb.append(elements[i].toString()).append("\n\n");
-        }
-        return sb.toString();
-    } //END public static String getThrowableStackTrace(Throwable)
+
+	/**
+	 * Returns the message and the stack trace elements of a Throwable in a single String.
+	 *
+	 * @param e The original Throwable
+	 * @return The message and stack trace elements delimitted by a line-feed character
+	 */
+	public static String getThrowableStackTrace(Throwable e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Stack trace of error:\n");
+		sb.append(e.toString()).append("\n");
+		sb.append(e.getMessage()).append("\n");
+		StackTraceElement[] elements = e.getStackTrace();
+		for (int i = 0; i < elements.length; i++) {
+			sb.append(elements[i].toString()).append("\n\n");
+		}
+		return sb.toString();
+	} //END public static String getThrowableStackTrace(Throwable)
 
 	/*---- Logging ----------------------------------------------------------------*/
 
 	/** The name of the application logging file */
 	public final static String LOGGING_FILE_NAME = "dings.log";
-	
+
 	/*---- Messages ----------------------------------------------------------------*/
 	//Message type
 	public final static int INFORMATION_MESSAGE = 101;
 	public final static int ERROR_MESSAGE = 102;
 	public final static int WARNING_MESSAGE = 103;
 	public final static int QUESTION_MESSAGE = 104;
-	
+
 	//option Choicetype
 	public final static int YES_NO_OPTION = 201;
 	public final static int YES_NO_CANCEL_OPTION = 202;
-	
+
 	//result type
 	public final static int YES_OPTION = 301;
 	public final static int NO_OPTION = 302;
 	public final static int CANCEL_OPTION = 303;
 	//public final static int OK_OPTION = 304;
-	//public final static int CLOSED_OPTION = 305; 
+	//public final static int CLOSED_OPTION = 305;
 	public final static String CANCELLED_INPUT = "CANCELLED_INPUT";
 
 	/*---- IDs RELATED ------------------------------------------------------------*/
@@ -205,7 +205,7 @@ public class Constants  {
 
 	/** The prefix for a EntryType id */
 	public final static String PREFIX_ENTRYTYPE = "ET";
-	
+
 	/** The prefix for a EntryTypeAttribute id */
 	public final static String PREFIX_ENTRTYPE_ATTRIBUTE = "ETA";
 
@@ -241,7 +241,7 @@ public class Constants  {
 	public final static String XML_ATTR_IRREGULAR = "ir"; //short for irregular
 	public final static String XML_ATTR_LAST_UPD = "lu";
 	public final static String XML_ATTR_LAST_LEARNED = "ll"; //only for Entry
-	
+
 	//core info
 	public final static String XML_BASE = "o"; //was origin
 	public final static String XML_TARGET = "d"; //was destination
@@ -257,7 +257,7 @@ public class Constants  {
 	//entry types
 	public final static String XML_ENTRYTYPES = "entrytypes";
 	public final static String XML_ENTRYTYPE = "entrytype";
-	
+
 	//EntryTypeAttribute
 	public final static String XML_ENTRYTYPE_ATTRIBUTES = "etattributes";
 	public final static String XML_ENTRYTYPE_ATTRIBUTE = "eta";
@@ -295,7 +295,7 @@ public class Constants  {
 	public final static String XML_VISIBILITY_EXAMPLE = "visex";
 	public final static String XML_VISIBILITY_PRONUNCIATION = "vispro";
 	public final static String XML_VISIBILITY_RELATION = "visrel";
-	
+
 	//general
 	public final static String XML_VOCABULARY = "vocabulary";
 	public final static String XML_INFO = "info";
@@ -305,19 +305,19 @@ public class Constants  {
 	public final static String XML_CATEGORIES = "categories";
 	public final static String XML_ENTRY = "e";
 	public final static String XML_ENTRIES = "entries";
-	
+
 	//statistics
 	public final static String XML_STATS = "stats";
 	public final static String XML_STATS_SET = "sset";
 	public final static String XML_STATS_TIMESTAMP = "ts";
 	public final static String XML_STATS_NOF_ENTRIES = "sne";
-	
+
 	/*---- Date Parsing -------------------------------------------------------*/
 	/** The format of a date String */
 	public final static String DATE_FORMAT = "yyyyMMdd HH:mm:ss z";
-		
+
 	/**
-	 * Formats a date as a String with the format 
+	 * Formats a date as a String with the format
 	 * YYYYMMDD HH24:MI:SS.
 	 * @return String date - a date as a formatted String
 	 */
@@ -325,11 +325,11 @@ public class Constants  {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 		return sdf.format(aDate);
 	} //END protected final String getDateString()
-	
+
 	/**
 	 * Sets a date by converting a String representation of the date.
 	 * If something goes wrong, then a default date is used.
-	 * 
+	 *
 	 * @param String aDateString - the last updated date as a String (YYYYMMDD HH24:MI:SS)
 	 * @param Date defaultDate - a default date if parsing of the String fails
 	 * @param Logger aLogger - the logger to log failure to
@@ -349,19 +349,19 @@ public class Constants  {
 				}
 				return defaultDate;
 			}
-		}	
+		}
 	} //END public final static Date getDateFromString(String, Date, Logger)
-	
+
 	/*------------------------- Locales ------------------------------------------*/
-	
+
 	/** All supported locales as an array of Strings, where the first element is a
 	 * combination of languagecode_COUNTRYCODE (e.g. en_US) and the display name
 	 */
 	private static String[][] SUPPORTED_LOCALES;
-	
+
 	/** The default locale is set to en_US to have best guarantee for support */
 	public final static Locale DEFAULT_LOCALE = new Locale("en", "US");
-	
+
 	/**
 	 * Initializes the array with supported locales.
 	 * The current list is built upon the following:
@@ -661,9 +661,9 @@ public class Constants  {
 		SUPPORTED_LOCALES[93][1] = "Turkish (Turkey)";
 		SUPPORTED_LOCALES[94] = new String[2];
 		SUPPORTED_LOCALES[94][0] = "uk_UA";
-		SUPPORTED_LOCALES[94][1] = "Ukrainian (Ukraine)";		
+		SUPPORTED_LOCALES[94][1] = "Ukrainian (Ukraine)";
 	} //END private static void initializeSupportedLocales()
-	
+
 	/**
 	 * The supported locales for influence of bidirectional text and
 	 * spell-checking.
@@ -679,12 +679,12 @@ public class Constants  {
 		}
 		return SUPPORTED_LOCALES;
 	} //END public static String[][] getSupportedLocales(Locale)
-	
+
 	/**
 	 * Parses a string (e.g. "en_US") to a Locale.
 	 * For backwards compatibility (version 0.2) int values can be expected
 	 * and are then translated to the DEFAULT_LOCALE.
-	 * 
+	 *
 	 * @param localeString
 	 * @return A Locale based on the info in the input parameter or
 	 *         DEFAULT_LOCALE if something goes wrong.

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -69,7 +69,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private SolutionLabel entryTypeSL;
 	private JButton changeEntryTypeB;
 	private LabeledSeparator attributesLS, othersLS;
-	
+
 	/** Stores the labels and ids of the available enttry types */
 	private String[][] entryTypesList;
 	private String entryTypeId;
@@ -92,16 +92,16 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		exampleL = new JLabel(Toolbox.getInstance().getInfoPointer().getExampleLabel() + ":");
 		pronunciationL = new JLabel("Pronunciation:");
 		relationL = new JLabel("Relation:");
-		
+
 		attributeOneL = new JLabel("N/A:");
 		attributeTwoL = new JLabel("N/A:");
 		attributeThreeL = new JLabel("N/A:");
 		attributeFourL = new JLabel("N/A:");
 		attributeOneL.setEnabled(false);
 		attributeTwoL.setEnabled(false);
-		attributeThreeL.setEnabled(false);		
-		attributeFourL.setEnabled(false);		
-		
+		attributeThreeL.setEnabled(false);
+		attributeFourL.setEnabled(false);
+
 		//base
 		baseVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_BASE));
 		baseVTA.setToolTipText("May not be empty");
@@ -188,13 +188,13 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		pronunciationTF.addKeyListener(this);
 		//relation
 		relationTF = new JTextField();
-		relationTF.addKeyListener(this);	
+		relationTF.addKeyListener(this);
 	} //END private void initComponents()
-	
+
 	//implements AViewWithScrollPane
 	protected void initializeEditP() {
 		initComponents();
-		
+
 		//static components
 		LabeledSeparator basicsLS = new LabeledSeparator("Basics");
 		JLabel statusL = new JLabel("Status:");
@@ -212,7 +212,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		entryTypeP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_G, 0)));
 		entryTypeP.add(changeEntryTypeB);
 		entryTypeP.add(Box.createHorizontalGlue());
-		
+
 		//scroll panes for text areas
 		JScrollPane baseSP = new JScrollPane(baseVTA);
 		baseSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -226,10 +226,10 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		JScrollPane exampleSP = new JScrollPane(exampleTA);
 		exampleSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		exampleSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
+
 		//set the visibility after everything has been initialized
 		setVisibilities();
-		
+
 		//layout
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -239,7 +239,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 				, DingsSwingConstants.SP_V_C
 				, DingsSwingConstants.SP_H_C));
 		editP.setLayout(gbl);
-		
+
 		//----basicsLS
 		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -499,7 +499,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbl.setConstraints(statusCB, gbc);
 		editP.add(statusCB);
 	} //END private void initializeEditP()
-	
+
 	/**
 	 * Convenience method for setting the visibility of labels and fields
 	 * based on the properties of the learning stack info.
@@ -545,14 +545,14 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 		//others separator is always visible due to status checkbox
 	} //END private void setVisibilities()
-	
+
 	private void onChangeEntryType() {
 		//make the GUI
 		JPanel dialogP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		dialogP.setLayout(gbl);
-		
+
 		JLabel textL = new JLabel();
 		textL.setText("<html><p>Choose one of the Entry Types in the list below.</p>"
 				+ "<p>Please be aware that all Entry Type related attribute data will be lost!</p></html>");
@@ -573,8 +573,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.gridy = 1;
 		gbc.insets = new Insets(DingsSwingConstants.SP_V_G, 0, 0, 0);
 		gbl.setConstraints(entryTypesCh, gbc);
-		dialogP.add(entryTypesCh);		
-		
+		dialogP.add(entryTypesCh);
+
 		Object[] options = {"OK", "Cancel"};
 		int answer = JOptionPane.showOptionDialog(this,
 													dialogP,
@@ -584,8 +584,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 													null,     //don't use a custom Icon
 													options,  //the titles of buttons
 													options[0]); //default button title
-	
-		//if ok, show entry edit 
+
+		//if ok, show entry edit
 		if (JOptionPane.OK_OPTION == answer) {
 			AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
 			evt.setMessage(MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE);
@@ -612,7 +612,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	public String getTarget() {
 		return targetVTA.getText();
 	} //END public String getTarget()
-	
+
 	public void setEntryType(String aLabel, String anId) {
 		entryTypeSL.setText(aLabel);
 		entryTypeId = anId;
@@ -752,10 +752,10 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		isUpdating = false;
 	} //END public void setCategories(String[][])
 
-	
+
 	/**
-	 * Prepares a combobox for choice of entry type, when the dialog for 
-	 * change is called. 
+	 * Prepares a combobox for choice of entry type, when the dialog for
+	 * change is called.
 	 *
 	 * @param String[][] theEntryTypes - the entry types and respective IDs
 	 */
@@ -768,7 +768,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 		this.entryTypesList = theEntryTypes;
 	} //END public void setEntryTypes(String[][])
-	
+
 	public void setAttributeItems(String[][] theItems, int aNumber) {
 		isUpdating = true;
 		switch (aNumber) {
@@ -795,12 +795,12 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 		isUpdating = false;
 	} //END public void setAttributeItems(String[][], int)
-	
+
 	//implements IEntryEditView
 	public void setBaseIsValueValid(boolean valid) {
 		baseVTA.isValueValid(valid);
 	} //END public void setBaseIsValueValid(boolean)
-	
+
 	//implements IEntryEditView
 	public void setTargetIsValueValid(boolean valid) {
 		targetVTA.isValueValid(valid);

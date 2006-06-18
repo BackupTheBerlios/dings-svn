@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -337,9 +337,9 @@ public class EntriesCollection extends ACollection {
 	protected int countChosenEntries() {
 		return chosenKeys.size();
 	} //END protected int countChosenEntries()
-	
+
 	/**
-	 * 
+	 *
 	 * @param minimum
 	 * @return true if the number of chosen entries is greater than or
 	 *          equal to the minimum input parameter
@@ -503,7 +503,7 @@ public class EntriesCollection extends ACollection {
 		setCurrentItem(randomChosen.getId());
 		currentScore = randomChosen.getScore();
 	} //END private void getNextLearnOne()
-	
+
 	/**
 	 * @return an id of an entry in the current selection, which has been chosen
 	 *          randomly: first weighted random by score and then randomly within the same score
@@ -719,11 +719,11 @@ public class EntriesCollection extends ACollection {
 		}
 		return false;
 	} //END protected boolean isSelectionItemUsed(String)
-	
+
 	/**
-	 * 
+	 *
 	 * @param number
-	 * @return an array of Entries with the number of elements as specified by the 
+	 * @return an array of Entries with the number of elements as specified by the
 	 *          input parameter and randomly chosen among all entries in the current selection
 	 */
 	public Entry[] getNextChoiceSet(int number) {
@@ -739,7 +739,7 @@ public class EntriesCollection extends ACollection {
 		}
 		return randomArray;
 	} //END public Entry[] getNextChoiceSet(int)
-	
+
 	/**
 	 * Sets the learning results for a collection of entries represented by their ids
 	 * by updating their scores.

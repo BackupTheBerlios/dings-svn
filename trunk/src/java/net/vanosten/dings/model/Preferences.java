@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -115,7 +115,7 @@ public class Preferences extends AModel{
 	//public final static String LEARN_HINT_COVER_PERCENT = "learn_hint_cover_percent";
 	public final static String LEARN_HINT_FLASH_TIME = "learn_hint_flash_time";
 	public final static String LEARN_HINT_SHUFFLE_WORD = "learn_hint_shuffle_word";
-	
+
 	/** The number of lines for entry field base */
 	public final static String PROP_LINES_BASE = "lines_base";
 	/** The number of lnes for entry field target */
@@ -261,7 +261,7 @@ public class Preferences extends AModel{
 	public String getProperty(String thePropertyKey) {
 		return props.getProperty(thePropertyKey);
 	} //END public String getProperty(String)
-	
+
 	/**
 	 * Parses the property as an int value
 	 * @param thePropertyKey
@@ -280,7 +280,7 @@ public class Preferences extends AModel{
 	public Object setProperty(String thePropertyKey, String theValue) {
 		return props.setProperty(thePropertyKey, theValue);
 	} //END public Object setProperty(String, String)
-	
+
 	public void setIntProperty(String thePropertyKey, int theValue) {
 		props.setProperty(thePropertyKey, Integer.toString(theValue));
 	}

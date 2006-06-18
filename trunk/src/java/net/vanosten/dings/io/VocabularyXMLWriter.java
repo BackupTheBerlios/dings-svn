@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +36,7 @@ import net.vanosten.dings.consts.Constants;
 /**
  * This class handels xml-writing for ADings. i.e. it can write a xml-file (of a specific structure).
  *
- * @author Rick Gruber, <a href="mailto:rick@vanosten.net">rick@vanosten.net</a>
+ * @author Rick Gruber, <a href="mailto:dingsbums@vanosten.net">dingsbums@vanosten.net</a>
  * @version 1.0.0, 2001-03-20
  */
 public class VocabularyXMLWriter implements IOHandler {

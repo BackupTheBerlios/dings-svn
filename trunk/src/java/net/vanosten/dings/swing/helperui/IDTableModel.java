@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,30 +27,30 @@ import javax.swing.table.AbstractTableModel;
  * IDTableModel is an inplementation of AbstractTableModel
  * that holds the ID of a record in the first column,
  * which is never shown.
- * 
+ *
  * @author Rick Gruber
  */
 public class IDTableModel extends AbstractTableModel {
 	private final static long serialVersionUID = 1L;
-		
+
 	private String[] columnNames;
 	protected Object[][] data;
-	
+
 	public IDTableModel(String[] theColumnNames, Object[][] theData) {
 		this.columnNames = theColumnNames;
 		this.data = theData;
 	} //END public IDTableModel(String[], Object[][])
-	
+
 	//Implements AbstractTableModel
 	public Object getValueAt(int row, int col) {
 		return data[row][col + 1];
 	} //END public Object getValueAt(int, int)
-	
+
 	//Implements AbstractTableModel
 	public int getRowCount() {
 		return data.length;
 	} //END public int getRowCount()
-	
+
 	//Implements AbstractTableModel.
 	public int getColumnCount() {
 		return columnNames.length;
@@ -60,13 +60,13 @@ public class IDTableModel extends AbstractTableModel {
 	 * Overrides the default method in AbstractTableModel
 	 * by providing the given column nmae as given in the
 	 * constructor.
-	 * 
+	 *
 	 * @param int col - the column number.
 	 */
 	public String getColumnName(int col) {
 		return columnNames[col];
-	} //END public String getColumnName(int)	
-	
+	} //END public String getColumnName(int)
+
 	/**
 	 * JTable uses this method to determine the default renderer/
 	 * editor for each cell.  If we didn't implement this method,
@@ -87,7 +87,7 @@ public class IDTableModel extends AbstractTableModel {
 		}
 		return (String)data[pos][0];
 	} //END public String getIDAt(int)
-	
+
 	/**
 	 * Returns the index pos of an ID or -1 if ID cannot be found
 	 */
@@ -95,11 +95,11 @@ public class IDTableModel extends AbstractTableModel {
 		for (int i = 0; i < data.length; i++) {
 			if (anID.equals(data[i][0])) {
 				return i;
-			} 
-		}		
+			}
+		}
 		return -1;
 	} //END public int getIDIndexPos(String)
-	
+
 	public Object[][] getData() {
 		Object[][] copiedData = new Object[data.length][];
 		System.arraycopy(data, 0, copiedData, 0, data.length);

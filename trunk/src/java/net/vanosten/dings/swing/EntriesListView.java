@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,21 +33,21 @@ import net.vanosten.dings.uiif.IEntriesListView;
 
 public class EntriesListView extends ListView implements IEntriesListView {
 	private final static long serialVersionUID = 1L;
-	
+
 	/** The names of and ids for EntryTypes to be presented in a dialog */
 	private String[][] entryTypes;
-	
+
 	public EntriesListView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.list_entries"), aComponentOrientation);
 	} //END public EntriesListView()
-	
+
 	protected void setMessages() {
 		msgEdit = MessageConstants.Message.N_VIEW_ENTRY_EDIT;
 	} //END protected void setMessages()
-	
+
 	/**
 	 * Overrides the method in ListView to present a dialog with choice possiblities.
-	 * If there is more than one element in 
+	 * If there is more than one element in
 	 */
 	protected String getIdTypeForNew() {
 		//if there is only one entry type, then choose that one directly
@@ -67,7 +67,7 @@ public class EntriesListView extends ListView implements IEntriesListView {
 				, DingsSwingConstants.getIconForMessageType(Constants.QUESTION_MESSAGE)
 				,options //the titles of buttons
 				,options[0]); //default button title
-	
+
 		//if ok, show entry edit
 		if (JOptionPane.OK_OPTION == answer) {
 			return entryTypesCh.getSelectedID();
@@ -75,7 +75,7 @@ public class EntriesListView extends ListView implements IEntriesListView {
 		//else return null
 		return null;
 	} //END protected String getIdTypeForNew()
-	
+
 	/**
 	 * Prepares a combobox for choice of entry type, when new is called.
 	 *

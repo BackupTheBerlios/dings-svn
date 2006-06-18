@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -63,28 +63,28 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class SummaryView extends AViewWithButtons implements ISummaryView {
 	private final static long serialVersionUID = 1L;
-	
+
 	/** Lets the user choose the chart type / current statistic */
 	private JComboBox chartTypeCB;
-	
+
 	/** Whether all entries should be taken into account or only chosen */
 	private JCheckBox chosenCB;
-	
+
 	/** The button to (re)draw the chart based on the current chart properties */
 	private JButton redrawB;
-	
+
 	/** The panel containing a chart to display statistics */
 	private JPanel chartP;
-	
+
 	/** The panel containing the chart properties */
 	private JPanel chartPropertiesP;
-	
+
 	public SummaryView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.summary"), aComponentOrientation);
 		initializeGUI();
 		this.setGUIOrientation();
 	} //END public SummaryView(ComponentOrientation)
-	
+
 	//implements AViewWithButtons
 	protected void initializeMainP() {
 		mainP = new JPanel();
@@ -94,11 +94,11 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 
 		initComponents();
 		initializeChartPropertiesPanel();
-		
+
 		mainP.add(chartP, BorderLayout.CENTER);
 		mainP.add(chartPropertiesP, BorderLayout.PAGE_END);
 	} //END protected void initializeMainP()
-	
+
 	private void initComponents() {
 		chartP = new JPanel();
 		chartP.setLayout(new BorderLayout());
@@ -107,7 +107,7 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		infoL.setEnabled(false); //only for display
 		infoL.setHorizontalAlignment(SwingConstants.CENTER);
 		chartP.add(infoL, BorderLayout.CENTER);
-		
+
 		Vector<String> items = new Vector<String>();
 		items.add("Entries by " + Toolbox.getInstance().getInfoPointer().getUnitLabel());
 		items.add("Entries by " + Toolbox.getInstance().getInfoPointer().getCategoryLabel());
@@ -124,26 +124,26 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 				}
 			}
 		});
-		
+
 		chosenCB = new JCheckBox("Only Selected Entries", false);
 		chosenCB.setMnemonic("O".charAt(0));
 	} //END private void initComponents()
-	
+
 	private void initializeChartPropertiesPanel() {
 		chartPropertiesP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		chartPropertiesP.setLayout(gbl);
-		
+
 		TitledBorder title;
 		title = BorderFactory.createTitledBorder("Chart Properties");
 		chartPropertiesP.setBorder(title);
-		
+
 		JLabel typeL = new JLabel("Chart Type:");
 		typeL.setDisplayedMnemonic("C".charAt(0));
 		typeL.setLabelFor(chartTypeCB);
 		JLabel emptyL = new JLabel();
-		
+
 		Insets vghg = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_G, 0, 0);
 		//----type
 		gbc.gridwidth = 1;
@@ -171,14 +171,14 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		gbl.setConstraints(chosenCB, gbc);
 		chartPropertiesP.add(chosenCB);
 	} //END private void initializeChartPropertiesPanel()
-	
+
 	//implements AViewWithButtons
 	protected void initializeButtonP() {
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
 		buttonsP.add(redrawB);
 	} //END protected void initializeButtonP()
-	
+
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
 		redrawB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.update_view")
@@ -190,7 +190,7 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 			}
 		});
 	} //END protected final void initButtonComponents()
-	
+
 	//overrides the method in AViewWithButton
 	public boolean init(IAppEventHandler aController) {
 		boolean foo = super.init(aController);
@@ -199,7 +199,7 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		}
 		return true;
 	} //END public boolean init()
-	
+
 	/**
 	 * Shows the chosen grahp in the display area.
 	 */
@@ -216,18 +216,18 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		evt.setDetails(Boolean.toString(chosenCB.isSelected()));
 		controller.handleAppEvent(evt);
 	} //END private void showChart()
-	
-    /**
-     * Creates a sample chart.
-     * 
-     * @param dataset  the dataset.
-     * 
-     * @return The chart.
-     */
-    public void displayHorizontalBarChart(final CategoryDataset dataset, final String title, final String categoryTitle, final String valueTitle) {
-    	// create the chart...
-    	final JFreeChart chart = ChartFactory.createBarChart(
-    			title // chart title
+
+	/**
+	 * Creates a sample chart.
+	 *
+	 * @param dataset  the dataset.
+	 *
+	 * @return The chart.
+	 */
+	public void displayHorizontalBarChart(final CategoryDataset dataset, final String title, final String categoryTitle, final String valueTitle) {
+		// create the chart...
+		final JFreeChart chart = ChartFactory.createBarChart(
+				title // chart title
 				, categoryTitle // domain axis label
 				, valueTitle // range axis label
 				, dataset // data
@@ -236,85 +236,85 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 				, true // tooltips?
 				, false // URLs?
 				);
-    	// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
-    	// set the background color for the chart...
-    	chart.setBackgroundPaint(Color.white);
-    	
-    	// get a reference to the plot for further customisation...
-    	final CategoryPlot plot = chart.getCategoryPlot();
+		// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
+		// set the background color for the chart...
+		chart.setBackgroundPaint(Color.white);
+
+		// get a reference to the plot for further customisation...
+		final CategoryPlot plot = chart.getCategoryPlot();
 		plot.setBackgroundPaint(Color.lightGray);
 		plot.setDomainGridlinePaint(Color.white);
 		plot.setRangeGridlinePaint(Color.white);
-		
+
 		// set the range axis to display integers only...
 		final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
 		rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		
+
 		// disable bar outlines...
 		final BarRenderer renderer = (BarRenderer) plot.getRenderer();
 		renderer.setDrawBarOutline(false);
-		
-		placeChart(chart);	
-    } //END public void displayHorizontalBarChart(...)
-    
-    //implemnts ISummaryView
-    public void displayTimeSeriesChart(final TimeSeriesCollection averageScore
-    		, final int maxScoreRange
-    		, final TimeSeriesCollection numberOfEntries
+
+		placeChart(chart);
+	} //END public void displayHorizontalBarChart(...)
+
+	//implemnts ISummaryView
+	public void displayTimeSeriesChart(final TimeSeriesCollection averageScore
+			, final int maxScoreRange
+			, final TimeSeriesCollection numberOfEntries
 			, final int maxTotalRange) {
-        final JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                "Time Series" 
-                , "Date" 
-                , "Average Score"
-                , averageScore 
-                , true 
-                , true 
-                , false
-            );
+		final JFreeChart chart = ChartFactory.createTimeSeriesChart(
+				"Time Series"
+				, "Date"
+				, "Average Score"
+				, averageScore
+				, true
+				, true
+				, false
+			);
 
-        chart.setBackgroundPaint(Color.white);
-        final XYPlot plot = chart.getXYPlot();
-        plot.setOrientation(PlotOrientation.VERTICAL);
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-                    
-        final StandardXYItemRenderer renderer1 = (StandardXYItemRenderer) plot.getRenderer();
-        renderer1.setPaint(Color.blue);
-        
-        //axis 1
-        final NumberAxis axis1 = new NumberAxis("Average Score");
-        axis1.setLabelPaint(Color.blue);
-        axis1.setTickLabelPaint(Color.blue);
-        axis1.setRange(0.0d, maxScoreRange + 1);
-        plot.setRangeAxis(0, axis1);
-        
-        //axis 2
-        final NumberAxis axis2 = new NumberAxis("Number of Entries");
-        axis2.setLabelPaint(Color.red);
-        axis2.setTickLabelPaint(Color.red);
-        axis2.setRange(0.0d, 10 * (((int) (maxTotalRange / 10)) + 1));
-        plot.setRangeAxis(1, axis2);
+		chart.setBackgroundPaint(Color.white);
+		final XYPlot plot = chart.getXYPlot();
+		plot.setOrientation(PlotOrientation.VERTICAL);
+		plot.setBackgroundPaint(Color.lightGray);
+		plot.setDomainGridlinePaint(Color.white);
+		plot.setRangeGridlinePaint(Color.white);
 
-        plot.setDataset(1, numberOfEntries);
-        plot.mapDatasetToRangeAxis(1, 1);
-        final StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
-        renderer2.setPaint(Color.red);
-        plot.setRenderer(1, renderer2);
+		final StandardXYItemRenderer renderer1 = (StandardXYItemRenderer) plot.getRenderer();
+		renderer1.setPaint(Color.blue);
 
-        placeChart(chart);
-    } //END public void displayTimeSeriesChart(XYDataset, XYDataSet)
-    
-    /**
-     * Places a chart object into the GUI and makes sure it is painted.
-     * @param aChart
-     */
-    private final void placeChart(JFreeChart aChart) {
+		//axis 1
+		final NumberAxis axis1 = new NumberAxis("Average Score");
+		axis1.setLabelPaint(Color.blue);
+		axis1.setTickLabelPaint(Color.blue);
+		axis1.setRange(0.0d, maxScoreRange + 1);
+		plot.setRangeAxis(0, axis1);
+
+		//axis 2
+		final NumberAxis axis2 = new NumberAxis("Number of Entries");
+		axis2.setLabelPaint(Color.red);
+		axis2.setTickLabelPaint(Color.red);
+		axis2.setRange(0.0d, 10 * (((int) (maxTotalRange / 10)) + 1));
+		plot.setRangeAxis(1, axis2);
+
+		plot.setDataset(1, numberOfEntries);
+		plot.mapDatasetToRangeAxis(1, 1);
+		final StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
+		renderer2.setPaint(Color.red);
+		plot.setRenderer(1, renderer2);
+
+		placeChart(chart);
+	} //END public void displayTimeSeriesChart(XYDataset, XYDataSet)
+
+	/**
+	 * Places a chart object into the GUI and makes sure it is painted.
+	 * @param aChart
+	 */
+	private final void placeChart(JFreeChart aChart) {
 		chartP.removeAll();
 		chartP.add(new ChartPanel(aChart), BorderLayout.CENTER);
 		this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		mainP.invalidate();
 		mainP.validate();
-		mainP.repaint();		
-    } //END private final void placeChart(JFreeChart)
+		mainP.repaint();
+	} //END private final void placeChart(JFreeChart)
 } //END public class SummaryView extends AViewWithButtons implements ISummaryView

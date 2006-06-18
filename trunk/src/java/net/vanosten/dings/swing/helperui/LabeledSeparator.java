@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,10 +33,10 @@ import net.vanosten.dings.swing.DingsSwingConstants;
 
 public class LabeledSeparator extends JPanel {
 	private final static long serialVersionUID = 1L;
-		
+
 	/** The label for showing the title text */
 	private JLabel label;
-	
+
 	/**
 	 * Default constructor
 	 */
@@ -44,16 +44,16 @@ public class LabeledSeparator extends JPanel {
 		super();
 		initializeGUI(aText);
 	} //END public LabeledSeparator()
-	
+
 	private void initializeGUI(String aText) {
 		GridBagLayout gbl = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		this.setLayout(gbl);
-		
+
 		label = new JLabel(aText);
 		label.setHorizontalAlignment(SwingConstants.LEADING);
 		JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-		
+
 		gbl.setConstraints(label, gbc);
 		this.add(label);
 		//----
@@ -64,10 +64,10 @@ public class LabeledSeparator extends JPanel {
 		gbl.setConstraints(separator, gbc);
 		this.add(separator);
 	} //END private void initializeGUI()
-	
+
 	/**
 	 * Sets the displayed text of the separator.
-	 * 
+	 *
 	 * @param aText
 	 */
 	public void setText(String aText) {

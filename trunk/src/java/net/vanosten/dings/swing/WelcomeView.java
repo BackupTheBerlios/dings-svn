@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,14 +49,14 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		initializeGUI();
 		this.setGUIOrientation();
 	} //END public WelcomeView(ComponentOrientation)
-	
+
 	//implements AViewWithButtons
 	protected void initializeMainP() {
-		mainP = new JPanel();	
+		mainP = new JPanel();
 		GridBagLayout mgbl = new GridBagLayout();
 		GridBagConstraints mgbc = new GridBagConstraints();
 		mainP.setLayout(mgbl);
-		
+
 		JLabel label = new JLabel(Toolbox.getInstance().getLocalizedString("text.welcome_view.howto"));
 
 		//make the gui
@@ -67,21 +67,21 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		mgbl.setConstraints(label, mgbc);
 		mainP.add(label);
 	} //END protected void initializeMainP()
-	
+
 	//implements AViewWithButtons
 	protected final void initializeButtonP() {
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new FlowLayout(FlowLayout.TRAILING, 0, 0));
-		
+
 		JPanel myButtonsP = new JPanel();
 		myButtonsP.setLayout(new GridLayout(1,2, DingsSwingConstants.SP_H_C, 0));
-		
+
 		myButtonsP.add(newB);
 		myButtonsP.add(openB);
-		
+
 		buttonsP.add(myButtonsP);
 	} //END protected final void initializeButtonP()
-	
+
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
 		newB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.new")

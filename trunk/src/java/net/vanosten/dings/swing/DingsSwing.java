@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,12 +24,12 @@ package net.vanosten.dings.swing;
 import net.vanosten.dings.model.ADings;
 
 public class DingsSwing extends ADings {
-	
+
 	public DingsSwing(String[] args) {
 		super(args);
 		//nothing to do
 	} //END public DingsSwing(String[])
-	
+
 	//implements ADings
 	protected void initializeGUI() {
 		mainWindow = new MainWindow(this);

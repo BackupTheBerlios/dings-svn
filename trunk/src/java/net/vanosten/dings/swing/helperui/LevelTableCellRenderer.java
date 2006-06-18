@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -30,14 +30,14 @@ import java.awt.Color;
 
 public class LevelTableCellRenderer extends JLabel implements TableCellRenderer {
 	private final static long serialVersionUID = 1L;
-	
-	
+
+
 	public LevelTableCellRenderer() {
 		super();
 		setOpaque(true);
 		setHorizontalAlignment(SwingConstants.CENTER);
 	} //END public LevelTableCellRenderer()
-	
+
 	/**
 	 * Implements the interface
 	 */

@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 
 	private ValidatedTextField nameVTF;
 	private JTextArea descriptionTA;
-	
+
 	public UnitEditView(String aTitle, ComponentOrientation aComponentOrientation, Message aMessage) {
 		super(aTitle, aComponentOrientation, true, true, aMessage);
 	} //END public UnitEditView(String, ComponentOrientation, String)
@@ -105,27 +105,27 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 		//set focus
 		nameVTF.requestFocus();
 	}//END protected void initializeEditP()
-	
+
 	//implements IUnitEditView
 	public void setName(String aName) {
 		nameVTF.setText(aName);
 	} //END public void setUnitName(String)
-	
+
 	//implements IUnitEditView
 	public String getName() {
 		return nameVTF.getText();
 	} //END public String getName()
-	
+
 	//implements IUnitEditView
 	public void setDescription(String aDescription) {
 		descriptionTA.setText(aDescription);
 	} //END public void setDescription(String)
-	
+
 	//implements IUnitEditView
 	public String getDescription() {
 		return descriptionTA.getText();
 	} //END public String getDescription()
-	
+
 	//implements IUnitEditView
 	public void setNameIsValueValid(boolean valid) {
 		nameVTF.isValueValid(valid);

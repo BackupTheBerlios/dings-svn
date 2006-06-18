@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -79,15 +79,15 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 				, false
 				, MessageConstants.Message.N_VIEW_ENTRIES_LIST);
 	} //END public InfoVocabEditView(ComponentOrientation)
-	
+
 	private final void initComponents() {
 		titleVTF = new ValidatedTextField(50);
 		titleVTF.setToolTipText("May not be empty");
-		titleVTF.addKeyListener(this);		
+		titleVTF.addKeyListener(this);
 		authorTF = new JTextField(20);
-		authorTF.addKeyListener(this);		
+		authorTF.addKeyListener(this);
 		copyrightTF = new JTextField(20);
-		copyrightTF.addKeyListener(this);		
+		copyrightTF.addKeyListener(this);
 		notesTA = new JTextArea();
 		notesTA.setLineWrap(true);
 		notesTA.setRows(5);
@@ -105,7 +105,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		//labels
 		baseLabelVTF = new ValidatedTextField(20);
 		baseLabelVTF.setToolTipText("May not be empty");
-		baseLabelVTF.addKeyListener(this);		
+		baseLabelVTF.addKeyListener(this);
 		targetLabelVTF = new ValidatedTextField(20);
 		targetLabelVTF.setToolTipText("May not be empty");
 		targetLabelVTF.addKeyListener(this);
@@ -234,10 +234,10 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		setVisibilityItems(visibilityPronunciationCB);
 		setVisibilityItems(visibilityRelationCB);
 	} //END private final void initComponents()
-	
+
 	//implements IInfoVocabEditView
 	public void setAvailableLocales(String[][] theLocales) {
-		isUpdating = true;		
+		isUpdating = true;
 		baseLocaleCB.setItems(theLocales);
 		targetLocaleCB.setItems(theLocales);
 		attributesLocaleCB.setItems(theLocales);
@@ -249,9 +249,9 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		relationLocaleCB.setItems(theLocales);
 		isUpdating = false;
 	} //END public void setAvailableLocales(String[][]);
-	
+
 	private void setVisibilityItems(JComboBox aCB) {
-		isUpdating = true;		
+		isUpdating = true;
 		aCB.addItem("always"); //InfoVocab.VISIBILITY_ALWAYS
 		aCB.addItem("one-to-one query and all solutions"); //InfoVocab.VISIBILITY_QUERY_ONE
 		aCB.addItem("all solutions"); //InfoVocab.VISIBILITY_SOLUTION_ALL
@@ -261,11 +261,11 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		aCB.addItem("never"); //InfoVocab.VISIBILITY_NEVER
 		isUpdating = false;
 	} //END private void setVisibilityItems(JComboBox)
-	
+
 	//implements AViewWithScrollPane
 	protected void initializeEditP() {
 		initComponents();
-		
+
 		editP = new JPanel();
 		editP.setLayout(new BorderLayout());
 		JTabbedPane tabbedPane = new JTabbedPane();
@@ -287,9 +287,9 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		//visibilities
 		initializeVisibilitiesP();
 		tabbedPane.addTab("Visibility", visibilitiesP);
-		tabbedPane.setMnemonicAt(3, "V".charAt(0));		
+		tabbedPane.setMnemonicAt(3, "V".charAt(0));
 	} //END private void initializeEditP()
-	
+
 	private void initializeBasicsP() {
 		basicsP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
@@ -302,7 +302,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 				, DingsSwingConstants.SP_D_RIGHT
 			);
 		basicsP.setBorder(border);
-		
+
 		JLabel titleL = new JLabel("Title:");
 		titleL.setDisplayedMnemonic("I".charAt(0));
 		titleL.setLabelFor(titleVTF);
@@ -318,7 +318,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		JLabel licenceL = new JLabel("Licence:");
 		licenceL.setDisplayedMnemonic("C".charAt(0));
 		licenceL.setLabelFor(licenceTA);
-				
+
 		//----
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.fill = GridBagConstraints.NONE;
@@ -402,7 +402,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		gbl.setConstraints(licenceSP, gbc);
 		basicsP.add(licenceSP);
 	} //END private void initializeBasicsP()
-	
+
 	private void initializeLabelsP() {
 		labelsP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
@@ -415,7 +415,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 				, DingsSwingConstants.SP_D_RIGHT
 			);
 		labelsP.setBorder(border);
-		
+
 		JLabel baseLabelL = new JLabel("Base:");
 		baseLabelL.setDisplayedMnemonic("S".charAt(0));
 		baseLabelL.setLabelFor(baseLabelVTF);
@@ -575,7 +575,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		gbl.setConstraints(exampleLabelVTF, gbc);
 		labelsP.add(exampleLabelVTF);
 	} //END private void initializeLabelsP()
-	
+
 	private void initializeLocaleP() {
 		localeP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
@@ -588,7 +588,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 				, DingsSwingConstants.SP_D_RIGHT
 			);
 		localeP.setBorder(border);
-		
+
 		JLabel baseLocaleL = new JLabel("Base:");
 		baseLocaleL.setDisplayedMnemonic("S".charAt(0));
 		baseLocaleL.setLabelFor(baseLocaleCB);
@@ -734,7 +734,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		gbl.setConstraints(relationLocaleCB, gbc);
 		localeP.add(relationLocaleCB);
 	} //END private void initializeOrientationsP()
-	
+
 	private void initializeVisibilitiesP() {
 		visibilitiesP = new JPanel();
 		GridBagLayout gbl = new GridBagLayout();
@@ -747,7 +747,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 				, DingsSwingConstants.SP_D_RIGHT
 			);
 		visibilitiesP.setBorder(border);
-		
+
 		JLabel attributesL = new JLabel("Attributes:");
 		attributesL.setDisplayedMnemonic("A".charAt(0));
 		attributesL.setLabelFor(visibilityAttributesCB);
@@ -869,107 +869,107 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		gbl.setConstraints(visibilityRelationCB, gbc);
 		visibilitiesP.add(visibilityRelationCB);
 	} //END private void initializeVisibilitiesP()
-	
+
 	public String getTitle() {
 		return titleVTF.getText();
 	} //END public String getTitle()
-    
+
 	public void setTitle(String aTitle) {
 		titleVTF.setText(aTitle);
 	} //END public void setTitle(String)
-	
+
 	public String getAuthor() {
 		return authorTF.getText();
 	} //END public String getAuthor()
-    
+
 	public void setAuthor(String anAuthor) {
 		authorTF.setText(anAuthor);
 	} //END public void setAuthor(String)
-	
+
 	public String getNotes() {
 		return notesTA.getText();
 	} //END public String getNotes()
-    
+
 	public void setNotes(String theNotes) {
 		notesTA.setText(theNotes);
 	} //END public void setNotes(String)
-	
+
 	public String getCopyright() {
 		return copyrightTF.getText();
 	} //END public String getCopyright()
-    
+
 	public void setCopyright(String aCopyright) {
 		copyrightTF.setText(aCopyright);
 	} //END public void setCopyright(String)
-    
+
 	public void setLicence(String aLicence) {
 		licenceTA.setText(aLicence);
 	} //END public void setLicence(String)
-	
+
 	public String getLicence() {
 		return licenceTA.getText();
 	} //END public String getLicence()
-    
+
 	public String getBaseLabel() {
 		return baseLabelVTF.getText();
 	} //END public String getBase()
-    
+
 	public void setBaseLabel(String aBase) {
 		baseLabelVTF.setText(aBase);
 	} //END public void setBase(String)
-	
+
 	public String getTargetLabel() {
 		return targetLabelVTF.getText();
 	} //END public String getTarget()
-    
+
 	public void setTargetLabel(String aTarget) {
 		targetLabelVTF.setText(aTarget);
 	} //END public void setTarget(String)
-	
+
 	public void setAttributesLabel(String aLabel) {
 		attributesLabelVTF.setText(aLabel);
 	} //END public void setAttributesLabel(String)
-	
+
 	public String getAttributesLabel() {
 		return attributesLabelVTF.getText();
 	} //END public String getAttributesLabel()
-	
+
 	public void setUnitLabel(String aLabel) {
 		unitLabelVTF.setText(aLabel);
 	} //END public void setUnitLabel(String)
-	
+
 	public String getUnitLabel() {
 		return unitLabelVTF.getText();
 	} //END public String getUnitLabel()
-	
+
 	public void setCategoryLabel(String aLabel) {
 		categoryLabelVTF.setText(aLabel);
 	} //END public void setCategoryLabel(String)
-	
+
 	public String getCategoryLabel() {
 		return categoryLabelVTF.getText();
 	} //END public String getCategoryLabel()
-	
+
 	public void setOthersLabel(String aLabel) {
 		othersLabelVTF.setText(aLabel);
 	} //END public void setOthersLabel(String)
-	
+
 	public String getOthersLabel() {
 		return othersLabelVTF.getText();
 	} //END public String getOhtersLabel()
-	
+
 	public void setExplanationLabel(String aLabel) {
 		explanationLabelVTF.setText(aLabel);
 	} //END public void setExplanationLabel(String)
-	
+
 	public String getExplanationLabel() {
 		return explanationLabelVTF.getText();
 	} //END public String getExplanationLabel()
-	
+
 	public void setExampleLabel(String aLabel) {
 		exampleLabelVTF.setText(aLabel);
 	} //END public void setExampleLabel(String)
-	
+
 	public String getExampleLabel() {
 		return exampleLabelVTF.getText();
 	} //END public String getExampleLabel()
@@ -1063,118 +1063,118 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	public String getRelationLocale() {
 		return relationLocaleCB.getSelectedID();
 	} //END public String getRelationLocale()
-	
+
 	public void setVisibilityAttributes(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityAttributesCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityAttributes(int)
-	
+
 	public int getVisibilityAttributes() {
 		return visibilityAttributesCB.getSelectedIndex();
 	} //END public int getVisibilityAttributes()
-	
+
 	public void setVisibilityUnit(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityUnitCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityUnit(int)
-	
+
 	public int getVisibilityUnit() {
 		return visibilityUnitCB.getSelectedIndex();
 	} //END public int getVisibilityUnit()
-	
+
 	public void setVisibilityCategory(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityCategoryCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityCategory(int)
-	
+
 	public int getVisibilityCategory() {
 		return visibilityCategoryCB.getSelectedIndex();
 	} //END public int getVisibilityCategory()
-	
+
 	public void setVisibilityExplanation(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityExplanationCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityExplanation(int)
-	
+
 	public int getVisibilityExplanation() {
 		return visibilityExplanationCB.getSelectedIndex();
 	} //END public int getVisibilityExplanation()
-	
+
 	public void setVisibilityExample(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityExampleCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityExample(int)
-	
+
 	public int getVisibilityExample() {
 		return visibilityExampleCB.getSelectedIndex();
 	} //END public int getVisibilityExample()
-	
+
 	public void setVisibilityPronunciation(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityPronunciationCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityPronunciation(int)
-	
+
 	public int getVisibilityPronunciation() {
 		return visibilityPronunciationCB.getSelectedIndex();
 	} //END public int getVisibilityPronunciation()
-	
+
 	public void setVisibilityRelation(int aVisibility) {
-		isUpdating = true;		
+		isUpdating = true;
 		visibilityRelationCB.setSelectedIndex(aVisibility);
 		isUpdating = false;
 	} //END public void setVisibilityRelation(int)
-	
+
 	public int getVisibilityRelation() {
 		return visibilityRelationCB.getSelectedIndex();
 	} //END public int getVisibilityRelation()
-	
+
 	//validation
 	//implements IInfoVocabEditView
 	public void setTitleIsValueValid(boolean valid) {
 		titleVTF.isValueValid(valid);
 	} //END public void setTitleIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setBaseLabelIsValueValid(boolean valid) {
 		baseLabelVTF.isValueValid(valid);
 	} //END public void setBaseLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setTragetLabelIsValueValid(boolean valid) {
 		targetLabelVTF.isValueValid(valid);
 	} //END public void setTragetLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setAttributesLabelIsValueValid(boolean valid) {
 		attributesLabelVTF.isValueValid(valid);
 	} //END public void setAttributesLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setUnitLabelIsValueValid(boolean valid) {
 		unitLabelVTF.isValueValid(valid);
 	} //END public void setUnitLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setCategoryLabelIsValueValid(boolean valid) {
 		categoryLabelVTF.isValueValid(valid);
 	} //END public void setCategoryLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setOthersLabelIsValueValid(boolean valid) {
 		othersLabelVTF.isValueValid(valid);
 	} //END public void setOthersLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setExplanationLabelIsValueValid(boolean valid) {
 		explanationLabelVTF.isValueValid(valid);
 	} //END public void setExplanationLabelIsValueValid(boolean)
-	
+
 	//implements IInfoVocabEditView
 	public void setExampleLabelIsValueValid(boolean valid) {
 		exampleLabelVTF.isValueValid(valid);

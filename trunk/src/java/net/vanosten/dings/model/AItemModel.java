@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -24,10 +24,10 @@ package net.vanosten.dings.model;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.consts.MessageConstants;
 
-import java.util.logging.Level; 
+import java.util.logging.Level;
 
 public abstract class AItemModel extends AModel {
-	
+
 	/**
 	 * Writes a xml-string based that conforms to the
 	 * xml-definition of ADings.
@@ -35,10 +35,10 @@ public abstract class AItemModel extends AModel {
 	 * @return String - this information about the vocabulary as a valid xml-string
 	 */
 	protected abstract String getXMLString();
-	
+
 	/**
 	 * Validates an Id.
-	 * 
+	 *
 	 * @param aPrefix - the Models prefix
 	 * @return String error - a description of the error, or null if validation successful.
 	 */
@@ -56,11 +56,11 @@ public abstract class AItemModel extends AModel {
 		}
 		if (tempId <= 0) {
 			isValid = false;
-		} 
+		}
 		if (isValid) return null;
 		return "The id \"" + anId + "\" is not valid. It must start with \"" + aPrefix + "\"and the number must be > 0.";
 	} //END public static String validateId(String)
-	
+
 	/**
 	 * Sends an AppEvent to set save neded.
 	 */
@@ -69,7 +69,7 @@ public abstract class AItemModel extends AModel {
 		ape.setMessage(MessageConstants.Message.S_SAVE_NEEDED);
 		parentController.handleAppEvent(ape);
 	} //END protected void sendSaveNeeded()
-	
+
 	/**
 	 * Checks for changes in the GUI relative to the values in the model.
 	 */

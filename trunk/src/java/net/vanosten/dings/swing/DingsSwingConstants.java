@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -34,12 +34,12 @@ import net.vanosten.dings.consts.Constants;
 public class DingsSwingConstants {
 
 	private static Logger logger = Logger.getLogger("net.vanosten.dings.swing.DingsSwingConstants");
-	
+
 	/** Set private in order to prevent instantiations */
 	private DingsSwingConstants() {
 		//nothing to initialize
 	} //ENDprivate DingsSwingConstants()
-		
+
 	/*------------------- Spacing -----------------------------*/
 	/*
 	 * SP = SPACING
@@ -57,14 +57,14 @@ public class DingsSwingConstants {
 	public final static int SP_D_RIGHT = 11;
 	public final static int SP_D_BUTTOM = 11;
 
-	public final static int SP_H_G = 12; //between labels and buttons or 
+	public final static int SP_H_G = 12; //between labels and buttons or
 	public final static int SP_H_C = 6; //between buttons
 	public final static int SP_H_T = 24; //between button groups
 	public final static int SP_V_G = 12; //between groups of elements
 	public final static int SP_V_C = 6; //between groups of related RadioButtons or Checkbuttons
 	public final static int SP_V_T = 24; //intro text and different themes
-	public final static int SP_V_COM = 18; //before command buttons 
-	
+	public final static int SP_V_COM = 18; //before command buttons
+
 	/*------------------- Colors ------------------------------*/
 	//The primary color two of the Metal L&F.
 	//TODO: Can eventually be replaced by direct access javax.swing.plaf.metal.DefaultMetalTheme.getPrimary2()
@@ -76,20 +76,20 @@ public class DingsSwingConstants {
 	//The colors for background to indicate valid / invalid input
 	public final static Color VALID_INPUT = new Color(255,255,153);
 	public final static Color INVALID_INPUT = new Color(255,153,153);
-    
+
 	/*-------------------------FONTS------------------------------------------------*/
 
 	protected static Font TITLE_ONE_FONT;
-	
+
 	protected static Font TITLE_TWO_FONT;
-	
+
 	protected static Font DEFAULT_FONT;
-	
+
 	public static Font STATUS_BAR_FONT;
-	
+
 	/** The font used to show hideable text in entries (e.g. text for example */
 	public static Font SOLUTION_FONT;
-	
+
 	/**
 	 * Sets the static Fonts (e.g. TITLE_ONE_FONT) relative to the default font size.
 	 *
@@ -104,12 +104,12 @@ public class DingsSwingConstants {
 		STATUS_BAR_FONT = new Font(fontName, Font.PLAIN, fontSize);
 		SOLUTION_FONT = new Font(fontName, Font.ITALIC, fontSize);
 	} //END public static setFontSizes(Font)
-	
+
 	/*------------------- Get images ------------------------------*/
-	
+
 	//home grown
 	public final static String IMG_DINGS_32 = "dings32.png";
-	
+
 	//gtk2.4 stock images
 	//menu items
 	public final static String IMG_CLOSE_MI = "fileclose.png"; //in actions16
@@ -147,13 +147,13 @@ public class DingsSwingConstants {
 	public final static String IMG_UNKNOWN_BTN = "ledred.png"; //in actions22
 	public final static String IMG_HINT_BTN = "ktip.png"; //in apps22
 	public final static String IMG_RESULT_BTN = "kview.png"; //in apps22
-	
-	
+
+
 	/**
 	 * Gets an ImageIcon by providing the resource path and a description.
-	 * 
+	 *
 	 * @param String path - the relative resource file path for the image
-	 * @param String description - allows assistive technologies to help a visually impaired 
+	 * @param String description - allows assistive technologies to help a visually impaired
 	 * user understand what information the icon conveys
 	 */
 	public static ImageIcon createImageIcon(String path, String description) {
@@ -161,7 +161,7 @@ public class DingsSwingConstants {
 		URL imgURL = Constants.class.getClassLoader().getResource(fullPath);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL, description);
-		} 
+		}
 		else {
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.logp(Level.FINEST, Constants.class.getName(), "createImageIcon", "Could not load image: " + fullPath);
@@ -169,7 +169,7 @@ public class DingsSwingConstants {
 			return null;
 		}
 	} //END public static ImageIcon createImageIcon(String, String)
-	
+
 	/**
 	 * Gets an ImcageIcon for a message dialog by providing the message type
 	 * @param aMessageType
@@ -187,5 +187,5 @@ public class DingsSwingConstants {
 			return createImageIcon(IMG_QUESTION_DLG, "FIXME");
 		}
 	} //END public static ImageIcon getIconForMessageType(int)
-	
+
 } //END public class DingsSwingConstants

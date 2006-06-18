@@ -2,7 +2,7 @@
 <!--
 DingsBums?! A flexible flashcard application written in Java.
 
-Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -42,7 +42,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 	<target name="compile">
 		<!-- Compile the java code with version 1.5 compatibility -->
-		<javac srcdir="${src}/java" destdir="${build}" excludes="net/vanosten/dings/gnome/**" 
+		<javac srcdir="${src}/java" destdir="${build}" excludes="net/vanosten/dings/gnome/**"
 			source="1.5" deprecation="on">
 			<classpath>
 				<pathelement path="${classpath}"/>
@@ -74,7 +74,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 			</manifest>
 		</jar>
 	</target>
-	
+
 	<target name="runjar">
 		<java jar="dingsbums.jar" fork="true" />
 	</target>
@@ -84,7 +84,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
 	</target>
-	
+
 	<!--<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
 
 	<target name="pmd">

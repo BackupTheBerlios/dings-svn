@@ -3,7 +3,7 @@
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
- * Copyright (C) 2002, 03, 04, 2005 Rick Gruber-Riemer (rick@vanosten.net)
+ * Copyright (C) 2002, 03, 04, 05, 2006 Rick Gruber-Riemer (dingsbums@vanosten.net)
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ import javax.swing.Timer;
  */
 public class HintLabel extends JLabel {
 	private final static long serialVersionUID = 1L;
-	
+
 	public final static int MODE_FLASH = 0;
 	public final static int MODE_LETTER = 1;
 	public final static int MODE_SHUFFLE = 2;
@@ -46,17 +46,17 @@ public class HintLabel extends JLabel {
 
 	/** The real text */
 	private String originalText = null;
-	
+
 	/** The hint text color */
 	private Color hintColor;
-	
+
 	/** The color to show a result */
 	private Color resultColor;
 
 	/**
 	 * Empty constructor. All other constructors of parent class
 	 * JLabel are hidden.
-	 * 
+	 *
 	 * @param defaultColor The color to be used to draw the text
 	 * @param resultColor The color to be used if the hint should appear like a result
 	 */
@@ -64,7 +64,7 @@ public class HintLabel extends JLabel {
 		super();
 		setTextColors(aHintColor, aResultColor);
 	} //END public HintLabel(Color, Color)
-	
+
 	/**
 	 * Sets the text color.
 	 * @param aHintColor The color for showing hint texts
@@ -74,7 +74,7 @@ public class HintLabel extends JLabel {
 		hintColor = aHintColor;
 		resultColor = aResultColor;
 	} //END public void setTextColors(Color, Color)
-	
+
 	/**
 	 * Setter for the text to be displayed.
 	 *
@@ -105,7 +105,7 @@ public class HintLabel extends JLabel {
 		//wait and hide
 		timer.start();
 	} //END void doFlash(int)
-	
+
 	/**
 	 * Show the text with shuffled letters (shuffeled within the single words.
 	 *
@@ -131,21 +131,21 @@ public class HintLabel extends JLabel {
 				//append to shuffled string
 				for (int j = 0; j < shuffeler.size(); j++) {
 					shuffeledSB.append(shuffeler.get(j));
-				}				
+				}
 			}
 			//add a space if needed
 			if (i < (theTokens.length -1)) {
 				shuffeledSB.append(" ");
 			}
 		}
-		
+
 		//set the view
 		setShownText(shuffeledSB.toString(), true, false);
 	} //END public void doShuffle()
 
 	/**
 	 * Shows the text with only a portion of the letters visible.
-	 * 
+	 *
 	 * @return True if not all letters of the text have been shown
 	 */
 	public boolean doLetters() {
@@ -157,28 +157,28 @@ public class HintLabel extends JLabel {
 		doResult();
 		return false;
 	} //END public boolean doLetters(int)
-	
+
 	/**
 	 * Resets the shown letters to none
 	 */
 	public void resetLetters() {
 		shownLetters = 0;
 	} //END public void resetLetters()
-	
+
 	/**
 	 * Shows the text as a result.
 	 */
 	public void doResult() {
 		setShownText(originalText, true, true);
 	} //END public void doResult()
-	
+
 	/**
 	 * Hides the text
 	 */
 	public void doHide() {
 		setShownText(originalText, false, false);
 	} //END public void doHide()
-	
+
 	/**
 	 * Sets the text to be displayed as an html-string
 	 * @param aText - the visible text
