@@ -89,6 +89,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private final static String STATS = Toolbox.getInstance().getLocalizedString("pev.stats.panel");
 	private final static String LOCALE = Toolbox.getInstance().getLocalizedString("pev.locale.panel");
 	private final static String TEXT_LINES = Toolbox.getInstance().getLocalizedString("pev.text_lines.panel");
+	private final static String CHECK_ANSWER = Toolbox.getInstance().getLocalizedString("pev.check_answer.panel");
 
 	private JPanel learnHintP;
 	private JSlider learnHintFlashTimeSL;
@@ -120,6 +121,11 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JSpinner targetSP;
 	private JSpinner explanationSP;
 	private JSpinner exampleSP;
+	
+	private JPanel checkAnswerP;
+	private JCheckBox caseSensitiveCB;
+	private JCheckBox globalAttributesCB;
+	private JCheckBox typeAttributesCB;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -170,7 +176,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 
 		JLabel categoryL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.categories.label"));
 		categoryL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.categories.mnemonic").charAt(0));
-		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE, TEXT_LINES};
+		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE, TEXT_LINES, CHECK_ANSWER};
 		choiceLi = new JList(choices);
 		choiceLi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		choiceLi.addListSelectionListener(new ListSelectionListener() {
@@ -240,6 +246,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		mainP.add(localeP, LOCALE);
 		initializeTextLinesPanel();
 		mainP.add(textLinesP, TEXT_LINES);
+		initializeCheckAnswerPanel();
+		mainP.add(checkAnswerP, CHECK_ANSWER);
 
 		//layout
 		gbc.gridx = 0;
@@ -348,6 +356,10 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			case 7: //text lines
 				titleL.setText(Toolbox.getInstance().getLocalizedString("pev.text_lines.title"));
 				descriptionL.setText(Toolbox.getInstance().getLocalizedString("pev.text_lines.description"));
+				break;
+			case 8: //check answer
+				titleL.setText(Toolbox.getInstance().getLocalizedString("pev.check_answer.title"));
+				descriptionL.setText(Toolbox.getInstance().getLocalizedString("pev.check_answer.description"));
 				break;
 			default: //file encoding
 				titleL.setText("File Encoding");
@@ -677,33 +689,82 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		textLinesP.setLayout(layout);
 
 		layout.setHorizontalGroup(layout.createSequentialGroup()
-				.add(layout.createParallelGroup(GroupLayout.TRAILING)
-						.add(baseL).add(targetL).add(explanationL).add(exampleL)
-				)
-				.addPreferredGap(LayoutStyle.RELATED)
-				.add(layout.createParallelGroup(GroupLayout.LEADING)
-						.add(baseSP).add(targetSP).add(explanationSP).add(exampleSP)
-				)
+			.add(layout.createParallelGroup(GroupLayout.TRAILING)
+				.add(baseL).add(targetL).add(explanationL).add(exampleL)
+			)
+			.addPreferredGap(LayoutStyle.RELATED)
+			.add(layout.createParallelGroup(GroupLayout.LEADING)
+				.add(baseSP).add(targetSP).add(explanationSP).add(exampleSP)
+			)
 		);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
-				.add(layout.createParallelGroup(GroupLayout.BASELINE)
-						.add(baseL).add(baseSP)
-				)
-				.addPreferredGap(LayoutStyle.UNRELATED)
-				.add(layout.createParallelGroup(GroupLayout.BASELINE)
-						.add(targetL).add(targetSP)
-				)
-				.addPreferredGap(LayoutStyle.UNRELATED)
-				.add(layout.createParallelGroup(GroupLayout.BASELINE)
-						.add(explanationL).add(explanationSP)
-				)
-				.addPreferredGap(LayoutStyle.UNRELATED)
-				.add(layout.createParallelGroup(GroupLayout.BASELINE)
-						.add(exampleL).add(exampleSP)
-				)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(baseL).add(baseSP)
+			)
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(targetL).add(targetSP)
+			)
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(explanationL).add(explanationSP)
+			)
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(exampleL).add(exampleSP)
+			)
 		);
 	} //END private void initializeTextLinesPanel()
+	
+	private void initializeCheckAnswerPanel() {
+		checkAnswerP = new JPanel();
+		caseSensitiveCB = new JCheckBox(Toolbox.getInstance().getLocalizedString("pev.check_answer.label.case_sensitive"));
+		caseSensitiveCB.setMnemonic(Toolbox.getInstance().getLocalizedString("pev.check_answer.mnemonic.case_sensitive").charAt(0));
+		caseSensitiveCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onChange();
+			}
+		});
+		globalAttributesCB = new JCheckBox(Toolbox.getInstance().getLocalizedString("pev.check_answer.label.global_attributes"));
+		globalAttributesCB.setMnemonic(Toolbox.getInstance().getLocalizedString("pev.check_answer.mnemonic.global_attributes").charAt(0));
+		globalAttributesCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onChange();
+			}
+		});
+		typeAttributesCB = new JCheckBox(Toolbox.getInstance().getLocalizedString("pev.check_answer.label.type_attributes"));
+		typeAttributesCB.setMnemonic(Toolbox.getInstance().getLocalizedString("pev.check_answer.mnemonic.type_attributes").charAt(0));
+		typeAttributesCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onChange();
+			}
+		});
+
+		//make the gui
+		GroupLayout layout = new GroupLayout(checkAnswerP);
+		checkAnswerP.setLayout(layout);
+
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+			.add(layout.createParallelGroup(GroupLayout.LEADING)
+				.add(caseSensitiveCB).add(globalAttributesCB).add(typeAttributesCB)
+			)
+		);
+
+		layout.setVerticalGroup(layout.createSequentialGroup()
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(caseSensitiveCB)
+			)
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(globalAttributesCB)
+			)
+			.addPreferredGap(LayoutStyle.RELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE)
+				.add(typeAttributesCB)
+			)
+		);
+	} //END private void initializeCheckAnswerPanel()
 
 	//Implements IView
 	public boolean init(IAppEventHandler aController) {
@@ -789,7 +850,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	//implements IPreferencesEditView
 	public void setLearnHintShuffleByWord(String isSelected) {
 		isUpdating = true;
-		learnHintShuffleByWordCB.setSelected(Boolean.valueOf(isSelected).booleanValue());
+		learnHintShuffleByWordCB.setSelected(Boolean.TRUE.equals(isSelected));
 		isUpdating = false;
 	} //END public void setLearnHintShuffleByWord(String)
 
@@ -801,7 +862,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	//implements IPreferencesEditView
 	public void setLoggingEnabled(String isSelected) {
 		isUpdating = true;
-		boolean selected = Boolean.valueOf(isSelected).booleanValue();
+		boolean selected = Boolean.TRUE.equals(isSelected);
 		loggingEnabledCB.setSelected(selected);
 		loggingToFileCB.setEnabled(selected);
 		isUpdating = false;
@@ -815,7 +876,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	//implements IPreferencesEditView
 	public void setLoggingToFile(String isSelected) {
 		isUpdating = true;
-		loggingToFileCB.setSelected(Boolean.valueOf(isSelected).booleanValue());
+		loggingToFileCB.setSelected(Boolean.TRUE.equals(isSelected));
 		isUpdating = false;
 	} //END public void setLoggingToFile(String)
 
@@ -963,4 +1024,40 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		targetSP.setValue(numberOfLines);
 		isUpdating = false;
 	} //END public void setLinesTarget(int)
+	
+	//implements IPreferencesEditView
+	public boolean isCheckCaseSensitive() {
+		return caseSensitiveCB.isSelected();
+	}
+	
+	//implements IPreferencesEditView
+	public void setCheckCaseSensitive(boolean sensitive) {
+		isUpdating = true;
+		caseSensitiveCB.setSelected(sensitive);
+		isUpdating = false;
+	}
+	
+	//implements IPreferencesEditView
+	public boolean isCheckTypeAttributes() {
+		return typeAttributesCB.isSelected();
+	}
+	
+	//implements IPreferencesEditView
+	public void setCheckTypeAttributes(boolean check) {
+		isUpdating = true;
+		typeAttributesCB.setSelected(check);
+		isUpdating = false;
+	}
+	
+	//implements IPreferencesEditView
+	public boolean isCheckGlobalAttributes() {
+		return globalAttributesCB.isSelected();
+	}
+
+	//implements IPreferencesEditView
+	public void setCheckGlobalAttributes(boolean check) {
+		isUpdating = true;
+		globalAttributesCB.setSelected(check);
+		isUpdating = false;
+	}
 } //END public class PreferencesEditView extends JPanel implements IPreferencesEditView

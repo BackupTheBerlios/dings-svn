@@ -60,19 +60,16 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	private ChoiceID attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh, categoriesCh, unitsCh;
 	private JCheckBox statusCB;
 	private ChoiceID modeCh; //Which hint mode should be used
-	private SolutionLabel baseSL, explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
-	private JTextArea targetTA;
+	private SolutionLabel questionSL, explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
+	private JTextArea answerTA;
 	private HintLabel hintHL;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL;
-	private JLabel baseL, hintL, targetL, explanationL, exampleL, pronunciationL, relationL, unitL, categoryL, scoreL;
+	private JLabel questionL, hintL, answerL, explanationL, exampleL, pronunciationL, relationL, unitL, categoryL, scoreL;
 	private LabeledSeparator attributesLS, othersLS;
-	private JButton hintB, showB, knowB, notKnowB;
+	private JButton hintB, showB, checkAnswerB, knowB, notKnowB;
 
 	/** the result of the learning */
 	private Result result = Result.SUCCESS;
-	
-	/** The learning direction is true, if target is asked */
-	private boolean targetAsked = true;
 
 	public EntryLearnOneView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.learn_one"), aComponentOrientation);
@@ -85,19 +82,25 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		attributesLS = new LabeledSeparator(Toolbox.getInstance().getInfoPointer().getAttributesLabel() + ":");
 		othersLS = new LabeledSeparator(Toolbox.getInstance().getInfoPointer().getOthersLabel() + ":");
 		//labels
+		String questionLabel = Toolbox.getInstance().getInfoPointer().getBaseLabel();
+		String answerLabel = Toolbox.getInstance().getInfoPointer().getTargetLabel();
+		if (false == Toolbox.getInstance().isTargetAsked()) {
+			questionLabel = Toolbox.getInstance().getInfoPointer().getTargetLabel();
+			answerLabel = Toolbox.getInstance().getInfoPointer().getBaseLabel();
+		}
 		entryTypeSL = new SolutionLabel();
 
-		baseL = new JLabel(Toolbox.getInstance().getInfoPointer().getBaseLabel() + ":");
-		baseSL = new SolutionLabel();
+		questionL = new JLabel(questionLabel + ":");
+		questionSL = new SolutionLabel();
 		//hint
 		hintL = new JLabel("Hint:");
 		hintHL = new HintLabel(Color.BLUE, Color.RED);
 		//target
-		targetL = new JLabel(Toolbox.getInstance().getInfoPointer().getTargetLabel() + ":");
-		targetTA = new JTextArea();
-		targetTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
-		targetTA.setWrapStyleWord(true);
-		targetTA.setLineWrap(true);
+		answerL = new JLabel(answerLabel + ":");
+		answerTA = new JTextArea();
+		answerTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
+		answerTA.setWrapStyleWord(true);
+		answerTA.setLineWrap(true);
 		//status
 		statusCB = new JCheckBox("up-to-date");
 		//score
@@ -151,7 +154,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		Insets vthg = new Insets(DingsSwingConstants.SP_V_T, DingsSwingConstants.SP_H_G, 0, 0);
 		JLabel emptyL = new JLabel(); //an empty label for layout purposes
 		
-		JScrollPane targetSP = new JScrollPane(targetTA);
+		JScrollPane targetSP = new JScrollPane(answerTA);
 		targetSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		targetSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
@@ -181,16 +184,16 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
-		gbl.setConstraints(baseL, gbc);
-		editP.add(baseL);
+		gbl.setConstraints(questionL, gbc);
+		editP.add(questionL);
 		//----
 		gbc.gridx = 1;
 		gbc.gridwidth = 4;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(baseSL, gbc);
-		editP.add(baseSL);
+		gbl.setConstraints(questionSL, gbc);
+		editP.add(questionSL);
 		//----target
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -198,8 +201,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
-		gbl.setConstraints(targetL, gbc);
-		editP.add(targetL);
+		gbl.setConstraints(answerL, gbc);
+		editP.add(answerL);
 		//----
 		gbc.gridx = 1;
 		gbc.gridwidth = 4;
@@ -563,6 +566,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_C, 0)));
 		buttonsP.add(hintB);
 		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_T, 0)));
+		buttonsP.add(checkAnswerB);
+		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_G, 0)));
 		buttonsP.add(showB);
 		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_G, 0)));
 		buttonsP.add(knowB);
@@ -592,6 +597,13 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		hintB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doHint();
+			}
+		});
+		checkAnswerB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.check_answer"));
+		checkAnswerB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.check_answer").charAt(0));
+		checkAnswerB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doCheckAnswer();
 			}
 		});
 		showB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.show")
@@ -687,6 +699,12 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		showB.setEnabled(false);
 		sendUpdateGUI();
 	} //END private void doShow()
+	
+	private void doCheckAnswer() {
+		AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+		evt.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_CHECKANSWER);
+		controller.handleAppEvent(evt);
+	} //END private void doCheckAnswer()
 
 	/**
 	 * Sends the events common to the know and notknow buttons
@@ -769,28 +787,17 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	} //END public Result getResult()
 
 	//---Setters and Getters
-	
-	//implements IEntrlyLearnOneView
-	public final void setTargetAsked(boolean isTargetAsked) {
-		this.targetAsked = isTargetAsked;
-		if (false == targetAsked) {
-			//change labels
-			String targetLabelText = targetL.getText();
-			targetL.setText(baseL.getText());
-			baseL.setText(targetLabelText);
-		}
-	} //END public final void setTargetAsked(boolean)
-	
+		
 	private final void setRealBase(String aBase) {
 		if (null == aBase) {
-			baseSL.setText("");
+			questionSL.setText("");
 		}
 		else {
-			baseSL.setText(aBase);
+			questionSL.setText(aBase);
 		}		
 	} //END private final void setRealBase(String)
 	
-	public void setRealTarget(String aTarget) {
+	private void setRealTarget(String aTarget) {
 		if (null == aTarget) {
 			hintHL.setHintText("");
 		}
@@ -800,7 +807,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	} //END public void setRealTarget(String)
 
 	public void setBase(String aBase) {
-		if (targetAsked) {
+		if (Toolbox.getInstance().isTargetAsked()) {
 			setRealBase(aBase);
 		} else {
 			setRealTarget(aBase);
@@ -808,7 +815,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	} //END public void setBase(String)
 
 	public void setTarget(String aTarget) {
-		if (targetAsked) {
+		if (Toolbox.getInstance().isTargetAsked()) {
 			setRealTarget(aTarget);
 		} else {
 			setRealBase(aTarget);
@@ -961,5 +968,13 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				break;
 		}
 	} //END public void setAttributeItems(String[][], int)
+	
+	//------------------- check answer related --------------------------
+	//implements IEntrlyLearnOneView
+	public void setAnswerCorrect(boolean targetCorrect, Boolean[] attributeCorrect) {
+		//enable / disable buttons
 		
+		//correct / incorrect fields
+		
+	}
 } //END public class EntryLearnOneView extends AViewWithScrollPane

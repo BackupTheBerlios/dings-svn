@@ -681,7 +681,7 @@ public class EntriesCollection extends ACollection {
 		if (isLearning) {
 			propertyS = Preferences.PROP_SEL_UPD_INST_LEARNING;
 		}
-		if (Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(propertyS)).booleanValue()) {
+		if (Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(propertyS)) {
 			if (false == currentItem.partOfChoice(selStatusChoice, getLastLearnedBeforeDate(), selMinMaxScore
 					, selUnitsChoice, selCategoriesChoice, selTypesChoice)) {
 				//remove from score list if isLEarning == true

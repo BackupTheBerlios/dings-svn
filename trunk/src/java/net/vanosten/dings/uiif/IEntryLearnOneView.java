@@ -29,7 +29,6 @@ public interface IEntryLearnOneView extends IView {
 	 */
 	public void reset();
 	public void sendUpdateGUI();
-	public void setTargetAsked(boolean isTargetAsked);
 	public void setBase(String anBase);
 	public void setTarget(String aTarget);
 	public void setEntryType(String aLabel);
@@ -48,4 +47,5 @@ public interface IEntryLearnOneView extends IView {
 	public void setStatus(boolean aStatus);
 	public void setScore(int aScore);
 	public Result getResult();
+	public void setAnswerCorrect(boolean targetCorrect, Boolean[] attributeCorrect);
 } //END public interface IEntryLearnOneView extends IDetailsView

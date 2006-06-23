@@ -362,10 +362,9 @@ public final class Entry extends AIdItemModel {
 	 *
 	 * @return an array of boolean with the results of the answer check indexed as follows:
 	 */
-	private boolean[] checkAnswerLearnOne() {
-		boolean[]answersCorrect = new boolean[5];
+	private void checkAnswerLearnOne() {
+		boolean hasErrors = false;
 		//sdfsdfsdf
-		return answersCorrect;
 	}
 
 	private void getResultLearnOneView() {
@@ -517,23 +516,14 @@ public final class Entry extends AIdItemModel {
 			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_NEXT) {
 				parentController.handleAppEvent(evt);
 			}
+			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_LEARNONE_CHECKANSWER) {
+				this.checkAnswerLearnOne();
+			}
 			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE) {
 				parentController.handleAppEvent(evt);
 			}
 		}
 		else parentController.handleAppEvent(evt);
-		/*
-		if (isEditView) {
-			//reuse functionality from AEditView
-			super.handleAppEvent(evt);
-		}
-		else { //learnOneView
-			if (evt.isDataEvent()) {
-				else if (evt.getMessage().equals(MessageConstants.D_ENTRY_LEARNONE_SHOWALL)) {
-					showAllLearnOneView();
-				}
-			}
-			*/
 	} //END public void handleAppEvent(AppEvent)
 
 	/**

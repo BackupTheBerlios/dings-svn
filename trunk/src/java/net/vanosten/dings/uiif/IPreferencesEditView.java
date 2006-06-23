@@ -83,4 +83,11 @@ public interface IPreferencesEditView extends IView {
 	public void setLinesExplanation(Integer numberOfLines);
 	public Integer getLinesExample();
 	public void setLinesExample(Integer numberOfLines);
+	//check answer
+	public boolean isCheckCaseSensitive();
+	public void setCheckCaseSensitive(boolean sensitive);
+	public boolean isCheckTypeAttributes();
+	public void setCheckTypeAttributes(boolean check);
+	public boolean isCheckGlobalAttributes();
+	public void setCheckGlobalAttributes(boolean check);
 } //END public interface IPreferencesEditView extends IDetailsView

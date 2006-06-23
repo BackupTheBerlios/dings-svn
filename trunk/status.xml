@@ -93,7 +93,7 @@ entitled "GNU Free Documentation License".
 			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
 		</actions>
 		<actions priority="high">
-			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics.</action>
+			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics. Begin with PropertiesEditview</action>
 			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
 			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
 			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation</action><!-- ## Enable orientation in EntryEdit and EntryLearn -->

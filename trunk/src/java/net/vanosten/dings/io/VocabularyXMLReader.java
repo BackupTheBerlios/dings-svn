@@ -388,7 +388,7 @@ public class VocabularyXMLReader implements IOHandler {
 		//Attributes for EntryTypeAttributeItem
 		else if (localName.equals(Constants.XML_ENTRYTYPE_ATTRIBUTE_ITEM)) {
 			id = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
-			irregular = Boolean.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_IRREGULAR)).booleanValue();
+			irregular = Boolean.TRUE.equals(xpp.getAttributeValue(namespace,Constants.XML_ATTR_IRREGULAR));
 		}
 
 		//Attributes common to all Entries
@@ -400,7 +400,7 @@ public class VocabularyXMLReader implements IOHandler {
 			foo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_SCORE);
 			if (foo != null) score = Integer.parseInt(foo);
 			else score = 0;
-			status = Boolean.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_STATUS)).booleanValue();
+			status = Boolean.TRUE.equals(xpp.getAttributeValue(namespace,Constants.XML_ATTR_STATUS));
 			//equals to null if attribute does not exist
 			attributeOne = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEONE);
 			attributeTwo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO);

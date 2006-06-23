@@ -339,7 +339,6 @@ public abstract class ADings implements IAppEventHandler {
 				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRY_EDIT);
 			}
 			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRY_LEARNONE) {
-				entryLearnOneView = mainWindow.getEntryLearnOneView();
 				//learning direction
 				int answer = mainWindow.showOptionDialog("Learning Direction"
 						, "Do you want to learn in the default direction: "
@@ -348,10 +347,12 @@ public abstract class ADings implements IAppEventHandler {
 						, Constants.QUESTION_MESSAGE
 						, Constants.YES_NO_OPTION);
 				if (Constants.YES_OPTION == answer) {
-					entryLearnOneView.setTargetAsked(true);
+					Toolbox.getInstance().setTargetAsked(true);
 				} else {
-					entryLearnOneView.setTargetAsked(false);
+					Toolbox.getInstance().setTargetAsked(false);
 				}
+				//make view
+				entryLearnOneView = mainWindow.getEntryLearnOneView();
 
 				//prepare entries
 				AppEvent initializeEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
@@ -502,7 +503,7 @@ public abstract class ADings implements IAppEventHandler {
 		boolean writeSuccess = true;
 
 		//eventually save the learning statistics
-		if (Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_STATS_QUIT)).booleanValue()) {
+		if (Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(Preferences.PROP_STATS_QUIT)) {
 			stats.addNewStatisticSet();
 		}
 
@@ -595,7 +596,7 @@ public abstract class ADings implements IAppEventHandler {
 		//get from preferences, whether logging should be made to file
 		if (false == overrideLogging) {
 			if (Toolbox.getInstance().getPreferencesPointer().containsKey(Preferences.PROP_LOG_TO_FILE)) {
-				isFileLogging = Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_LOG_TO_FILE)).booleanValue();
+				isFileLogging = Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(Preferences.PROP_LOG_TO_FILE);
 			}
 		}
 		//else isFileLogging remains false to force logging to console
@@ -645,7 +646,7 @@ public abstract class ADings implements IAppEventHandler {
 		}
 		else {
 			if (Toolbox.getInstance().getPreferencesPointer().containsKey(Preferences.PROP_LOGGING_ENABLED)) {
-				boolean logEnabled = Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_LOGGING_ENABLED)).booleanValue();
+				boolean logEnabled = Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(Preferences.PROP_LOGGING_ENABLED);
 				if (logEnabled) {
 					logger.setLevel(Level.FINEST);
 				}

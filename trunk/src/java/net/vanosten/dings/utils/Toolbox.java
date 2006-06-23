@@ -23,6 +23,7 @@ package net.vanosten.dings.utils;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.IAppEventHandler;
@@ -54,6 +55,11 @@ public class Toolbox {
 
 	/** The Properties of the current learning stack */
 	private InfoVocab infoVocab;
+	
+	/** The current learning direction */
+	private boolean targetAsked = false;
+	
+	private Logger logger = Logger.getLogger("net.vanosten.dings.utils.Toolbox");
 
 	/**
 	 * Private constructor to prevent instantiation from outside
@@ -139,6 +145,20 @@ public class Toolbox {
 	 * @return a localized String for the current Locale if specified
 	 */
 	public final String getLocalizedString(String key) {
-		return bundle.getString(key);
+		try {
+			String value = bundle.getString(key);
+			return value;
+		} catch (Exception e) {//see the 3 exceptions in ResourceBundle.getString(key)
+			logger.warning("Property " + key + "cannot be resolved in ressource bundle");
+		}
+		return "????";
 	} //END public final String getLocalizedString(String)
+
+	public boolean isTargetAsked() {
+		return targetAsked;
+	}
+
+	public void setTargetAsked(boolean targetAsked) {
+		this.targetAsked = targetAsked;
+	}
 } //END public class Toolbox

@@ -124,6 +124,13 @@ public class Preferences extends AModel{
 	public final static String PROP_LINES_EXPLANATION = "lines_explanation";
 	/** The number of lnes for entry field example */
 	public final static String PROP_LINES_EXAMPLE = "lines_example";
+	
+	/** Whether or not checking answer is case sensitive */
+	public final static String PROP_CHECKANSWER_CASE_SENSITIVE = "checkanswer_case_sensitive";
+	/** Whether or not entry type related attributes should be checked when checking answer */
+	public final static String PROP_CHECKANSWER_TYPE_ATTRIBUTES = "checkanswer_type_attributtes";
+	/** Whether or not global attributes should be checked when checking answer */
+	public final static String PROP_CHECKANSWER_GLOBAL_ATTRIBUTES = "checkanswer_global_attributes";
 
 	/** The edit view */
 	private IPreferencesEditView editView;
@@ -156,7 +163,7 @@ public class Preferences extends AModel{
 			//file encoding
 			editView.setFileEncoding(props.getProperty(FILE_ENCODING));
 			//look and feel
-			editView.setSystemLookAndFeel(Boolean.valueOf(props.getProperty(PROP_SYSTEM_LAF)).booleanValue());
+			editView.setSystemLookAndFeel(getBooleanProperty(PROP_SYSTEM_LAF));
 			//learn hints
 			//editView.setLearnHintCoverPercent(Integer.parseInt(props.getProperty(LEARN_HINT_COVER_PERCENT)));
 			editView.setLearnHintFlashTime(Integer.parseInt(props.getProperty(LEARN_HINT_FLASH_TIME)));
@@ -167,10 +174,9 @@ public class Preferences extends AModel{
 			editView.setLoggingEnabled(props.getProperty(PROP_LOGGING_ENABLED));
 			editView.setLoggingToFile(props.getProperty(PROP_LOG_TO_FILE));
 			//selection updates
-			editView.setSelUpdInst(Boolean.valueOf(props.getProperty(PROP_SEL_UPD_INST_EDITING)).booleanValue()
-										, Boolean.valueOf(props.getProperty(PROP_SEL_UPD_INST_LEARNING)).booleanValue());
+			editView.setSelUpdInst(getBooleanProperty(PROP_SEL_UPD_INST_EDITING), getBooleanProperty(PROP_SEL_UPD_INST_LEARNING));
 			//stats on quit
-			editView.setStatsOnQuit(Boolean.valueOf(props.getProperty(PROP_STATS_QUIT)).booleanValue());
+			editView.setStatsOnQuit(getBooleanProperty(PROP_STATS_QUIT));
 			//locale
 			editView.setApplicationLocale(props.getProperty(PROP_LOCALE));
 			//text lines
@@ -178,6 +184,10 @@ public class Preferences extends AModel{
 			editView.setLinesTarget(Integer.valueOf(props.getProperty(PROP_LINES_TARGET)));
 			editView.setLinesExplanation(Integer.valueOf(props.getProperty(PROP_LINES_EXPLANATION)));
 			editView.setLinesExample(Integer.valueOf(props.getProperty(PROP_LINES_EXAMPLE)));
+			//check answer
+			editView.setCheckCaseSensitive(getBooleanProperty(PROP_CHECKANSWER_CASE_SENSITIVE));
+			editView.setCheckGlobalAttributes(getBooleanProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES));
+			editView.setCheckTypeAttributes(getBooleanProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES));
 		}
 		catch (NumberFormatException e) {
 			//TODO: log this
@@ -189,9 +199,9 @@ public class Preferences extends AModel{
 		//file encoding
 		props.setProperty(FILE_ENCODING, editView.getFileEncoding());
 		//look and feel
-		boolean oldLAF = Boolean.valueOf(props.getProperty(PROP_SYSTEM_LAF)).booleanValue();
+		boolean oldLAF = getBooleanProperty(PROP_SYSTEM_LAF);
 		if (oldLAF != editView.isSystemLookAndFeel()) {
-			props.setProperty(PROP_SYSTEM_LAF, String.valueOf(editView.isSystemLookAndFeel()));
+			props.setProperty(PROP_SYSTEM_LAF, Boolean.toString(editView.isSystemLookAndFeel()));
 			AppEvent ape1 = new AppEvent(AppEvent.EventType.STATUS_EVENT);
 			ape1.setMessage(MessageConstants.Message.S_CHANGE_LAF);
 			parentController.handleAppEvent(ape1);
@@ -215,10 +225,10 @@ public class Preferences extends AModel{
 			parentController.handleAppEvent(ape2);
 		}
 		//resetting score
-		props.setProperty(PROP_SEL_UPD_INST_EDITING, String.valueOf(editView.isSelUpdInstEditing()));
-		props.setProperty(PROP_SEL_UPD_INST_LEARNING, String.valueOf(editView.isSelUpdInstLearning()));
+		props.setProperty(PROP_SEL_UPD_INST_EDITING, Boolean.toString(editView.isSelUpdInstEditing()));
+		props.setProperty(PROP_SEL_UPD_INST_LEARNING, Boolean.toString(editView.isSelUpdInstLearning()));
 		//stats on quit
-		props.setProperty(PROP_STATS_QUIT, String.valueOf(editView.isStatsOnQuit()));
+		props.setProperty(PROP_STATS_QUIT, Boolean.toString(editView.isStatsOnQuit()));
 		//locale
 		props.setProperty(PROP_LOCALE, editView.getApplicationLocale());
 		//text lines
@@ -226,6 +236,10 @@ public class Preferences extends AModel{
 		props.setProperty(PROP_LINES_TARGET, editView.getLinesTarget().toString());
 		props.setProperty(PROP_LINES_EXPLANATION, editView.getLinesExplanation().toString());
 		props.setProperty(PROP_LINES_EXAMPLE, editView.getLinesExample().toString());
+		//check answer
+		props.setProperty(PROP_CHECKANSWER_CASE_SENSITIVE, Boolean.toString(editView.isCheckCaseSensitive()));
+		props.setProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES, Boolean.toString(editView.isCheckGlobalAttributes()));
+		props.setProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES, Boolean.toString(editView.isCheckTypeAttributes()));
 	} //END protected void updateModel()
 
 	//Overrides AModel
@@ -276,6 +290,17 @@ public class Preferences extends AModel{
 		}
 		return myInt;
 	} //END public int getIntProperty(String)
+	
+	/**
+	 * This method can handle null in contrast to Boolean.valueOf(String).booleanValue()
+	 * @param property
+	 * @return false if property is null or anything else then Boolean.TRUE.toString()
+	 */
+	public boolean getBooleanProperty(String property) {
+		String myvalue = props.getProperty(property);
+		boolean value = Boolean.parseBoolean(myvalue);
+		return value;		
+	}
 
 	public Object setProperty(String thePropertyKey, String theValue) {
 		return props.setProperty(thePropertyKey, theValue);
@@ -352,7 +377,7 @@ public class Preferences extends AModel{
 			props.setProperty(PROP_FILE_HISTORY, "");
 		}
 		if (!props.containsKey(PROP_SYSTEM_LAF)) {
-			props.setProperty(PROP_SYSTEM_LAF, String.valueOf(IPreferencesEditView.SYSTEM_LAF_DEFAULT));
+			props.setProperty(PROP_SYSTEM_LAF, Boolean.toString(IPreferencesEditView.SYSTEM_LAF_DEFAULT));
 		}
 		if (!props.containsKey(PROP_SEL_UPD_INST_EDITING)) {
 			props.setProperty(PROP_SEL_UPD_INST_EDITING, Boolean.toString(true));
@@ -374,6 +399,15 @@ public class Preferences extends AModel{
 		}
 		if (!props.containsKey(PROP_LINES_EXAMPLE)) {
 			props.setProperty(PROP_LINES_EXAMPLE, Integer.toString(3));
+		}
+		if (!props.containsKey(PROP_CHECKANSWER_CASE_SENSITIVE)) {
+			props.setProperty(PROP_CHECKANSWER_CASE_SENSITIVE, Boolean.toString(false));
+		}
+		if (!props.containsKey(PROP_CHECKANSWER_TYPE_ATTRIBUTES)) {
+			props.setProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES, Boolean.toString(false));
+		}
+		if (!props.containsKey(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES)) {
+			props.setProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES, Boolean.toString(false));
 		}
 		//PROP_LOCALE is not set to a value. The value is set to the value of the underlying
 		//OS the first time the application is started

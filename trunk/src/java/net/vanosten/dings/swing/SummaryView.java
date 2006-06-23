@@ -58,6 +58,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.time.TimeSeriesCollection;
 
@@ -279,7 +280,7 @@ public class SummaryView extends AViewWithButtons implements ISummaryView {
 		plot.setDomainGridlinePaint(Color.white);
 		plot.setRangeGridlinePaint(Color.white);
 
-		final StandardXYItemRenderer renderer1 = (StandardXYItemRenderer) plot.getRenderer();
+		final XYItemRenderer renderer1 = plot.getRenderer();
 		renderer1.setPaint(Color.blue);
 
 		//axis 1

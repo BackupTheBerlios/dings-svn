@@ -240,7 +240,7 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			if (logger.isLoggable(Level.FINEST)) {
 				logger.logp(Level.FINEST, this.getClass().getName(), "MainWindow()", "System look and feel class name: " + systemLAF);
 			}
-			if (Boolean.valueOf(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_SYSTEM_LAF)).booleanValue()) {
+			if (Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(Preferences.PROP_SYSTEM_LAF)) {
 				UIManager.setLookAndFeel(systemLAF);
 			} else {
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -298,10 +298,10 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	public void showHelp(Message screen) {
 		if (screen == MessageConstants.Message.H_ALL) {
 			//JOptionPane.showMessageDialog(this, "Sorry, not implemented yet!", "Help", JOptionPane.INFORMATION_MESSAGE);
-			showMessageDialog("Help", "Sorry, not implemented yet!\nHave a look at the website http://dings.berlios.de/", Constants.INFORMATION_MESSAGE);
+			showMessageDialog("Help", "Sorry, not implemented yet!\nHave a look at the website http://dingsbums.vanosten.net/", Constants.INFORMATION_MESSAGE);
 		} else {
 			//JOptionPane.showMessageDialog(this, "DingsBums?! by vanosten", "About", JOptionPane.INFORMATION_MESSAGE);
-			showMessageDialog("About", "DingsBums?! by vanosten", Constants.INFORMATION_MESSAGE);
+			showMessageDialog("About", "DingsBums?! by vanosten\ndingsbums@vanosten.net", Constants.INFORMATION_MESSAGE);
 		}
 	} //END public void showHelp(Message)
 
