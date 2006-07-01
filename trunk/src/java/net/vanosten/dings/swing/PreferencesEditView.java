@@ -746,23 +746,15 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		checkAnswerP.setLayout(layout);
 
 		layout.setHorizontalGroup(layout.createSequentialGroup()
-			.add(layout.createParallelGroup(GroupLayout.LEADING)
-				.add(caseSensitiveCB).add(globalAttributesCB).add(typeAttributesCB)
-			)
+			.add(layout.createParallelGroup(GroupLayout.LEADING).add(caseSensitiveCB).add(globalAttributesCB).add(typeAttributesCB))
 		);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
-			.add(layout.createParallelGroup(GroupLayout.BASELINE)
-				.add(caseSensitiveCB)
-			)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(caseSensitiveCB))
 			.addPreferredGap(LayoutStyle.UNRELATED)
-			.add(layout.createParallelGroup(GroupLayout.BASELINE)
-				.add(globalAttributesCB)
-			)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(globalAttributesCB))
 			.addPreferredGap(LayoutStyle.RELATED)
-			.add(layout.createParallelGroup(GroupLayout.BASELINE)
-				.add(typeAttributesCB)
-			)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(typeAttributesCB))
 		);
 	} //END private void initializeCheckAnswerPanel()
 

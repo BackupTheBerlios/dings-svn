@@ -21,10 +21,10 @@ entitled "GNU Free Documentation License".
 	<body>
 		<section id="about">
 			<title>About</title>
-			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning that can be used for any kind of content, which can be memorized using flashcards, including vocabularies. <code>Dingsbums?!</code>aims to be an application which makes memorizing both fun and efficient.</p>
+			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning tool that can be used for any kind of content, which can be memorized using flashcards, including vocabularies. <code>Dingsbums?!</code>aims to be an application which makes memorizing both fun and efficient.</p>
 			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away.</p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
-			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS-X, Windows and Solaris.</p>
+			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
 		</section>
 		<section id="evaluating">
 			<title>Is this for you?</title>
@@ -52,10 +52,15 @@ entitled "GNU Free Documentation License".
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="site:links">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title><code>DingsBums?!</code> 0.4.1 released</title>
-			<p>Version 0.4.1 is a minor update of version 0.4.0. The most important new feature is the possibility to learn with a forth possibility &quot;Memory&quot; in the <a href="site:learningchoice">game-like learning environments</a>. Also a critical bug preventing the creation of new learning stacks has been fixed. See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
-			<p>The next minor release will contain more options for preferences and multiline input for base/term and target/definition. The next major release will support pictures.</p>
-			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then have a look at the <a href="site:features">features</a> and <a href="site:todo">todo-list</a> and <a href="site:contact">contact</a> me.</p>
+			<title><code>DingsBums?!</code> 0.4.2 released</title>
+			<p>Version 0.4.2 is a minor update in the 0.4.x series. The most important two new features are:</p>
+			<ol>
+				<li>The answer when learning one by one can now be checked by the program according to settings for case sensitivity etc. in the preferences.</li>
+				<li>The base, target, explanation and example fields in entry can now have multiple lines, the number of which can be configured in preferences.</li>
+			</ol>
+			<p>See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
+			<p>The next major release will support pictures and figures besides text for the target information.</p>
+			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then please have a look at the <a href="site:features">features</a> and <a href="site:todo">todo</a> lists. Feel free to <a href="site:contact">contact</a> me.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
 	</body>

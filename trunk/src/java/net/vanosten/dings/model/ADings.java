@@ -340,30 +340,22 @@ public abstract class ADings implements IAppEventHandler {
 			}
 			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRY_LEARNONE) {
 				//learning direction
-				int answer = mainWindow.showOptionDialog("Learning Direction"
-						, "Do you want to learn in the default direction: "
-						+ Toolbox.getInstance().getInfoPointer().getBaseLabel()
-						+ " -> " + Toolbox.getInstance().getInfoPointer().getTargetLabel() + "?"
-						, Constants.QUESTION_MESSAGE
-						, Constants.YES_NO_OPTION);
-				if (Constants.YES_OPTION == answer) {
-					Toolbox.getInstance().setTargetAsked(true);
-				} else {
-					Toolbox.getInstance().setTargetAsked(false);
+				boolean goOn = mainWindow.showLearningDirectionDialog();
+				if (goOn) {
+					//make view
+					entryLearnOneView = mainWindow.getEntryLearnOneView();
+	
+					//prepare entries
+					AppEvent initializeEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+					initializeEvt.setMessage(MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING);
+					entries.handleAppEvent(initializeEvt);
+					//set entry relation
+					AppEvent entryEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
+					entryEvt.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_NEXT);
+					this.handleAppEvent(entryEvt);
+					//add to panel and show
+					mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRY_LEARNONE);
 				}
-				//make view
-				entryLearnOneView = mainWindow.getEntryLearnOneView();
-
-				//prepare entries
-				AppEvent initializeEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
-				initializeEvt.setMessage(MessageConstants.Message.D_ENTRIES_INITIALIZE_LEARNING);
-				entries.handleAppEvent(initializeEvt);
-				//set entry relation
-				AppEvent entryEvt = new AppEvent(AppEvent.EventType.DATA_EVENT);
-				entryEvt.setMessage(MessageConstants.Message.D_ENTRY_LEARNONE_NEXT);
-				this.handleAppEvent(entryEvt);
-				//add to panel and show
-				mainWindow.showView(MessageConstants.Message.N_VIEW_ENTRY_LEARNONE);
 			}
 			else if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRYTYPES_LIST) {
 				IListView listView = mainWindow.getEntryTypesListView();

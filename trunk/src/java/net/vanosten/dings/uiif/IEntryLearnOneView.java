@@ -32,6 +32,7 @@ public interface IEntryLearnOneView extends IView {
 	public void setBase(String anBase);
 	public void setTarget(String aTarget);
 	public void setEntryType(String aLabel);
+	public String getAttributeId(int aNumber);
 	public void setAttributeId(String anAttributeId, int aNumber);
 	public void setAttributeName(String anAttributeName, int aNumber);
 	public void setAttributeItems(String[][] theItems, int aNumber);
@@ -39,13 +40,23 @@ public interface IEntryLearnOneView extends IView {
 	public void setExample(String anExample);
 	public void setPronunciation(String aPronunciation);
 	public void setRelation(String aRelation);
+	public String getUnitId();
 	public void setUnitId(String aUnitId);
 	public void setUnits(String theUnits[][]);
+	public String getCategoryId();
 	public void setCategoryId(String aCategoryId);
 	public void setCategories(String theCategories[][]);
 	public boolean getStatus();
 	public void setStatus(boolean aStatus);
 	public void setScore(int aScore);
 	public Result getResult();
-	public void setAnswerCorrect(boolean targetCorrect, Boolean[] attributeCorrect);
+	public String getAnswer();
+	/**
+	 * 
+	 * @param targetCorrect
+	 * @param globalAttributesCorrect index position 0 for unit, index position 1 for categories.
+	 *                                Boolean == null if not checked
+	 * @param typeAttributesCorrect index position 0 to 3 for the four attributes. Boolean == null if not checked
+	 */
+	public void setAnswerCorrect(boolean targetCorrect, Boolean[] globalAttributesCorrect, Boolean[] typeAttributesCorrect);
 } //END public interface IEntryLearnOneView extends IDetailsView

@@ -252,13 +252,10 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 
 	private void setVisibilityItems(JComboBox aCB) {
 		isUpdating = true;
-		aCB.addItem("always"); //InfoVocab.VISIBILITY_ALWAYS
-		aCB.addItem("one-to-one query and all solutions"); //InfoVocab.VISIBILITY_QUERY_ONE
-		aCB.addItem("all solutions"); //InfoVocab.VISIBILITY_SOLUTION_ALL
-		aCB.addItem("many-to-many solutions"); //InfoVocab.VISIBILITY_SOLUTION_MANY
-		aCB.addItem("one-to-one solution"); //InfoVocab.VISIBILITY_SOLUTION_ONE
-		aCB.addItem("only editing"); //InfoVocab.VISIBILITY_EDITING
-		aCB.addItem("never"); //InfoVocab.VISIBILITY_NEVER
+		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.always")); //InfoVocab.VISIBILITY_ALWAYS
+		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.query")); //InfoVocab.VISIBILITY_QUERY
+		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.solution")); //InfoVocab.VISIBILITY_SOLUTION
+		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.never")); //InfoVocab.VISIBILITY_NEVER
 		isUpdating = false;
 	} //END private void setVisibilityItems(JComboBox)
 

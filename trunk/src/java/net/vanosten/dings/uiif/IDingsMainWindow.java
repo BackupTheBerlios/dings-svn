@@ -32,6 +32,12 @@ public interface IDingsMainWindow {
 	public void showHelp(Message aMessage);
 	public void showMessageDialog(String aTitle, String aMessage, int aMessageType);
 	public int showOptionDialog(String aTitle, String aMessage, int aMessageType, int anOptionType);
+	
+	/**
+	 * @return false if cancel button pressed. Otherwise true and the learning direction
+	 *         is set in Toolbox-instance.
+	 */
+	public boolean showLearningDirectionDialog();
 	public String showFileChooser(String aFileName, boolean showOpen);
 	public void setApplicationTitle(String aTitle);
 	public void setStatusBarStatusText(String aStatusText, String aSelectionText);

@@ -34,6 +34,7 @@ import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.uiif.IEntryEditView;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
 import net.vanosten.dings.utils.Toolbox;
+import net.vanosten.dings.utils.Util;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -363,9 +364,71 @@ public final class Entry extends AIdItemModel {
 	 * @return an array of boolean with the results of the answer check indexed as follows:
 	 */
 	private void checkAnswerLearnOne() {
-		boolean hasErrors = false;
-		//sdfsdfsdf
-	}
+		boolean answerCorrect = false;
+		String answer = Util.stripWhitespace(learnOneView.getAnswer());
+		String question = null;
+		if (Toolbox.getInstance().isTargetAsked()) {
+			question = Util.stripWhitespace(target);
+		} else {
+			question = Util.stripWhitespace(base);
+		}
+		if (Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(Preferences.PROP_CHECKANSWER_CASE_SENSITIVE)) {
+			answerCorrect = answer.equals(question);
+		} else {
+			answerCorrect = answer.equalsIgnoreCase(question);
+		}
+		//global attributes
+		Boolean[] globalAttributesCorrect = new Boolean[2];
+		if ((null != unitId)
+				&& (Toolbox.getInstance().getInfoPointer().getVisibilityUnit() == InfoVocab.VISIBILITY_QUERY)) {
+			if ((null != learnOneView.getUnitId()) && learnOneView.getUnitId().equals(unitId)) {
+				globalAttributesCorrect[0] = Boolean.TRUE;
+			} else {
+				globalAttributesCorrect[0] = Boolean.FALSE;
+			}
+		}
+		if ((null != categoryId)
+				&& (Toolbox.getInstance().getInfoPointer().getVisibilityCategory() == InfoVocab.VISIBILITY_QUERY)) {
+			if ((null != learnOneView.getCategoryId()) && learnOneView.getCategoryId().equals(categoryId)) {
+				globalAttributesCorrect[1] = Boolean.TRUE;
+			} else {
+				globalAttributesCorrect[1] = Boolean.FALSE;
+			}
+		}
+		//type attributes
+		Boolean[] typeAttributesCorrect = new Boolean[4];
+		if (Toolbox.getInstance().getInfoPointer().getVisibilityAttributes() == InfoVocab.VISIBILITY_QUERY) {
+			if (null != attributeOneId) {
+				if (null != learnOneView.getAttributeId(1) && learnOneView.getAttributeId(1).equals(attributeOneId)) {
+					typeAttributesCorrect[0] = Boolean.TRUE;
+				} else {
+					typeAttributesCorrect[0] = Boolean.FALSE;
+				}
+			}
+			if (null != attributeTwoId) {
+				if (null != learnOneView.getAttributeId(2) && learnOneView.getAttributeId(2).equals(attributeTwoId)) {
+					typeAttributesCorrect[1] = Boolean.TRUE;
+				} else {
+					typeAttributesCorrect[1] = Boolean.FALSE;
+				}
+			}
+			if (null != attributeThreeId) {
+				if (null != learnOneView.getAttributeId(3) && learnOneView.getAttributeId(3).equals(attributeThreeId)) {
+					typeAttributesCorrect[2] = Boolean.TRUE;
+				} else {
+					typeAttributesCorrect[2] = Boolean.FALSE;
+				}	
+			}
+			if (null != attributeFourId) {
+				if (null != learnOneView.getAttributeId(4) && learnOneView.getAttributeId(4).equals(attributeFourId)) {
+					typeAttributesCorrect[3] = Boolean.TRUE;
+				} else {
+					typeAttributesCorrect[3] = Boolean.FALSE;
+				}
+			}
+		}
+		learnOneView.setAnswerCorrect(answerCorrect, globalAttributesCorrect, typeAttributesCorrect);
+	} //END private void checkAnswerLearnOne()
 
 	private void getResultLearnOneView() {
 		//update status

@@ -29,20 +29,26 @@ package net.vanosten.dings.swing;
  * @author vanosten
  */
 import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+
+import org.jdesktop.layout.GroupLayout;
+import org.jdesktop.layout.LayoutStyle;
 
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
@@ -358,6 +364,51 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 						, options[0]); //default button title
 		return getDingsAnswer(answer);
 	} //END public int showOptionDialog(String, String, int, int)
+	
+	//implements IDingsMainWindow
+	public boolean showLearningDirectionDialog() {
+		Object[] options = {
+			Toolbox.getInstance().getLocalizedString("label.button.yes")
+			, Toolbox.getInstance().getLocalizedString("label.button.cancel")
+		};
+		JPanel myPanel = new JPanel();
+		JLabel textL = new JLabel(Toolbox.getInstance().getLocalizedString("learndir.dialog.text"));
+		JRadioButton baseTargetRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("learndir.basetarget.label"));
+		baseTargetRB.setMnemonic(Toolbox.getInstance().getLocalizedString("learndir.basetarget.mnemonic").charAt(0));
+		JRadioButton targetBaseRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("learndir.targetbase.label"));
+		targetBaseRB.setMnemonic(Toolbox.getInstance().getLocalizedString("learndir.targetbase.mnemonic").charAt(0));
+		ButtonGroup directionBG = new ButtonGroup();
+		directionBG.add(baseTargetRB);
+		directionBG.add(targetBaseRB);
+		baseTargetRB.setSelected(true);
+		GroupLayout layout = new GroupLayout(myPanel);
+		myPanel.setLayout(layout);
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+			.add(layout.createParallelGroup(GroupLayout.LEADING).add(textL).add(baseTargetRB).add(targetBaseRB))
+		);
+		layout.setVerticalGroup(layout.createSequentialGroup()
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(textL))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(baseTargetRB))
+			.addPreferredGap(LayoutStyle.RELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(targetBaseRB))
+		);
+
+		int answer = JOptionPane.showOptionDialog(this
+					, myPanel
+					, Toolbox.getInstance().getLocalizedString("learndir.dialog.title")
+					, JOptionPane.OK_CANCEL_OPTION
+					, JOptionPane.QUESTION_MESSAGE
+					, DingsSwingConstants.getIconForMessageType(Constants.QUESTION_MESSAGE)
+					, options
+					, options[0]);
+		if (JOptionPane.CANCEL_OPTION == answer) {
+			return false;
+		}
+		//set the learning direction
+		Toolbox.getInstance().setTargetAsked(baseTargetRB.isSelected());
+		return true;
+	}
 
 	private int getDingsAnswer(int aSwingAnswer) {
 		int dingsAnswer = -1;

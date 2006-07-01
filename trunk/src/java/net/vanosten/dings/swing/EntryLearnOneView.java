@@ -70,6 +70,12 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 
 	/** the result of the learning */
 	private Result result = Result.SUCCESS;
+	
+	//default background colors
+	private Color textAreaDefaultBgColor = null;
+	private Color choiceDefaultBgColor = null;
+	private final static Color CORRECT_COLOR = Color.green;
+	private final static Color WRONG_COLOR = Color.red;
 
 	public EntryLearnOneView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.learn_one"), aComponentOrientation);
@@ -101,6 +107,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		answerTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		answerTA.setWrapStyleWord(true);
 		answerTA.setLineWrap(true);
+		textAreaDefaultBgColor = answerTA.getBackground();
 		//status
 		statusCB = new JCheckBox("up-to-date");
 		//score
@@ -108,6 +115,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		//units
 		unitL = new JLabel(Toolbox.getInstance().getInfoPointer().getUnitLabel() + ":");
 		unitsCh = new ChoiceID();
+		choiceDefaultBgColor = unitsCh.getBackground();
 		//categories
 		categoryL = new JLabel(Toolbox.getInstance().getInfoPointer().getCategoryLabel() + ":");
 		categoriesCh = new ChoiceID();
@@ -491,68 +499,62 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		int visPronunciation = Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation();
 		int visRelation = Toolbox.getInstance().getInfoPointer().getVisibilityRelation();
 		//units and categories
-		if (InfoVocab.VISIBILITY_EDITING == visUnit
-				|| InfoVocab.VISIBILITY_NEVER == visUnit) {
+		if (InfoVocab.VISIBILITY_NEVER == visUnit) {
 			unitL.setVisible(false);
 			unitsCh.setVisible(false);
 		}
-		if (InfoVocab.VISIBILITY_EDITING == visCategory
-				|| InfoVocab.VISIBILITY_NEVER == visCategory) {
+		if (InfoVocab.VISIBILITY_NEVER == visCategory) {
 			categoryL.setVisible(false);
 			categoriesCh.setVisible(false);
 		}
 		//others
-		if (InfoVocab.VISIBILITY_EDITING == visExplanation
-				|| InfoVocab.VISIBILITY_NEVER == visExplanation) {
+		if (InfoVocab.VISIBILITY_NEVER == visExplanation) {
 			explanationL.setVisible(false);
 			explanationSL.setVisible(false);
 		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == visExplanation) {
+		else if (InfoVocab.VISIBILITY_SOLUTION == visExplanation) {
 			explanationSL.setHideable(true);
 		}
 		else {
 			explanationSL.setHideable(false);
 		}
-		if (InfoVocab.VISIBILITY_EDITING == visExample
-				|| InfoVocab.VISIBILITY_NEVER == visExample) {
+		if (InfoVocab.VISIBILITY_NEVER == visExample) {
 			exampleL.setVisible(false);
 			exampleSL.setVisible(false);
 		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == visExample) {
+		else if (InfoVocab.VISIBILITY_SOLUTION == visExample) {
 			exampleSL.setHideable(true);
 		}
 		else {
 			exampleSL.setHideable(false);
 		}
-		if (InfoVocab.VISIBILITY_EDITING == visPronunciation
-				||InfoVocab.VISIBILITY_NEVER == visPronunciation) {
+		if (InfoVocab.VISIBILITY_NEVER == visPronunciation) {
 			pronunciationL.setVisible(false);
 			pronunciationSL.setVisible(false);
 		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == visPronunciation) {
+		else if (InfoVocab.VISIBILITY_SOLUTION == visPronunciation) {
 			pronunciationSL.setHideable(true);
 		}
 		else {
 			pronunciationSL.setHideable(false);
 		}
-		if (InfoVocab.VISIBILITY_EDITING == visRelation
-				|| InfoVocab.VISIBILITY_NEVER == visRelation) {
+		if (InfoVocab.VISIBILITY_NEVER == visRelation) {
 			relationL.setVisible(false);
 			relationSL.setVisible(false);
 		}
-		else if (InfoVocab.VISIBILITY_SOLUTION_ONE == Toolbox.getInstance().getInfoPointer().getVisibilityRelation()) {
+		else if (InfoVocab.VISIBILITY_SOLUTION == Toolbox.getInstance().getInfoPointer().getVisibilityRelation()) {
 			relationSL.setHideable(true);
 		}
 		else {
 			relationSL.setHideable(false);
 		}
 		//test whether to hide the others separator, too
-		if ((InfoVocab.VISIBILITY_EDITING == visExplanation || InfoVocab.VISIBILITY_NEVER == visExplanation) &&
-				(InfoVocab.VISIBILITY_EDITING == visExample || InfoVocab.VISIBILITY_NEVER == visExample) &&
-				(InfoVocab.VISIBILITY_EDITING == visPronunciation || InfoVocab.VISIBILITY_NEVER == visPronunciation) &&
-				(InfoVocab.VISIBILITY_EDITING == visRelation || InfoVocab.VISIBILITY_NEVER == visRelation) &&
-				(InfoVocab.VISIBILITY_EDITING == visUnit || InfoVocab.VISIBILITY_NEVER == visUnit) &&
-				(InfoVocab.VISIBILITY_EDITING == visCategory || InfoVocab.VISIBILITY_NEVER == visCategory)) {
+		if ((InfoVocab.VISIBILITY_NEVER == visExplanation)
+				&& (InfoVocab.VISIBILITY_NEVER == visExample)
+				&& (InfoVocab.VISIBILITY_NEVER == visPronunciation)
+				&& (InfoVocab.VISIBILITY_NEVER == visRelation)
+				&& (InfoVocab.VISIBILITY_NEVER == visUnit)
+				&& (InfoVocab.VISIBILITY_NEVER == visCategory)) {
 			othersLS.setVisible(false);
 		}
 	} //END private void setVisibilities()
@@ -775,6 +777,17 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		attributeFourL.setText("N/A:");
 		attributeFourCh.removeAllItems();
 		attributeFourCh.setEnabled(false);
+		//reset for check answer
+		answerTA.setBackground(textAreaDefaultBgColor);
+		unitsCh.setBackground(choiceDefaultBgColor);
+		categoriesCh.setBackground(choiceDefaultBgColor);
+		attributeOneCh.setBackground(choiceDefaultBgColor);
+		attributeTwoCh.setBackground(choiceDefaultBgColor);
+		attributeThreeCh.setBackground(choiceDefaultBgColor);
+		attributeFourCh.setBackground(choiceDefaultBgColor);
+		knowB.setEnabled(true);
+		notKnowB.setEnabled(true);
+		answerTA.setText("");
 	} //END public void reset()
 	
 	/**
@@ -787,6 +800,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	} //END public Result getResult()
 
 	//---Setters and Getters
+	
+	public String getAnswer() {
+		return answerTA.getText();
+	} //ENd public String getAnswer()
 		
 	private final void setRealBase(String aBase) {
 		if (null == aBase) {
@@ -925,11 +942,19 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	public void setScore(int aScore) {
 		scoreL.setText(Integer.toString(aScore));
 	} //END public void setScore(int)
+	
+	public String getUnitId() {
+		return unitsCh.getSelectedID();
+	} //END public String getUnitId()
 
 	public void setUnitId(String aUnitId) {
 		unitsCh.setSelectedIndex(0);
 		unitsCh.setSelectedID(aUnitId);
 	} //END public void setUnitId(String)
+	
+	public String getCategoryId() {
+		return categoriesCh.getSelectedID();
+	} //END public String getCategoryId()
 
 	public void setCategoryId(String aCategoryId) {
 		categoriesCh.setSelectedIndex(0);
@@ -971,10 +996,61 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	
 	//------------------- check answer related --------------------------
 	//implements IEntrlyLearnOneView
-	public void setAnswerCorrect(boolean targetCorrect, Boolean[] attributeCorrect) {
+	public void setAnswerCorrect(boolean answerCorrect, Boolean[] globalAttributesCorrect, Boolean[] typeAttributesCorrect) {
+		boolean allCorrect = true;
+		if (answerCorrect) {
+			answerTA.setBackground(CORRECT_COLOR);
+		} else {
+			answerTA.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		}
+		//global attributes
+		if (Boolean.TRUE.equals(globalAttributesCorrect[0])) {
+			unitsCh.setBackground(CORRECT_COLOR);
+		} else if (Boolean.FALSE.equals(globalAttributesCorrect[0])) {
+			unitsCh.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		} // else do nothing i.e. Boolean is null
+		if (Boolean.TRUE.equals(globalAttributesCorrect[1])) {
+			categoriesCh.setBackground(CORRECT_COLOR);
+		} else if (Boolean.FALSE.equals(globalAttributesCorrect[1])) {
+			categoriesCh.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		} // else do nothing i.e. Boolean is null
+		
+		// type attributes
+		if (Boolean.TRUE.equals(typeAttributesCorrect[0])) {
+			attributeOneCh.setBackground(CORRECT_COLOR);
+		} else if (Boolean.FALSE.equals(typeAttributesCorrect[0])) {
+			attributeOneCh.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		} // else do nothing i.e. Boolean is null
+		if (Boolean.TRUE.equals(typeAttributesCorrect[1])) {
+			attributeTwoCh.setBackground(CORRECT_COLOR);
+		} else if (Boolean.FALSE.equals(typeAttributesCorrect[1])) {
+			attributeTwoCh.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		} // else do nothing i.e. Boolean is null
+		if (Boolean.TRUE.equals(typeAttributesCorrect[2])) {
+			attributeThreeCh.setBackground(CORRECT_COLOR);
+		} else if (Boolean.FALSE.equals(typeAttributesCorrect[2])) {
+			attributeThreeCh.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		} // else do nothing i.e. Boolean is null
+		if (Boolean.TRUE.equals(typeAttributesCorrect[3])) {
+			attributeFourCh.setBackground(CORRECT_COLOR);
+		} else if (Boolean.FALSE.equals(typeAttributesCorrect[3])) {
+			attributeFourCh.setBackground(WRONG_COLOR);
+			allCorrect = false;
+		} // else do nothing i.e. Boolean is null
+
 		//enable / disable buttons
-		
-		//correct / incorrect fields
-		
+		if (allCorrect) {
+			notKnowB.setEnabled(false);
+			knowB.setEnabled(true);
+		} else {
+			knowB.setEnabled(false);
+			notKnowB.setEnabled(true);
+		}
 	}
 } //END public class EntryLearnOneView extends AViewWithScrollPane

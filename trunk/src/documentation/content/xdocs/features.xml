@@ -24,16 +24,7 @@ entitled "GNU Free Documentation License".
 			<p>The program does NOT include predefined learning stacks &#8212; making one is considered part of the learning process.</p>
 			<p>A not comprehensive list of features:</p>
 			<ul>
-				<li>Create new flashcard training stacks (e.g. vocabulary list) from scratch.</li>
-				<li>Use units and categories to organize the entries / cards.</li>
-				<li>The possibility to define your own entry types with grammatical attributes. E.g. gender and plural for nouns in a language like French. Assign an entry type to each entry. Based on the entry type different attributes will be handled.</li>
-				<li>The entry types of existing entries can be changed.</li>
-				<li>Entry type attribute items can be edited and a default assigned to each entry type attribute. The entry type attributes can be freely assigned to entry types.</li>
-				<li>Deletion of units, categories, entry types, entry type attributes and entry type attribute items is not possible, if they are used in an entry.</li>
-				<li>The labels in the GUI can be changed to suit the learning stack card purpose (e.g. different language for a vocabulary trainer)</li>
-				<li>The visibility of unit, category, and other fields can be influenced.</li>
-				<li>Decide whether changes in an Entry (e.g. the score, the category) while editing or learning are checked immediately against the current selection criteria, and eventually remove the Entry from the current selection.</li>
-				<li>Hints of remembrance for <a href="site:learning">learning on by one</a>. By this I mean help, if you do not quite recall a term, but might remember it, if you could get a hint. The hints are:
+				<li>Hints of remembrance for <a href="site:learning">learning on by one</a>. By this I mean help, if you do not quite recall a term, but might remember it, if you just could get a hint. The hints are:
 					<ul>
 						<li>Letters: displays more and more letters, starting with the first letter of the word.</li>
 						<li>Flash: displays the entire term for less than a second. You might not be able to read the term, but recognize it.</li>
@@ -49,7 +40,17 @@ entitled "GNU Free Documentation License".
 						<li>The popular &quot;Memory&quot; card game</li>
 					</ul>
 				</li>
+				<li>The program can compare the answer given by you with the definition.</li>
 				<li>An intelligent <a href="site:learningalgo">learning algorithm</a> that shows those entries, which you do not know that well, most often. The main idea is that you earn a point, whenever you know the word, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</li>
+				<li>Create new flashcard training stacks (e.g. vocabulary list) from scratch.</li>
+				<li>Use units and categories to organize the entries / cards (also referred to as &quot;global attributes&quot;).</li>
+				<li>The possibility to define your own entry types with grammatical attributes. E.g. gender and plural for nouns in a language like French. Assign an entry type to each entry. Based on the entry type different attributes will be handled (also referred to as &quot;type attributes&quot;).</li>
+				<li>The entry types of existing entries can be changed.</li>
+				<li>Entry type attribute items can be edited and a default assigned to each entry type attribute. The entry type attributes can be freely assigned to entry types.</li>
+				<li>Upon deletion of units, categories, entry types, entry type attributes and entry type attribute items, the program checks, whether they are used in any entry.</li>
+				<li>The labels in the GUI can be changed to suit the learning stack card purpose (e.g. different language for a vocabulary trainer).</li>
+				<li>The visibility of unit, category, and other fields can be influenced.</li>
+				<li>Decide whether changes in an Entry (e.g. the score, the category) while editing or learning are checked immediately against the current selection criteria, and eventually remove the Entry from the current selection.</li>
 				<li>The scores can be reset to the minimum for either all entries or the current selection.</li>
 				<li>The time in milliseconds of the flash hint and the coverage in percents can be dynamically be changed in the properties.</li>
 				<li>Window positions and sizes are saved</li>
@@ -60,7 +61,7 @@ entitled "GNU Free Documentation License".
 			<title>Future Releases</title>
 			<p>The next releases of <code>DingsBums?!</code> will provide more functionality and stability. Among others:</p>
 			<ul>
-				<li>Support for images (in stead of or supplementing text)</li>
+				<li>Support for images (figures, pictures)</li>
 				<li>Wizard to import learning stacks from other flashcard programs</li>
 				<li>Internationalization including bi-directional text</li>
 				<li>Search facilities</li>
@@ -68,7 +69,7 @@ entitled "GNU Free Documentation License".
 				<li>Option for learning algorithm based on <a href="http://en.wikipedia.org/wiki/Sebastian_Leitner">Leitner System</a></li>
 				<li>An editor for the pronunciation using the international phonetic alphabet</li>
 				<li>PDA or mobile phone support to memorize stuff while sitting in the bus, waiting in the restaurant etc.</li>
-				<li>A comprehensive user guide and a FAQ</li>
+				<li>A comprehensive user guide and an FAQ</li>
 				<li>User interface clean ups</li>
 			</ul>
 		</section>

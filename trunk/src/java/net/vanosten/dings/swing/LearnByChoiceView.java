@@ -200,9 +200,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 			
 			//Choose the direction of learning
 			directionL = new JLabel(Toolbox.getInstance().getLocalizedString("lbcv.direction.label"));
-			baseTargetRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.basetargetrb.label"));
+			baseTargetRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("learndir.basetarget.label"));
 			baseTargetRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.basetargetrb.mnemonic").charAt(0));
-			targetBaseRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("lbcv.targetbaserb.label"));
+			targetBaseRB = new JRadioButton(Toolbox.getInstance().getLocalizedString("learndir.targetbase.label"));
 			targetBaseRB.setMnemonic(Toolbox.getInstance().getLocalizedString("lbcv.targetbaserb.mnemonic").charAt(0));
 			ButtonGroup directionBG = new ButtonGroup();
 			directionBG.add(baseTargetRB);

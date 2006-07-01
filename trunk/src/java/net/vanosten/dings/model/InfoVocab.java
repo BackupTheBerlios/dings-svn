@@ -111,22 +111,13 @@ public final class InfoVocab extends AItemModel {
 	public final static int VISIBILITY_ALWAYS = 0;
 
 	/** Field is visible in one-to-one query and solution views */
-	public final static int VISIBILITY_QUERY_ONE = 1;
+	public final static int VISIBILITY_QUERY = 1;
 
-	/** Field is visible all solution views */
-	public final static int VISIBILITY_SOLUTION_ALL = 2;
+	/** Field is visible in solution views */
+	public final static int VISIBILITY_SOLUTION = 2;
 
-	/** Field is visible all solution views for many-to-many */
-	public final static int VISIBILITY_SOLUTION_MANY = 3;
-
-	/** Field is visible in one-to-one solution views */
-	public final static int VISIBILITY_SOLUTION_ONE = 4;
-
-	/** Field is visible only in edit and solution views */
-	public final static int VISIBILITY_EDITING = 5;
-
-	/** Field is not visible in any view */
-	public final static int VISIBILITY_NEVER = 6;
+	/** Field is not visible in any view (not used)*/
+	public final static int VISIBILITY_NEVER = 3;
 
 	/** The visibility of Unit in views */
 	private int visibilityAttributes = VISIBILITY_ALWAYS;
@@ -243,6 +234,7 @@ public final class InfoVocab extends AItemModel {
 		this.visibilityExample = aVisibilityExample;
 		this.visibilityPronunciation = aVisibilityPronunciation;
 		this.visibilityRelation = aVisibilityRelation;
+		
 	} //END public InfoVocab(...)
 
 	//Implements AItemModel

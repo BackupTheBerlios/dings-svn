@@ -575,25 +575,25 @@ public class VocabularyXMLReader implements IOHandler {
 			rlocale = currentValue;
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_ATTRIBUTES)) {
-			visa = Integer.parseInt(currentValue);
+			visa = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_UNIT)) {
-			visu = Integer.parseInt(currentValue);
+			visu = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_CATEGORY)) {
-			viscat = Integer.parseInt(currentValue);
+			viscat = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_EXPLANATION)) {
-			visexp = Integer.parseInt(currentValue);
+			visexp = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_EXAMPLE)) {
-			visex = Integer.parseInt(currentValue);
+			visex = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_PRONUNCIATION)) {
-			vispro = Integer.parseInt(currentValue);
+			vispro = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_VISIBILITY_RELATION)) {
-			visrel = Integer.parseInt(currentValue);
+			visrel = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
 		else if (localName.equals(Constants.XML_INFO)) {
 			ArrayList errors = InfoVocab.validate(title, blabel, tlabel, alabel, ulabel, clabel, olabel, explabel, exlabel);
@@ -622,6 +622,22 @@ public class VocabularyXMLReader implements IOHandler {
 			stats.put(statSet.getTimeStamp(), statSet);
 		}
 	} //END processEndElements(XmlPullParser) throws Exception
+		
+	/**
+	 * Makes sure that a visibility from the information store (xml) is not larger than the 
+	 * allowed number. This was introduced in version 0.4.2 for safely simplifying the
+	 * visibility structure.
+	 * 
+	 * @param aVisibility
+	 * @return
+	 */
+	private int getValidatedVisibility(int aVisibility) {
+		if (aVisibility > InfoVocab.VISIBILITY_NEVER) {
+			return InfoVocab.VISIBILITY_ALWAYS;
+		}
+		return aVisibility;
+	}
+
 
 	/**
 	 * Resets common entry tags

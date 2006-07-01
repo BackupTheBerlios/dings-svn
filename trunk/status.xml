@@ -22,6 +22,8 @@ entitled "GNU Free Documentation License".
 
 	<changes>
 		<release version="0.4.2 (svn ??)" date="???">
+			<action type="add" context="feature" dev="vanosten">The answer when learning one by one can now be checked by the program according to settings for case sensitivity etc. in the preferences.</action>
+			<action type="update" context="feature" dev="vanosten">Reduced the nmber of visibility options in the learning stack properties.</action>
 			<action type="update" context="gui" dev="vanosten">View title for learn by choice reflects current view type.</action>
 			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice for <code>Match</code> and <code>Memory</code>.</action>
 			<action type="update" context="gui" dev="vanosten">The base, target, explanation and example fields in entry can now have multiple lines, the number of which can be configured in preferences.</action>
@@ -84,15 +86,15 @@ entitled "GNU Free Documentation License".
 
 	<todo>
 		<actions priority="next release">
-			<action context="code" dev="vanosten">Check in learn one whether user has typed/chosen correct: case sensitive? include attributes? whitespace sensitive? point sensitive? =&gt; Preferences; button in GUI; event; check-method in model; documentation</action>
-			<action context="code" dev="vanosten">Evt. replace Boolean.valueOf(String).booleanValue() with Boolean.TRUE.equals(Boolean.valueOf(String))</action>
-			<action context="gui" dev="vanosten">Learning direction dialog for LearnOne should have other text and buttons.</action>
+			<action context="code" dev="vanosten">Check answer: documentation</action>
+			<action context="other" dev="vanosten">Promote application in wikipedia.com, wikipedia.de, freshmeat.</action>
+			<action context="other" dev="vanosten">Update berlios.de error todo</action>
+		</actions>
+		<actions priority="high">
 			<action context="feature" dev="vanosten">Make sure that learning results (scores) are reflected in the selection for learning by choice</action>
 			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
 			<action context="feature" dev="vanosten">LearnByChoicePane should support preference for colors.</action>
 			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
-		</actions>
-		<actions priority="high">
 			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics. Begin with PropertiesEditview</action>
 			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
 			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
@@ -102,13 +104,12 @@ entitled "GNU Free Documentation License".
 			<action context="feature" dev="vanosten">Show Window with error text instead of Usage on command line</action>
 			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
 			<action context="documentation" dev="vanosten">Add description about architecture and data architecture.</action>
-			<action context="documentation" dev="vanosten">Add text about support for furmulae (e.g. MathML) etc..</action>
+			<action context="documentation" dev="vanosten">Add text about support for formulae (e.g. MathML) etc..</action>
 		</actions>
 		<actions priority="medium">
 			<action context="feature" dev="vanosten">Show summary of learning session after learn one by one and learn by choice.</action>
 			<action context="feature" dev="vanosten">Add actual statistics to window status field</action>
 			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
-			<action context="other" dev="vanosten">Promote application in e.g. SwingSightings, www.jars.com, java.com.</action>
 			<action context="documentation" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
 			<action context="documentation" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
 			<action context="documentation" dev="vanosten">Add author and revision control to JavaDoc.</action>
