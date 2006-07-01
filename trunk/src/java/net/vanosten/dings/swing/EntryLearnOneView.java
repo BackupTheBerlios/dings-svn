@@ -601,7 +601,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				doHint();
 			}
 		});
-		checkAnswerB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.check_answer"));
+		checkAnswerB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.check_answer")
+				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_MISC_BTN, ""));
 		checkAnswerB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.check_answer").charAt(0));
 		checkAnswerB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {

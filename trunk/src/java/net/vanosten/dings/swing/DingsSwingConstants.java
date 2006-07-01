@@ -110,7 +110,7 @@ public class DingsSwingConstants {
 	//home grown
 	public final static String IMG_DINGS_32 = "dings32.png";
 
-	//gtk2.4 stock images
+	//Nuvola images
 	//menu items
 	public final static String IMG_CLOSE_MI = "fileclose.png"; //in actions16
 	public final static String IMG_EXIT_MI = "exit.png"; //in actions16
@@ -147,6 +147,7 @@ public class DingsSwingConstants {
 	public final static String IMG_UNKNOWN_BTN = "ledred.png"; //in actions22
 	public final static String IMG_HINT_BTN = "ktip.png"; //in apps22
 	public final static String IMG_RESULT_BTN = "kview.png"; //in apps22
+	public final static String IMG_MISC_BTN = "misc.png"; //in actions22
 
 
 	/**
