@@ -48,7 +48,7 @@ entitled "GNU Free Documentation License".
 			<title>Testing for and installing a Java Virtual Machine</title>
 			<p>A Java Virtual Machine (JVM) is included in a Java Runtime environment (JRE) for end users, and Java Development Kits (Java SDK or JDK) for programmers. The way to test whether you have a JVM in the right version depends on you operating system (e.g. Microsoft Windows).</p>
 			<p><a href="http://java.com/en/download/help/testvm.jsp">&quot;Test your Java Virtual Machine&quot;</a> lets you do the test in your browser. This web page is part of the official Java site at <a href="http://java.com">java.com</a>, which contains lots of help around Java.</p>
-			<p>If you happen to be the owner of an Apple Macintosh you can find additional information at <a href="http://www.apple.com/macosx/features/java/">Apple&apos;s Java pages</a> and <a href="http://developer.apple.com/java/faq/">Java Frequently Asked Questions</a>. Unfortunately there is no recent JVM for Mac OS 9 and earlier.</p>
+			<p>If you happen to be the owner of an Apple Macintosh you can find additional information at <a href="http://www.apple.com/macosx/features/java/">Apple&apos;s Java pages</a> and <a href="http://developer.apple.com/java/faq/">Java Frequently Asked Questions</a>. Make sure to install the J2SE 5.0 version. Unfortunately there is no recent JVM for Mac OS 9 and earlier.</p>
 			<p>If you are still in doubt of what to do after reading the documentation in this section you may <a href="contact.html">contact</a> me.</p>
 			<p>Another way test your installation is to do the following:</p>
 			<ol>
