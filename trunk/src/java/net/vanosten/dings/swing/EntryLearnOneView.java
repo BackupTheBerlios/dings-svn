@@ -478,8 +478,16 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	 * based on the properties of the learning stack info.
 	 */
 	private void setVisibilities() {
-		//attributes
-		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityAttributes()) {
+		//convenience to temporarly store visibility info (and reduce number of calls
+		int visTypeAttributes = Toolbox.getInstance().getInfoPointer().getVisibilityAttributes();
+		int visUnit = Toolbox.getInstance().getInfoPointer().getVisibilityUnit();
+		int visCategory = Toolbox.getInstance().getInfoPointer().getVisibilityCategory();
+		int visExplanation = Toolbox.getInstance().getInfoPointer().getVisibilityExplanation();
+		int visExample = Toolbox.getInstance().getInfoPointer().getVisibilityExample();
+		int visPronunciation = Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation();
+		int visRelation = Toolbox.getInstance().getInfoPointer().getVisibilityRelation();
+		//type attributes
+		if (InfoVocab.VISIBILITY_NEVER == visTypeAttributes) {
 			attributesLS.setVisible(false);
 			attributeOneL.setVisible(false);
 			attributeOneCh.setVisible(false);
@@ -491,14 +499,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			attributeFourCh.setVisible(false);
 		}
 		
-		//convenience to temporarly store visibility info (and reduce number of calls
-		int visUnit = Toolbox.getInstance().getInfoPointer().getVisibilityUnit();
-		int visCategory = Toolbox.getInstance().getInfoPointer().getVisibilityCategory();
-		int visExplanation = Toolbox.getInstance().getInfoPointer().getVisibilityExplanation();
-		int visExample = Toolbox.getInstance().getInfoPointer().getVisibilityExample();
-		int visPronunciation = Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation();
-		int visRelation = Toolbox.getInstance().getInfoPointer().getVisibilityRelation();
-		//units and categories
+		//global attributes
 		if (InfoVocab.VISIBILITY_NEVER == visUnit) {
 			unitL.setVisible(false);
 			unitsCh.setVisible(false);
@@ -700,6 +701,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 
 		hintB.setEnabled(false);
 		showB.setEnabled(false);
+		checkAnswerB.setEnabled(false);
 		sendUpdateGUI();
 	} //END private void doShow()
 	
@@ -731,7 +733,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	} //END public void sendUpdateGUI()
 
 	/**
-	 * Initialize when first shown and reset for continuous
+	 * Called every time showing the next entry. Called after reset() in ADings.handleAppEvent for
+	 * D_ENTRY_LEARNONE_NEXT
 	 */
 	public boolean init(IAppEventHandler aController) {
 		this.controller = aController;
@@ -740,10 +743,22 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		}
 		sendUpdateGUI();
 		//set selected indixes to null to hide attribute details
-		attributeOneCh.setSelectedID(null);
-		attributeTwoCh.setSelectedID(null);
-		attributeThreeCh.setSelectedID(null);
-		attributeFourCh.setSelectedID(null);
+		//convenience to temporarly store visibility info (and reduce number of calls
+		int visTypeAttributes = Toolbox.getInstance().getInfoPointer().getVisibilityAttributes();
+		int visUnit = Toolbox.getInstance().getInfoPointer().getVisibilityUnit();
+		int visCategory = Toolbox.getInstance().getInfoPointer().getVisibilityCategory();
+		if (InfoVocab.VISIBILITY_QUERY == visTypeAttributes || InfoVocab.VISIBILITY_SOLUTION == visTypeAttributes) {
+			attributeOneCh.setSelectedID(null);
+			attributeTwoCh.setSelectedID(null);
+			attributeThreeCh.setSelectedID(null);
+			attributeFourCh.setSelectedID(null);
+		}
+		if (InfoVocab.VISIBILITY_QUERY == visUnit || InfoVocab.VISIBILITY_SOLUTION == visUnit) {
+			unitsCh.setSelectedID(null);
+		}
+		if (InfoVocab.VISIBILITY_QUERY == visCategory || InfoVocab.VISIBILITY_SOLUTION == visCategory) {
+			categoriesCh.setSelectedID(null);
+		}
 		return true;
 	} //END public boolean init()
 	
@@ -756,6 +771,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		hintHL.resetLetters();
 		hintB.setEnabled(true);
 		showB.setEnabled(true);
+		checkAnswerB.setEnabled(true);
 		//reset others
 		explanationSL.setHidden(true);
 		pronunciationSL.setHidden(true);

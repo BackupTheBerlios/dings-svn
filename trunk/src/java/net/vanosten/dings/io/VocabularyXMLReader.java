@@ -400,7 +400,7 @@ public class VocabularyXMLReader implements IOHandler {
 			foo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_SCORE);
 			if (foo != null) score = Integer.parseInt(foo);
 			else score = 0;
-			status = Boolean.TRUE.equals(xpp.getAttributeValue(namespace,Constants.XML_ATTR_STATUS));
+			status = Boolean.parseBoolean(xpp.getAttributeValue(namespace,Constants.XML_ATTR_STATUS));
 			//equals to null if attribute does not exist
 			attributeOne = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEONE);
 			attributeTwo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO);

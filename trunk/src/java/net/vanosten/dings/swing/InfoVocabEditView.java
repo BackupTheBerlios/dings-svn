@@ -226,13 +226,13 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 			}
 		});
 		//set items of CBs
-		setVisibilityItems(visibilityAttributesCB);
-		setVisibilityItems(visibilityUnitCB);
-		setVisibilityItems(visibilityCategoryCB);
-		setVisibilityItems(visibilityExplanationCB);
-		setVisibilityItems(visibilityExampleCB);
-		setVisibilityItems(visibilityPronunciationCB);
-		setVisibilityItems(visibilityRelationCB);
+		setVisibilityItems(visibilityAttributesCB, true);
+		setVisibilityItems(visibilityUnitCB, true);
+		setVisibilityItems(visibilityCategoryCB, true);
+		setVisibilityItems(visibilityExplanationCB, false);
+		setVisibilityItems(visibilityExampleCB, false);
+		setVisibilityItems(visibilityPronunciationCB, false);
+		setVisibilityItems(visibilityRelationCB, false);
 	} //END private final void initComponents()
 
 	//implements IInfoVocabEditView
@@ -250,10 +250,12 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		isUpdating = false;
 	} //END public void setAvailableLocales(String[][]);
 
-	private void setVisibilityItems(JComboBox aCB) {
+	private void setVisibilityItems(JComboBox aCB, boolean hasQuery) {
 		isUpdating = true;
 		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.always")); //InfoVocab.VISIBILITY_ALWAYS
-		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.query")); //InfoVocab.VISIBILITY_QUERY
+		if (hasQuery) {
+			aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.query")); //InfoVocab.VISIBILITY_QUERY
+		}
 		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.solution")); //InfoVocab.VISIBILITY_SOLUTION
 		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.never")); //InfoVocab.VISIBILITY_NEVER
 		isUpdating = false;
