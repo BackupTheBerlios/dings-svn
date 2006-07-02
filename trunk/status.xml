@@ -25,6 +25,7 @@ entitled "GNU Free Documentation License".
 			<action type="add" context="feature" dev="vanosten">The answer when learning one by one can now be checked by the program according to settings for case sensitivity etc. in the preferences.</action>
 			<action type="update" context="feature" dev="vanosten">Reduced the nmber of visibility options in the learning stack properties.</action>
 			<action type="update" context="gui" dev="vanosten">View title for learn by choice reflects current view type.</action>
+			<action type="update" context="gui" dev="vanosten">Hint button is now aligned with the hint instead of the button panel at the bottom of the screen.</action>
 			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice for <code>Match</code> and <code>Memory</code>.</action>
 			<action type="update" context="gui" dev="vanosten">The base, target, explanation and example fields in entry can now have multiple lines, the number of which can be configured in preferences.</action>
 			<action type="update" context="code" dev="vanosten">Uses JFreechart 1.0 API</action>

@@ -48,25 +48,25 @@ import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.model.Entry.Result;
-import net.vanosten.dings.swing.helperui.HintLabel;
+import net.vanosten.dings.swing.helperui.HintObserver;
+import net.vanosten.dings.swing.helperui.HintPanel;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
 
-public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView {
+public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView, HintObserver {
 	private final static long serialVersionUID = 1L;
 
 	private ChoiceID attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh, categoriesCh, unitsCh;
 	private JCheckBox statusCB;
-	private ChoiceID modeCh; //Which hint mode should be used
 	private SolutionLabel questionSL, explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
 	private JTextArea answerTA;
-	private HintLabel hintHL;
+	private HintPanel hintPL;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL;
 	private JLabel questionL, hintL, answerL, explanationL, exampleL, pronunciationL, relationL, unitL, categoryL, scoreL;
 	private LabeledSeparator attributesLS, othersLS;
-	private JButton hintB, showB, checkAnswerB, knowB, notKnowB;
+	private JButton showB, checkAnswerB, knowB, notKnowB;
 
 	/** the result of the learning */
 	private Result result = Result.SUCCESS;
@@ -100,7 +100,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		questionSL = new SolutionLabel();
 		//hint
 		hintL = new JLabel("Hint:");
-		hintHL = new HintLabel(Color.BLUE, Color.RED);
+		hintPL = new HintPanel();
+		hintPL.registerHintObserver(this);
 		//target
 		answerL = new JLabel(answerLabel + ":");
 		answerTA = new JTextArea();
@@ -234,8 +235,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
 		gbc.insets = vghg;
-		gbl.setConstraints(hintHL, gbc);
-		editP.add(hintHL);
+		gbl.setConstraints(hintPL, gbc);
+		editP.add(hintPL);
 		//----entrytype
 		gbc.gridx = 0;
 		gbc.gridy = 4;
@@ -565,10 +566,6 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		buttonsP = new JPanel();
 		buttonsP.setLayout(new BoxLayout(buttonsP, BoxLayout.LINE_AXIS));
 		buttonsP.add(Box.createHorizontalGlue());
-		buttonsP.add(modeCh);
-		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_C, 0)));
-		buttonsP.add(hintB);
-		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_T, 0)));
 		buttonsP.add(checkAnswerB);
 		buttonsP.add(Box.createRigidArea(new Dimension(DingsSwingConstants.SP_H_G, 0)));
 		buttonsP.add(showB);
@@ -580,28 +577,6 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	
 	//implements AViewWithButtons
 	protected final void initButtonComponents() {
-		String[][] modeItems = {
-					{Integer.toString(HintLabel.MODE_FLASH), "Flash"}
-					,{Integer.toString(HintLabel.MODE_LETTER), "Letter"}
-					,{Integer.toString(HintLabel.MODE_SHUFFLE), "Shuffle"}
-		};
-		modeCh = new ChoiceID();
-		modeCh.setItems(modeItems);
-		modeCh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				if (HintLabel.MODE_LETTER == Integer.parseInt(modeCh.getSelectedID())) {
-					hintHL.resetLetters();
-				}
-			}
-		});
-		hintB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.hint")
-				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_HINT_BTN, ""));
-		hintB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.hint").charAt(0));
-		hintB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				doHint();
-			}
-		});
 		checkAnswerB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.check_answer")
 				, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_MISC_BTN, ""));
 		checkAnswerB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.check_answer").charAt(0));
@@ -641,65 +616,17 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			}
 		});
 	} //END protected final void initButtonComponents()
-	
-	/**
-	 * Sets the colors for the hint text according to preferences.
-	 * This is done repeately to cope with changes in preferences without restart of learning.
-	 */
-	private void setHintTextColors() {
-		Color hintC = null;
-		Color resultC = null;
-		try {
-			hintC = new Color(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_COLOR_HINT));
-			resultC = new Color(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_COLOR_RESULT));
-		}
-		catch(NumberFormatException e) {
-			hintC = Color.BLUE;
-			resultC = Color.RED;
-		}
-		hintHL.setTextColors(hintC, resultC);
-	} //END private void setHintTextColors()
-
-	/**
-	 * Displays a hint in the target field.
-	 */
-	private void doHint() {
-		setHintTextColors();
-		try {
-			int helperMode = Integer.parseInt(modeCh.getSelectedID());
-			switch(helperMode) {
-				case HintLabel.MODE_FLASH:
-					hintHL.doFlash(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.LEARN_HINT_FLASH_TIME));
-					break;
-				case HintLabel.MODE_LETTER:
-					if (false == hintHL.doLetters()) {
-						knowB.setEnabled(false);
-						doShow();
-					}
-					break;
-				case HintLabel.MODE_SHUFFLE:
-					hintHL.doShuffle();
-					break;
-			}
-			result = Result.HELPED;
-		}
-		catch (NumberFormatException e) {
-			//TODO: this should never happen, but ...
-		}
-	} //END private void doHint()
 
 	/**
 	 * Shows the entries.
 	 */
 	private void doShow() {
-		setHintTextColors();
-		hintHL.doResult();
+		hintPL.doResult();
 		explanationSL.setHidden(false);
 		pronunciationSL.setHidden(false);
 		exampleSL.setHidden(false);
 		relationSL.setHidden(false);
 
-		hintB.setEnabled(false);
 		showB.setEnabled(false);
 		checkAnswerB.setEnabled(false);
 		sendUpdateGUI();
@@ -767,9 +694,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		//reset scoring
 		result = Result.SUCCESS;
 		//reset the helps
-		hintHL.doHide();
-		hintHL.resetLetters();
-		hintB.setEnabled(true);
+		hintPL.reset();
 		showB.setEnabled(true);
 		checkAnswerB.setEnabled(true);
 		//reset others
@@ -833,10 +758,10 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	
 	private void setRealTarget(String aTarget) {
 		if (null == aTarget) {
-			hintHL.setHintText("");
+			hintPL.setHintText("");
 		}
 		else {
-			hintHL.setHintText(aTarget);
+			hintPL.setHintText(aTarget);
 		}
 	} //END public void setRealTarget(String)
 
@@ -1070,4 +995,13 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			notKnowB.setEnabled(true);
 		}
 	}
+
+	//implements HintObserver
+	public void hintOccured(boolean allShown) {
+		result = Result.HELPED;
+		if (allShown) {
+			knowB.setEnabled(false);
+			doShow();
+		}
+	} //END public void hintOccured(boolean)
 } //END public class EntryLearnOneView extends AViewWithScrollPane

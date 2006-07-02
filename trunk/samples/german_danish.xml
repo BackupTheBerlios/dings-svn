@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vocabulary version="3">
-<info><title>Deutsch-Dänisch Vokabular</title><author>Rick Gruber, dingsbums@vanosten.net</author><notes></notes><copyright></copyright><licence></licence><blabel>Tysk</blabel><tlabel>Dansk</tlabel><alabel>Grammatik</alabel><ulabel>Lektion</ulabel><clabel>Kategori</clabel><olabel>Andre</olabel><explabel>Forklaring</explabel><exlabel>Eksempel</exlabel><bor>sq_AL</bor><tor>sq_AL</tor><aor>sq_AL</aor><uor>sq_AL</uor><cor>sq_AL</cor><expor>sq_AL</expor><exor>sq_AL</exor><por>sq_AL</por><ror>sq_AL</ror><visa>1</visa><visu>2</visu><viscat>2</viscat><visexp>0</visexp><visex>0</visex><vispro>0</vispro><visrel>0</visrel></info>
+<info><title>Deutsch-Dänisch Vokabular</title><author>Rick Gruber, dingsbums@vanosten.net</author><notes></notes><copyright></copyright><licence></licence><blabel>Tysk</blabel><tlabel>Dansk</tlabel><alabel>Grammatik</alabel><ulabel>Lektion</ulabel><clabel>Kategori</clabel><olabel>Andre</olabel><explabel>Forklaring</explabel><exlabel>Eksempel</exlabel><bor>sq_AL</bor><tor>sq_AL</tor><aor>sq_AL</aor><uor>sq_AL</uor><cor>sq_AL</cor><expor>sq_AL</expor><exor>sq_AL</exor><por>sq_AL</por><ror>sq_AL</ror><visa>1</visa><visu>2</visu><viscat>2</viscat><visexp>1</visexp><visex>1</visex><vispro>1</vispro><visrel>1</visrel></info>
 <etattributes>
 <eta eid="ETA1" n="Konjugation" di="ETAI21" lu="20040219 08:43:41 CET"><etai eid="ETAI21" ir="false">ikke definieret</etai><etai eid="ETAI5" ir="false">ede</etai><etai eid="ETAI6" ir="false">te</etai><etai eid="ETAI7" ir="false">ede eller te</etai><etai eid="ETAI8" ir="false">uregelmæssig</etai></eta>
 <eta eid="ETA4" n="Pluralis" di="ETAI24" lu="20040219 08:43:41 CET"><etai eid="ETAI24" ir="false">ikke definieret</etai><etai eid="ETAI14" ir="false">ingen</etai><etai eid="ETAI15" ir="false">kun flertal</etai><etai eid="ETAI16" ir="false">-</etai><etai eid="ETAI17" ir="false">r</etai><etai eid="ETAI18" ir="false">e</etai><etai eid="ETAI19" ir="false">uregelmæssig</etai></eta>
@@ -26,7 +26,7 @@
 <category eid="C1" lu="20040219 08:43:41 CET"><name>Common</name><desc></desc></category>
 </categories>
 <entries>
-<e et="ET3" eid="E424" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdm etw vorenthalden</o><d>forholde ngn ngt</d><ea>forholde ministeren vigtige oplysninger -- forholde arbejderne deres løn</ea></e>
+<e et="ET3" eid="E424" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI5"><o>jdm etw vorenthalten</o><d>forholde ngn ngt</d><ea>forholde ministeren vigtige oplysninger -- forholde arbejderne deres løn</ea></e>
 <e et="ET5" eid="E126" u="U1" c="C1" lv="1" st="true" lu="20040426 17:47:27 CEST" ll="19700101 00:00:00 CET"><o>noch</o><d>endnu</d></e>
 <e et="ET1" eid="E183" u="U1" c="C1" lv="4" st="true" lu="20050129 09:46:08 CET" ll="20050129 09:46:08 CET" a1="ETAI12" a2="ETAI17"><o>Unordnung, Durcheinander</o><d>roderi</d></e>
 <e et="ET5" eid="E56" u="U1" c="C1" lv="1" st="true" lu="20040426 17:48:21 CEST" ll="19700101 00:00:00 CET"><o>sogar</o><d>endog, endda, sågar</d></e>
@@ -115,7 +115,7 @@
 <e et="ET1" eid="E195" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI24"><o>Vortrag</o><d>fordrag, oplæg</d></e>
 <e et="ET5" eid="E52" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET"><o>zu Zeiten und Unzeiten</o><d>i tide og utide</d></e>
 <e et="ET2" eid="E4" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI9"><o>geneigt (zu)</o><d>tilbøjelig (til)</d></e>
-<e et="ET4" eid="E366" u="U2" c="C1" lv="2" st="true" lu="20050129 10:58:56 CET" ll="20050129 10:58:56 CET" a1="ETAI2"><o>Spass beiseite!</o><d>Spøg frabedes!</d></e>
+<e et="ET4" eid="E366" u="U2" c="C1" lv="3" st="true" lu="20060702 12:17:58 CEST" ll="20060702 12:17:58 CEST" a1="ETAI2"><o>Spass beiseite!</o><d>Spøg frabedes!</d></e>
 <e et="ET1" eid="E109" u="U1" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI12" a2="ETAI14"><o>Urteil, Meinung</o><d>omdømme</d></e>
 <e et="ET1" eid="E187" u="U1" c="C1" lv="5" st="true" lu="20050129 09:46:14 CET" ll="20050129 09:46:14 CET" a1="ETAI12" a2="ETAI17"><o>Bogen, Blatt</o><d>ark</d><ep>Papier etc.</ep></e>
 <e et="ET3" eid="E412" u="U3" c="C1" lv="1" st="true" lu="20040219 08:43:41 CET" ll="19700101 00:00:00 CET" a1="ETAI8"><o>ungelegen kommen</o><d>komme utilpas</d></e>
@@ -464,7 +464,7 @@
 </entries>
 <stats>
 <sset ts="20050128 09:11:30 CET"><sne lv="1">431</sne><sne lv="2">3</sne><sne lv="3">1</sne><sne lv="4">0</sne><sne lv="5">0</sne><sne lv="6">0</sne><sne lv="7">0</sne></sset>
-<sset ts="20040806 10:26:07 CEST"><sne lv="1">431</sne><sne lv="2">3</sne><sne lv="3">1</sne><sne lv="4">0</sne><sne lv="5">0</sne><sne lv="6">0</sne><sne lv="7">0</sne></sset>
 <sset ts="20060702 10:08:46 CEST"><sne lv="1">386</sne><sne lv="2">20</sne><sne lv="3">9</sne><sne lv="4">3</sne><sne lv="5">7</sne><sne lv="6">1</sne><sne lv="7">9</sne></sset>
+<sset ts="20040806 10:26:07 CEST"><sne lv="1">431</sne><sne lv="2">3</sne><sne lv="3">1</sne><sne lv="4">0</sne><sne lv="5">0</sne><sne lv="6">0</sne><sne lv="7">0</sne></sset>
 </stats>
 </vocabulary>
