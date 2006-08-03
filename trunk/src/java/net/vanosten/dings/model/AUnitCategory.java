@@ -21,10 +21,12 @@
  */
 package net.vanosten.dings.model;
 
+import java.awt.Color;
 import java.util.List;
 
-import net.vanosten.dings.uiif.IUnitEditView;
 import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.uiif.IUnitEditView;
+import net.vanosten.dings.utils.Util;
 
 /**
  * Implements as much of the common fields and methods of Unit and Category as possible.
@@ -36,19 +38,30 @@ public abstract class AUnitCategory extends AIdItemModel {
 
 	/** The description */
 	protected String description;
+	
+	/** The color to display */
+	protected Color color;
 
 	/** The edit view */
 	protected IUnitEditView editView;
 
-	public AUnitCategory(String anId, String aLastUpd, String aName, String aDescription) {
+	public AUnitCategory(String anId, String aLastUpd, String aName, String aDescription, Color aColor) {
 		this.id = anId;
 		this.setLastUpd(aLastUpd);
 
-		if (null == aName) this.name = Constants.UNDEFINED;
-		else this.name = aName;
+		if (null == aName) {
+			this.name = Constants.UNDEFINED;
+		} else {
+			this.name = aName;
+		}
 
-		if (null == aDescription) this.description = Constants.EMPTY_STRING;
-		else this.description = aDescription;
+		if (null == aDescription) {
+			this.description = Constants.EMPTY_STRING;
+		} else {
+			this.description = aDescription;
+		}
+		
+		this.color = aColor;
 	} //END public AUnitCategory(...)
 
 	/**
@@ -137,5 +150,22 @@ public abstract class AUnitCategory extends AIdItemModel {
 		//validation
 		editView.setNameIsValueValid(isValid);
 	} //END protected void checkChangeInGUI()
+
+	protected String constructXMLString(String xmlName) {
+		StringBuffer xml = new StringBuffer();
+		xml.append("<").append(xmlName);
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
+		xml.append(">");
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_NAME, name));
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_DESCRIPTION, description));
+		String rgb = Util.convertRGB(color);
+		if (null != rgb) {
+			xml.append(Constants.getXMLTaggedValue(Constants.XML_COLOR, rgb));
+		}
+		xml.append("</").append(xmlName).append(">");
+		return xml.toString();
+	} //END protected String constructXMLString()
+
 } //END public class AUnitCategory extends AIdItemModel
 

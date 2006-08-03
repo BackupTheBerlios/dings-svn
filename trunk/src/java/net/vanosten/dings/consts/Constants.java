@@ -26,9 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Defines the constants for the ADings application.
@@ -147,7 +146,7 @@ public class Constants  {
 		//return the StringBuffer as a String
 		return sb.toString();
 	} //END public static String getXMLEntitiesReplacedString(String)
-
+	
 	/*-------------------------Exception printing------------------------------------------------*/
 
 	/**
@@ -253,6 +252,7 @@ public class Constants  {
 	//unit and category
 	public final static String XML_NAME = "name";
 	public final static String XML_DESCRIPTION = "desc";
+	public final static String XML_COLOR = "clr";
 
 	//entry types
 	public final static String XML_ENTRYTYPES = "entrytypes";

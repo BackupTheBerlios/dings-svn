@@ -21,6 +21,7 @@
  */
 package net.vanosten.dings.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public final class Category extends AUnitCategory {
 	/** Defines the maximal number of an item until now */
 	private static int maxId = 0;
 
-	public Category(String anId, String aLastUpd, String aName, String aDescription) {
-		super(anId, aLastUpd, aName, aDescription);
+	public Category(String anId, String aLastUpd, String aName, String aDescription, Color aColor) {
+		super(anId, aLastUpd, aName, aDescription, aColor);
 		setMaxId(anId);
 		logger = Logger.getLogger("net.vanosten.dings.model.Category");
 	} //END public Category(...)
@@ -67,22 +68,14 @@ public final class Category extends AUnitCategory {
 	 */
 	protected static Category newItem(boolean isDefault) {
 		if (isDefault) {
-			return new Category(getNewId(), null, "Default", Constants.EMPTY_STRING);
+			return new Category(getNewId(), null, "Default", Constants.EMPTY_STRING, null);
 		}
-		return new Category(getNewId(), null, Constants.UNDEFINED, Constants.EMPTY_STRING);
+		return new Category(getNewId(), null, Constants.UNDEFINED, Constants.EMPTY_STRING, null);
 	} //END protected static Category newItem(boolean)
 
 	//Implements AItemModel
 	protected String getXMLString() {
-		StringBuffer xml = new StringBuffer();
-		xml.append("<").append(Constants.XML_CATEGORY);
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
-		xml.append(">");
-		xml.append(Constants.getXMLTaggedValue(Constants.XML_NAME, name));
-		xml.append(Constants.getXMLTaggedValue(Constants.XML_DESCRIPTION, description));
-		xml.append("</").append(Constants.XML_CATEGORY).append(">");
-		return xml.toString();
+		return super.constructXMLString(Constants.XML_CATEGORY);
 	} //END protected String getXMLString()
 
 	//implements AUnitCategory

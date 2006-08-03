@@ -24,6 +24,7 @@ package net.vanosten.dings.io;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.vanosten.dings.model.*;
+import net.vanosten.dings.utils.Util;
 import net.vanosten.dings.consts.Constants;
 
 import java.util.logging.Logger;
@@ -120,6 +122,7 @@ public class VocabularyXMLReader implements IOHandler {
 	private String description;
 	private String lastUpd; //also used in statistics for timestamp
 	private String lastLearned;
+	private Color color;
 
 	//Entry tags
 	private String base = Constants.EMPTY_STRING;
@@ -469,13 +472,14 @@ public class VocabularyXMLReader implements IOHandler {
 		//Unit
 		else if (localName.equals(Constants.XML_NAME)) name = currentValue;
 		else if (localName.equals(Constants.XML_DESCRIPTION)) description = currentValue;
+		else if (localName.equals(Constants.XML_COLOR)) color = Util.parseRGB(currentValue);
 		else if (localName.equals(Constants.XML_UNIT)) {
 			List<String> errors = Unit.validate(id, name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
 			else {
-				aUnit = new Unit(id, lastUpd, name, description);
+				aUnit = new Unit(id, lastUpd, name, description, color);
 				units.put(id, aUnit);
 			}
 		}
@@ -486,7 +490,7 @@ public class VocabularyXMLReader implements IOHandler {
 				throw new Exception(errors.toString());
 			}
 			else {
-				aCategory = new Category(id, lastUpd, name, description);
+				aCategory = new Category(id, lastUpd, name, description, color);
 				categories.put(id, aCategory);
 			}
 		}
