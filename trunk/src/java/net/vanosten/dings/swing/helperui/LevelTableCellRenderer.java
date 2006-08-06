@@ -43,7 +43,7 @@ public class LevelTableCellRenderer extends JLabel implements TableCellRenderer 
 	 */
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		if (null == value) {
-			//log error
+			//TODO: log error
 			return this;
 		}
 		if (value instanceof Integer) {

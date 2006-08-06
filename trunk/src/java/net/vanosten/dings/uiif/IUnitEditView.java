@@ -21,6 +21,8 @@
  */
 package net.vanosten.dings.uiif;
 
+import java.awt.Color;
+
 /**
  * This interface is used for displaying a GUI for both Unit and Category.
  */
@@ -29,5 +31,7 @@ public interface IUnitEditView extends IDetailsView {
 	public String getName();
 	public void setDescription(String aDescription);
 	public String getDescription();
+	public void setIndicatorColor(Color aColor);
+	public Color getIndicatorColor();
 	public void setNameIsValueValid(boolean valid);
 } //END public interface IUnitEditView extends IDetailsView

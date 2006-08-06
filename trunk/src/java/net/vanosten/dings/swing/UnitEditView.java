@@ -21,6 +21,7 @@
  */
 package net.vanosten.dings.swing;
 
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -130,4 +131,14 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 	public void setNameIsValueValid(boolean valid) {
 		nameVTF.isValueValid(valid);
 	} //END public void setNameIsValueValid(boolean)
+
+	public Color getIndicatorColor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setIndicatorColor(Color aColor) {
+		// TODO Auto-generated method stub
+		
+	}
 } //END public class UnitEditView
