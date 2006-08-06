@@ -21,54 +21,54 @@
  */
 package net.vanosten.dings.swing;
 
-import java.awt.Color;
-
 import java.awt.BorderLayout;
-import java.awt.ComponentOrientation;
-import java.awt.FlowLayout;
 import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JLabel;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import org.jdesktop.layout.GroupLayout;
-import org.jdesktop.layout.LayoutStyle;
-
-import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Preferences;
-import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.uiif.IPreferencesEditView;
+import net.vanosten.dings.utils.Toolbox;
+
+import org.jdesktop.layout.GroupLayout;
+import org.jdesktop.layout.LayoutStyle;
 
 public class PreferencesEditView extends JDialog implements IPreferencesEditView, ChangeListener {
 	private final static long serialVersionUID = 1L;
@@ -90,7 +90,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private final static String LOCALE = Toolbox.getInstance().getLocalizedString("pev.locale.panel");
 	private final static String TEXT_LINES = Toolbox.getInstance().getLocalizedString("pev.text_lines.panel");
 	private final static String CHECK_ANSWER = Toolbox.getInstance().getLocalizedString("pev.check_answer.panel");
-
+	private final static String SYLLABLE_COLORS = Toolbox.getInstance().getLocalizedString("pev.syllable_colors.panel");
+	
 	private JPanel learnHintP;
 	private JSlider learnHintFlashTimeSL;
 	private JCheckBox learnHintShuffleByWordCB;
@@ -126,6 +127,12 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JCheckBox caseSensitiveCB;
 	private JCheckBox globalAttributesCB;
 	private JCheckBox typeAttributesCB;
+	
+	private JPanel syllableColorsP;
+	private JButton acuteChangeB;
+	private JButton graveChangeB;
+	private JButton circumflexChangeB;
+	private JButton streightChangeB;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -176,7 +183,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 
 		JLabel categoryL = new JLabel(Toolbox.getInstance().getLocalizedString("pev.categories.label"));
 		categoryL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("pev.categories.mnemonic").charAt(0));
-		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE, TEXT_LINES, CHECK_ANSWER};
+		String[] choices = {FILEENC, LAF, LH, LOGGING, SELECTION_UPDATE, STATS, LOCALE, TEXT_LINES, CHECK_ANSWER, SYLLABLE_COLORS};
 		choiceLi = new JList(choices);
 		choiceLi.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		choiceLi.addListSelectionListener(new ListSelectionListener() {
@@ -248,6 +255,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		mainP.add(textLinesP, TEXT_LINES);
 		initializeCheckAnswerPanel();
 		mainP.add(checkAnswerP, CHECK_ANSWER);
+		initializeSyllableColorsPanel();
+		mainP.add(syllableColorsP, SYLLABLE_COLORS);
 
 		//layout
 		gbc.gridx = 0;
@@ -360,6 +369,10 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			case 8: //check answer
 				titleL.setText(Toolbox.getInstance().getLocalizedString("pev.check_answer.title"));
 				descriptionL.setText(Toolbox.getInstance().getLocalizedString("pev.check_answer.description"));
+				break;
+			case 9: //syllable colors
+				titleL.setText(Toolbox.getInstance().getLocalizedString("pev.syllable_colors.title"));
+				descriptionL.setText(Toolbox.getInstance().getLocalizedString("pev.syllable_colors.description"));
 				break;
 			default: //file encoding
 				titleL.setText("File Encoding");
@@ -757,6 +770,61 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(typeAttributesCB))
 		);
 	} //END private void initializeCheckAnswerPanel()
+	
+	private void initializeSyllableColorsPanel() {
+		syllableColorsP = new JPanel();
+		acuteChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_acute"));
+		acuteChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_acute")).charAt(0));
+		acuteChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(acuteChangeB);
+			}
+		});
+		graveChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_grave"));
+		graveChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_grave")).charAt(0));
+		graveChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(graveChangeB);
+			}
+		});
+		circumflexChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_circumflex"));
+		circumflexChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_circumflex")).charAt(0));
+		circumflexChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(circumflexChangeB);
+			}
+		});
+		streightChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_streight"));
+		streightChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_streight")).charAt(0));
+		streightChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(streightChangeB);
+			}
+		});
+
+		//make the gui
+		GroupLayout layout = new GroupLayout(syllableColorsP);
+		syllableColorsP.setLayout(layout);
+
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+			.add(layout.createParallelGroup(GroupLayout.LEADING)
+					.add(acuteChangeB)
+					.add(graveChangeB)
+					.add(circumflexChangeB)
+					.add(streightChangeB)
+			)
+		);
+
+		layout.setVerticalGroup(layout.createSequentialGroup()
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(acuteChangeB))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(graveChangeB))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(circumflexChangeB))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(streightChangeB))
+		);
+	} //END private void initializeSyllableColorsPanel()
 
 	//Implements IView
 	public boolean init(IAppEventHandler aController) {
@@ -1050,6 +1118,46 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public void setCheckGlobalAttributes(boolean check) {
 		isUpdating = true;
 		globalAttributesCB.setSelected(check);
+		isUpdating = false;
+	}
+
+	public Color getSyllableAcuteColor() {
+		return acuteChangeB.getForeground();
+	}
+
+	public Color getSyllableCircumflexColor() {
+		return circumflexChangeB.getForeground();
+	}
+
+	public Color getSyllableGraveColor() {
+		return graveChangeB.getForeground();
+	}
+
+	public Color getSyllableStreightColor() {
+		return streightChangeB.getForeground();
+	}
+
+	public void setSyllableAcuteColor(Color aColor) {
+		isUpdating = true;
+		acuteChangeB.setForeground(aColor);
+		isUpdating = false;
+	}
+
+	public void setSyllableCircumflexColor(Color aColor) {
+		isUpdating = true;
+		circumflexChangeB.setForeground(aColor);
+		isUpdating = false;
+	}
+
+	public void setSyllableGraveColor(Color aColor) {
+		isUpdating = true;
+		graveChangeB.setForeground(aColor);
+		isUpdating = false;
+	}
+
+	public void setSyllableStreightColor(Color aColor) {
+		isUpdating = true;
+		streightChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 } //END public class PreferencesEditView extends JPanel implements IPreferencesEditView

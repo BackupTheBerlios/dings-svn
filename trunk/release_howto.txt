@@ -10,8 +10,8 @@ Documentation:
 # index.xml: update section "released"
 # status.xml: add release tag under changes tag and make sure the right date is
 specified
-# run forrest (0.6 or higher)
-# 
+# run forrest (0.7 or higher)
+#
 	$ cd build/site
 	$ tar zcf ../site.tar.gz .
 	$ cd ..
@@ -61,4 +61,4 @@ Freshmeat.net
 # In toolbar choose "Add release"
 # Copy text from release notes on DingsBums?! homepage
 # Eventually add a new screenshot (in toolbar choose "add screenshot"
-	
+

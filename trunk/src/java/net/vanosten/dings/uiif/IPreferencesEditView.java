@@ -90,4 +90,13 @@ public interface IPreferencesEditView extends IView {
 	public void setCheckTypeAttributes(boolean check);
 	public boolean isCheckGlobalAttributes();
 	public void setCheckGlobalAttributes(boolean check);
+	//syllable colors
+	public Color getSyllableAcuteColor();
+	public void setSyllableAcuteColor(Color aColor);
+	public Color getSyllableGraveColor();
+	public void setSyllableGraveColor(Color aColor);
+	public Color getSyllableCircumflexColor();
+	public void setSyllableCircumflexColor(Color aColor);
+	public Color getSyllableStreightColor();
+	public void setSyllableStreightColor(Color aColor);
 } //END public interface IPreferencesEditView extends IDetailsView
