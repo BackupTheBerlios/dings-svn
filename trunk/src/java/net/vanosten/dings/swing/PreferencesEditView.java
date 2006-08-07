@@ -24,6 +24,7 @@ package net.vanosten.dings.swing;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -814,6 +815,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 					.add(streightChangeB)
 			)
 		);
+		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,streightChangeB}, GroupLayout.HORIZONTAL);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(acuteChangeB))
@@ -1121,41 +1123,41 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		isUpdating = false;
 	}
 
-	public Color getSyllableAcuteColor() {
+	public Color getSyllableColorAcute() {
 		return acuteChangeB.getForeground();
 	}
 
-	public Color getSyllableCircumflexColor() {
-		return circumflexChangeB.getForeground();
-	}
-
-	public Color getSyllableGraveColor() {
-		return graveChangeB.getForeground();
-	}
-
-	public Color getSyllableStreightColor() {
-		return streightChangeB.getForeground();
-	}
-
-	public void setSyllableAcuteColor(Color aColor) {
+	public void setSyllableColorAcute(Color aColor) {
 		isUpdating = true;
 		acuteChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 
-	public void setSyllableCircumflexColor(Color aColor) {
+	public Color getSyllableColorCircumflex() {
+		return circumflexChangeB.getForeground();
+	}
+
+	public void setSyllableColorCircumflex(Color aColor) {
 		isUpdating = true;
 		circumflexChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 
-	public void setSyllableGraveColor(Color aColor) {
+	public Color getSyllableColorGrave() {
+		return graveChangeB.getForeground();
+	}
+
+	public void setSyllableColorGrave(Color aColor) {
 		isUpdating = true;
 		graveChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 
-	public void setSyllableStreightColor(Color aColor) {
+	public Color getSyllableColorStreight() {
+		return streightChangeB.getForeground();
+	}
+
+	public void setSyllableColorStreight(Color aColor) {
 		isUpdating = true;
 		streightChangeB.setForeground(aColor);
 		isUpdating = false;

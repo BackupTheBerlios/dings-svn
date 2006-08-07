@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.vanosten.dings.uiif.IPreferencesEditView;
+import net.vanosten.dings.utils.Util;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 
@@ -131,6 +132,18 @@ public class Preferences extends AModel{
 	public final static String PROP_CHECKANSWER_TYPE_ATTRIBUTES = "checkanswer_type_attributtes";
 	/** Whether or not global attributes should be checked when checking answer */
 	public final static String PROP_CHECKANSWER_GLOBAL_ATTRIBUTES = "checkanswer_global_attributes";
+	
+	/** Text color for syllable with accent acute stored as a String. See Util.convertRGB() */
+	public final static String PROP_SYLLABLE_COLOR_ACUTE = "syllable_color_acute";
+
+	/** Text color for syllable with accent grave stored as a String. See Util.convertRGB() */
+	public final static String PROP_SYLLABLE_COLOR_GRAVE = "syllable_color_grave";
+
+	/** Text color for syllable with accent circumflex stored as a String. See Util.convertRGB() */
+	public final static String PROP_SYLLABLE_COLOR_CIRCUMFLEX = "syllable_color_circumflex";
+
+	/** Text color for syllable with accent streight stored as a String. See Util.convertRGB() */
+	public final static String PROP_SYLLABLE_COLOR_STREIGHT = "syllable_color_streight";
 
 	/** The edit view */
 	private IPreferencesEditView editView;
@@ -188,6 +201,11 @@ public class Preferences extends AModel{
 			editView.setCheckCaseSensitive(getBooleanProperty(PROP_CHECKANSWER_CASE_SENSITIVE));
 			editView.setCheckGlobalAttributes(getBooleanProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES));
 			editView.setCheckTypeAttributes(getBooleanProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES));
+			//syllable colors
+			editView.setSyllableColorAcute(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_ACUTE)));
+			editView.setSyllableColorGrave(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_GRAVE)));
+			editView.setSyllableColorCircumflex(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX)));
+			editView.setSyllableColorStreight(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_STREIGHT)));
 		}
 		catch (NumberFormatException e) {
 			//TODO: log this
@@ -240,6 +258,11 @@ public class Preferences extends AModel{
 		props.setProperty(PROP_CHECKANSWER_CASE_SENSITIVE, Boolean.toString(editView.isCheckCaseSensitive()));
 		props.setProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES, Boolean.toString(editView.isCheckGlobalAttributes()));
 		props.setProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES, Boolean.toString(editView.isCheckTypeAttributes()));
+		//syllable color
+		props.setProperty(PROP_SYLLABLE_COLOR_ACUTE, Util.convertRGB(editView.getSyllableColorAcute()));
+		props.setProperty(PROP_SYLLABLE_COLOR_GRAVE, Util.convertRGB(editView.getSyllableColorGrave()));
+		props.setProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX, Util.convertRGB(editView.getSyllableColorCircumflex()));
+		props.setProperty(PROP_SYLLABLE_COLOR_STREIGHT, Util.convertRGB(editView.getSyllableColorStreight()));
 	} //END protected void updateModel()
 
 	//Overrides AModel
@@ -324,7 +347,6 @@ public class Preferences extends AModel{
 			String userHome = System.getProperty("user.home");
 			in = new FileInputStream(userHome + File.separator + PROP_FILENAME);
 			props.load(in);
-			in.close();
 		}
 		catch (Exception e) {
 			if (logger.isLoggable(Level.FINEST)) {
@@ -345,6 +367,7 @@ public class Preferences extends AModel{
 
 				}
 			}
+			in = null;
 		}
 		//assign defaults
 		if (!props.containsKey(FILE_ENCODING)) {
@@ -408,6 +431,18 @@ public class Preferences extends AModel{
 		}
 		if (!props.containsKey(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES)) {
 			props.setProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES, Boolean.toString(false));
+		}
+		if (!props.containsKey(PROP_SYLLABLE_COLOR_ACUTE)) {
+			props.setProperty(PROP_SYLLABLE_COLOR_ACUTE, Util.convertRGB(Color.BLUE));
+		}
+		if (!props.containsKey(PROP_SYLLABLE_COLOR_GRAVE)) {
+			props.setProperty(PROP_SYLLABLE_COLOR_GRAVE, Util.convertRGB(Color.CYAN));
+		}
+		if (!props.containsKey(PROP_SYLLABLE_COLOR_CIRCUMFLEX)) {
+			props.setProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX, Util.convertRGB(Color.GREEN));
+		}
+		if (!props.containsKey(PROP_SYLLABLE_COLOR_STREIGHT)) {
+			props.setProperty(PROP_SYLLABLE_COLOR_STREIGHT, Util.convertRGB(Color.MAGENTA));
 		}
 		//PROP_LOCALE is not set to a value. The value is set to the value of the underlying
 		//OS the first time the application is started
