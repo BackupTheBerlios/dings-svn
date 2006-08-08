@@ -295,6 +295,7 @@ public class Constants  {
 	public final static String XML_VISIBILITY_EXAMPLE = "visex";
 	public final static String XML_VISIBILITY_PRONUNCIATION = "vispro";
 	public final static String XML_VISIBILITY_RELATION = "visrel";
+	public final static String XML_SYLLABLES_TARGET = "syllt";
 
 	//general
 	public final static String XML_VOCABULARY = "vocabulary";

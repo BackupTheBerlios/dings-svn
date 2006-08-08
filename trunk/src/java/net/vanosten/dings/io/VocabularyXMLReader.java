@@ -115,6 +115,7 @@ public class VocabularyXMLReader implements IOHandler {
 	private int visex = InfoVocab.VISIBILITY_ALWAYS;
 	private int vispro = InfoVocab.VISIBILITY_ALWAYS;
 	private int visrel = InfoVocab.VISIBILITY_ALWAYS;
+	private boolean targetUsesSyllables = false;
 
 	//common attributes
 	private String id;
@@ -599,6 +600,9 @@ public class VocabularyXMLReader implements IOHandler {
 		else if (localName.equals(Constants.XML_VISIBILITY_RELATION)) {
 			visrel = getValidatedVisibility(Integer.parseInt(currentValue));
 		}
+		else if (localName.equals(Constants.XML_SYLLABLES_TARGET)) {
+			targetUsesSyllables = Boolean.parseBoolean(currentValue);
+		}
 		else if (localName.equals(Constants.XML_INFO)) {
 			ArrayList errors = InfoVocab.validate(title, blabel, tlabel, alabel, ulabel, clabel, olabel, explabel, exlabel);
 			if (errors.size() > 0) {
@@ -615,7 +619,8 @@ public class VocabularyXMLReader implements IOHandler {
 						, plocale, rlocale
 						,visa,visu,viscat
 						,visexp,visex
-						,vispro,visrel);
+						,vispro,visrel
+						,targetUsesSyllables);
 			}
 		}
 		else if (localName.equals(Constants.XML_STATS_NOF_ENTRIES)) {

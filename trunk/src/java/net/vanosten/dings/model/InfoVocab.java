@@ -32,9 +32,6 @@ import java.util.logging.Level;
 
 /**
  * Holder for the information of the vocabluary.
- *
- * @author  Rick Gruber, <a href="mailto:dingsbums@vanosten.net">dingsbums@vanosten.net</a>
- * @version 1.0.0
  */
 public final class InfoVocab extends AItemModel {
 	/** The title of this learning stack */
@@ -139,6 +136,8 @@ public final class InfoVocab extends AItemModel {
 
 	/** The visibility of Relation in views */
 	private int visibilityRelation = VISIBILITY_ALWAYS;
+	
+	private boolean targetUsesSyllables = false;
 
 	/**
 	 * A constructor without any data to make a default.
@@ -154,7 +153,8 @@ public final class InfoVocab extends AItemModel {
 					, "en_US", "en_US"
 					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS
 					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS
-					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS);
+					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS
+					, false);
 	} //END public InfoVocab()
 
 	/**
@@ -170,7 +170,8 @@ public final class InfoVocab extends AItemModel {
 					 , String aPronunciationLocale, String aRelationLocale
 					 , int aVisibilityAttributes, int aVisibilityUnit, int aVisibilityCategory
 					 , int aVisibilityExplanation, int aVisibilityExample
-					 , int aVisibilityPronunciation, int aVisibilityRelation) {
+					 , int aVisibilityPronunciation, int aVisibilityRelation
+					 , boolean aTargetUsesSyllables) {
 
 		logger = Logger.getLogger("net.vanosten.dings.model.InfoVocab");
 
@@ -235,6 +236,7 @@ public final class InfoVocab extends AItemModel {
 		this.visibilityPronunciation = aVisibilityPronunciation;
 		this.visibilityRelation = aVisibilityRelation;
 		
+		this.targetUsesSyllables = aTargetUsesSyllables;
 	} //END public InfoVocab(...)
 
 	//Implements AItemModel
@@ -274,6 +276,8 @@ public final class InfoVocab extends AItemModel {
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_VISIBILITY_EXAMPLE, Integer.toString(visibilityExample)));
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_VISIBILITY_PRONUNCIATION, Integer.toString(visibilityPronunciation)));
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_VISIBILITY_RELATION, Integer.toString(visibilityRelation)));
+		//syllables
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_SYLLABLES_TARGET, Boolean.toString(targetUsesSyllables)));
 		xml.append("</").append(Constants.XML_INFO).append(">");
 		return xml.toString();
 	} //END protected String getXMLString()
@@ -557,4 +561,8 @@ public final class InfoVocab extends AItemModel {
 	public int getVisibilityRelation() {
 		return visibilityRelation;
 	} //END public int getVisibilityRelation()
+	
+	public boolean isTargetUsesSyllables() {
+		return targetUsesSyllables;
+	}
 } //END public class InfoVocab extends DingsItem
