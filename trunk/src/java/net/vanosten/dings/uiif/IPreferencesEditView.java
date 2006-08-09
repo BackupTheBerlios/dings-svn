@@ -97,6 +97,8 @@ public interface IPreferencesEditView extends IView {
 	public void setSyllableColorGrave(Color aColor);
 	public Color getSyllableColorCircumflex();
 	public void setSyllableColorCircumflex(Color aColor);
-	public Color getSyllableColorStreight();
-	public void setSyllableColorStreight(Color aColor);
+	public Color getSyllableColorMacron();
+	public void setSyllableColorMacron(Color aColor);
+	public Color getSyllableColorBreve();
+	public void setSyllableColorBreve(Color aColor);
 } //END public interface IPreferencesEditView extends IDetailsView

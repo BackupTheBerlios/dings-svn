@@ -77,5 +77,31 @@ public class Util {
 		sb.append(rgb.getBlue());
 		return sb.toString();
 	}
-
+	/*-------------------------Syllables----------------------------------------*/
+	public final static String agrave = "à";
+	public final static String aacute = "á";
+	public final static String acircumflex = "â";
+	public final static String amacron = "ā";
+	public final static String abreve = "ă";
+	public final static String egrave = "è";
+	public final static String eacute = "é";
+	public final static String ecircumflex = "ê";
+	public final static String emacron = "ē";
+	public final static String ebreve = "ĕ";
+	public final static String igrave = "ì";
+	public final static String iacute = "í";
+	public final static String icircumflex = "î";
+	public final static String imacron = "ī";
+	public final static String ibreve = "ĭ";
+	public final static String ograve = "ò";
+	public final static String oacute = "ó";
+	public final static String ocircumflex = "ô";
+	public final static String omacron = "ō";
+	public final static String obreve = "ŏ";
+	public final static String ugrave = "ù";
+	public final static String uacute = "ú";
+	public final static String ucircumflex = "û";
+	public final static String umacron = "ū";
+	public final static String ubreve = "ŭ";
+	
 }

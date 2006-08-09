@@ -133,7 +133,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JButton acuteChangeB;
 	private JButton graveChangeB;
 	private JButton circumflexChangeB;
-	private JButton streightChangeB;
+	private JButton macronChangeB;
+	private JButton breveChangeB;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -795,11 +796,18 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 				showColorChooser(circumflexChangeB);
 			}
 		});
-		streightChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_streight"));
-		streightChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_streight")).charAt(0));
-		streightChangeB.addActionListener(new ActionListener() {
+		macronChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_macron"));
+		macronChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_macron")).charAt(0));
+		macronChangeB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				showColorChooser(streightChangeB);
+				showColorChooser(macronChangeB);
+			}
+		});
+		breveChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_breve"));
+		breveChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_breve")).charAt(0));
+		breveChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(breveChangeB);
 			}
 		});
 
@@ -812,10 +820,11 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 					.add(acuteChangeB)
 					.add(graveChangeB)
 					.add(circumflexChangeB)
-					.add(streightChangeB)
+					.add(macronChangeB)
+					.add(breveChangeB)
 			)
 		);
-		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,streightChangeB}, GroupLayout.HORIZONTAL);
+		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,macronChangeB,breveChangeB}, GroupLayout.HORIZONTAL);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(acuteChangeB))
@@ -824,7 +833,9 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			.addPreferredGap(LayoutStyle.UNRELATED)
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(circumflexChangeB))
 			.addPreferredGap(LayoutStyle.UNRELATED)
-			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(streightChangeB))
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(macronChangeB))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(breveChangeB))
 		);
 	} //END private void initializeSyllableColorsPanel()
 
@@ -1153,13 +1164,23 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		isUpdating = false;
 	}
 
-	public Color getSyllableColorStreight() {
-		return streightChangeB.getForeground();
+	public Color getSyllableColorMacron() {
+		return macronChangeB.getForeground();
 	}
 
-	public void setSyllableColorStreight(Color aColor) {
+	public void setSyllableColorMacron(Color aColor) {
 		isUpdating = true;
-		streightChangeB.setForeground(aColor);
+		macronChangeB.setForeground(aColor);
+		isUpdating = false;
+	}
+
+	public Color getSyllableColorBreve() {
+		return breveChangeB.getForeground();
+	}
+
+	public void setSyllableColorBreve(Color aColor) {
+		isUpdating = true;
+		breveChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 } //END public class PreferencesEditView extends JPanel implements IPreferencesEditView
