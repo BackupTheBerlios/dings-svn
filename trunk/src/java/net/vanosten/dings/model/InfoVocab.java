@@ -386,6 +386,7 @@ public final class InfoVocab extends AItemModel {
 			visibilityExample = editView.getVisibilityExample();
 			visibilityPronunciation = editView.getVisibilityPronunciation();
 			visibilityRelation = editView.getVisibilityRelation();
+			targetUsesSyllables = editView.isTargetUsesSyllables();
 			//save needed and reset
 			sendSaveNeeded();
 			updateGUI();
@@ -425,6 +426,8 @@ public final class InfoVocab extends AItemModel {
 		editView.setVisibilityExample(visibilityExample);
 		editView.setVisibilityPronunciation(visibilityPronunciation);
 		editView.setVisibilityRelation(visibilityRelation);
+		//syllables
+		editView.setTargetUsesSyllables(targetUsesSyllables);
 
 		//user feedback
 		editView.setEditing(false, true);
@@ -483,7 +486,8 @@ public final class InfoVocab extends AItemModel {
 			(editView.getVisibilityExplanation() == visibilityExplanation) &&
 			(editView.getVisibilityExample() == visibilityExample) &&
 			(editView.getVisibilityPronunciation() == visibilityPronunciation) &&
-			(editView.getVisibilityRelation() == visibilityRelation)) {
+			(editView.getVisibilityRelation() == visibilityRelation) &&
+			(editView.isTargetUsesSyllables() == targetUsesSyllables)) {
 			editView.setEditing(false, isValid);
 		}
 		else {

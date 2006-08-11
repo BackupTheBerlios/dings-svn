@@ -48,7 +48,9 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.utils.Toolbox;
+import net.vanosten.dings.utils.Util;
 import net.vanosten.dings.swing.helperui.ChoiceID;
+import net.vanosten.dings.swing.helperui.InsertCharacterButtonPanel;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
 import net.vanosten.dings.swing.helperui.ValidatedTextArea;
@@ -69,6 +71,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private SolutionLabel entryTypeSL;
 	private JButton changeEntryTypeB;
 	private LabeledSeparator attributesLS, othersLS;
+	private InsertCharacterButtonPanel charactersP;
 
 	/** Stores the labels and ids of the available enttry types */
 	private String[][] entryTypesList;
@@ -189,6 +192,10 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		//relation
 		relationTF = new JTextField();
 		relationTF.addKeyListener(this);
+		//characters button panel
+		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
+			charactersP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_GROUP);
+		}
 	} //END private void initComponents()
 
 	//implements AViewWithScrollPane
@@ -280,9 +287,28 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.insets = vghg;
 		gbl.setConstraints(targetSP, gbc);
 		editP.add(targetSP);
+		//----charactersP
+		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
+			gbc.gridx = 0;
+			gbc.gridy = 3;
+			gbc.gridwidth = 1;
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			gbc.insets = vghg;
+			gbl.setConstraints(emptyL, gbc);
+			editP.add(emptyL);
+			//----
+			gbc.gridx = 1;
+			gbc.gridwidth = 4;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			gbc.insets = vghg;
+			gbl.setConstraints(charactersP, gbc);
+			editP.add(charactersP);			
+		}
 		//----entrytype
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -305,7 +331,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(emptyL);
 		//----attributesLS
 		gbc.gridx = 0;
-		gbc.gridy = 4;
+		gbc.gridy = 5;
 		gbc.gridwidth = 5;
 		gbc.weightx = 0.0d;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -315,7 +341,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributesLS);
 		//----attributeOne
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -345,7 +371,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributeTwoCh);
 		//----attributeThree
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -375,7 +401,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributeFourCh);
 		//----otherLS
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 8;
 		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
@@ -384,7 +410,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(othersLS);
 		//----explanation
 		gbc.gridx = 0;
-		gbc.gridy = 8;
+		gbc.gridy = 9;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -401,7 +427,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(explanationSP);
 		//----example
 		gbc.gridx = 0;
-		gbc.gridy = 9;
+		gbc.gridy = 10;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -418,7 +444,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(exampleSP);
 		//----pronunciation
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 11;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -435,7 +461,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(pronunciationTF);
 		//----relation
 		gbc.gridx = 0;
-		gbc.gridy = 11;
+		gbc.gridy = 12;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -452,7 +478,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(relationTF);
 		//----unit
 		gbc.gridx = 0;
-		gbc.gridy = 12;
+		gbc.gridy = 13;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -468,7 +494,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(unitsCh);
 		//----category
 		gbc.gridx = 0;
-		gbc.gridy = 13;
+		gbc.gridy = 14;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
@@ -483,7 +509,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(categoriesCh);
 		//----status
 		gbc.gridx = 0;
-		gbc.gridy = 14;
+		gbc.gridy = 15;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;

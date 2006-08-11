@@ -78,30 +78,38 @@ public class Util {
 		return sb.toString();
 	}
 	/*-------------------------Syllables----------------------------------------*/
-	public final static String agrave = "à";
-	public final static String aacute = "á";
-	public final static String acircumflex = "â";
-	public final static String amacron = "ā";
-	public final static String abreve = "ă";
-	public final static String egrave = "è";
-	public final static String eacute = "é";
-	public final static String ecircumflex = "ê";
-	public final static String emacron = "ē";
-	public final static String ebreve = "ĕ";
-	public final static String igrave = "ì";
-	public final static String iacute = "í";
-	public final static String icircumflex = "î";
-	public final static String imacron = "ī";
-	public final static String ibreve = "ĭ";
-	public final static String ograve = "ò";
-	public final static String oacute = "ó";
-	public final static String ocircumflex = "ô";
-	public final static String omacron = "ō";
-	public final static String obreve = "ŏ";
-	public final static String ugrave = "ù";
-	public final static String uacute = "ú";
-	public final static String ucircumflex = "û";
-	public final static String umacron = "ū";
-	public final static String ubreve = "ŭ";
+	public final static String AGRAVE = "à";
+	public final static String AACUTE = "á";
+	public final static String ACIRCUMFLEX = "â";
+	public final static String AMACRON = "ā";
+	public final static String ABREVE = "ă";
+	public final static String EGRAVE = "è";
+	public final static String EACUTE = "é";
+	public final static String ECIRCUMFLEX = "ê";
+	public final static String EMACRON = "ē";
+	public final static String EBREVE = "ĕ";
+	public final static String IGRAVE = "ì";
+	public final static String IACUTE = "í";
+	public final static String ICIRCUMFLEX = "î";
+	public final static String IMACRON = "ī";
+	public final static String IBREVE = "ĭ";
+	public final static String OGRAVE = "ò";
+	public final static String OACUTE = "ó";
+	public final static String OCIRCUMFLEX = "ô";
+	public final static String OMACRON = "ō";
+	public final static String OBREVE = "ŏ";
+	public final static String UGRAVE = "ù";
+	public final static String UACUTE = "ú";
+	public final static String UCIRCUMFLEX = "û";
+	public final static String UMACRON = "ū";
+	public final static String UBREVE = "ŭ";
+	
+	public final static String[][] ACCENTS_BY_GROUP = {
+		{AGRAVE,AACUTE,ACIRCUMFLEX,AMACRON,ABREVE}
+		, {EGRAVE,EACUTE,ECIRCUMFLEX,EMACRON,EBREVE}
+		, {IGRAVE,IACUTE,ICIRCUMFLEX,IMACRON,IBREVE}
+		, {OGRAVE,OACUTE,OCIRCUMFLEX,OMACRON,OBREVE}
+		, {UGRAVE,UACUTE,UCIRCUMFLEX,UMACRON,UBREVE}
+	};
 	
 }

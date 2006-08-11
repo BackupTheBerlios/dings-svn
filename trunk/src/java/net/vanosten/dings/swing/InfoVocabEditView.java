@@ -21,6 +21,7 @@
  */
 package net.vanosten.dings.swing;
 
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
@@ -36,6 +37,8 @@ import java.awt.Insets;
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -71,6 +74,8 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	private JPanel visibilitiesP;
 	private JComboBox visibilityAttributesCB, visibilityUnitCB, visibilityCategoryCB;
 	private JComboBox visibilityExplanationCB, visibilityExampleCB, visibilityPronunciationCB, visibilityRelationCB;
+	private JPanel syllablesP;
+	private JCheckBox targetUsesSyllablesCB;
 
 	public InfoVocabEditView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_info_vocab")
@@ -233,6 +238,13 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		setVisibilityItems(visibilityExampleCB, false);
 		setVisibilityItems(visibilityPronunciationCB, false);
 		setVisibilityItems(visibilityRelationCB, false);
+		//syllables
+		targetUsesSyllablesCB = new JCheckBox(Toolbox.getInstance().getLocalizedString("ivev.syllables.use_syllables"));
+		targetUsesSyllablesCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				onChange();
+			}
+		});
 	} //END private final void initComponents()
 
 	//implements IInfoVocabEditView
@@ -272,21 +284,25 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 
 		//basics
 		initializeBasicsP();
-		tabbedPane.addTab("Basics", basicsP);
-		tabbedPane.setMnemonicAt(0, "B".charAt(0));
+		tabbedPane.addTab(Toolbox.getInstance().getLocalizedString("ivew.tab.basics.label"), basicsP);
+		tabbedPane.setMnemonicAt(0, Toolbox.getInstance().getLocalizedString("ivew.tab.basics.mnemonic").charAt(0));
 		//labels
 		initializeLabelsP();
-		tabbedPane.addTab("Labels", labelsP);
-		tabbedPane.setMnemonicAt(1, "L".charAt(0));
+		tabbedPane.addTab(Toolbox.getInstance().getLocalizedString("ivew.tab.labels.label"), labelsP);
+		tabbedPane.setMnemonicAt(1, Toolbox.getInstance().getLocalizedString("ivew.tab.labels.mnemonic").charAt(0));
 		//orientation
 		initializeLocaleP();
-		tabbedPane.addTab("Language of Text", localeP);
-		tabbedPane.setMnemonicAt(2, "A".charAt(0));
+		tabbedPane.addTab(Toolbox.getInstance().getLocalizedString("ivew.tab.language.label"), localeP);
+		tabbedPane.setMnemonicAt(2, Toolbox.getInstance().getLocalizedString("ivew.tab.language.mnemonic").charAt(0));
 		tabbedPane.setEnabledAt(2, false);
 		//visibilities
 		initializeVisibilitiesP();
-		tabbedPane.addTab("Visibility", visibilitiesP);
-		tabbedPane.setMnemonicAt(3, "V".charAt(0));
+		tabbedPane.addTab(Toolbox.getInstance().getLocalizedString("ivew.tab.visibility.label"), visibilitiesP);
+		tabbedPane.setMnemonicAt(3, Toolbox.getInstance().getLocalizedString("ivew.tab.visibility.mnemonic").charAt(0));
+		//syllables
+		initializeSyllablesP();
+		tabbedPane.addTab(Toolbox.getInstance().getLocalizedString("ivew.tab.syllables.label"), syllablesP);
+		tabbedPane.setMnemonicAt(4, Toolbox.getInstance().getLocalizedString("ivew.tab.syllables.mnemonic").charAt(0));
 	} //END private void initializeEditP()
 
 	private void initializeBasicsP() {
@@ -868,6 +884,39 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		gbl.setConstraints(visibilityRelationCB, gbc);
 		visibilitiesP.add(visibilityRelationCB);
 	} //END private void initializeVisibilitiesP()
+	
+	private void initializeSyllablesP() {
+		syllablesP = new JPanel();
+		GridBagLayout gbl = new GridBagLayout();
+		GridBagConstraints gbc = new GridBagConstraints();
+		syllablesP.setLayout(gbl);
+		EmptyBorder border = new EmptyBorder(
+				DingsSwingConstants.SP_D_TOP
+				, DingsSwingConstants.SP_D_LEFT
+				, DingsSwingConstants.SP_D_BUTTOM
+				, DingsSwingConstants.SP_D_RIGHT
+			);
+		syllablesP.setBorder(border);
+
+		JLabel targetL = new JLabel(Toolbox.getInstance().getLocalizedString("ivev.syllables.target.label"));
+		targetL.setDisplayedMnemonic(Toolbox.getInstance().getLocalizedString("ivev.syllables.target.mnemonic").charAt(0));
+		targetL.setLabelFor(targetUsesSyllablesCB);
+		
+		//----
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.insets = new Insets(DingsSwingConstants.SP_V_T, 0, 0, 0);
+		gbl.setConstraints(targetL, gbc);
+		syllablesP.add(targetL);
+		//----
+		gbc.gridx = 1;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.weightx = 1.0;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.insets = new Insets(DingsSwingConstants.SP_V_T, DingsSwingConstants.SP_H_G, 0, 0);
+		gbl.setConstraints(targetUsesSyllablesCB, gbc);
+		syllablesP.add(targetUsesSyllablesCB);
+	}
 
 	public String getTitle() {
 		return titleVTF.getText();
@@ -1178,4 +1227,14 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	public void setExampleLabelIsValueValid(boolean valid) {
 		exampleLabelVTF.isValueValid(valid);
 	} //END public void setExampleLabelIsValueValid(boolean)
+
+	public boolean isTargetUsesSyllables() {
+		return targetUsesSyllablesCB.isSelected();
+	}
+
+	public void setTargetUsesSyllables(boolean isUsed) {
+		isUpdating = true;
+		targetUsesSyllablesCB.setSelected(isUsed);
+		isUpdating = false;
+	}
 } //END public class InfoVocabEditView extends AEditView implements IInfoVocabEditView
