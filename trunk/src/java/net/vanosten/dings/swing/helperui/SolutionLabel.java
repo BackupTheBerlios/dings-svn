@@ -65,7 +65,7 @@ public class SolutionLabel extends JLabel {
 	public void setHideable(boolean hideable) {
 		this.hideable = hideable;
 	} //END public void setHideable(boolean)
-
+	
 	/**
 	 * Overrides JLabel.setText(String) by setting the text as an
 	 * html text and thereby allow multiple lines.

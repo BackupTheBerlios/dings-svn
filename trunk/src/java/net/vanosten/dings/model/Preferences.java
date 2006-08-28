@@ -148,6 +148,9 @@ public class Preferences extends AModel{
 	/** Text color for syllable with accent breve stored as a String. See Util.convertRGB() */
 	public final static String PROP_SYLLABLE_COLOR_BREVE = "syllable_color_breve";
 
+	/** Text color for syllable with no accent stored as a String. See Util.convertRGB() */
+	public final static String PROP_SYLLABLE_COLOR_DEFAULT = "syllable_color_default";
+
 	/** The edit view */
 	private IPreferencesEditView editView;
 
@@ -205,11 +208,12 @@ public class Preferences extends AModel{
 			editView.setCheckGlobalAttributes(getBooleanProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES));
 			editView.setCheckTypeAttributes(getBooleanProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES));
 			//syllable colors
-			editView.setSyllableColorAcute(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_ACUTE)));
-			editView.setSyllableColorGrave(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_GRAVE)));
-			editView.setSyllableColorCircumflex(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX)));
-			editView.setSyllableColorMacron(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_MACRON)));
-			editView.setSyllableColorBreve(Util.parseRGB(props.getProperty(PROP_SYLLABLE_COLOR_BREVE)));
+			editView.setSyllableColorAcute(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_ACUTE)));
+			editView.setSyllableColorGrave(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_GRAVE)));
+			editView.setSyllableColorCircumflex(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX)));
+			editView.setSyllableColorMacron(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_MACRON)));
+			editView.setSyllableColorBreve(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_BREVE)));
+			editView.setSyllableColorDefault(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_DEFAULT)));
 		}
 		catch (NumberFormatException e) {
 			//TODO: log this
@@ -268,6 +272,7 @@ public class Preferences extends AModel{
 		props.setProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX, Util.convertRGB(editView.getSyllableColorCircumflex()));
 		props.setProperty(PROP_SYLLABLE_COLOR_MACRON, Util.convertRGB(editView.getSyllableColorMacron()));
 		props.setProperty(PROP_SYLLABLE_COLOR_BREVE, Util.convertRGB(editView.getSyllableColorBreve()));
+		props.setProperty(PROP_SYLLABLE_COLOR_DEFAULT, Util.convertRGB(editView.getSyllableColorDefault()));
 	} //END protected void updateModel()
 
 	//Overrides AModel
@@ -328,6 +333,12 @@ public class Preferences extends AModel{
 		String myvalue = props.getProperty(property);
 		boolean value = Boolean.parseBoolean(myvalue);
 		return value;		
+	}
+	
+	public Color getColorProperty(String property) {
+		String myvalue = props.getProperty(property);
+		Color value = Util.parseRGBToColor(myvalue);
+		return value;
 	}
 
 	public Object setProperty(String thePropertyKey, String theValue) {
@@ -451,6 +462,9 @@ public class Preferences extends AModel{
 		}
 		if (!props.containsKey(PROP_SYLLABLE_COLOR_BREVE)) {
 			props.setProperty(PROP_SYLLABLE_COLOR_BREVE, Util.convertRGB(Color.ORANGE));
+		}
+		if (!props.containsKey(PROP_SYLLABLE_COLOR_DEFAULT)) {
+			props.setProperty(PROP_SYLLABLE_COLOR_DEFAULT, Util.convertRGB(Color.BLACK));
 		}
 		//PROP_LOCALE is not set to a value. The value is set to the value of the underlying
 		//OS the first time the application is started

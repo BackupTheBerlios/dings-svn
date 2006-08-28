@@ -473,7 +473,7 @@ public class VocabularyXMLReader implements IOHandler {
 		//Unit
 		else if (localName.equals(Constants.XML_NAME)) name = currentValue;
 		else if (localName.equals(Constants.XML_DESCRIPTION)) description = currentValue;
-		else if (localName.equals(Constants.XML_COLOR)) color = Util.parseRGB(currentValue);
+		else if (localName.equals(Constants.XML_COLOR)) color = Util.parseRGBToColor(currentValue);
 		else if (localName.equals(Constants.XML_UNIT)) {
 			List<String> errors = Unit.validate(id, name);
 			if (errors.size() > 0) {

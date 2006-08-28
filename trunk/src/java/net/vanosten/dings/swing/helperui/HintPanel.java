@@ -39,6 +39,7 @@ import javax.swing.Timer;
 import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.swing.DingsSwingConstants;
 import net.vanosten.dings.utils.Toolbox;
+import net.vanosten.dings.utils.Util;
 
 /**
  * Shows part of a text to give a hint about the contents to help learning.
@@ -75,13 +76,16 @@ public class HintPanel extends JPanel implements HintObservable {
 	/** The objects observing for hints */
 	private List<HintObserver> observers = new ArrayList<HintObserver>();
 	
+	private boolean usesSyllables = false;
+	
 	/**
 	 * Empty constructor. All other constructors of parent class
 	 * JLabel are hidden.
 	 */
-	public HintPanel() {
+	public HintPanel(boolean usesSyllables) {
 		super();
 		this.setHintTextColors();
+		this.usesSyllables = usesSyllables;
 		initComponents();
 	} //END public HintLabel()
 	
@@ -247,7 +251,12 @@ public class HintPanel extends JPanel implements HintObservable {
 		} else {
 			hintL.setForeground(getBackground());
 		}
-		hintL.setText("<html>" + aText + "</html>");
+		//only if the text should be visible and the target uses syllables
+		if (isVisible && usesSyllables) {
+			hintL.setText("<html>" + Util.enrichSyllablesWithColor(aText) + "</html>");
+		} else {
+			hintL.setText("<html>" + aText + "</html>");
+		}
 	} //END private void setShownText(String, boolean, boolean)
 
 	/**

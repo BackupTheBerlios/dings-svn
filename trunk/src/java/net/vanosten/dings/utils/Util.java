@@ -2,6 +2,8 @@ package net.vanosten.dings.utils;
 
 import java.awt.Color;
 
+import net.vanosten.dings.model.Preferences;
+
 /**
  * Diverse public static utility methods.
  */
@@ -38,7 +40,7 @@ public class Util {
 	 * @param rgb String containing integer values for red, green and blue separated by COLOR_DELIMITTER
 	 * @return a Color object, if the string could be parsed. Null otherwise.
 	 */
-	public static Color parseRGB(String rgb) {
+	public static Color parseRGBToColor(String rgb) {
 		if (null == rgb) {
 			return null;
 		}
@@ -77,6 +79,18 @@ public class Util {
 		sb.append(rgb.getBlue());
 		return sb.toString();
 	}
+	
+	/**
+	 * 
+	 * @param aColor
+	 * @return a String representing the color in hexadecimal format for html
+	 */
+	public final static String convertColorToHexString(Color aColor) {
+		String str = Integer.toHexString(aColor.getRGB() & 0xFFFFFF);
+		str = ("#" + "000000".substring(str.length()) + str.toUpperCase());
+		return str;
+	}
+	
 	/*-------------------------Syllables----------------------------------------*/
 	public final static String AGRAVE = "à";
 	public final static String AACUTE = "á";
@@ -111,5 +125,24 @@ public class Util {
 		, {OGRAVE,OACUTE,OCIRCUMFLEX,OMACRON,OBREVE}
 		, {UGRAVE,UACUTE,UCIRCUMFLEX,UMACRON,UBREVE}
 	};
+	
+	public final static String enrichSyllablesWithColor(String text) {
+		//preallocate StringBuilder
+		////one syllable about 3 letters, enriched syllable about 35 letters
+		int size = 35;
+		if (null != text) {
+			size = size * (text.length()/3);
+		}
+		StringBuilder sb = new StringBuilder(size);
+		
+		Color aColor = Toolbox.getInstance().getPreferencesPointer().getColorProperty(Preferences.PROP_SYLLABLE_COLOR_ACUTE);
+		sb.append("<font color=");
+		sb.append(convertColorToHexString(aColor));
+		sb.append(">");
+		sb.append(text);
+		sb.append("</font>");
+		
+		return sb.toString();
+	}
 	
 }

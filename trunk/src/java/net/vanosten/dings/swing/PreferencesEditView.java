@@ -135,6 +135,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JButton circumflexChangeB;
 	private JButton macronChangeB;
 	private JButton breveChangeB;
+	private JButton defaultChangeB;
 
 	/**
 	 * Indicates whether the gui value is changed programmatically
@@ -810,6 +811,13 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 				showColorChooser(breveChangeB);
 			}
 		});
+		defaultChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_default"));
+		defaultChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_default")).charAt(0));
+		defaultChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(defaultChangeB);
+			}
+		});
 
 		//make the gui
 		GroupLayout layout = new GroupLayout(syllableColorsP);
@@ -822,9 +830,10 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 					.add(circumflexChangeB)
 					.add(macronChangeB)
 					.add(breveChangeB)
+					.add(defaultChangeB)
 			)
 		);
-		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,macronChangeB,breveChangeB}, GroupLayout.HORIZONTAL);
+		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,macronChangeB,breveChangeB,defaultChangeB}, GroupLayout.HORIZONTAL);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(acuteChangeB))
@@ -836,6 +845,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(macronChangeB))
 			.addPreferredGap(LayoutStyle.UNRELATED)
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(breveChangeB))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(defaultChangeB))
 		);
 	} //END private void initializeSyllableColorsPanel()
 
@@ -1181,6 +1192,16 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public void setSyllableColorBreve(Color aColor) {
 		isUpdating = true;
 		breveChangeB.setForeground(aColor);
+		isUpdating = false;
+	}
+
+	public Color getSyllableColorDefault() {
+		return defaultChangeB.getForeground();
+	}
+
+	public void setSyllableColorDefault(Color aColor) {
+		isUpdating = true;
+		defaultChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 } //END public class PreferencesEditView extends JPanel implements IPreferencesEditView

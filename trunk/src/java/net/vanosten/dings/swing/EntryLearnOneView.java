@@ -100,7 +100,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		questionSL = new SolutionLabel();
 		//hint
 		hintL = new JLabel("Hint:");
-		hintPL = new HintPanel();
+		hintPL = new HintPanel(Toolbox.getInstance().isTargetAsked() && Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables());
 		hintPL.registerHintObserver(this);
 		//target
 		answerL = new JLabel(answerLabel + ":");
