@@ -110,7 +110,6 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		baseVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_BASE));
 		baseVTA.setToolTipText("May not be empty");
 		baseVTA.addKeyListener(this);
-		baseVTA.
 		//target
 		targetVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		targetVTA.setToolTipText("May not be empty");

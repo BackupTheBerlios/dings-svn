@@ -94,7 +94,14 @@ public class InsertCharacterButtonPanel extends JPanel {
 		aButton.setMargin(new Insets(0,0,0,0));
 		aButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				insertCharacter(label, textComponent);
+				int caretPosition = insertCharacter(label, textComponent);
+				//set the focus back to the text component.
+				//otherwise the button will keep the focus, although the user is about to type the next character
+				//and this character will then not hit the text component
+				textComponent.requestFocusInWindow();
+				//set the caret position. Setting focus by default sets the caret
+				//to the end of the string
+				textComponent.setCaretPosition(caretPosition);
 			}
 		});
 		return aButton;
@@ -106,18 +113,22 @@ public class InsertCharacterButtonPanel extends JPanel {
 	 * If the text in the text component is null, then the text is set 
 	 * tothe buttons label text.
 	 * @param aButton
+	 * @return the new caret position
 	 */
-	private static void insertCharacter(String label, JTextComponent textComponent) {
+	private static int insertCharacter(String label, JTextComponent textComponent) {
 		String text = textComponent.getText();
+		int caretPosition;
 		if (null == text) {
 			text = label;
+			caretPosition = 0;
 		} else {
-			int pos = textComponent.getCaretPosition();
+			caretPosition = textComponent.getCaretPosition();
 			StringBuilder sb = new StringBuilder(text);
-			sb.insert(pos, label);
+			sb.insert(caretPosition, label);
 			text = sb.toString();
 		}
 		textComponent.setText(text);
+		return ++caretPosition;
 	}
 
 }
