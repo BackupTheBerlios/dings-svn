@@ -72,6 +72,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private JButton changeEntryTypeB;
 	private LabeledSeparator attributesLS, othersLS;
 	private InsertCharacterButtonPanel charactersP;
+	private JPanel syllablesTargetP;
 
 	/** Stores the labels and ids of the available enttry types */
 	private String[][] entryTypesList;
@@ -109,6 +110,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		baseVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_BASE));
 		baseVTA.setToolTipText("May not be empty");
 		baseVTA.addKeyListener(this);
+		baseVTA.
 		//target
 		targetVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		targetVTA.setToolTipText("May not be empty");
@@ -194,7 +196,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		relationTF.addKeyListener(this);
 		//characters button panel
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
-			charactersP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_GROUP);
+			charactersP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_LETTERGROUP);
 		}
 	} //END private void initComponents()
 

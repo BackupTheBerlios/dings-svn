@@ -253,7 +253,7 @@ public class HintPanel extends JPanel implements HintObservable {
 		}
 		//only if the text should be visible and the target uses syllables
 		if (isVisible && usesSyllables) {
-			hintL.setText("<html>" + Util.enrichSyllablesWithColor(aText) + "</html>");
+			hintL.setText(Util.enrichSyllablesWithColor(aText));
 		} else {
 			hintL.setText("<html>" + aText + "</html>");
 		}

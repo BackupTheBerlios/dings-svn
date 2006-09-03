@@ -1,6 +1,8 @@
 package net.vanosten.dings.utils;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.vanosten.dings.model.Preferences;
 
@@ -15,19 +17,33 @@ public class Util {
 	 * @return a string with no whitespace in front and end and only one space between the parts.
 	 */
 	public static String stripWhitespace(String input) {
-		String[] parts = input.trim().split("\\s");
 		StringBuilder sb = new StringBuilder();
+		List<String> tokens = extractTokensBetweenWhitespace(input);
+		for (String token : tokens) {
+			if (0 < sb.length()) { //it is not enough to test for index 0, because there might be whitespace
+				sb.append(" ");
+			}
+			sb.append(token);
+		}
+		return sb.toString();
+	} //END public static String stripWhitespace(String)
+	
+	/**
+	 * 
+	 * @param input
+	 * @return a list of Strings, which do not contain whitespace, and which where part of the whitespace delimitted input string
+	 */
+	public static List<String> extractTokensBetweenWhitespace(String input) {
+		List<String> tokens = new ArrayList<String>();
+		String[] parts = input.trim().split("\\s");
 		for (int i = 0; i < parts.length; i++) {
 			if (0 == parts[i].trim().length()) {
 				continue;
 			}
-			if (0 < sb.length()) { //it is not enough to test for index 0, because there might be whitespace
-				sb.append(" ");
-			}
-			sb.append(parts[i]);
+			tokens.add(parts[i].trim());
 		}
-		return sb.toString();
-	} //END public static String stripWhitespace(String)
+		return tokens;
+	}
 
 	
 	/*-------------------------String to Color conversion----------------------------------------*/
@@ -118,7 +134,7 @@ public class Util {
 	public final static String UMACRON = "ū";
 	public final static String UBREVE = "ŭ";
 	
-	public final static String[][] ACCENTS_BY_GROUP = {
+	public final static String[][] ACCENTS_BY_LETTERGROUP = {
 		{AGRAVE,AACUTE,ACIRCUMFLEX,AMACRON,ABREVE}
 		, {EGRAVE,EACUTE,ECIRCUMFLEX,EMACRON,EBREVE}
 		, {IGRAVE,IACUTE,ICIRCUMFLEX,IMACRON,IBREVE}
@@ -126,6 +142,45 @@ public class Util {
 		, {UGRAVE,UACUTE,UCIRCUMFLEX,UMACRON,UBREVE}
 	};
 	
+	public final static String[][] ACCENTS_BY_ACCENTGROUP = {
+		{AGRAVE,EGRAVE,IGRAVE,OGRAVE,UGRAVE}
+		, {AACUTE,EACUTE,IACUTE,OACUTE,UACUTE}
+		, {ACIRCUMFLEX,ECIRCUMFLEX,ICIRCUMFLEX,OCIRCUMFLEX,UCIRCUMFLEX}
+		, {AMACRON,EMACRON,IMACRON,OMACRON,UMACRON}
+		, {ABREVE,EBREVE,IBREVE,OBREVE,UBREVE}
+	};
+	
+	public final static String[] COLOR_BY_ACCENTGROUP = {
+		Preferences.PROP_SYLLABLE_COLOR_GRAVE
+		, Preferences.PROP_SYLLABLE_COLOR_ACUTE
+		, Preferences.PROP_SYLLABLE_COLOR_CIRCUMFLEX
+		, Preferences.PROP_SYLLABLE_COLOR_MACRON
+		, Preferences.PROP_SYLLABLE_COLOR_BREVE
+	};
+	
+	/**
+	 * 
+	 * @param aToken
+	 * @return the position of the first character with an accent within ACCENTS_BY_ACCENTGROUP or -1 if no accent hit 
+	 */
+	public final static int indexOfFirstAccent(String aToken) {
+		for (int c = 0; c < aToken.length(); c++) {		
+			for (int i = 0; i < ACCENTS_BY_ACCENTGROUP.length; i++) {
+				for (int j = 0; j < ACCENTS_BY_ACCENTGROUP[i].length; j++) {
+					if (aToken.substring(c,c+1).equalsIgnoreCase(ACCENTS_BY_ACCENTGROUP[i][j])) {
+						return i;
+					}
+				}
+			}
+		}
+		return -1;
+	}
+	
+	/**
+	 * 
+	 * @param text
+	 * @return the same text with html font styles having colors per token depending on the first found accent
+	 */
 	public final static String enrichSyllablesWithColor(String text) {
 		//preallocate StringBuilder
 		////one syllable about 3 letters, enriched syllable about 35 letters
@@ -134,8 +189,31 @@ public class Util {
 			size = size * (text.length()/3);
 		}
 		StringBuilder sb = new StringBuilder(size);
+		sb.append("<html>");
 		
-		Color aColor = Toolbox.getInstance().getPreferencesPointer().getColorProperty(Preferences.PROP_SYLLABLE_COLOR_ACUTE);
+		//get all tokens
+		List<String> tokens = extractTokensBetweenWhitespace(text);
+		
+		int accentgroup;
+		Color aColor;
+		for (String token : tokens) {
+			if (0 < sb.length()) {
+				sb.append(" ");
+			}
+			accentgroup = indexOfFirstAccent(token);
+			if (0 <= accentgroup) {
+				aColor = Toolbox.getInstance().getPreferencesPointer().getColorProperty(COLOR_BY_ACCENTGROUP[accentgroup]);
+			} else {
+				aColor = Toolbox.getInstance().getPreferencesPointer().getColorProperty(Preferences.PROP_SYLLABLE_COLOR_DEFAULT);
+			}
+			sb.append(enrichStringWithHTMLFontStyle(token, aColor));
+		}
+		sb.append("</html>");
+		return sb.toString();
+	}
+	
+	public final static String enrichStringWithHTMLFontStyle(String text, Color aColor) {
+		StringBuilder sb = new StringBuilder(27-text.length());
 		sb.append("<font color=");
 		sb.append(convertColorToHexString(aColor));
 		sb.append(">");
