@@ -33,6 +33,9 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 
 import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
@@ -53,6 +56,7 @@ import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.InsertCharacterButtonPanel;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
+import net.vanosten.dings.swing.helperui.SyllablesLabel;
 import net.vanosten.dings.swing.helperui.ValidatedTextArea;
 import net.vanosten.dings.uiif.IEntryEditView;
 import net.vanosten.dings.event.AppEvent;
@@ -72,7 +76,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private JButton changeEntryTypeB;
 	private LabeledSeparator attributesLS, othersLS;
 	private InsertCharacterButtonPanel charactersP;
-	private JPanel syllablesTargetP;
+	private SyllablesLabel syllablesTargetL;
 
 	/** Stores the labels and ids of the available enttry types */
 	private String[][] entryTypesList;
@@ -113,7 +117,8 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		//target
 		targetVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		targetVTA.setToolTipText("May not be empty");
-		targetVTA.addKeyListener(this);
+		Document targetDocument = targetVTA.getDocument();
+		targetDocument.addDocumentListener(new TargetDocumentListener());
 		//entry type
 		changeEntryTypeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.change_entry_type"));
 		changeEntryTypeB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.change_entry_type").charAt(0));
@@ -196,6 +201,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		//characters button panel
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
 			charactersP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_LETTERGROUP);
+			syllablesTargetL = new SyllablesLabel();
 		}
 	} //END private void initComponents()
 
@@ -288,7 +294,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.insets = vghg;
 		gbl.setConstraints(targetSP, gbc);
 		editP.add(targetSP);
-		//----charactersP
+		//----charactersP and syllable label
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
 			gbc.gridx = 0;
 			gbc.gridy = 3;
@@ -305,11 +311,28 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 			gbc.anchor = GridBagConstraints.LINE_START;
 			gbc.insets = vghg;
 			gbl.setConstraints(charactersP, gbc);
-			editP.add(charactersP);			
+			editP.add(charactersP);	
+			//---- syllableTargetL
+			gbc.gridx = 0;
+			gbc.gridy = 4;
+			gbc.gridwidth = 1;
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			gbc.insets = vghg;
+			gbl.setConstraints(emptyL, gbc);
+			editP.add(emptyL);
+			//----
+			gbc.gridx = 1;
+			gbc.gridwidth = 4;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			gbc.insets = vghg;
+			gbl.setConstraints(syllablesTargetL, gbc);
+			editP.add(syllablesTargetL);			
 		}
 		//----entrytype
 		gbc.gridx = 0;
-		gbc.gridy = 4;
+		gbc.gridy = 5;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -332,7 +355,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(emptyL);
 		//----attributesLS
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 5;
 		gbc.weightx = 0.0d;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -342,7 +365,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributesLS);
 		//----attributeOne
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -372,7 +395,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributeTwoCh);
 		//----attributeThree
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 8;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -402,7 +425,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributeFourCh);
 		//----otherLS
 		gbc.gridx = 0;
-		gbc.gridy = 8;
+		gbc.gridy = 9;
 		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
@@ -411,7 +434,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(othersLS);
 		//----explanation
 		gbc.gridx = 0;
-		gbc.gridy = 9;
+		gbc.gridy = 10;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -428,7 +451,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(explanationSP);
 		//----example
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 11;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -445,7 +468,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(exampleSP);
 		//----pronunciation
 		gbc.gridx = 0;
-		gbc.gridy = 11;
+		gbc.gridy = 12;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -462,7 +485,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(pronunciationTF);
 		//----relation
 		gbc.gridx = 0;
-		gbc.gridy = 12;
+		gbc.gridy = 13;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -479,7 +502,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(relationTF);
 		//----unit
 		gbc.gridx = 0;
-		gbc.gridy = 13;
+		gbc.gridy = 14;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -495,7 +518,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(unitsCh);
 		//----category
 		gbc.gridx = 0;
-		gbc.gridy = 14;
+		gbc.gridy = 15;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
@@ -510,7 +533,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(categoriesCh);
 		//----status
 		gbc.gridx = 0;
-		gbc.gridy = 15;
+		gbc.gridy = 16;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -832,4 +855,31 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	public void setTargetIsValueValid(boolean valid) {
 		targetVTA.isValueValid(valid);
 	} //END public void setTrargetIsValueValid(boolean)
+	
+	//------------------------ Inner classes for special listeners
+	class TargetDocumentListener implements DocumentListener {
+
+		public void changedUpdate(DocumentEvent e) {
+			//nothing to do		
+		}
+
+		public void insertUpdate(DocumentEvent e) {
+			doOnUpdate();
+		}
+
+		public void removeUpdate(DocumentEvent e) {
+			doOnUpdate();
+		}
+		
+		private void doOnUpdate() {
+			//notify the model of events. KeyEvent is not good in this case
+			//because no change would be triggerde if a character gets inserted programmatically
+			onChange();
+			//update the syllables label
+			if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
+				syllablesTargetL.setText(targetVTA.getText());
+			}
+		}
+		
+	}
 } //END public class EntryEditView extends AEditView implements IEntryEditView
