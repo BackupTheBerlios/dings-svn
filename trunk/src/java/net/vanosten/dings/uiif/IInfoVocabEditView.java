@@ -81,6 +81,8 @@ public interface IInfoVocabEditView extends IDetailsView {
 	public void setVisibilityRelation(int aVisibility);
 	public int getVisibilityRelation();
 	public void setAvailableLocales(String[][] theLocales);
+	public boolean isBaseUsesSyllables();
+	public void setBaseUsesSyllables(boolean isUsed);
 	public boolean isTargetUsesSyllables();
 	public void setTargetUsesSyllables(boolean isUsed);
 	//validation

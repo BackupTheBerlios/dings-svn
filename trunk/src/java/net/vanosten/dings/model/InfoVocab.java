@@ -137,6 +137,7 @@ public final class InfoVocab extends AItemModel {
 	/** The visibility of Relation in views */
 	private int visibilityRelation = VISIBILITY_ALWAYS;
 	
+	private boolean baseUsesSyllables = false;
 	private boolean targetUsesSyllables = false;
 
 	/**
@@ -154,7 +155,7 @@ public final class InfoVocab extends AItemModel {
 					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS
 					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS
 					, VISIBILITY_ALWAYS, VISIBILITY_ALWAYS
-					, false);
+					, false, false);
 	} //END public InfoVocab()
 
 	/**
@@ -171,7 +172,7 @@ public final class InfoVocab extends AItemModel {
 					 , int aVisibilityAttributes, int aVisibilityUnit, int aVisibilityCategory
 					 , int aVisibilityExplanation, int aVisibilityExample
 					 , int aVisibilityPronunciation, int aVisibilityRelation
-					 , boolean aTargetUsesSyllables) {
+					 , boolean aBaseUsesSyllables, boolean aTargetUsesSyllables) {
 
 		logger = Logger.getLogger("net.vanosten.dings.model.InfoVocab");
 
@@ -236,6 +237,8 @@ public final class InfoVocab extends AItemModel {
 		this.visibilityPronunciation = aVisibilityPronunciation;
 		this.visibilityRelation = aVisibilityRelation;
 		
+		//syllables
+		this.baseUsesSyllables = aBaseUsesSyllables;
 		this.targetUsesSyllables = aTargetUsesSyllables;
 	} //END public InfoVocab(...)
 
@@ -277,6 +280,7 @@ public final class InfoVocab extends AItemModel {
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_VISIBILITY_PRONUNCIATION, Integer.toString(visibilityPronunciation)));
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_VISIBILITY_RELATION, Integer.toString(visibilityRelation)));
 		//syllables
+		xml.append(Constants.getXMLTaggedValue(Constants.XML_SYLLABLES_BASE, Boolean.toString(baseUsesSyllables)));
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_SYLLABLES_TARGET, Boolean.toString(targetUsesSyllables)));
 		xml.append("</").append(Constants.XML_INFO).append(">");
 		return xml.toString();
@@ -386,6 +390,7 @@ public final class InfoVocab extends AItemModel {
 			visibilityExample = editView.getVisibilityExample();
 			visibilityPronunciation = editView.getVisibilityPronunciation();
 			visibilityRelation = editView.getVisibilityRelation();
+			baseUsesSyllables = editView.isBaseUsesSyllables();
 			targetUsesSyllables = editView.isTargetUsesSyllables();
 			//save needed and reset
 			sendSaveNeeded();
@@ -427,6 +432,7 @@ public final class InfoVocab extends AItemModel {
 		editView.setVisibilityPronunciation(visibilityPronunciation);
 		editView.setVisibilityRelation(visibilityRelation);
 		//syllables
+		editView.setBaseUsesSyllables(baseUsesSyllables);
 		editView.setTargetUsesSyllables(targetUsesSyllables);
 
 		//user feedback
@@ -487,6 +493,7 @@ public final class InfoVocab extends AItemModel {
 			(editView.getVisibilityExample() == visibilityExample) &&
 			(editView.getVisibilityPronunciation() == visibilityPronunciation) &&
 			(editView.getVisibilityRelation() == visibilityRelation) &&
+			(editView.isBaseUsesSyllables() == baseUsesSyllables) &&
 			(editView.isTargetUsesSyllables() == targetUsesSyllables)) {
 			editView.setEditing(false, isValid);
 		}
@@ -565,6 +572,10 @@ public final class InfoVocab extends AItemModel {
 	public int getVisibilityRelation() {
 		return visibilityRelation;
 	} //END public int getVisibilityRelation()
+	
+	public boolean isBaseUsesSyllables() {
+		return baseUsesSyllables;
+	}
 	
 	public boolean isTargetUsesSyllables() {
 		return targetUsesSyllables;

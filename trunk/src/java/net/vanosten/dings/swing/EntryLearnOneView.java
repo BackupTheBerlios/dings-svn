@@ -53,6 +53,7 @@ import net.vanosten.dings.swing.helperui.HintPanel;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
+import net.vanosten.dings.swing.helperui.SyllablesLabel;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
 
 public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView, HintObserver {
@@ -60,7 +61,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 
 	private ChoiceID attributeOneCh, attributeTwoCh, attributeThreeCh, attributeFourCh, categoriesCh, unitsCh;
 	private JCheckBox statusCB;
-	private SolutionLabel questionSL, explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
+	private JLabel questionSL;
+	private SolutionLabel explanationSL, pronunciationSL, exampleSL, relationSL, entryTypeSL;
 	private JTextArea answerTA;
 	private HintPanel hintPL;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL;
@@ -96,11 +98,21 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		}
 		entryTypeSL = new SolutionLabel();
 
+		boolean usesSyllables;
+		
 		questionL = new JLabel(questionLabel + ":");
-		questionSL = new SolutionLabel();
+		usesSyllables = (true == Toolbox.getInstance().isTargetAsked() && Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables())
+				|| (false == Toolbox.getInstance().isTargetAsked() && Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables());
+		if (usesSyllables) {
+			questionSL = new SyllablesLabel();
+		} else {
+			questionSL = new SolutionLabel();
+		}
 		//hint
 		hintL = new JLabel("Hint:");
-		hintPL = new HintPanel(Toolbox.getInstance().isTargetAsked() && Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables());
+		usesSyllables = (false == Toolbox.getInstance().isTargetAsked() && Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables())
+				|| (true == Toolbox.getInstance().isTargetAsked() && Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables());
+		hintPL = new HintPanel(usesSyllables);
 		hintPL.registerHintObserver(this);
 		//target
 		answerL = new JLabel(answerLabel + ":");

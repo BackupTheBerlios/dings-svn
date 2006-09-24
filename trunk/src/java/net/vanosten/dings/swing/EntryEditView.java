@@ -75,7 +75,9 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private SolutionLabel entryTypeSL;
 	private JButton changeEntryTypeB;
 	private LabeledSeparator attributesLS, othersLS;
-	private InsertCharacterButtonPanel charactersP;
+	private InsertCharacterButtonPanel charactersBaseP;
+	private InsertCharacterButtonPanel charactersTargetP;
+	private SyllablesLabel syllablesBaseL;
 	private SyllablesLabel syllablesTargetL;
 
 	/** Stores the labels and ids of the available enttry types */
@@ -113,12 +115,13 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		//base
 		baseVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_BASE));
 		baseVTA.setToolTipText("May not be empty");
-		baseVTA.addKeyListener(this);
+		Document baseDocument = baseVTA.getDocument();
+		baseDocument.addDocumentListener(new SyllablesDocumentListener());
 		//target
 		targetVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		targetVTA.setToolTipText("May not be empty");
 		Document targetDocument = targetVTA.getDocument();
-		targetDocument.addDocumentListener(new TargetDocumentListener());
+		targetDocument.addDocumentListener(new SyllablesDocumentListener());
 		//entry type
 		changeEntryTypeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.change_entry_type"));
 		changeEntryTypeB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.change_entry_type").charAt(0));
@@ -199,8 +202,12 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		relationTF = new JTextField();
 		relationTF.addKeyListener(this);
 		//characters button panel
+		if (Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables()) {
+			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, Util.ACCENTS_BY_LETTERGROUP);
+			syllablesBaseL = new SyllablesLabel();
+		}
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
-			charactersP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_LETTERGROUP);
+			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_LETTERGROUP);
 			syllablesTargetL = new SyllablesLabel();
 		}
 	} //END private void initComponents()
@@ -277,25 +284,25 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		gbc.insets = vghg;
 		gbl.setConstraints(baseSP, gbc);
 		editP.add(baseSP);
-		//----target
-		gbc.gridx = 0;
-		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.anchor = GridBagConstraints.LINE_END;
-		gbc.insets = vghg;
-		gbl.setConstraints(targetL, gbc);
-		editP.add(targetL);
-		//----
-		gbc.gridx = 1;
-		gbc.gridwidth = 4;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.insets = vghg;
-		gbl.setConstraints(targetSP, gbc);
-		editP.add(targetSP);
-		//----charactersP and syllable label
-		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
+		//----charactersBaseP and syllable label
+		if (Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables()) {
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			gbc.gridwidth = 1;
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			gbc.insets = vghg;
+			gbl.setConstraints(emptyL, gbc);
+			editP.add(emptyL);
+			//----
+			gbc.gridx = 1;
+			gbc.gridwidth = 4;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			gbc.insets = vghg;
+			gbl.setConstraints(charactersBaseP, gbc);
+			editP.add(charactersBaseP);	
+			//---- syllableBaseL
 			gbc.gridx = 0;
 			gbc.gridy = 3;
 			gbc.gridwidth = 1;
@@ -310,11 +317,47 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.anchor = GridBagConstraints.LINE_START;
 			gbc.insets = vghg;
-			gbl.setConstraints(charactersP, gbc);
-			editP.add(charactersP);	
+			gbl.setConstraints(syllablesBaseL, gbc);
+			editP.add(syllablesBaseL);			
+		}
+		//----target
+		gbc.gridx = 0;
+		gbc.gridy = 4;
+		gbc.gridwidth = 1;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbc.insets = vghg;
+		gbl.setConstraints(targetL, gbc);
+		editP.add(targetL);
+		//----
+		gbc.gridx = 1;
+		gbc.gridwidth = 4;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.insets = vghg;
+		gbl.setConstraints(targetSP, gbc);
+		editP.add(targetSP);
+		//----charactersTargetP and syllable label
+		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
+			gbc.gridx = 0;
+			gbc.gridy = 5;
+			gbc.gridwidth = 1;
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			gbc.insets = vghg;
+			gbl.setConstraints(emptyL, gbc);
+			editP.add(emptyL);
+			//----
+			gbc.gridx = 1;
+			gbc.gridwidth = 4;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			gbc.insets = vghg;
+			gbl.setConstraints(charactersTargetP, gbc);
+			editP.add(charactersTargetP);	
 			//---- syllableTargetL
 			gbc.gridx = 0;
-			gbc.gridy = 4;
+			gbc.gridy = 6;
 			gbc.gridwidth = 1;
 			gbc.fill = GridBagConstraints.NONE;
 			gbc.anchor = GridBagConstraints.LINE_END;
@@ -332,7 +375,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 		//----entrytype
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 7;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -355,7 +398,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(emptyL);
 		//----attributesLS
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 8;
 		gbc.gridwidth = 5;
 		gbc.weightx = 0.0d;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -365,7 +408,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributesLS);
 		//----attributeOne
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 9;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -395,7 +438,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributeTwoCh);
 		//----attributeThree
 		gbc.gridx = 0;
-		gbc.gridy = 8;
+		gbc.gridy = 10;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -425,7 +468,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(attributeFourCh);
 		//----otherLS
 		gbc.gridx = 0;
-		gbc.gridy = 9;
+		gbc.gridy = 11;
 		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
@@ -434,7 +477,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(othersLS);
 		//----explanation
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 12;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -451,7 +494,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(explanationSP);
 		//----example
 		gbc.gridx = 0;
-		gbc.gridy = 11;
+		gbc.gridy = 13;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -468,7 +511,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(exampleSP);
 		//----pronunciation
 		gbc.gridx = 0;
-		gbc.gridy = 12;
+		gbc.gridy = 14;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -485,7 +528,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(pronunciationTF);
 		//----relation
 		gbc.gridx = 0;
-		gbc.gridy = 13;
+		gbc.gridy = 15;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -502,7 +545,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(relationTF);
 		//----unit
 		gbc.gridx = 0;
-		gbc.gridy = 14;
+		gbc.gridy = 16;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -518,7 +561,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(unitsCh);
 		//----category
 		gbc.gridx = 0;
-		gbc.gridy = 15;
+		gbc.gridy = 17;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
@@ -533,7 +576,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		editP.add(categoriesCh);
 		//----status
 		gbc.gridx = 0;
-		gbc.gridy = 16;
+		gbc.gridy = 18;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -857,7 +900,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	} //END public void setTrargetIsValueValid(boolean)
 	
 	//------------------------ Inner classes for special listeners
-	class TargetDocumentListener implements DocumentListener {
+	class SyllablesDocumentListener implements DocumentListener {
 
 		public void changedUpdate(DocumentEvent e) {
 			//nothing to do		
@@ -876,10 +919,12 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 			//because no change would be triggerde if a character gets inserted programmatically
 			onChange();
 			//update the syllables label
+			if (Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables()) {
+				syllablesBaseL.setText(baseVTA.getText());
+			}
 			if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
 				syllablesTargetL.setText(targetVTA.getText());
 			}
-		}
-		
+		}	
 	}
 } //END public class EntryEditView extends AEditView implements IEntryEditView
