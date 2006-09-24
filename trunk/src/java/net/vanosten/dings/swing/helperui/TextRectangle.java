@@ -32,6 +32,7 @@ import javax.swing.border.LineBorder;
 
 import net.vanosten.dings.swing.LearnByChoicePane;
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
+import net.vanosten.dings.utils.Util;
 
 public class TextRectangle extends JLabel implements MouseListener {
 	private final static long serialVersionUID = 1L;
@@ -47,6 +48,9 @@ public class TextRectangle extends JLabel implements MouseListener {
 	
 	/** Used as a question? */
 	private boolean question = false;
+	
+	/** Use syllables in display? */
+	private boolean usesSyllables = false;
 	
 	/** Used in memory ? */
 	private ChoiceType type;
@@ -206,12 +210,20 @@ public class TextRectangle extends JLabel implements MouseListener {
 	 */
 	@Override
 	public void setText(String text) {
-		if (0 == text.trim().indexOf("<html>")) {
-			super.setText(text.trim());
+		if (0 == text.indexOf("<html>")) {
+			super.setText(text);
 		} else {
-			super.setText("<html>" + text.trim() + "</html>");
+			if (usesSyllables) {
+				super.setText(Util.enrichSyllablesWithColor(text));
+			} else {
+				super.setText("<html>" + text.trim() + "</html>");
+			}
 		}
 	} //END public void setText(String)
+	
+	public void setUseSyllables(boolean usesSyllables) {
+		this.usesSyllables = usesSyllables;
+	}
 
 	public String getId() {
 		return id;

@@ -359,8 +359,8 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 		} else {
 			chosen = ChoiceType.MEMORY;
 		}
+		Toolbox.getInstance().setTargetAsked(targetBaseRB.isSelected());
 		learningPane.setType(chosen
-				, baseTargetRB.isSelected()
 				, ((Integer)numberOfColumnsCB.getSelectedItem()).intValue()
 				, pauseIntervalS.getValue()
 				, waitHideS.getValue());

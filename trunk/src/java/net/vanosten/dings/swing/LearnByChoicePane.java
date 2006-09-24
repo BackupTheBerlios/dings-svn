@@ -42,6 +42,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import net.vanosten.dings.utils.RandomUtil;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.model.Entry;
 import net.vanosten.dings.model.Entry.Result;
 import net.vanosten.dings.swing.helperui.TextRectangle;
@@ -68,9 +69,6 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		, MEMORY
 	}
 	private ChoiceType type = ChoiceType.SET;
-	
-	/** The learning direction */
-	private boolean baseToTargetDirection = true;
 	
 	/** The number of columns for MULTI */
 	private int numberOfColumns;
@@ -149,9 +147,8 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 		this.addMouseMotionListener(this);
 	} //END public LearnByChoicePane()
 	
-	public void setType(ChoiceType type, boolean baseToTarget, int numberOfColumns, int pauseInterval, int waitHide) {
+	public void setType(ChoiceType type, int numberOfColumns, int pauseInterval, int waitHide) {
 		this.type = type;
-		this.baseToTargetDirection = baseToTarget;
 		this.numberOfColumns = numberOfColumns;
 		this.pauseInterval = pauseInterval;
 		this.waitHide = waitHide;
@@ -175,11 +172,15 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 			rectQuestion = new TextRectangle(this);
 			rectAnswer.setQuestion(false);
 			rectQuestion.setQuestion(true);
-			if (baseToTargetDirection) {
+			if (false == Toolbox.getInstance().isTargetAsked()) {
+				rectAnswer.setUseSyllables(Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables());
 				rectAnswer.setText(entries[i].getTarget());
+				rectQuestion.setUseSyllables(Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables());
 				rectQuestion.setText(entries[i].getBase());
 			} else {
+				rectAnswer.setUseSyllables(Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables());
 				rectAnswer.setText(entries[i].getBase());
+				rectQuestion.setUseSyllables(Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables());
 				rectQuestion.setText(entries[i].getTarget());
 			}
 			rectAnswer.setId(entries[i].getId());
