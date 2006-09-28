@@ -109,6 +109,7 @@ public class DingsSwingConstants {
 
 	//home grown
 	public final static String IMG_DINGS_32 = "dings32.png";
+	public final static String IMG_DINGS_128 = "dings128.png";
 
 	//Nuvola images
 	//menu items

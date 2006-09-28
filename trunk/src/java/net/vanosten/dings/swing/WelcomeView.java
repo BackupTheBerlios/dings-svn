@@ -21,6 +21,7 @@
  */
 package net.vanosten.dings.swing;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -58,14 +59,25 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		mainP.setLayout(mgbl);
 
 		JLabel label = new JLabel(Toolbox.getInstance().getLocalizedString("text.welcome_view.howto"));
+		JLabel logo = new JLabel();
+		ImageIcon logoImg = DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DINGS_128, "FIXME");
+		logo.setIcon(logoImg);
 
 		//make the gui
 		mgbc.weightx = 1.0;
-		mgbc.weighty = 1.0;
+		mgbc.weighty = 0.0;
 		mgbc.fill = GridBagConstraints.HORIZONTAL;
 		mgbc.anchor = GridBagConstraints.PAGE_START;
 		mgbl.setConstraints(label, mgbc);
 		mainP.add(label);
+		//the logo
+		mgbc.weightx = 0.0;
+		mgbc.weighty = 1.0;
+		mgbc.gridy = 1;
+		mgbc.anchor = GridBagConstraints.CENTER;
+		mgbc.fill = GridBagConstraints.VERTICAL;
+		mgbl.setConstraints(logo, mgbc);
+		mainP.add(logo);
 	} //END protected void initializeMainP()
 
 	//implements AViewWithButtons

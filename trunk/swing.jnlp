@@ -9,8 +9,7 @@
 		<vendor>vanosten.net</vendor>
 		<homepage href="http://dingsbums.vanosten.net/"/>
 		<description>DingsBums?! flashcard application</description>
-		<icon href="images/swingset2.jpg"/>
-		<icon kind="splash" href="images/splash.gif"/>
+		<icon href="logo.gif"/>
 		<offline-allowed/>
 		<shortcut online="false">
 			<desktop/>
