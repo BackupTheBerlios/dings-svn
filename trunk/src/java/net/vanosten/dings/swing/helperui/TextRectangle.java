@@ -20,12 +20,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 package net.vanosten.dings.swing.helperui;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
@@ -34,7 +36,7 @@ import net.vanosten.dings.swing.LearnByChoicePane;
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
 import net.vanosten.dings.utils.Util;
 
-public class TextRectangle extends JLabel implements MouseListener {
+public class TextRectangle extends JPanel {
 	private final static long serialVersionUID = 1L;
 	
 	/** The parent component in charge of drawing etc. */
@@ -54,6 +56,19 @@ public class TextRectangle extends JLabel implements MouseListener {
 	
 	/** Used in memory ? */
 	private ChoiceType type;
+	
+	/** Shows the text etc */
+	private JLabel displayL;
+	
+	/** The text to display. Can be enriched with html */
+	private String text;
+	
+	/**
+	 * The text to display when type == MEMORY and text should be invisible 
+	 * This is needed because the text could have syllables in which case setting
+	 * the foreground color to the background color does not work.
+	 */
+	private String textInvisible;
 	
 	//the card background
 	private final static Color BG_OUT = Color.yellow;
@@ -77,9 +92,9 @@ public class TextRectangle extends JLabel implements MouseListener {
 	private final static Color FG_M_OUT = BG_OUT; //must be the same as BG_OUT
 	private final static Color FG_M_IN = BG_IN; //must be the same as BG_IN
 	private final static Color FG_M_CHOSEN = BG_CHOSEN; //must be the same as BG_CHOSEN
-	private final static Color FG_M_CORRECT_RESULT = Color.white;
-	private final static Color FG_M_WRONG_RESULT = Color.white;
-	private final static Color FG_M_QUESTION = Color.black;
+	private final static Color FG_M_CORRECT_RESULT = FG_CORRECT_RESULT;
+	private final static Color FG_M_WRONG_RESULT = FG_WRONG_RESULT;
+	private final static Color FG_M_QUESTION = FG_QUESTION; //actually not used
 	/** True if the mouse is within this Shape */
 	private Color[] foregroundMemory = {FG_M_OUT, FG_M_IN, FG_M_CHOSEN, FG_M_CORRECT_RESULT, FG_M_WRONG_RESULT, FG_M_QUESTION};
 
@@ -95,11 +110,17 @@ public class TextRectangle extends JLabel implements MouseListener {
 	
 	public TextRectangle(LearnByChoicePane parent) {
 		this.parent = parent;
-		this.addMouseListener(this);
-		this.setOpaque(true); //otherwise the background is not painted
+		this.addMouseListener(new TextRectangleListener());
+		
+		displayL = new JLabel();
+		//displayL.addMouseListener(new TextRectangleListener());
+		displayL.setOpaque(true); //otherwise the background is not painted
+		displayL.setHorizontalAlignment(SwingConstants.CENTER);
+		displayL.setVerticalAlignment(SwingConstants.CENTER);		
+		this.setLayout(new BorderLayout());
+		this.add(displayL, BorderLayout.CENTER);
+		
 		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
-		this.setHorizontalAlignment(SwingConstants.CENTER);
-		this.setVerticalAlignment(SwingConstants.CENTER);
 		setLineBorder(Color.black, 3);
 	} //END public TextRectangle(JComponent)
 	
@@ -135,19 +156,24 @@ public class TextRectangle extends JLabel implements MouseListener {
 	 * foreground color is used.
 	 */
 	private void changeAppearance() {
-		this.setBackground(background[status.ordinal()]);
 		if (ChoiceType.MEMORY == type) {
-			if (Status.CORRECT_RESULT == status) {
-				//do nothing as this gets overridden by setMemoryColorForCorrect(int)
-			} else {	
-				this.setForeground(foregroundMemory[status.ordinal()]);
-				this.setBackground(background[status.ordinal()]);
+			if (Status.CORRECT_RESULT == status || Status.CHOSEN == status) {
+				displayL.setText(text);
+			} else {
+				displayL.setText(textInvisible);
 			}
+			displayL.setForeground(foregroundMemory[status.ordinal()]);
 		} else {
-			this.setForeground(foreground[status.ordinal()]);
-			this.setBackground(background[status.ordinal()]);
+			displayL.setForeground(foreground[status.ordinal()]);
 		}
+		//change the background color
+		changeBackground(background[status.ordinal()]);
 	} //END private void changeAppearance()
+	
+	private void changeBackground(Color bgColor) {
+		displayL.setBackground(bgColor);
+		this.setBackground(bgColor);
+	}
 	
 	/**
 	 * Sets the color of the border and the text different for each
@@ -155,71 +181,32 @@ public class TextRectangle extends JLabel implements MouseListener {
 	 * @param Color 
 	 */
 	public void setColorForPair(Color fg) {
-		this.setBackground(Color.white);
+		changeBackground(Color.white);
 		this.setLineBorder(fg, 5);
-		this.setForeground(fg);
+		displayL.setForeground(fg);
 	} //END public void setColorForPair(Color)
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
-	 */
-	public void mouseClicked(MouseEvent e) {
-		changeStatus(Status.CHOSEN, true);
-	} //END public void mouseClicked(MouseEvent)
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
-	 */
-	public void mouseEntered(MouseEvent e) {
-		changeStatus(Status.IN, true);
-	} //END public void mouseEntered(MouseEvent)
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
-	 */
-	public void mouseExited(MouseEvent e) {
-		changeStatus(Status.OUT, true);
-	} //END public void mouseExited(MouseEvent)
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
-	 */
-	public void mousePressed(MouseEvent e) {
-		//do nothing
-	} //END public void mousePressed(MouseEvent)
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
-	 */
-	public void mouseReleased(MouseEvent e) {
-		//do nothing
-	} //END public void mouseReleased(MouseEvent)
-
-	//implements MouseMotionListener
-	public void mouseDragged(MouseEvent e) {
-		//do nothing
-	} //END public void mouseDragged(MouseEvent)
-
-	//implements MouseMotionListener
-	public void mouseMoved(MouseEvent e) {
-		//do nothing		
-	} //END public void mouseMoved(MouseEvent)
 
 	/**
 	 * Sets the text to contain html tags in order to have the text wrap etc
 	 */
-	@Override
-	public void setText(String text) {
-		if (0 == text.indexOf("<html>")) {
-			super.setText(text);
+	public void setText(String aText) {
+		if (0 == aText.indexOf("<html>")) {
+			this.text = aText;
+			this.textInvisible = aText;
 		} else {
 			if (usesSyllables) {
-				super.setText(Util.enrichSyllablesWithColor(text));
+				this.text = Util.enrichSyllablesWithColor(aText);
 			} else {
-				super.setText("<html>" + text.trim() + "</html>");
+				this.text = Util.enrichStringWithHTML(aText.trim());
 			}
+			this.textInvisible = Util.enrichStringWithHTML(aText.trim());
 		}
+		displayL.setText(text);
 	} //END public void setText(String)
+	
+	public String getText() {
+		return text;
+	}
 	
 	public void setUseSyllables(boolean usesSyllables) {
 		this.usesSyllables = usesSyllables;
@@ -249,5 +236,54 @@ public class TextRectangle extends JLabel implements MouseListener {
 		this.type = type;
 		this.changeStatus(Status.OUT, false); //set the status and implicitely set background and foreground
 	} //END public void setType(ChoiceType)
+	
+	//------------------------ Inner classes for special listeners
+	class TextRectangleListener implements MouseListener {
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+		 */
+		public void mouseClicked(MouseEvent e) {
+			changeStatus(Status.CHOSEN, true);
+		} //END public void mouseClicked(MouseEvent)
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+		 */
+		public void mouseEntered(MouseEvent e) {
+			changeStatus(Status.IN, true);
+		} //END public void mouseEntered(MouseEvent)
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+		 */
+		public void mouseExited(MouseEvent e) {
+			changeStatus(Status.OUT, true);
+		} //END public void mouseExited(MouseEvent)
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+		 */
+		public void mousePressed(MouseEvent e) {
+			//do nothing
+		} //END public void mousePressed(MouseEvent)
+
+		/* (non-Javadoc)
+		 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+		 */
+		public void mouseReleased(MouseEvent e) {
+			//do nothing
+		} //END public void mouseReleased(MouseEvent)
+
+		//implements MouseMotionListener
+		public void mouseDragged(MouseEvent e) {
+			//do nothing
+		} //END public void mouseDragged(MouseEvent)
+
+		//implements MouseMotionListener
+		public void mouseMoved(MouseEvent e) {
+			//do nothing		
+		} //END public void mouseMoved(MouseEvent)		
+	}
 
 } //END public class TextRectangle extends JLabel implements MouseListener

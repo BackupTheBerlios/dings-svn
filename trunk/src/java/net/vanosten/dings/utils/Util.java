@@ -212,8 +212,13 @@ public class Util {
 		return sb.toString();
 	}
 	
+	/**
+	 * @param text
+	 * @param aColor
+	 * @return the input text surrounded by html 3.2 font tag including the color as a hexadecimal string
+	 */
 	public final static String enrichStringWithHTMLFontStyle(String text, Color aColor) {
-		StringBuilder sb = new StringBuilder(27-text.length());
+		StringBuilder sb = new StringBuilder(27+text.length());
 		sb.append("<font color=");
 		sb.append(convertColorToHexString(aColor));
 		sb.append(">");
@@ -223,4 +228,14 @@ public class Util {
 		return sb.toString();
 	}
 	
+	/**
+	 * 
+	 * @param text
+	 * @return the input text surrounded by a html-tag
+	 */
+	public final static String enrichStringWithHTML(String text) {
+		StringBuilder sb = new StringBuilder(13+text.length());
+		sb.append("<html>").append(text).append("</html>");
+		return sb.toString();
+	}
 }
