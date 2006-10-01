@@ -24,16 +24,29 @@ entitled "GNU Free Documentation License".
 			<p>You need a Java Virtual Machine (JVM) 1.5 or higher to run the program.</p>
 			<p>If you are in doubt of what this means, then please read the section <a href="#java">&quot;Testing for and installing a Java Virtual Machine&quot;</a> below.</p>
 		</section>
-		<section id="download">
-			<title>Download</title>
-			<p>The newest version of the program can be downloaded from the <a href="http://developer.berlios.de/project/showfiles.php?group_id=844">files section</a> of the project website.</p>
-			<p>Alternatively you can get access to the newest untested code in the <a href="http://developer.berlios.de/svn/?group_id=844">version control system</a>.</p>
+		<section id="easyinstallation">
+			<title>Easy Installation</title>
+			<p>The easiest way to install the application and also keeping it up to date is to launch the application by pressing the buttom below. This will automatically download the application, launch it, give you the opportunity to define a desktop or menu shortcut and check for updates each time the application is launched.</p>
+			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
+			<p>Behind the scenes this uses <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology</a>. Using this link you will get</p>
+			<ul>
+				<li>a security warning that the security certificate was issued by a company that is not trusted. This is because I do not have the money to buy an expensive certificate from an official certification authoroty. If you do not trust this, you have always the possibility to do a basic install (as described below) or compile the application from the sources.</li>
+				<li>a dialog asking whether you want to create menu and desktop shortcuts</li>
+			</ul>
 		</section>
-		<section id="installation">
-			<title>Running and Installation</title>
-			<p>Unfortunately at the moment there is no sophisticated way to install and run <code>DingsBums?!</code>.</p>
-			<p>Unpack the zip-file you downloaded and place the contents into a directory, where you have read/write access.</p>
-			<p>On <a href="http://www.apple.com/macosx">Mac OS X</a> and eventually on <a href="http://www.microsoft.com/windows">Microsoft Windows</a> you can simply double-click the dingsbums.jar file to launch the application. All others have to get a command prompt (see below how to do that), change to the directory containing the application and then type the following: <code>java -jar dingsbums.jar</code>.</p>
+		<section id="basicinstallation">
+			<title>Basic Installation</title>
+			<section id="download">
+				<title>Download</title>
+				<p>The newest version of the program can be downloaded from the <a href="http://developer.berlios.de/project/showfiles.php?group_id=844">files section</a> of the project website.</p>
+				<p>Alternatively you can get access to the newest untested code in the <a href="http://developer.berlios.de/svn/?group_id=844">version control system</a>.</p>
+			</section>
+			<section id="installation">
+				<title>Running and Installation</title>
+				<p>Unfortunately at the moment there is no sophisticated way to install and run <code>DingsBums?!</code>.</p>
+				<p>Unpack the zip-file you downloaded and place the contents into a directory, where you have read/write access.</p>
+				<p>On <a href="http://www.apple.com/macosx">Mac OS X</a> and eventually on <a href="http://www.microsoft.com/windows">Microsoft Windows</a> you can simply double-click the dingsbums.jar file to launch the application. All others have to get a command prompt (see below how to do that), change to the directory containing the application and then type the following: <code>java -jar dingsbums.jar</code>.</p>
+			</section>
 		</section>
 		<section id="samples">
 			<title>Samples</title>

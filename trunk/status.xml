@@ -21,6 +21,10 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
+		<release version="0.4.3 (svn 74)" date="2006-09-30">
+			<action type="add" context="feature" dev="vanosten">Added support for syntax highlighting of syllables, e.g. for <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
+			<action type="add" context="feature" dev="vanosten">Simplified installation based on <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology.</a></action>
+		</release>
 		<release version="0.4.2 (svn 55)" date="2006-07-02">
 			<action type="add" context="feature" dev="vanosten">The answer when learning one by one can now be checked by the program according to settings for case sensitivity etc. in the preferences.</action>
 			<action type="update" context="feature" dev="vanosten">Reduced the nmber of visibility options in the learning stack properties.</action>
@@ -88,14 +92,17 @@ entitled "GNU Free Documentation License".
 	<todo>
 		<actions priority="next release">
 			<action context="code" dev="vanosten">Check answer: documentation</action>
-			<action context="other" dev="vanosten">Promote application in wikipedia.com, wikipedia.de, freshmeat.</action>
+			<action context="code" dev="vanosten">Use accent caron instead of breve (see http://pinyin.info)</action>
+			<action context="code" dev="vanosten">Learn multi Memory syllables when chosen</action>
 			<action context="other" dev="vanosten">Update berlios.de error todo</action>
+			<action context="feature" dev="vanosten">Import entries from other stack</action>
+			<action context="code" dev="vanosten">Hide hidden fields in edit mode</action>
 		</actions>
 		<actions priority="high">
+			<action context="other" dev="vanosten">Submit to rating in http://www.quingle.com/softarea/flash-su.htm</action>
 			<action context="feature" dev="vanosten">Make sure that learning results (scores) are reflected in the selection for learning by choice</action>
 			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
 			<action context="feature" dev="vanosten">LearnByChoicePane should support preference for colors.</action>
-			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
 			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics. Begin with PropertiesEditview</action>
 			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
 			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
@@ -119,6 +126,7 @@ entitled "GNU Free Documentation License".
 		</actions>
 		<actions priority="low">
 			<!-- GUI -->
+			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
 			<action context="gui" dev="vanosten">Show EntryType in EntryEdit or LearnOne only if more than one EntryType.</action>
 			<action context="gui" dev="vanosten">Change the alignment of the column header to match the alignment of the cell contents in ListViews.</action>
 			<action context="gui" dev="vanosten">Adapt Insets to text orientation</action>

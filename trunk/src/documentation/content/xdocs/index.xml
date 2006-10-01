@@ -22,13 +22,14 @@ entitled "GNU Free Documentation License".
 		<section id="about">
 			<title>About</title>
 			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning tool that can be used for any kind of content, which can be memorized using flashcards, including vocabularies. <code>Dingsbums?!</code>aims to be an application which makes memorizing both fun and efficient.</p>
-			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away.</p>
+			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away. If you have Java installed just press the launch button below:</p>
+			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
 			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
 		</section>
 		<section id="evaluating">
 			<title>Is this for you?</title>
-			<p><code>DingsBums?!</code> is written with flexibility in mind. So it can be adapted to many different needs. It is open source and you can therefore try and later use it free of charge. If you miss a feature in the current version, then there is a chance that it is on the <a href="todo.html">todo list</a> or a <a href="site:features">planned feature</a>.</p>
+			<p><code>DingsBums?!</code> is written with flexibility in mind. So it can be adapted to many different needs. It is open source and you can therefore try and later use it free of charge. If you miss a feature in the current version, then there is a chance that it is a <a href="site:features">planned feature</a>.</p>
 			<p><code>DingsBums?!</code> is for you if:</p>
 			<ul>
 				<li>you want to be able to memorize stuff in the classical way (item by item)</li>
@@ -39,6 +40,7 @@ entitled "GNU Free Documentation License".
 				<li>you want to define the learning items yourself - no matter whether you are learning the stuff or you are a teacher.</li>
 				<!--<li>a mixture of languages and bi-directional text is a must-have.</li>  -->
 				<li>you want to be able to learn in both directions. E.g. in a French - English learning stack you can test both from French to English and from English to French.</li>
+				<li>you need support for <a href="site:syllables">syntax highlighting of syllables</a>, e.g. for simplified Chinese using <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></li>
 			</ul>
 			<p><code>DingsBums?!</code> in its current form and within the next releases is not for you if:</p>
 			<ul>
@@ -52,15 +54,15 @@ entitled "GNU Free Documentation License".
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="site:links">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title><code>DingsBums?!</code> 0.4.2 released</title>
-			<p>Version 0.4.2 is a minor update in the 0.4.x series. The most important two new features are:</p>
+			<title><code>DingsBums?!</code> 0.4.3 released</title>
+			<p>Version 0.4.3 is a minor update in the 0.4.x series. The most important two new features are:</p>
 			<ol>
-				<li>The answer when learning one by one can now be checked by the program according to settings for case sensitivity etc. in the preferences.</li>
-				<li>The base, target, explanation and example fields in entry can now have multiple lines, the number of which can be configured in preferences.</li>
+				<li>Added support for syntax highlighting of syllables, e.g. for <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></li>
+				<li>Simplified installation based on <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology.</a></li>
 			</ol>
 			<p>See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
 			<p>The next major release will support pictures and figures besides text for the target information.</p>
-			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then please have a look at the <a href="site:features">features</a> and <a href="site:todo">todo</a> lists. Feel free to <a href="site:contact">contact</a> me.</p>
+			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then please have a look at the <a href="site:features">features</a> list. Feel free to <a href="site:contact">contact</a> me.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>
 	</body>

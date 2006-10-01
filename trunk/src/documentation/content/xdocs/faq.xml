@@ -94,12 +94,6 @@ entitled "GNU Free Documentation License".
 	<!-- Technical Questions -->
 	<faqsection id="technical">
 		<title>Technical Questions</title>
-		<faq id="installer">
-			<question>Isn't there an easier way to install and run the application?</question>
-			<answer>
-				<p>Unfortuantely I cannot provide installers at the moment. Partly due to the fact, that I do not own e.g. a Mac, and partly because I did not invest time into it (e.g. for Windows). However this is part of the <a href="site:todo">todo</a> list. And any help is naturally welcome!</p>
-			</answer>
-		</faq>
 		<faq id="java">
 			<question>Why is Java mentioned all the time? Why do I have to bother?</question>
 			<answer>

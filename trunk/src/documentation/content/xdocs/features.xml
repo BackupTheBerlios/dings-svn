@@ -42,8 +42,8 @@ entitled "GNU Free Documentation License".
 				</li>
 				<li>The program can compare the answer given by you with the definition.</li>
 				<li>An intelligent <a href="site:learningalgo">learning algorithm</a> that shows those entries, which you do not know that well, most often. The main idea is that you earn a point, whenever you know the word, loose a point when you do not know it. And you neither loose or earn, when you remember the word only after having received a hint.</li>
-				<li>Create new flashcard training stacks (e.g. vocabulary list) from scratch.</li>
 				<li>Use units and categories to organize the entries / cards (also referred to as &quot;global attributes&quot;).</li>
+				<li>Support for <a href="site:syllables">syntax highlighting of syllables</a>, e.g. for simplified Chinese using <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></li>
 				<li>The possibility to define your own entry types with grammatical attributes. E.g. gender and plural for nouns in a language like French. Assign an entry type to each entry. Based on the entry type different attributes will be handled (also referred to as &quot;type attributes&quot;).</li>
 				<li>The entry types of existing entries can be changed.</li>
 				<li>Entry type attribute items can be edited and a default assigned to each entry type attribute. The entry type attributes can be freely assigned to entry types.</li>

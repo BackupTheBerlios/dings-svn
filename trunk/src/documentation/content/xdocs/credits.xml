@@ -21,7 +21,10 @@ entitled "GNU Free Documentation License".
 	<body>
 		<section id="contributors">
 			<title>Contributions</title>
-			<p>Until now <code>DingsBums?!</code> has been a one man show - unfortunately :-( Find out how you can <a href="contribute.html">contribute</a>.</p>
+			<p>Until now <code>DingsBums?!</code> has mainly been a one man show - unfortunately. Find out how you can <a href="contribute.html">contribute</a>.</p>
+			<ul>
+				<li>Roman Habrik has given the idea and guidelines for <a href="site:syllables">syntax highlighting of syllables</a> (especially for <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a>)</li>
+			</ul>
 		</section>
 		<section id="libraries">
 			<title>External Libraries</title>
