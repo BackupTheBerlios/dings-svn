@@ -113,34 +113,31 @@ public class Util {
 	public final static String ACIRCUMFLEX = "â";
 	public final static String AMACRON = "ā";
 	public final static String ABREVE = "ă";
+	public final static String ACARON = "ǎ";
 	public final static String EGRAVE = "è";
 	public final static String EACUTE = "é";
 	public final static String ECIRCUMFLEX = "ê";
 	public final static String EMACRON = "ē";
 	public final static String EBREVE = "ĕ";
+	public final static String ECARON = "ě";
 	public final static String IGRAVE = "ì";
 	public final static String IACUTE = "í";
 	public final static String ICIRCUMFLEX = "î";
 	public final static String IMACRON = "ī";
 	public final static String IBREVE = "ĭ";
+	public final static String ICARON = "ǐ";
 	public final static String OGRAVE = "ò";
 	public final static String OACUTE = "ó";
 	public final static String OCIRCUMFLEX = "ô";
 	public final static String OMACRON = "ō";
 	public final static String OBREVE = "ŏ";
+	public final static String OCARON = "ǒ";
 	public final static String UGRAVE = "ù";
 	public final static String UACUTE = "ú";
 	public final static String UCIRCUMFLEX = "û";
 	public final static String UMACRON = "ū";
 	public final static String UBREVE = "ŭ";
-	
-	public final static String[][] ACCENTS_BY_LETTERGROUP = {
-		{AGRAVE,AACUTE,ACIRCUMFLEX,AMACRON,ABREVE}
-		, {EGRAVE,EACUTE,ECIRCUMFLEX,EMACRON,EBREVE}
-		, {IGRAVE,IACUTE,ICIRCUMFLEX,IMACRON,IBREVE}
-		, {OGRAVE,OACUTE,OCIRCUMFLEX,OMACRON,OBREVE}
-		, {UGRAVE,UACUTE,UCIRCUMFLEX,UMACRON,UBREVE}
-	};
+	public final static String UCARON = "ǔ";
 	
 	public final static String[][] ACCENTS_BY_ACCENTGROUP = {
 		{AGRAVE,EGRAVE,IGRAVE,OGRAVE,UGRAVE}
@@ -148,6 +145,7 @@ public class Util {
 		, {ACIRCUMFLEX,ECIRCUMFLEX,ICIRCUMFLEX,OCIRCUMFLEX,UCIRCUMFLEX}
 		, {AMACRON,EMACRON,IMACRON,OMACRON,UMACRON}
 		, {ABREVE,EBREVE,IBREVE,OBREVE,UBREVE}
+		, {ACARON,ECARON,ICARON,OCARON,UCARON}
 	};
 	
 	public final static String[] COLOR_BY_ACCENTGROUP = {
@@ -156,6 +154,7 @@ public class Util {
 		, Preferences.PROP_SYLLABLE_COLOR_CIRCUMFLEX
 		, Preferences.PROP_SYLLABLE_COLOR_MACRON
 		, Preferences.PROP_SYLLABLE_COLOR_BREVE
+		, Preferences.PROP_SYLLABLE_COLOR_CARON
 	};
 	
 	/**

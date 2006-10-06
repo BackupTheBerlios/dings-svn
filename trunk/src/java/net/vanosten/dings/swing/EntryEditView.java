@@ -203,11 +203,11 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		relationTF.addKeyListener(this);
 		//characters button panel
 		if (Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables()) {
-			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, Util.ACCENTS_BY_LETTERGROUP);
+			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, Util.ACCENTS_BY_ACCENTGROUP);
 			syllablesBaseL = new SyllablesLabel();
 		}
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
-			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_LETTERGROUP);
+			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_ACCENTGROUP);
 			syllablesTargetL = new SyllablesLabel();
 		}
 	} //END private void initComponents()

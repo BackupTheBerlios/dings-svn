@@ -135,6 +135,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JButton circumflexChangeB;
 	private JButton macronChangeB;
 	private JButton breveChangeB;
+	private JButton caronChangeB;
 	private JButton defaultChangeB;
 
 	/**
@@ -811,6 +812,13 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 				showColorChooser(breveChangeB);
 			}
 		});
+		caronChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_caron"));
+		caronChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_caron")).charAt(0));
+		caronChangeB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				showColorChooser(caronChangeB);
+			}
+		});
 		defaultChangeB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.syllable_default"));
 		defaultChangeB.setMnemonic((Toolbox.getInstance().getLocalizedString("mnemonic.button.syllable_default")).charAt(0));
 		defaultChangeB.addActionListener(new ActionListener() {
@@ -830,10 +838,11 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 					.add(circumflexChangeB)
 					.add(macronChangeB)
 					.add(breveChangeB)
+					.add(caronChangeB)
 					.add(defaultChangeB)
 			)
 		);
-		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,macronChangeB,breveChangeB,defaultChangeB}, GroupLayout.HORIZONTAL);
+		layout.linkSize(new Component[] {acuteChangeB,graveChangeB,circumflexChangeB,macronChangeB,breveChangeB,caronChangeB,defaultChangeB}, GroupLayout.HORIZONTAL);
 
 		layout.setVerticalGroup(layout.createSequentialGroup()
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(acuteChangeB))
@@ -845,6 +854,8 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(macronChangeB))
 			.addPreferredGap(LayoutStyle.UNRELATED)
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(breveChangeB))
+			.addPreferredGap(LayoutStyle.UNRELATED)
+			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(caronChangeB))
 			.addPreferredGap(LayoutStyle.UNRELATED)
 			.add(layout.createParallelGroup(GroupLayout.BASELINE).add(defaultChangeB))
 		);
@@ -1192,6 +1203,16 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	public void setSyllableColorBreve(Color aColor) {
 		isUpdating = true;
 		breveChangeB.setForeground(aColor);
+		isUpdating = false;
+	}
+
+	public Color getSyllableColorCaron() {
+		return caronChangeB.getForeground();
+	}
+
+	public void setSyllableColorCaron(Color aColor) {
+		isUpdating = true;
+		caronChangeB.setForeground(aColor);
 		isUpdating = false;
 	}
 
