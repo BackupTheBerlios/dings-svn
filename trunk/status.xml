@@ -21,6 +21,12 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
+		<release version="0.4.4 (svn ??)" date="2006-10-09">
+			<action type="add" context="feature" dev="vanosten">Support for accent caron in syllables highlighting for e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
+			<action type="add" context="feature" dev="vanosten">Support for character input panel for syllables in learn one by one view.</action>
+			<action type="update" context="feature" dev="vanosten">About dialog now has version information and product icon.</action>
+			<action type="update" context="other" dev="vanosten">Parametrized version information in window title and startup information.</action>
+		</release>
 		<release version="0.4.3 (svn 74)" date="2006-09-30">
 			<action type="add" context="feature" dev="vanosten">Added support for syntax highlighting of syllables, e.g. for <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
 			<action type="add" context="feature" dev="vanosten">Simplified installation based on <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology.</a></action>

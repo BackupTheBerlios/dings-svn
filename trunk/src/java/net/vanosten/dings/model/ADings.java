@@ -24,6 +24,7 @@ package net.vanosten.dings.model;
 import java.io.File;
 import java.util.Date;
 import java.text.DateFormat;
+import java.text.MessageFormat;
 
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
@@ -44,13 +45,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 
 public abstract class ADings implements IAppEventHandler {
-
-	/** The version of the dataformat */
-	public final static String dataVersion = "3";
-
-	/** The minimal JVM version to run the application */
-	private final static String MIN_JVM_VERSION = "1.5";
-
 	/** Holds the units */
 	private UnitsCollection units;
 
@@ -114,7 +108,7 @@ public abstract class ADings implements IAppEventHandler {
 
 
 		this.initializeGUI();
-		mainWindow.setApplicationTitle("DingsBums?!");
+		setMainwindowTitle(null);
 
 		//add the first view which is always the view GO
 		AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
@@ -140,21 +134,23 @@ public abstract class ADings implements IAppEventHandler {
 						, "Arguments: " + args.toString());
 			}
 			//the following code for checking the version is partly taken from JOnAS
+			String reqVer = Toolbox.getInstance().getLocalizedString("application.jvmversion");
 			try {
 				Package p = Package.getPackage("java.lang");
 				String implVer = p.getImplementationVersion();
 				String specVer = p.getSpecificationVersion();
+				Object[] objects = {implVer,specVer,reqVer}; 
 				if (logger.isLoggable(Level.FINEST)) {
 					logger.logp(Level.FINEST, this.getClass().getName(), "checkMainArgs()"
-							, "Java version: " + implVer + "; spec version: " + specVer);
+							, MessageFormat.format(Toolbox.getInstance().getLocalizedString("application.jvm_installed"),objects));
 				}
-				if (!p.isCompatibleWith(MIN_JVM_VERSION)) {
-					System.err.println("DingsBums?! requires a 1.5 JVM or higher. \n"
-							+ "Current JVM implementation version is '" + implVer + "' with specification '" + specVer + "'");
+				if (!p.isCompatibleWith(reqVer)) {
+					System.err.println(MessageFormat.format(Toolbox.getInstance().getLocalizedString("application.jvm_test_incompatible"), objects));
 					System.exit(0);
 				}
 			} catch (NumberFormatException nfe) {
-				System.err.println("Cannot detect the running JVM version. Note that DingsBums?! requires a 1.5 or higher JVM.");
+				Object[] objects = {reqVer};
+				System.err.println(MessageFormat.format(Toolbox.getInstance().getLocalizedString("application.jvm_test_unknown"),objects));
 			}
 
 			//check arguments
@@ -527,7 +523,7 @@ public abstract class ADings implements IAppEventHandler {
 			currentVocabFileName = null;
 			vocabOpened = false;
 			setSaveNeeded(false);
-			mainWindow.setApplicationTitle("DingsBums?!");
+			setMainwindowTitle(null);
 
 			//everything went fine, so retrun true
 			return true;
@@ -563,7 +559,7 @@ public abstract class ADings implements IAppEventHandler {
 		currentVocabFileName = aFileName;
 		Toolbox.getInstance().getPreferencesPointer().updateFileHistory(aFileName, true);
 		mainWindow.setFileHistory(Toolbox.getInstance().getPreferencesPointer().getFileHistoryPaths());
-		mainWindow.setApplicationTitle(aFileName + " - Dingsbums?!");
+		setMainwindowTitle(aFileName);
 	} //END private void setVocabularyFileName(String)
 
 	/**
@@ -846,7 +842,7 @@ public abstract class ADings implements IAppEventHandler {
 				writer.setVocabularyFile(currentVocabFileName, Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.FILE_ENCODING));
 
 				//set the XML strings
-				writer.setXMLElements(dataVersion, units.getXMLString()
+				writer.setXMLElements(Toolbox.getInstance().getLocalizedString("application.dataversion"), units.getXMLString()
 								, categories.getXMLString()
 								, entries.getXMLString()
 								, entryTypes.getXMLString()
@@ -1010,4 +1006,18 @@ public abstract class ADings implements IAppEventHandler {
 		//set the strings in the status bar
 		mainWindow.setStatusBarStatusText(theStatus, theSelection.toString());
 	} //END private void updateStatusBarStatus(String)
+	
+	/**
+	 * Sets the title in the window bar of the main window
+	 * @param filePath
+	 */
+	private void setMainwindowTitle(String filePath) {
+		String appName = Toolbox.getInstance().getLocalizedString("application.name");
+		if (null == filePath) {
+			mainWindow.setApplicationTitle(appName);
+		} else {
+			Object[] args = {filePath,appName};
+			mainWindow.setApplicationTitle(MessageFormat.format(Toolbox.getInstance().getLocalizedString("application.title_long"),args));
+		}
+	}
 } //END public abstract class ADings extends IAppEventHandler

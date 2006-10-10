@@ -50,11 +50,11 @@ public class InsertCharacterButtonPanel extends JPanel {
 	 * @param aTextArea
 	 * @param characters a two dinensional array of Strings, where characters are grouped
 	 */
-	public InsertCharacterButtonPanel(JTextComponent textComponent, String[][] characters) {
-		constructPanel(textComponent, characters);
+	public InsertCharacterButtonPanel(JTextComponent textComponent, String[][] characters, String[][] tooltips) {
+		constructPanel(textComponent, characters, tooltips);
 	}
 	
-	private void constructPanel(JTextComponent textComponent, String[][] characters) {
+	private void constructPanel(JTextComponent textComponent, String[][] characters, String[][] tooltips) {
 		//make the gui
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);		
@@ -71,7 +71,7 @@ public class InsertCharacterButtonPanel extends JPanel {
 				if (0 != j) {
 					horizontal.addPreferredGap(LayoutStyle.RELATED);
 				}
-				tempB = createButton(characters[i][j], textComponent);
+				tempB = createButton(characters[i][j], tooltips[i][j], textComponent);
 				buttons.add(tempB);
 				horizontal.add(tempB);
 				vertical.add(tempB);
@@ -89,8 +89,9 @@ public class InsertCharacterButtonPanel extends JPanel {
 		layout.setVerticalGroup(vertical);
 	}
 	
-	private JButton createButton(final String label, final JTextComponent textComponent) {
+	private JButton createButton(final String label, final String tooltip, final JTextComponent textComponent) {
 		JButton aButton = new JButton(label);
+		aButton.setToolTipText(tooltip);
 		aButton.setMargin(new Insets(0,0,0,0));
 		aButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {

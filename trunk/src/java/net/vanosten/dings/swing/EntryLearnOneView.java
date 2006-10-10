@@ -21,40 +21,45 @@
  */
 package net.vanosten.dings.swing;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
-import javax.swing.ScrollPaneConstants;
-
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.event.AppEvent;
+import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
-import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.model.Entry.Result;
+import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.HintObserver;
 import net.vanosten.dings.swing.helperui.HintPanel;
-import net.vanosten.dings.swing.helperui.ChoiceID;
-import net.vanosten.dings.swing.helperui.SolutionLabel;
+import net.vanosten.dings.swing.helperui.InsertCharacterButtonPanel;
 import net.vanosten.dings.swing.helperui.LabeledSeparator;
+import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.SyllablesLabel;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
+import net.vanosten.dings.utils.Toolbox;
+import net.vanosten.dings.utils.Util;
 
 public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView, HintObserver {
 	private final static long serialVersionUID = 1L;
@@ -69,6 +74,9 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 	private JLabel questionL, hintL, answerL, explanationL, exampleL, pronunciationL, relationL, unitL, categoryL, scoreL;
 	private LabeledSeparator attributesLS, othersLS;
 	private JButton showB, checkAnswerB, knowB, notKnowB;
+	private InsertCharacterButtonPanel charactersP;
+	private SyllablesLabel syllablesL;
+
 
 	/** the result of the learning */
 	private Result result = Result.SUCCESS;
@@ -121,6 +129,8 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		answerTA.setWrapStyleWord(true);
 		answerTA.setLineWrap(true);
 		textAreaDefaultBgColor = answerTA.getBackground();
+		Document answerDocument = answerTA.getDocument();
+		answerDocument.addDocumentListener(new SyllablesDocumentListener());
 		//status
 		statusCB = new JCheckBox("up-to-date");
 		//score
@@ -155,7 +165,13 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		pronunciationSL = new SolutionLabel();
 		//relation
 		relationL = new JLabel("Relation:");
-		relationSL = new SolutionLabel();		
+		relationSL = new SolutionLabel();
+		//syllables characters
+		if ((Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables() && (false == Toolbox.getInstance().isTargetAsked()))
+				|| (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables() && (Toolbox.getInstance().isTargetAsked()))) {
+			charactersP = new InsertCharacterButtonPanel(answerTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
+			syllablesL = new SyllablesLabel();
+		}
 	} //END private void initComponents()
 
 	//Implements AViewWithScrollPane
@@ -232,9 +248,28 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		gbc.insets = vghg;
 		gbl.setConstraints(targetSP, gbc);
 		editP.add(targetSP);
+		//---- syællables characters
+		if (null != charactersP) {
+			gbc.gridx = 0;
+			gbc.gridy = 3;
+			gbc.gridwidth = 1;
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			gbc.insets = vghg;
+			gbl.setConstraints(emptyL, gbc);
+			editP.add(emptyL);
+			//----
+			gbc.gridx = 1;
+			gbc.gridwidth = 4;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			gbc.insets = vghg;
+			gbl.setConstraints(charactersP, gbc);
+			editP.add(charactersP);	
+		}
 		//----hint
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -251,7 +286,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(hintPL);
 		//----entrytype
 		gbc.gridx = 0;
-		gbc.gridy = 4;
+		gbc.gridy = 5;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -274,7 +309,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(emptyL);
 		//----attributesLS
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 5;
 		gbc.weightx = 0.0d;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -284,7 +319,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(attributesLS);
 		//----attributeOne
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -314,7 +349,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(attributeTwoCh);
 		//----attributeThree
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 8;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -344,7 +379,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(attributeFourCh);
 		//----otherLS
 		gbc.gridx = 0;
-		gbc.gridy = 8;
+		gbc.gridy = 9;
 		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
@@ -353,7 +388,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(othersLS);
 		//----explanation
 		gbc.gridx = 0;
-		gbc.gridy = 9;
+		gbc.gridy = 10;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -370,7 +405,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(explanationSL);
 		//----example
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 11;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -387,7 +422,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(exampleSL);
 		//----pronunciation
 		gbc.gridx = 0;
-		gbc.gridy = 11;
+		gbc.gridy = 12;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -404,7 +439,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(pronunciationSL);
 		//----relation
 		gbc.gridx = 0;
-		gbc.gridy = 12;
+		gbc.gridy = 13;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -421,7 +456,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(relationSL);
 		//----unit
 		gbc.gridx = 0;
-		gbc.gridy = 13;
+		gbc.gridy = 14;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -437,7 +472,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(unitsCh);
 		//----category
 		gbc.gridx = 0;
-		gbc.gridy = 14;
+		gbc.gridy = 15;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
@@ -452,7 +487,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(categoriesCh);
 		//----status
 		gbc.gridx = 0;
-		gbc.gridy = 15;
+		gbc.gridy = 16;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -469,7 +504,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(statusCB);
 		//----score
 		gbc.gridx = 0;
-		gbc.gridy = 16;
+		gbc.gridy = 17;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -513,16 +548,20 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		}
 		
 		//global attributes
+		int numberOfNotShownOthers = 0;
 		if (InfoVocab.VISIBILITY_NEVER == visUnit) {
+			numberOfNotShownOthers++;
 			unitL.setVisible(false);
 			unitsCh.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == visCategory) {
+			numberOfNotShownOthers++;
 			categoryL.setVisible(false);
 			categoriesCh.setVisible(false);
 		}
 		//others
 		if (InfoVocab.VISIBILITY_NEVER == visExplanation) {
+			numberOfNotShownOthers++;
 			explanationL.setVisible(false);
 			explanationSL.setVisible(false);
 		}
@@ -533,6 +572,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			explanationSL.setHideable(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == visExample) {
+			numberOfNotShownOthers++;
 			exampleL.setVisible(false);
 			exampleSL.setVisible(false);
 		}
@@ -543,6 +583,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			exampleSL.setHideable(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == visPronunciation) {
+			numberOfNotShownOthers++;
 			pronunciationL.setVisible(false);
 			pronunciationSL.setVisible(false);
 		}
@@ -553,22 +594,17 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			pronunciationSL.setHideable(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == visRelation) {
+			numberOfNotShownOthers++;
 			relationL.setVisible(false);
 			relationSL.setVisible(false);
 		}
-		else if (InfoVocab.VISIBILITY_SOLUTION == Toolbox.getInstance().getInfoPointer().getVisibilityRelation()) {
+		else if (InfoVocab.VISIBILITY_SOLUTION == visRelation) {
 			relationSL.setHideable(true);
 		}
 		else {
 			relationSL.setHideable(false);
 		}
-		//test whether to hide the others separator, too
-		if ((InfoVocab.VISIBILITY_NEVER == visExplanation)
-				&& (InfoVocab.VISIBILITY_NEVER == visExample)
-				&& (InfoVocab.VISIBILITY_NEVER == visPronunciation)
-				&& (InfoVocab.VISIBILITY_NEVER == visRelation)
-				&& (InfoVocab.VISIBILITY_NEVER == visUnit)
-				&& (InfoVocab.VISIBILITY_NEVER == visCategory)) {
+		if (6 == numberOfNotShownOthers) {
 			othersLS.setVisible(false);
 		}
 	} //END private void setVisibilities()
@@ -1016,4 +1052,28 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			doShow();
 		}
 	} //END public void hintOccured(boolean)
+	
+	//------------------------ Inner classes for special listeners
+	class SyllablesDocumentListener implements DocumentListener {
+
+		public void changedUpdate(DocumentEvent e) {
+			//nothing to do		
+		}
+
+		public void insertUpdate(DocumentEvent e) {
+			doOnUpdate();
+		}
+
+		public void removeUpdate(DocumentEvent e) {
+			doOnUpdate();
+		}
+		
+		private void doOnUpdate() {
+			//update the syllables label
+			if ((Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables() && (false == Toolbox.getInstance().isTargetAsked()))
+					|| (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables() && (Toolbox.getInstance().isTargetAsked()))) {
+				syllablesL.setText(answerTA.getText());
+			}
+		}	
+	}
 } //END public class EntryLearnOneView extends AViewWithScrollPane

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vocabulary version="3">
-<info><title>English Chinese Vocabulary</title><author>Rick Gruber-Riemer</author><notes>Simple example of using syntax highlighting with syllables. Uses very basic setup for labels and visibility</notes><copyright></copyright><licence></licence><blabel>English</blabel><tlabel>Chinese</tlabel><alabel>na</alabel><ulabel>na</ulabel><clabel>na</clabel><olabel>na</olabel><explabel>na</explabel><exlabel>na</exlabel><bor>en_US</bor><tor>en_US</tor><aor>en_US</aor><uor>en_US</uor><cor>en_US</cor><expor>en_US</expor><exor>en_US</exor><por>en_US</por><ror>en_US</ror><visa>3</visa><visu>3</visu><viscat>3</viscat><visexp>2</visexp><visex>2</visex><vispro>2</vispro><visrel>2</visrel><syllb>false</syllb><syllt>true</syllt></info>
+<info><title>English Chinese Vocabulary</title><author>Rick Gruber-Riemer</author><notes>Simple example of using syntax highlighting with syllables. Uses very basic setup for labels and visibility</notes><copyright></copyright><licence></licence><blabel>English</blabel><tlabel>Chinese</tlabel><alabel>na</alabel><ulabel>na</ulabel><clabel>na</clabel><olabel>na</olabel><explabel>na</explabel><exlabel>na</exlabel><bor>en_US</bor><tor>en_US</tor><aor>en_US</aor><uor>en_US</uor><cor>en_US</cor><expor>en_US</expor><exor>en_US</exor><por>en_US</por><ror>en_US</ror><visa>3</visa><visu>3</visu><viscat>3</viscat><visexp>3</visexp><visex>3</visex><vispro>3</vispro><visrel>3</visrel><syllb>false</syllb><syllt>true</syllt></info>
 <etattributes>
 <eta eid="ETA2" n="Default" di="ETAI1" lu="20061001 14:02:26 CEST"><etai eid="ETAI1" ir="false">?!?</etai></eta>
 </etattributes>
@@ -15,7 +15,7 @@
 </categories>
 <entries>
 <e et="ET1" eid="E6" u="U1" c="C1" lv="1" st="true" lu="20061001 14:13:50 CEST" ll="19700101 01:00:00 CET"><o>Madam (affectionate term for an elderly woman)</o><d>lăo dà mā</d></e>
-<e et="ET1" eid="E5" u="U1" c="C1" lv="1" st="true" lu="20061001 14:19:01 CEST" ll="19700101 01:00:00 CET"><o>suicide car bombing</o><d>zì shā shì qì chē zhà dàn xí jī shì jiàn</d></e>
+<e et="ET1" eid="E5" u="U1" c="C1" lv="1" st="true" lu="20061010 17:29:19 CEST" ll="20061010 17:29:19 CEST"><o>suicide car bombing</o><d>zì shā shì qì chē zhà dàn xí jī shì jiàn</d></e>
 <e et="ET1" eid="E1" u="U1" c="C1" lv="1" st="true" lu="20061001 14:06:31 CEST" ll="19700101 01:00:00 CET"><o>television station</o><d>diàn shì tái</d></e>
 <e et="ET1" eid="E2" u="U1" c="C1" lv="1" st="true" lu="20061001 14:07:29 CEST" ll="19700101 01:00:00 CET"><o>train station</o><d>huŏ chē zhàn</d></e>
 <e et="ET1" eid="E4" u="U1" c="C1" lv="1" st="true" lu="20061001 14:09:23 CEST" ll="19700101 01:00:00 CET"><o>convertible car; open car</o><d>chăng péng chē</d></e>

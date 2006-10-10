@@ -119,7 +119,7 @@ public class Util {
 	public final static String ECIRCUMFLEX = "ê";
 	public final static String EMACRON = "ē";
 	public final static String EBREVE = "ĕ";
-	public final static String ECARON = "ě";
+	public final static String ECARON = "ě"; //U0011B
 	public final static String IGRAVE = "ì";
 	public final static String IACUTE = "í";
 	public final static String ICIRCUMFLEX = "î";
@@ -147,6 +147,41 @@ public class Util {
 		, {ABREVE,EBREVE,IBREVE,OBREVE,UBREVE}
 		, {ACARON,ECARON,ICARON,OCARON,UCARON}
 	};
+	
+	
+	public final static String[][] TOOLTIPS_BY_ACCENTGROUP = {
+		{Toolbox.getInstance().getLocalizedString("AGRAVE")
+				,Toolbox.getInstance().getLocalizedString("EGRAVE")
+				,Toolbox.getInstance().getLocalizedString("IGRAVE")
+				,Toolbox.getInstance().getLocalizedString("OGRAVE")
+				,Toolbox.getInstance().getLocalizedString("UGRAVE")}
+		, {Toolbox.getInstance().getLocalizedString("AACUTE")
+			,Toolbox.getInstance().getLocalizedString("EACUTE")
+			,Toolbox.getInstance().getLocalizedString("IACUTE")
+			,Toolbox.getInstance().getLocalizedString("OACUTE")
+			,Toolbox.getInstance().getLocalizedString("UACUTE")}
+		, {Toolbox.getInstance().getLocalizedString("ACIRCUMFLEX")
+			,Toolbox.getInstance().getLocalizedString("ECIRCUMFLEX")
+			,Toolbox.getInstance().getLocalizedString("ICIRCUMFLEX")
+			,Toolbox.getInstance().getLocalizedString("OCIRCUMFLEX")
+			,Toolbox.getInstance().getLocalizedString("UCIRCUMFLEX")}
+		, {Toolbox.getInstance().getLocalizedString("AMACRON")
+			,Toolbox.getInstance().getLocalizedString("EMACRON")
+			,Toolbox.getInstance().getLocalizedString("IMACRON")
+			,Toolbox.getInstance().getLocalizedString("OMACRON")
+			,Toolbox.getInstance().getLocalizedString("UMACRON")}
+		, {Toolbox.getInstance().getLocalizedString("ABREVE")
+			,Toolbox.getInstance().getLocalizedString("EBREVE")
+			,Toolbox.getInstance().getLocalizedString("IBREVE")
+			,Toolbox.getInstance().getLocalizedString("OBREVE")
+			,Toolbox.getInstance().getLocalizedString("UBREVE")}
+		, {Toolbox.getInstance().getLocalizedString("ACARON")
+			,Toolbox.getInstance().getLocalizedString("ECARON")
+			, Toolbox.getInstance().getLocalizedString("ICARON")
+			,Toolbox.getInstance().getLocalizedString("OCARON")
+			,Toolbox.getInstance().getLocalizedString("UCARON")}
+	};
+
 	
 	public final static String[] COLOR_BY_ACCENTGROUP = {
 		Preferences.PROP_SYLLABLE_COLOR_GRAVE

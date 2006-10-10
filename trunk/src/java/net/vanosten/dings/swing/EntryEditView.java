@@ -68,6 +68,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 	private JCheckBox statusCB;
 	private ValidatedTextArea baseVTA, targetVTA;
 	private JTextArea explanationTA, exampleTA;
+	private JScrollPane explanationSP, exampleSP;
 	private JTextField pronunciationTF, relationTF;
 	private JLabel attributeOneL, attributeTwoL, attributeThreeL, attributeFourL; //populated based on entry type
 	private JLabel baseL, targetL, unitL, categoryL, explanationL, exampleL; //populated based on InfoVocab
@@ -203,11 +204,11 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		relationTF.addKeyListener(this);
 		//characters button panel
 		if (Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables()) {
-			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, Util.ACCENTS_BY_ACCENTGROUP);
+			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
 			syllablesBaseL = new SyllablesLabel();
 		}
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
-			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_ACCENTGROUP);
+			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
 			syllablesTargetL = new SyllablesLabel();
 		}
 	} //END private void initComponents()
@@ -241,10 +242,10 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		JScrollPane targetSP = new JScrollPane(targetVTA);
 		targetSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		targetSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JScrollPane explanationSP = new JScrollPane(explanationTA);
+		explanationSP = new JScrollPane(explanationTA);
 		explanationSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		explanationSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		JScrollPane exampleSP = new JScrollPane(exampleTA);
+		exampleSP = new JScrollPane(exampleTA);
 		exampleSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		exampleSP.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -611,32 +612,41 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 			attributeFourCh.setVisible(false);
 		}
 		//units and category
+		int numberOfNotShownOthers = 0;
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityUnit()) {
+			numberOfNotShownOthers++;
 			unitL.setVisible(false);
 			unitsCh.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityCategory()) {
+			numberOfNotShownOthers++;
 			categoryL.setVisible(false);
 			categoriesCh.setVisible(false);
 		}
 		//others
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityExplanation()) {
+			numberOfNotShownOthers++;
 			explanationL.setVisible(false);
-			explanationTA.setVisible(false);
+			explanationSP.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityExample()) {
+			numberOfNotShownOthers++;
 			exampleL.setVisible(false);
-			exampleTA.setVisible(false);
+			exampleSP.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityPronunciation()) {
+			numberOfNotShownOthers++;
 			pronunciationL.setVisible(false);
 			pronunciationTF.setVisible(false);
 		}
 		if (InfoVocab.VISIBILITY_NEVER == Toolbox.getInstance().getInfoPointer().getVisibilityRelation()) {
+			numberOfNotShownOthers++;
 			relationL.setVisible(false);
 			relationTF.setVisible(false);
 		}
-		//others separator is always visible due to status checkbox
+		if (6 == numberOfNotShownOthers) {
+			othersLS.setVisible(false);
+		}
 	} //END private void setVisibilities()
 
 	private void onChangeEntryType() {

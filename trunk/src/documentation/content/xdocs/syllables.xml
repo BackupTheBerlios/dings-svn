@@ -22,7 +22,7 @@ entitled "GNU Free Documentation License".
 		<p><code>DingsBums?!</code> gives the possibility to syntax highlight syllables based on vocals with special accents. This is especially useful for learning pronounciation based on e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a> for Chinese.</p>
 		<p>Support for syllables is turned on in the learnign stack properties under the &quot;Syllables&quot; tab.</p>
 		<figure src="images/syllables_properties.png" alt="screenshot of DingsBums?! showing syllables properties in learnign stack properties" />
-		<p>The application provides immediate feedback for syllables in different colors already during input. Additionaly there are shortcut buttons for the accents recognized by the program for easier use.</p>
+		<p>The application provides immediate feedback for syllables in different colors already during input. Additionaly there are shortcut buttons for the accents recognized by the program for easier use. Depending on the fonts and characters supported by your operating system not all accents might be displayed correctly on the screen. Accent <a href="http://en.wikipedia.org/wiki/Caron">caron (hasek)</a>, which should be used in <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a> instead of accent <a href="http://en.wikipedia.org/wiki/Breve">breve</a> is e.g. not always supported. The tooltip text will indicate, what character should be displayed.</p>
 		<figure src="images/syllables_edit.png" alt="screenshot of DingsBums?! showing editing with syllables" />
 		<p>Syllables are highlighted in all sitautions if turned on, e.g. while learning:</p>
 		<figure src="images/syllables_multi.png" alt="screenshot of DingsBums?! showing learning with syllables highlighting turned on" />

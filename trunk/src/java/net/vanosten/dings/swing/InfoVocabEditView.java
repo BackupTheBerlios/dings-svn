@@ -21,32 +21,32 @@
  */
 package net.vanosten.dings.swing;
 
+import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JTextArea;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.ComponentOrientation;
-import java.awt.Insets;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-
 import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.utils.Toolbox;
+import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IInfoVocabEditView;
+import net.vanosten.dings.utils.Toolbox;
 
 public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	private final static long serialVersionUID = 1L;
@@ -72,8 +72,8 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	private ChoiceID explanationLocaleCB, exampleLocaleCB;
 	private ChoiceID pronunciationLocaleCB, relationLocaleCB;
 	private JPanel visibilitiesP;
-	private JComboBox visibilityAttributesCB, visibilityUnitCB, visibilityCategoryCB;
-	private JComboBox visibilityExplanationCB, visibilityExampleCB, visibilityPronunciationCB, visibilityRelationCB;
+	private ChoiceID visibilityAttributesCB, visibilityUnitCB, visibilityCategoryCB;
+	private ChoiceID visibilityExplanationCB, visibilityExampleCB, visibilityPronunciationCB, visibilityRelationCB;
 	private JPanel syllablesP;
 	private JCheckBox baseUsesSyllablesCB;
 	private JCheckBox targetUsesSyllablesCB;
@@ -189,43 +189,43 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 			}
 		});
 		//visibility
-		visibilityAttributesCB = new JComboBox();
+		visibilityAttributesCB = new ChoiceID();
 		visibilityAttributesCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityUnitCB = new JComboBox();
+		visibilityUnitCB = new ChoiceID();
 		visibilityUnitCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityCategoryCB = new JComboBox();
+		visibilityCategoryCB = new ChoiceID();
 		visibilityCategoryCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityExplanationCB = new JComboBox();
+		visibilityExplanationCB = new ChoiceID();
 		visibilityExplanationCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityExampleCB = new JComboBox();
+		visibilityExampleCB = new ChoiceID();
 		visibilityExampleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityPronunciationCB = new JComboBox();
+		visibilityPronunciationCB = new ChoiceID();
 		visibilityPronunciationCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityRelationCB = new JComboBox();
+		visibilityRelationCB = new ChoiceID();
 		visibilityRelationCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
@@ -269,14 +269,24 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		isUpdating = false;
 	} //END public void setAvailableLocales(String[][]);
 
-	private void setVisibilityItems(JComboBox aCB, boolean hasQuery) {
+	private void setVisibilityItems(ChoiceID aCB, boolean hasQuery) {
 		isUpdating = true;
-		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.always")); //InfoVocab.VISIBILITY_ALWAYS
 		if (hasQuery) {
-			aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.query")); //InfoVocab.VISIBILITY_QUERY
+			String[][] items = {
+					{Integer.toString(InfoVocab.VISIBILITY_ALWAYS), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.always")}
+					,{Integer.toString(InfoVocab.VISIBILITY_QUERY), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.query")}
+					,{Integer.toString(InfoVocab.VISIBILITY_SOLUTION), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.solution")}
+					,{Integer.toString(InfoVocab.VISIBILITY_NEVER), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.never")}
+			};
+			aCB.setItems(items);
+		} else {
+			String[][] items = {
+					{Integer.toString(InfoVocab.VISIBILITY_ALWAYS), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.always")}
+					,{Integer.toString(InfoVocab.VISIBILITY_SOLUTION), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.solution")}
+					,{Integer.toString(InfoVocab.VISIBILITY_NEVER), Toolbox.getInstance().getLocalizedString("ivev.visibility.items.never")}
+			};
+			aCB.setItems(items);
 		}
-		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.solution")); //InfoVocab.VISIBILITY_SOLUTION
-		aCB.addItem(Toolbox.getInstance().getLocalizedString("ivev.visibility.items.never")); //InfoVocab.VISIBILITY_NEVER
 		isUpdating = false;
 	} //END private void setVisibilityItems(JComboBox)
 
@@ -1140,72 +1150,72 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 
 	public void setVisibilityAttributes(int aVisibility) {
 		isUpdating = true;
-		visibilityAttributesCB.setSelectedIndex(aVisibility);
+		visibilityAttributesCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityAttributes(int)
 
 	public int getVisibilityAttributes() {
-		return visibilityAttributesCB.getSelectedIndex();
+		return Integer.parseInt(visibilityAttributesCB.getSelectedID());
 	} //END public int getVisibilityAttributes()
 
 	public void setVisibilityUnit(int aVisibility) {
 		isUpdating = true;
-		visibilityUnitCB.setSelectedIndex(aVisibility);
+		visibilityUnitCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityUnit(int)
 
 	public int getVisibilityUnit() {
-		return visibilityUnitCB.getSelectedIndex();
+		return Integer.parseInt(visibilityUnitCB.getSelectedID());
 	} //END public int getVisibilityUnit()
 
 	public void setVisibilityCategory(int aVisibility) {
 		isUpdating = true;
-		visibilityCategoryCB.setSelectedIndex(aVisibility);
+		visibilityCategoryCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityCategory(int)
 
 	public int getVisibilityCategory() {
-		return visibilityCategoryCB.getSelectedIndex();
+		return Integer.parseInt(visibilityCategoryCB.getSelectedID());
 	} //END public int getVisibilityCategory()
 
 	public void setVisibilityExplanation(int aVisibility) {
 		isUpdating = true;
-		visibilityExplanationCB.setSelectedIndex(aVisibility);
+		visibilityExplanationCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityExplanation(int)
 
 	public int getVisibilityExplanation() {
-		return visibilityExplanationCB.getSelectedIndex();
+		return Integer.parseInt(visibilityExplanationCB.getSelectedID());
 	} //END public int getVisibilityExplanation()
 
 	public void setVisibilityExample(int aVisibility) {
 		isUpdating = true;
-		visibilityExampleCB.setSelectedIndex(aVisibility);
+		visibilityExampleCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityExample(int)
 
 	public int getVisibilityExample() {
-		return visibilityExampleCB.getSelectedIndex();
+		return Integer.parseInt(visibilityExampleCB.getSelectedID());
 	} //END public int getVisibilityExample()
 
 	public void setVisibilityPronunciation(int aVisibility) {
 		isUpdating = true;
-		visibilityPronunciationCB.setSelectedIndex(aVisibility);
+		visibilityPronunciationCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityPronunciation(int)
 
 	public int getVisibilityPronunciation() {
-		return visibilityPronunciationCB.getSelectedIndex();
+		return Integer.parseInt(visibilityPronunciationCB.getSelectedID());
 	} //END public int getVisibilityPronunciation()
 
 	public void setVisibilityRelation(int aVisibility) {
 		isUpdating = true;
-		visibilityRelationCB.setSelectedIndex(aVisibility);
+		visibilityRelationCB.setSelectedID(Integer.toString(aVisibility));
 		isUpdating = false;
 	} //END public void setVisibilityRelation(int)
 
 	public int getVisibilityRelation() {
-		return visibilityRelationCB.getSelectedIndex();
+		return Integer.parseInt(visibilityRelationCB.getSelectedID());
 	} //END public int getVisibilityRelation()
 
 	//validation
