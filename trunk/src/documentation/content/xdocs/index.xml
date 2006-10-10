@@ -22,10 +22,10 @@ entitled "GNU Free Documentation License".
 		<section id="about">
 			<title>About</title>
 			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning tool that can be used for any kind of content, which can be memorized using flashcards, including vocabularies. <code>Dingsbums?!</code>aims to be an application which makes memorizing both fun and efficient.</p>
-			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away. If you have Java installed just press the launch button below:</p>
+			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away and try one of the <a href="site:samples">samples</a> right away. If you have <a href="http://java.com/">Java</a> installed just press the launch button below:</p>
 			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
-			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
+			<p><code>DingsBums?!</code> is written in Java and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
 		</section>
 		<section id="evaluating">
 			<title>Is this for you?</title>

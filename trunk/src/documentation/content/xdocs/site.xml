@@ -20,6 +20,7 @@ entitled "GNU Free Documentation License".
 		<index label="Introduction" href="index.html" description="Welcome to DingsBums?!"/>
 		<features label="Features" href="features.html" description="Overview of features of DingsBums?!" />
 		<screenshots label="Screenshots" href="screenshots.html" description="Various screenshots with explanation of DingsBums?!" />
+		<samples label="Samples" href="samples.html" description="Sample learning stacks" />
 		<download label="Download" href="download.html" description="Download and installation instructions" />
 		<faq label="FAQ" href="faq.html" description="Frequently asked questions and answers" />
 		<licenses label="Licenses" href="license.html" description="The License for using DingsBums?!" />

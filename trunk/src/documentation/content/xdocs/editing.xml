@@ -55,7 +55,7 @@ entitled "GNU Free Documentation License".
 		<section id="edit_eta_items">
 			<title>Editing the Items of an Entry Type Attribute</title>
 			<p>The screenshot shows the same set of attributes as was used for editing a Danish noun in a screenshot above. For each entry type attribute an item is chosen as the default.</p>
-			<p>An Entry Type Attribute can be (re)used in different Entry types (see the <code>eucapitals.xml</code> file in the samples directory for an example of how to do this).</p>
+			<p>An Entry Type Attribute can be (re)used in different Entry types (see the <code>eucapitals.xml</code> file in <a href="site:samples">samples</a> for an example of how to do this).</p>
 			<figure src="images/entrytypeattribute_edit.png" alt="screenshot of DingsBums?! showing editing entry type attribute items" />
 		</section>
 		<section id="user_feedback">
