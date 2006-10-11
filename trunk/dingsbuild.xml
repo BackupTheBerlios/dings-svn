@@ -28,6 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		<!-- Create the time stamp -->
 		<tstamp/>
 		<!-- Create the build directory structure used by compile and dist-->
+		<mkdir dir="${build}"/>
 		<mkdir dir="${dist}"/>
 	</target>
 
@@ -53,7 +54,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		</javac>
 	</target>
 
-	<target name="dist" depends="compile,resources">
+	<target name="dist" depends="init,compile,resources">
 		<!-- Unjar the external libraries -->
 		<unjar src="${lib}/xpp3.jar" dest="${dist}" /><!-- 1.1.3_8 -->
 		<unjar src="${lib}/jfreechart.jar" dest="${dist}" /><!-- 1.0.1 -->

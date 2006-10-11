@@ -33,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.text.MessageFormat;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
@@ -58,7 +59,8 @@ public class WelcomeView extends AViewWithButtons implements IWelcomeView {
 		GridBagConstraints mgbc = new GridBagConstraints();
 		mainP.setLayout(mgbl);
 
-		JLabel label = new JLabel(Toolbox.getInstance().getLocalizedString("text.welcome_view.howto"));
+		Object[] args = {Toolbox.getInstance().getLocalizedString("application.version")};
+		JLabel label = new JLabel(MessageFormat.format(Toolbox.getInstance().getLocalizedString("text.welcome_view.howto"), args));
 		JLabel logo = new JLabel();
 		ImageIcon logoImg = DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_DINGS_128, "FIXME");
 		logo.setIcon(logoImg);

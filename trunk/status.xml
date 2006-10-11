@@ -21,7 +21,7 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
-		<release version="0.4.4 (svn 80)" date="2006-10-11">
+		<release version="0.4.4 (svn 81)" date="2006-10-11">
 			<action type="add" context="feature" dev="vanosten">Support for accent caron in syllables highlighting for e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
 			<action type="add" context="feature" dev="vanosten">Support for character input panel for syllables in learn one by one view.</action>
 			<action type="fix" context="gui" dev="vanosten">Fixed visibility of fields in edit entry and learn one view, when they should not be shown.</action>

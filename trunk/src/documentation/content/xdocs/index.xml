@@ -59,7 +59,7 @@ entitled "GNU Free Documentation License".
 				<ol>
 					<li>Added support for accent caron in syllables highlighting for e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a>.</li>
 					<li>Added support for character input panel for syllables in learn one by one view.</li>
-					<li>Fixed visibility of fields in edit entry and learn one view, when they should not be shown. You might need to change the visibility settings in the learning stack properties.</li>
+					<li>Fixed visibility of fields in edit entry and learn one view, when they should not be shown. You might need to correct the visibility settings in the learning stack properties for fields, which should not be displayed.</li>
 				</ol>
 			<p>See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
 			<p>The next major release will support pictures and figures besides text for the target information.</p>
