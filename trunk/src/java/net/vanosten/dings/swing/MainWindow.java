@@ -72,6 +72,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.model.Preferences;
+import net.vanosten.dings.present.PreferencesPresenter;
 import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.swing.helperui.XMLFileFilter;
 import net.vanosten.dings.swing.helperui.StatusBar;
@@ -281,6 +282,8 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 	 */
 	private void showPreferences() {
 		PreferencesEditView preferencesEditView = new PreferencesEditView(this, this.guiOrientation);
+		PreferencesPresenter presenter = new PreferencesPresenter();
+		presenter.setParentController(Toolbox.getInstance().getDings());
 		int dialogWidth = 500;
 		int dialogHeight = 400;
 		Preferences preferences = Toolbox.getInstance().getPreferencesPointer(); //locale Preferences pointer
@@ -294,8 +297,8 @@ public class MainWindow extends JFrame implements IDingsMainWindow {
 			}
 		}
 		preferencesEditView.setSize(dialogWidth, dialogHeight);
-		preferences.setEditView(preferencesEditView);
-		preferencesEditView.init(preferences);
+		presenter.setEditView(preferencesEditView);
+		preferencesEditView.init(presenter);
 		preferencesEditView.setLocationRelativeTo(this);
 		preferencesEditView.setVisible(true);
 	} //END private void showPreferences()

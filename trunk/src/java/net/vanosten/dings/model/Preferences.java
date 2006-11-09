@@ -21,31 +21,19 @@
  */
 package net.vanosten.dings.model;
 
-import java.util.List;
-import java.util.Properties;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 import java.awt.Color;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
+import net.vanosten.dings.io.PropertiesIO;
 import net.vanosten.dings.uiif.IPreferencesEditView;
 import net.vanosten.dings.utils.Util;
-import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.event.AppEvent;
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-
-public class Preferences extends AModel{
-
-	/** The name of the application property file */
-	public final static String PROP_FILENAME = ".dings.properties";
-
-	/** The comment in the properties file */
-	public final static String PROP_COMMENT = "Properties for DingsBums?!";
+public class Preferences {
 
 	/** The history of opened vocabulary files as a delimitted list of paths*/
 	public final static String PROP_FILE_HISTORY = "file_history";
@@ -113,7 +101,6 @@ public class Preferences extends AModel{
 		,"UTF-16"
 	};
 
-	//public final static String LEARN_HINT_COVER_PERCENT = "learn_hint_cover_percent";
 	public final static String LEARN_HINT_FLASH_TIME = "learn_hint_flash_time";
 	public final static String LEARN_HINT_SHUFFLE_WORD = "learn_hint_shuffle_word";
 
@@ -154,158 +141,16 @@ public class Preferences extends AModel{
 	/** Text color for syllable with no accent stored as a String. See Util.convertRGB() */
 	public final static String PROP_SYLLABLE_COLOR_DEFAULT = "syllable_color_default";
 
-	/** The edit view */
-	private IPreferencesEditView editView;
-
 	/** All preferences and properties are stored in a Properties object */
 	private Properties props;
+	
+	/** The log4j logger */
+	protected static Logger logger = Logger.getLogger(Preferences.class.getName());
 
 	public Preferences() {
-		logger = Logger.getLogger("net.vanosten.dings.model.Preferences");
-		readProperties();
+		props = PropertiesIO.readFromFile();
+		this.assignDefaults();
 	} //END public Preferences()
-
-	/**
-	 * Lets you set the edit view
-	 *
-	 * @param ICategoryEditView aView
-	 */
-	public void setEditView(IPreferencesEditView aView) {
-		editView = aView;
-	} //END public void setEditView(IPreferencesEditView)
-
-	//implements AItemModel
-	protected void releaseViews() {
-		editView = null;
-	} //END protected void releaseViews()
-
-	//Implements AModel
-	protected void updateGUI() {
-		try {
-			//file encoding
-			editView.setFileEncoding(props.getProperty(FILE_ENCODING));
-			//look and feel
-			editView.setSystemLookAndFeel(getBooleanProperty(PROP_SYSTEM_LAF));
-			//learn hints
-			//editView.setLearnHintCoverPercent(Integer.parseInt(props.getProperty(LEARN_HINT_COVER_PERCENT)));
-			editView.setLearnHintFlashTime(Integer.parseInt(props.getProperty(LEARN_HINT_FLASH_TIME)));
-			editView.setLearnHintShuffleByWord(props.getProperty(LEARN_HINT_SHUFFLE_WORD));
-			editView.setHintTextColor(new Color(Integer.parseInt(props.getProperty(PROP_COLOR_HINT))));
-			editView.setResultTextColor(new Color(Integer.parseInt(props.getProperty(PROP_COLOR_RESULT))));
-			//logging
-			editView.setLoggingEnabled(props.getProperty(PROP_LOGGING_ENABLED));
-			editView.setLoggingToFile(props.getProperty(PROP_LOG_TO_FILE));
-			//selection updates
-			editView.setSelUpdInst(getBooleanProperty(PROP_SEL_UPD_INST_EDITING), getBooleanProperty(PROP_SEL_UPD_INST_LEARNING));
-			//stats on quit
-			editView.setStatsOnQuit(getBooleanProperty(PROP_STATS_QUIT));
-			//locale
-			editView.setApplicationLocale(props.getProperty(PROP_LOCALE));
-			//text lines
-			editView.setLinesBase(Integer.valueOf(props.getProperty(PROP_LINES_BASE)));
-			editView.setLinesTarget(Integer.valueOf(props.getProperty(PROP_LINES_TARGET)));
-			editView.setLinesExplanation(Integer.valueOf(props.getProperty(PROP_LINES_EXPLANATION)));
-			editView.setLinesExample(Integer.valueOf(props.getProperty(PROP_LINES_EXAMPLE)));
-			//check answer
-			editView.setCheckCaseSensitive(getBooleanProperty(PROP_CHECKANSWER_CASE_SENSITIVE));
-			editView.setCheckGlobalAttributes(getBooleanProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES));
-			editView.setCheckTypeAttributes(getBooleanProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES));
-			//syllable colors
-			editView.setSyllableColorAcute(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_ACUTE)));
-			editView.setSyllableColorGrave(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_GRAVE)));
-			editView.setSyllableColorCircumflex(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX)));
-			editView.setSyllableColorMacron(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_MACRON)));
-			editView.setSyllableColorBreve(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_BREVE)));
-			editView.setSyllableColorCaron(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_CARON)));
-			editView.setSyllableColorDefault(Util.parseRGBToColor(props.getProperty(PROP_SYLLABLE_COLOR_DEFAULT)));
-		}
-		catch (NumberFormatException e) {
-			//TODO: log this
-		}
-	 } //END protected void updateGUI()
-
-	//Implements AModel
-	protected void updateModel() {
-		//file encoding
-		props.setProperty(FILE_ENCODING, editView.getFileEncoding());
-		//look and feel
-		boolean oldLAF = getBooleanProperty(PROP_SYSTEM_LAF);
-		if (oldLAF != editView.isSystemLookAndFeel()) {
-			props.setProperty(PROP_SYSTEM_LAF, Boolean.toString(editView.isSystemLookAndFeel()));
-			AppEvent ape1 = new AppEvent(AppEvent.EventType.STATUS_EVENT);
-			ape1.setMessage(MessageConstants.Message.S_CHANGE_LAF);
-			parentController.handleAppEvent(ape1);
-		}
-		//learn hints
-		//props.setProperty(LEARN_HINT_COVER_PERCENT, Integer.toString(editView.getLearnHintCoverPercent()));
-		props.setProperty(LEARN_HINT_FLASH_TIME, Integer.toString(editView.getLearnHintFlashTime()));
-		props.setProperty(LEARN_HINT_SHUFFLE_WORD, editView.getLearnHintShuffleByWord());
-		props.setProperty(PROP_COLOR_HINT, Integer.toString(editView.getHintTextColor().getRGB()));
-		props.setProperty(PROP_COLOR_RESULT, Integer.toString(editView.getResultTextColor().getRGB()));
-		//logging
-		String oldEnabled = props.getProperty(PROP_LOGGING_ENABLED);
-		String newEnabled = editView.getLoggingEnabled();
-		String oldToFile = props.getProperty(PROP_LOG_TO_FILE);
-		String newToFile = editView.getLoggingToFile();
-		if (false == oldEnabled.equals(newEnabled) || false == oldToFile.equals(newToFile)) {
-			props.setProperty(PROP_LOGGING_ENABLED, newEnabled); //must come before event
-			props.setProperty(PROP_LOG_TO_FILE, newToFile); //must come before event
-			AppEvent ape2 = new AppEvent(AppEvent.EventType.STATUS_EVENT);
-			ape2.setMessage(MessageConstants.Message.S_CHANGE_LOGGING);
-			parentController.handleAppEvent(ape2);
-		}
-		//resetting score
-		props.setProperty(PROP_SEL_UPD_INST_EDITING, Boolean.toString(editView.isSelUpdInstEditing()));
-		props.setProperty(PROP_SEL_UPD_INST_LEARNING, Boolean.toString(editView.isSelUpdInstLearning()));
-		//stats on quit
-		props.setProperty(PROP_STATS_QUIT, Boolean.toString(editView.isStatsOnQuit()));
-		//locale
-		props.setProperty(PROP_LOCALE, editView.getApplicationLocale());
-		//text lines
-		props.setProperty(PROP_LINES_BASE, editView.getLinesBase().toString());
-		props.setProperty(PROP_LINES_TARGET, editView.getLinesTarget().toString());
-		props.setProperty(PROP_LINES_EXPLANATION, editView.getLinesExplanation().toString());
-		props.setProperty(PROP_LINES_EXAMPLE, editView.getLinesExample().toString());
-		//check answer
-		props.setProperty(PROP_CHECKANSWER_CASE_SENSITIVE, Boolean.toString(editView.isCheckCaseSensitive()));
-		props.setProperty(PROP_CHECKANSWER_GLOBAL_ATTRIBUTES, Boolean.toString(editView.isCheckGlobalAttributes()));
-		props.setProperty(PROP_CHECKANSWER_TYPE_ATTRIBUTES, Boolean.toString(editView.isCheckTypeAttributes()));
-		//syllable color
-		props.setProperty(PROP_SYLLABLE_COLOR_ACUTE, Util.convertRGB(editView.getSyllableColorAcute()));
-		props.setProperty(PROP_SYLLABLE_COLOR_GRAVE, Util.convertRGB(editView.getSyllableColorGrave()));
-		props.setProperty(PROP_SYLLABLE_COLOR_CIRCUMFLEX, Util.convertRGB(editView.getSyllableColorCircumflex()));
-		props.setProperty(PROP_SYLLABLE_COLOR_MACRON, Util.convertRGB(editView.getSyllableColorMacron()));
-		props.setProperty(PROP_SYLLABLE_COLOR_BREVE, Util.convertRGB(editView.getSyllableColorBreve()));
-		props.setProperty(PROP_SYLLABLE_COLOR_CARON, Util.convertRGB(editView.getSyllableColorCaron()));
-		props.setProperty(PROP_SYLLABLE_COLOR_DEFAULT, Util.convertRGB(editView.getSyllableColorDefault()));
-	} //END protected void updateModel()
-
-	//Overrides AModel
-	public void handleAppEvent(AppEvent evt) {
-		if (logger.isLoggable(Level.FINEST)) {
-			logger.logp(Level.FINEST, this.getClass().getName(), "handleAppEvent", evt.getMessage().name());
-		}
-		if (evt.getMessage() == MessageConstants.Message.D_PREFERENCES_EDIT_APPLY) {
-			updateModel();
-		}
-		else if (evt.getMessage() == MessageConstants.Message.D_PREFERENCES_EDIT_REVERT) {
-			updateGUI();
-		}
-		else if (evt.getMessage() == MessageConstants.Message.S_SAVE_DIALOG_SIZE) {
-			saveDialogSize();
-		}
-		else parentController.handleAppEvent(evt);
-	} //END public void handleAppEvent(AppEvent)
-
-	/**
-	 * Saves the size information of the dialog showing the preferences
-	 */
-	private void saveDialogSize() {
-		int dialogSize[] = editView.getDialogSize();
-		props.setProperty(PROP_PREF_DIALOG_WIDTH, Integer.toString(dialogSize[0]));
-		props.setProperty(PROP_PREF_DIALOG_HEIGHT, Integer.toString(dialogSize[1]));
-	 } //END private void saveDialogSize()
-
 	/**
 	 * Mimics the behavior of java.util.Property and passes the request directly to
 	 * the Properties object in the class
@@ -359,46 +204,14 @@ public class Preferences extends AModel{
 	} //END public boolean containsKEy(String)
 
 	/**
-	 * Reads the properties from a file in the users directory
+	 * Assigns default values to all the properties, that were not defined in the
+	 * properties from a file, evt. because the file did not exist or did not contain the
+	 * newest properties for the current version.
 	 */
-	private void readProperties() {
-		props = new Properties();
-		FileInputStream in = null;
-		try {
-			String userHome = System.getProperty("user.home");
-			in = new FileInputStream(userHome + File.separator + PROP_FILENAME);
-			props.load(in);
-		}
-		catch (Exception e) {
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "readProperties()", e.getMessage());
-			}
-			//do nothing
-		}
-		finally {
-			if (null != in) {
-				try {
-					in.close();
-				}
-				catch (IOException e) {
-					if (logger.isLoggable(Level.FINEST)) {
-						logger.logp(Level.FINEST, this.getClass().getName(), "readProperties()", e.getMessage());
-					}
-					//do nothing
-
-				}
-			}
-			in = null;
-		}
-		//assign defaults
+	private void assignDefaults() {
 		if (!props.containsKey(FILE_ENCODING)) {
 			props.setProperty(FILE_ENCODING, FILE_ENCODING_DEFAULT);
 		}
-		/*
-		if (!props.containsKey(LEARN_HINT_COVER_PERCENT)) {
-			props.setProperty(LEARN_HINT_COVER_PERCENT, Integer.toString(IPreferencesEditView.LH_COVER_PERCENT_DEFAULT));
-		}
-		*/
 		if (!props.containsKey(LEARN_HINT_FLASH_TIME)) {
 			props.setProperty(LEARN_HINT_FLASH_TIME, Integer.toString(IPreferencesEditView.LH_FLASH_TIME_DEFAULT));
 		}
@@ -604,37 +417,11 @@ public class Preferences extends AModel{
 		displaySB.append("]");
 		return displaySB.toString();
 	} //END private String getDisplayFilePath(String)
-
+	
 	/**
-	 * Saves the properties to a file in the users directory.
+	 * Saves the properties to a datastore
 	 */
-	protected void save() {
-		FileOutputStream out = null;
-		try {
-			String userHome = System.getProperty("user.home");
-			out = new FileOutputStream(userHome + File.separator + PROP_FILENAME);
-			props.store(out, PROP_COMMENT);
-			out.close();
-		}
-		catch (Exception e) {
-			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "save()", e.getMessage());
-			}
-			//do nothing
-		}
-		finally {
-			if (null != out) {
-				try {
-					out.close();
-				}
-				catch (IOException e) {
-					if (logger.isLoggable(Level.FINEST)) {
-						logger.logp(Level.FINEST, this.getClass().getName(), "save()", e.getMessage());
-					}
-					//do nothing
-
-				}
-			}
-		}
-	} //END protected void save()
+	public final void save() {
+		PropertiesIO.saveToFile(props);
+	}
 } //END public class Preferences extends AModel

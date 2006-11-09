@@ -148,9 +148,12 @@ public class Util {
 		, {ACARON,ECARON,ICARON,OCARON,UCARON}
 	};
 	
-	
-	public final static String[][] TOOLTIPS_BY_ACCENTGROUP = {
-		{Toolbox.getInstance().getLocalizedString("AGRAVE")
+	/**
+	 * Must not be a public final static String[][] field as it would be initialized before Toolbox has bundle
+	 * @return
+	 */
+	public final static String[][] getTooltipsByAccentGroup() {
+		String[][] tooltipsByAccentGroup = {{Toolbox.getInstance().getLocalizedString("AGRAVE")
 				,Toolbox.getInstance().getLocalizedString("EGRAVE")
 				,Toolbox.getInstance().getLocalizedString("IGRAVE")
 				,Toolbox.getInstance().getLocalizedString("OGRAVE")
@@ -181,6 +184,8 @@ public class Util {
 			,Toolbox.getInstance().getLocalizedString("OCARON")
 			,Toolbox.getInstance().getLocalizedString("UCARON")}
 	};
+		return tooltipsByAccentGroup;
+	}
 
 	
 	public final static String[] COLOR_BY_ACCENTGROUP = {

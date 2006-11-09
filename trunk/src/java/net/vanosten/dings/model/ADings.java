@@ -22,27 +22,36 @@
 package net.vanosten.dings.model;
 
 import java.io.File;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.MessageFormat;
-
-import net.vanosten.dings.event.IAppEventHandler;
-import net.vanosten.dings.event.AppEvent;
-import net.vanosten.dings.consts.Constants;
-import net.vanosten.dings.consts.MessageConstants;
-import net.vanosten.dings.consts.MessageConstants.Message;
-import net.vanosten.dings.io.VocabularyXMLReader;
-import net.vanosten.dings.io.VocabularyXMLWriter;
-
-import net.vanosten.dings.uiif.*;
-import net.vanosten.dings.utils.Toolbox;
-
-//Logging with java.util.logging
-import java.util.logging.Logger;
-import java.util.logging.Level;
+import java.util.Date;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.consts.MessageConstants;
+import net.vanosten.dings.consts.MessageConstants.Message;
+import net.vanosten.dings.event.AppEvent;
+import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.io.VocabularyXMLReader;
+import net.vanosten.dings.io.VocabularyXMLWriter;
+import net.vanosten.dings.uiif.IDingsMainWindow;
+import net.vanosten.dings.uiif.IEntriesListView;
+import net.vanosten.dings.uiif.IEntriesSelectionView;
+import net.vanosten.dings.uiif.IEntryEditView;
+import net.vanosten.dings.uiif.IEntryLearnOneView;
+import net.vanosten.dings.uiif.IEntryTypeAttributeEditView;
+import net.vanosten.dings.uiif.IEntryTypeEditView;
+import net.vanosten.dings.uiif.IInfoVocabEditView;
+import net.vanosten.dings.uiif.ILearnByChoiceView;
+import net.vanosten.dings.uiif.IListView;
+import net.vanosten.dings.uiif.ISummaryView;
+import net.vanosten.dings.uiif.IUnitEditView;
+import net.vanosten.dings.uiif.IWelcomeView;
+import net.vanosten.dings.utils.Toolbox;
 
 public abstract class ADings implements IAppEventHandler {
 	/** Holds the units */
@@ -95,9 +104,8 @@ public abstract class ADings implements IAppEventHandler {
 	 * program start the go view is displayed.
 	 */
 	public ADings(String[] args) {
-		//set the parent controller for Preferences
-		Toolbox.getInstance().getPreferencesPointer().setParentController(this);
-
+		Toolbox.getInstance().setDings(this);
+		
 		//locale
 		if (logger.isLoggable(Level.INFO)) {
 			logger.logp(Level.INFO, this.getClass().getName(), "ADings(String[])"
@@ -543,7 +551,7 @@ public abstract class ADings implements IAppEventHandler {
 		//hide the main window
 		mainWindow.hideMainWindow();
 
-		//safe preferences
+		//save preferences
 		Toolbox.getInstance().getPreferencesPointer().save();
 
 		//exit

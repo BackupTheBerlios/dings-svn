@@ -169,7 +169,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		//syllables characters
 		if ((Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables() && (false == Toolbox.getInstance().isTargetAsked()))
 				|| (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables() && (Toolbox.getInstance().isTargetAsked()))) {
-			charactersP = new InsertCharacterButtonPanel(answerTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
+			charactersP = new InsertCharacterButtonPanel(answerTA, Util.ACCENTS_BY_ACCENTGROUP, Util.getTooltipsByAccentGroup());
 			syllablesL = new SyllablesLabel();
 		}
 	} //END private void initComponents()
@@ -266,10 +266,27 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 			gbc.insets = vghg;
 			gbl.setConstraints(charactersP, gbc);
 			editP.add(charactersP);	
-		}
+			//---- syllableTargetL
+			gbc.gridx = 0;
+			gbc.gridy = 4;
+			gbc.gridwidth = 1;
+			gbc.fill = GridBagConstraints.NONE;
+			gbc.anchor = GridBagConstraints.LINE_END;
+			gbc.insets = vghg;
+			gbl.setConstraints(emptyL, gbc);
+			editP.add(emptyL);
+			//----
+			gbc.gridx = 1;
+			gbc.gridwidth = 4;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.LINE_START;
+			gbc.insets = vghg;
+			gbl.setConstraints(syllablesL, gbc);
+			editP.add(syllablesL);			
+	}
 		//----hint
 		gbc.gridx = 0;
-		gbc.gridy = 4;
+		gbc.gridy = 5;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -286,7 +303,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(hintPL);
 		//----entrytype
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -309,7 +326,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(emptyL);
 		//----attributesLS
 		gbc.gridx = 0;
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.gridwidth = 5;
 		gbc.weightx = 0.0d;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -319,7 +336,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(attributesLS);
 		//----attributeOne
 		gbc.gridx = 0;
-		gbc.gridy = 7;
+		gbc.gridy = 8;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -349,7 +366,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(attributeTwoCh);
 		//----attributeThree
 		gbc.gridx = 0;
-		gbc.gridy = 8;
+		gbc.gridy = 9;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -379,7 +396,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(attributeFourCh);
 		//----otherLS
 		gbc.gridx = 0;
-		gbc.gridy = 9;
+		gbc.gridy = 10;
 		gbc.gridwidth = 5;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.LINE_START;
@@ -388,7 +405,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(othersLS);
 		//----explanation
 		gbc.gridx = 0;
-		gbc.gridy = 10;
+		gbc.gridy = 11;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -405,7 +422,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(explanationSL);
 		//----example
 		gbc.gridx = 0;
-		gbc.gridy = 11;
+		gbc.gridy = 12;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -422,7 +439,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(exampleSL);
 		//----pronunciation
 		gbc.gridx = 0;
-		gbc.gridy = 12;
+		gbc.gridy = 13;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -439,7 +456,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(pronunciationSL);
 		//----relation
 		gbc.gridx = 0;
-		gbc.gridy = 13;
+		gbc.gridy = 14;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -456,7 +473,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(relationSL);
 		//----unit
 		gbc.gridx = 0;
-		gbc.gridy = 14;
+		gbc.gridy = 15;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -472,7 +489,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(unitsCh);
 		//----category
 		gbc.gridx = 0;
-		gbc.gridy = 15;
+		gbc.gridy = 16;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghg;
@@ -487,7 +504,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(categoriesCh);
 		//----status
 		gbc.gridx = 0;
-		gbc.gridy = 16;
+		gbc.gridy = 17;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;
@@ -504,7 +521,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		editP.add(statusCB);
 		//----score
 		gbc.gridx = 0;
-		gbc.gridy = 17;
+		gbc.gridy = 18;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.LINE_END;

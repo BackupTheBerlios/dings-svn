@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.event.IAppEventHandler;
+import net.vanosten.dings.model.ADings;
 import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
 
@@ -55,6 +56,9 @@ public class Toolbox {
 
 	/** The Properties of the current learning stack */
 	private InfoVocab infoVocab;
+	
+	/** The main controller */
+	private ADings dings;
 	
 	/** The current learning direction */
 	private boolean targetAsked = false;
@@ -160,5 +164,13 @@ public class Toolbox {
 
 	public void setTargetAsked(boolean targetAsked) {
 		this.targetAsked = targetAsked;
+	}
+
+	public ADings getDings() {
+		return dings;
+	}
+
+	public void setDings(ADings dings) {
+		this.dings = dings;
 	}
 } //END public class Toolbox
