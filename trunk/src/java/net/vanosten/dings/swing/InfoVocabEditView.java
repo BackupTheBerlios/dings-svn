@@ -43,7 +43,7 @@ import javax.swing.border.EmptyBorder;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.InfoVocab;
-import net.vanosten.dings.swing.helperui.ChoiceID;
+import net.vanosten.dings.swing.helperui.ChoiceString;
 import net.vanosten.dings.swing.helperui.ValidatedTextField;
 import net.vanosten.dings.uiif.IInfoVocabEditView;
 import net.vanosten.dings.utils.Toolbox;
@@ -67,13 +67,13 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 	private ValidatedTextField explanationLabelVTF;
 	private ValidatedTextField exampleLabelVTF;
 	private JPanel localeP;
-	private ChoiceID baseLocaleCB, targetLocaleCB, attributesLocaleCB;
-	private ChoiceID unitLocaleCB, categoryLocaleCB;
-	private ChoiceID explanationLocaleCB, exampleLocaleCB;
-	private ChoiceID pronunciationLocaleCB, relationLocaleCB;
+	private ChoiceString baseLocaleCB, targetLocaleCB, attributesLocaleCB;
+	private ChoiceString unitLocaleCB, categoryLocaleCB;
+	private ChoiceString explanationLocaleCB, exampleLocaleCB;
+	private ChoiceString pronunciationLocaleCB, relationLocaleCB;
 	private JPanel visibilitiesP;
-	private ChoiceID visibilityAttributesCB, visibilityUnitCB, visibilityCategoryCB;
-	private ChoiceID visibilityExplanationCB, visibilityExampleCB, visibilityPronunciationCB, visibilityRelationCB;
+	private ChoiceString visibilityAttributesCB, visibilityUnitCB, visibilityCategoryCB;
+	private ChoiceString visibilityExplanationCB, visibilityExampleCB, visibilityPronunciationCB, visibilityRelationCB;
 	private JPanel syllablesP;
 	private JCheckBox baseUsesSyllablesCB;
 	private JCheckBox targetUsesSyllablesCB;
@@ -134,98 +134,98 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		exampleLabelVTF.setToolTipText("May not be empty");
 		exampleLabelVTF.addKeyListener(this);
 		//locales
-		baseLocaleCB = new ChoiceID();
+		baseLocaleCB = new ChoiceString();
 		baseLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		targetLocaleCB = new ChoiceID();
+		targetLocaleCB = new ChoiceString();
 		targetLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		attributesLocaleCB = new ChoiceID();
+		attributesLocaleCB = new ChoiceString();
 		attributesLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		unitLocaleCB = new ChoiceID();
+		unitLocaleCB = new ChoiceString();
 		unitLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		categoryLocaleCB = new ChoiceID();
+		categoryLocaleCB = new ChoiceString();
 		categoryLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		explanationLocaleCB = new ChoiceID();
+		explanationLocaleCB = new ChoiceString();
 		explanationLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		exampleLocaleCB = new ChoiceID();
+		exampleLocaleCB = new ChoiceString();
 		exampleLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		pronunciationLocaleCB = new ChoiceID();
+		pronunciationLocaleCB = new ChoiceString();
 		pronunciationLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		relationLocaleCB = new ChoiceID();
+		relationLocaleCB = new ChoiceString();
 		relationLocaleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
 		//visibility
-		visibilityAttributesCB = new ChoiceID();
+		visibilityAttributesCB = new ChoiceString();
 		visibilityAttributesCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityUnitCB = new ChoiceID();
+		visibilityUnitCB = new ChoiceString();
 		visibilityUnitCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityCategoryCB = new ChoiceID();
+		visibilityCategoryCB = new ChoiceString();
 		visibilityCategoryCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityExplanationCB = new ChoiceID();
+		visibilityExplanationCB = new ChoiceString();
 		visibilityExplanationCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityExampleCB = new ChoiceID();
+		visibilityExampleCB = new ChoiceString();
 		visibilityExampleCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityPronunciationCB = new ChoiceID();
+		visibilityPronunciationCB = new ChoiceString();
 		visibilityPronunciationCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
 			}
 		});
-		visibilityRelationCB = new ChoiceID();
+		visibilityRelationCB = new ChoiceString();
 		visibilityRelationCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent evt) {
 				onChange();
@@ -269,7 +269,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		isUpdating = false;
 	} //END public void setAvailableLocales(String[][]);
 
-	private void setVisibilityItems(ChoiceID aCB, boolean hasQuery) {
+	private void setVisibilityItems(ChoiceString aCB, boolean hasQuery) {
 		isUpdating = true;
 		if (hasQuery) {
 			String[][] items = {

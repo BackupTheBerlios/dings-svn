@@ -252,7 +252,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	} //END public String getName()
 
 	//implements IEntryTypeAttributeEditView
-	public void setDefaultItem(String anId) {
+	public void setDefaultItem(Long anId) {
 		isUpdating = true;
 		defaultItemCh.setSelectedIndex(0);
 		defaultItemCh.setSelectedID(anId);
@@ -260,7 +260,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	} //END public void setDefaultItem(String)
 
 	//implements IEntryTypeAttributeEditView
-	public String getDefaultItem() {
+	public Long getDefaultItem() {
 		return defaultItemCh.getSelectedID();
 	} //END public String getDefaultItem()
 
@@ -287,13 +287,13 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 
 	private void setDefaultItemItems() {
 		//save the current selection
-		String currentSelectedDefaultItemID = defaultItemCh.getSelectedID();
+		Long currentSelectedDefaultItemID = defaultItemCh.getSelectedID();
 		//get data from table and transform
 		Object[][] theItems = itemsModel.getData();
 		String[][] listItems = new String[theItems.length][];
 		for (int i = 0; i < listItems.length; i++) {
 			listItems[i] = new String[2];
-			listItems[i][0] = (String)theItems[i][0];
+			listItems[i][0] = ((Long)theItems[i][0]).toString();
 			listItems[i][1] = (String)theItems[i][1];
 		}
 		isUpdating = true;
@@ -338,7 +338,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 			deleteItemB.setEnabled(false);
 			return;
 		}
-		String anID = itemsModel.getIDAt(theSelectedRow);
+		Long anID = itemsModel.getIDAt(theSelectedRow);
 		if (anID.equals(defaultItemCh.getSelectedID())) {
 			deleteItemB.setEnabled(false);
 		}
@@ -427,7 +427,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	} //END public void setNameIsValueValid(boolean)
 
 	//implements IEntryTypeAttributeEditView
-	public void setItemNameIsValueValid(String invalidId) {
+	public void setItemNameIsValueValid(Long invalidId) {
 		String invalid;
 		if (null == invalidId) {
 			invalid = null;
@@ -436,6 +436,6 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 			invalid = (String)itemsModel.getValueAt(pos, 0);
 		}
 		validStringRenderer.setInvalidString(invalid);
-	} //END public void setItemNameIsValueValid(String
+	}
 
 } //END public class EntryTpeAttributEditView extends AEditView implements IEntryTypeAttributeEditView

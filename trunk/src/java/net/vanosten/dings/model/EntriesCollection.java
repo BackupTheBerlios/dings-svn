@@ -47,11 +47,11 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class EntriesCollection extends ACollection {
-	/** The id for the actual entry */
+	/** The actual entry */
 	private Entry currentItem = null;
 
 	/** Acts as a key list (of Strings) when editing */
-	private List<String> chosenKeys = null;
+	private List<Long> chosenKeys = null;
 
 	/** the views served by this collection of models */
 	private IEntriesSelectionView selectionView = null;
@@ -65,15 +65,15 @@ public class EntriesCollection extends ACollection {
 	private UnitsCollection units = null;
 
 	/** Holds the scores fore the entries based on the score in lists */
-	private Map<Integer,List<String>> scorePointers;
+	private Map<Integer,List<Long>> scorePointers;
 
 	//the selections in the IEntriesSelectionView
 	int selStatusChoice;
 	int selDays;
 	int[] selMinMaxScore;
-	String[] selUnitsChoice;
-	String[] selCategoriesChoice;
-	String[] selTypesChoice;
+	Long[] selUnitsChoice;
+	Long[] selCategoriesChoice;
+	Long[] selTypesChoice;
 
 	/** The score of the currentItem when learning */
 	private int currentScore = 0;
@@ -86,8 +86,8 @@ public class EntriesCollection extends ACollection {
 
 	public EntriesCollection(IAppEventHandler anEventHandler) {
 		super(anEventHandler);
-		items = new HashMap<String,Entry>();
-		chosenKeys = new ArrayList<String>();
+		items = new HashMap<Long,Entry>();
+		chosenKeys = new ArrayList<Long>();
 	} //END public EntriesCollection(IAppEventHandler)
 
 	//implements ACollection
@@ -106,11 +106,10 @@ public class EntriesCollection extends ACollection {
 
 		Set allKeys = items.keySet();
 		Iterator iter = allKeys.iterator();
-		String thisId;
+		Long thisId;
 		Entry thisEntry = null;
 		while (iter.hasNext()) {
-			//set the max id
-			thisId = (String)iter.next();
+			thisId = (Long)iter.next();
 			//give a point er to the EntryType
 			thisEntry = (Entry)items.get(thisId);
 			thisEntry.setParentController(this);
@@ -119,10 +118,12 @@ public class EntriesCollection extends ACollection {
 
 		//set index
 		iter = allKeys.iterator();
-		if (iter.hasNext()) setCurrentItem((String)iter.next());
+		if (iter.hasNext()) {
+			setCurrentItem((Long)iter.next());
+		}
 
 		//set chosen keys
-		chosenKeys = new ArrayList<String>(items.keySet());
+		chosenKeys = new ArrayList<Long>(items.keySet());
 	} //END protected void setItems(HashMap)
 
 	protected Entry getCurrentItem() {
@@ -130,7 +131,7 @@ public class EntriesCollection extends ACollection {
 	} //END protected Entry getCurrentItem()
 
 	//implements ACollection
-	protected void setCurrentItem(String anID) {
+	protected void setCurrentItem(Long anID) {
 		if (null != currentItem) {
 			//release the views of the current
 			currentItem.releaseViews();
@@ -141,19 +142,19 @@ public class EntriesCollection extends ACollection {
 		else if (items.containsKey(anID)) {
 			currentItem = (Entry)items.get(anID);
 			if (logger.isLoggable(Level.FINEST)) {
-				logger.logp(Level.FINEST, this.getClass().getName(), "setCurrentItem", anID);
+				logger.logp(Level.FINEST, this.getClass().getName(), "setCurrentItem", anID.toString());
 			}
 		}
 	} //END private void setCurrentItem(String)
 
 	//Implements ACollection
-	protected String selectNewCurrent(String anId) {
+	protected Long selectNewCurrent(Long anId) {
 		int pos = chosenKeys.indexOf(anId);
 		if (pos > 0) {
-			return (String)chosenKeys.get(pos -1);
+			return chosenKeys.get(pos -1);
 		}
 		else if ((0 == pos) && (chosenKeys.size() > 1)) {
-			return (String)chosenKeys.get(1);
+			return chosenKeys.get(1);
 		}
 		else {
 			return null;
@@ -161,7 +162,7 @@ public class EntriesCollection extends ACollection {
 	} //END protected String selectNewCurrent()
 
 	//Implements ACollection
-	protected void removeInOther(String anId) {
+	protected void removeInOther(Long anId) {
 		int pos = chosenKeys.indexOf(anId);
 		chosenKeys.remove(pos);
 	} //END protected void removeInOther(String)
@@ -172,13 +173,13 @@ public class EntriesCollection extends ACollection {
 	} //END protected void deleteItem()
 
 	//Implements ACollection
-	protected boolean checkDeleteAllowed(String anId) {
+	protected boolean checkDeleteAllowed(Long anId) {
 		//allow allways
 		return true;
-	} //END protected boolean checkDeleteAllowed(String)
+	}
 
 	//implements ACollection
-	protected void newItem(String aType, boolean isDefault) {
+	protected void newItem(Long aType, boolean isDefault) {
 		Entry newEntry = Entry.newItem(aType);
 		newEntry.setParentController(this);
 		items.put(newEntry.getId(), newEntry);
@@ -214,13 +215,13 @@ public class EntriesCollection extends ACollection {
 		}
 		if(evt.isDataEvent()) {
 			if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_NEW) {
-				newItem(evt.getDetails(), false);
+				newItem(evt.getEntityId(), false);
 				//send navigation event
 				AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 				ape.setMessage(MessageConstants.Message.N_VIEW_ENTRY_EDIT);
 				parentController.handleAppEvent(ape);
 			}
-			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_DELETE) deleteItem(evt.getDetails(), true);
+			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_DELETE) deleteItem(evt.getEntityId(), true);
 			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_DELETE) deleteItem(currentItem.getId(), false);
 			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_REFRESH) refreshListView();
 			//selection
@@ -257,47 +258,52 @@ public class EntriesCollection extends ACollection {
 			}
 			else if (evt.getMessage() == MessageConstants.Message.D_ENTRY_TYPE_CHANGE_ATTRIBUTES) {
 				//get the details
-				StringTokenizer st = new StringTokenizer(evt.getDetails(), Constants.DELIMITTER_APP_EVENT);
-				String anEntryTypeId = st.nextToken();
-				String oldOneId = Constants.resolveNullString(st.nextToken());
-				String oldTwoId = Constants.resolveNullString(st.nextToken());
-				String oldThreeId = Constants.resolveNullString(st.nextToken());
-				String oldFourId = Constants.resolveNullString(st.nextToken());
-				String newOneId = Constants.resolveNullString(st.nextToken());
-				String newTwoId = Constants.resolveNullString(st.nextToken());
-				String newThreeId = Constants.resolveNullString(st.nextToken());
-				String newFourId = Constants.resolveNullString(st.nextToken());
-				String defaultOneId = Constants.resolveNullString(st.nextToken());
-				String defaultTwoId = Constants.resolveNullString(st.nextToken());
-				String defaultThreeId = Constants.resolveNullString(st.nextToken());
-				String defaultFourId = Constants.resolveNullString(st.nextToken());
-				//update Entries
-				Set allKeys = items.keySet();
-				Iterator iter = allKeys.iterator();
-				Entry thisEntry;
-				while (iter.hasNext()) {
-					thisEntry = (Entry)items.get(iter.next());
-					thisEntry.changeEntryTypeAttributes(
-							anEntryTypeId
-							, oldOneId
-							, oldTwoId
-							, oldThreeId
-							, oldFourId
-							, newOneId
-							, newTwoId
-							, newThreeId
-							, newFourId
-							, defaultOneId
-							, defaultTwoId
-							, defaultThreeId
-							, defaultFourId);
+				try {
+					//FIXME: use String.split()
+					StringTokenizer st = new StringTokenizer(evt.getDetails(), Constants.DELIMITTER_APP_EVENT);
+					Long anEntryTypeId = Long.valueOf(st.nextToken());
+					Long oldOneId = Long.valueOf(st.nextToken());
+					Long oldTwoId = Long.valueOf(st.nextToken());
+					Long oldThreeId = Long.valueOf(st.nextToken());
+					Long oldFourId = Long.valueOf(st.nextToken());
+					Long newOneId = Long.valueOf(st.nextToken());
+					Long newTwoId = Long.valueOf(st.nextToken());
+					Long newThreeId = Long.valueOf(st.nextToken());
+					Long newFourId = Long.valueOf(st.nextToken());
+					Long defaultOneId = Long.valueOf(st.nextToken());
+					Long defaultTwoId = Long.valueOf(st.nextToken());
+					Long defaultThreeId = Long.valueOf(st.nextToken());
+					Long defaultFourId = Long.valueOf(st.nextToken());
+					//update Entries
+					Set allKeys = items.keySet();
+					Iterator iter = allKeys.iterator();
+					Entry thisEntry;
+					while (iter.hasNext()) {
+						thisEntry = (Entry)items.get(iter.next());
+						thisEntry.changeEntryTypeAttributes(
+								anEntryTypeId
+								, oldOneId
+								, oldTwoId
+								, oldThreeId
+								, oldFourId
+								, newOneId
+								, newTwoId
+								, newThreeId
+								, newFourId
+								, defaultOneId
+								, defaultTwoId
+								, defaultThreeId
+								, defaultFourId);
+					}
+				} catch (NumberFormatException e) {
+					//FIXME: do something intelligent here
 				}
 			}
 			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_APPLY) {
 				checkCurrentItemSelection(false);
 			}
 			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE) {
-				currentItem.setEntryType(entryTypes.getEntryType(evt.getDetails()), true);
+				currentItem.setEntryType(entryTypes.getEntryType(evt.getEntityId()), true);
 				sendSaveNeeded();
 				checkCurrentItemSelection(false);
 				//refresh the edit view
@@ -308,7 +314,7 @@ public class EntriesCollection extends ACollection {
 		}
 		else if (evt.isNavEvent()) {
 			if (evt.getMessage() == MessageConstants.Message.N_VIEW_ENTRY_EDIT) {
-				editItem(evt.getDetails());
+				editItem(evt.getEntityId());
 			}
 		}
 		//TODO: the parentController should be called explicitely after each AppEvent type as an "else"
@@ -372,9 +378,9 @@ public class EntriesCollection extends ACollection {
 
 	protected int[] getEntriesPerXStats(boolean onlyChosenEntries, String[] theIds, int type) {
 		int[] theStats = new int[theIds.length];
-		Set<String> theKeys;
+		Set<Long> theKeys;
 		if (onlyChosenEntries) {
-			theKeys = new HashSet<String>(chosenKeys);
+			theKeys = new HashSet<Long>(chosenKeys);
 		}
 		else {
 			theKeys = items.keySet();
@@ -382,10 +388,10 @@ public class EntriesCollection extends ACollection {
 		Iterator iter = theKeys.iterator();
 		//do the counting
 		Entry thisEntry;
-		String thisID;
-		String thisXId;
+		Long thisID;
+		Long thisXId;
 		while (iter.hasNext()) {
-			thisID = (String)iter.next();
+			thisID = (Long)iter.next();
 			thisEntry = (Entry)items.get(thisID);
 			if (StatsCollection.SCORE == type) {
 				theStats[thisEntry.getScore() -1]++;
@@ -454,9 +460,9 @@ public class EntriesCollection extends ACollection {
 	 * Initializes the scores. This is needed before learning can be started.
 	 */
 	private void initializeScores() {
-		scorePointers = new TreeMap<Integer,List<String>>();
+		scorePointers = new TreeMap<Integer,List<Long>>();
 		for (int i = Entry.SCORE_MIN; i <= Entry.SCORE_MAX; i++) {
-			scorePointers.put(i, new ArrayList<String>());
+			scorePointers.put(i, new ArrayList<Long>());
 		}
 
 		//reset the current score
@@ -469,9 +475,9 @@ public class EntriesCollection extends ACollection {
 		Iterator iter = chosenKeys.iterator();
 		Entry thisEntry;
 		int thisScore;
-		String thisID;
+		Long thisID;
 		while (iter.hasNext()) {
-			thisID = (String)iter.next();
+			thisID = (Long)iter.next();
 			thisEntry = (Entry)items.get(thisID);
 			thisScore = thisEntry.getScore();
 			if (Entry.SCORE_MIN > thisScore) {
@@ -508,7 +514,7 @@ public class EntriesCollection extends ACollection {
 	 * @return an id of an entry in the current selection, which has been chosen
 	 *          randomly: first weighted random by score and then randomly within the same score
 	 */
-	private String getWeightedRandomId() {
+	private Long getWeightedRandomId() {
 		//get new score and index position
 		int nextScore = 0;
 		int myIndex = 0;
@@ -576,13 +582,13 @@ public class EntriesCollection extends ACollection {
 		selMinMaxScore[0] = Entry.SCORE_MIN;
 		selMinMaxScore[1] = Entry.SCORE_MAX;
 		//TODO: find a nicer way to do this
-		String[] theIDs = new String[categories.items.size()];
-		Set<String> keys = categories.items.keySet();
+		Long[] theIDs = new Long[categories.items.size()];
+		Set<Long> keys = categories.items.keySet();
 		selCategoriesChoice = keys.toArray(theIDs);
-		theIDs = new String[units.items.size()];
+		theIDs = new Long[units.items.size()];
 		keys = units.items.keySet();
 		selUnitsChoice = keys.toArray(theIDs);
-		theIDs = new String[entryTypes.items.size()];
+		theIDs = new Long[entryTypes.items.size()];
 		keys = entryTypes.items.keySet();
 		selTypesChoice = keys.toArray(theIDs);
 	} //END public final void initializeSelection()
@@ -707,7 +713,7 @@ public class EntriesCollection extends ACollection {
 	 * Controlls whether a selectable item (category, unit, entryType, attribute) is used in one of the entries.
 	 * Delegates this to Entry.isSelectionItemUsed(String).
 	 */
-	protected boolean isItemUsed(String anId) {
+	protected boolean isItemUsed(Long anId) {
 		Set allKeys = items.keySet();
 		Iterator iter = allKeys.iterator();
 		Entry thisEntry;
@@ -728,7 +734,7 @@ public class EntriesCollection extends ACollection {
 	 */
 	public Entry[] getNextChoiceSet(int number) {
 		Entry[] randomArray = new Entry[number];
-		Set<String> check = new TreeSet<String>(); //makes sure that there are unique ids in the returned array
+		Set<Long> check = new TreeSet<Long>(); //makes sure that there are unique ids in the returned array
 		int pos = 0;
 		while (pos < number) {
 			randomArray[pos] = (Entry)items.get(getWeightedRandomId());
@@ -745,9 +751,9 @@ public class EntriesCollection extends ACollection {
 	 * by updating their scores.
 	 * @param results
 	 */
-	public void setLearningResults(Map<String,Result> results) {
+	public void setLearningResults(Map<Long,Result> results) {
 		Entry anEntry = null;
-		for (String anId : results.keySet()) {
+		for (Long anId : results.keySet()) {
 			anEntry = (Entry) items.get(anId); //TODO: direct access when generics
 			anEntry.updateScore(results.get(anId));
 		}

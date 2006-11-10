@@ -27,8 +27,8 @@ import net.vanosten.dings.consts.Constants;
 
 public abstract class AIdItemModel extends AItemModel {
 
-	/** The id of this model. In xml the id has a prefix <code>PREFIX</code> to allow for a valid xml-id */
-	protected String id;
+	/** The id of this model. */
+	protected Long id;
 
 	/** The date of the last update */
 	protected Date lastUpd;
@@ -55,11 +55,11 @@ public abstract class AIdItemModel extends AItemModel {
 	/**
 	 * Returns the model's id.
 	 *
-	 * @return String - the id
+	 * @return the id
 	 */
-	public final String getId() {
+	public final Long getId() {
 		return id;
-	} //END public String getId()
+	} //END public long getId()
 
 	/**
 	 * Overrides <code>AItemModel.sendSaveNeeded()</code> to set the last update date.

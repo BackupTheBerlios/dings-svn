@@ -162,7 +162,7 @@ public abstract class ListView extends JPanel implements IListView {
 		deleteB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.remove").charAt(0));
 		deleteB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				String rowID = getSelectedRowID();
+				Long rowID = getSelectedRowID();
 				if (rowID != null) {
 					onDelete();
 				}
@@ -230,11 +230,11 @@ public abstract class ListView extends JPanel implements IListView {
 	/**
 	 * Gets the ID of the selected row
 	 *
-	 * return String - the ID of the selcted row.
+	 * return Long - the ID of the selcted row.
 	 */
-	private String getSelectedRowID() {
+	private Long getSelectedRowID() {
 		return model.getIDAt(listT.getSelectedRow());
-	} //END private String getSelectedRowID()
+	}
 
 
 	/**
@@ -266,13 +266,13 @@ public abstract class ListView extends JPanel implements IListView {
 		listT.requestFocus();
 	} //END public void setList(String[], String[], Object[][], boolean[])
 
-	public void setSelected(String anID) {
+	public void setSelected(Long anID) {
 		int row = model.getIDIndexPos(anID);
 		if (0 <= row) {
 			listT.setRowSelectionInterval(row, row);
 			listT.scrollRectToVisible(listT.getCellRect(row, 0, true));
 		}
-	} //END public void setSelected(String)
+	}
 
 	/**
 	 * Sets the width of the table columns. Gets called from setList(...)
@@ -312,8 +312,8 @@ public abstract class ListView extends JPanel implements IListView {
 	 *
 	 * @return String - the id of
 	 */
-	protected String getIdTypeForNew() {
-		return Constants.EMPTY_STRING;
+	protected Long getIdTypeForNew() {
+		return Constants.UNDEFINED_ID;
 	} //END protected String getIdTypeForNew()
 
 	//-----------------------------------------------------------------------
@@ -322,12 +322,12 @@ public abstract class ListView extends JPanel implements IListView {
 	 * Requests a new entry by asking, which entry type that should be chosen.
 	 */
 	private void onNew() {
-		String type = getIdTypeForNew();
+		Long type = getIdTypeForNew();
 
 		if (null != type) {
 			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
 			ape.setMessage(MessageConstants.Message.D_LIST_VIEW_NEW);
-			ape.setDetails(type);
+			ape.setEntityId(type);
 			controller.handleAppEvent(ape);
 		}
 		//else do nothing
@@ -337,21 +337,21 @@ public abstract class ListView extends JPanel implements IListView {
 	 * Shows an edit view for en entry.
 	 */
 	private void onEdit() {
-		String rowID = getSelectedRowID();
+		Long rowID = getSelectedRowID();
 		if (null != rowID) {
 			AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 			ape.setMessage(msgEdit);
-			ape.setDetails(rowID);
+			ape.setEntityId(rowID);
 			controller.handleAppEvent(ape);
 		}
 	} //END private void onEdit()
 
 	private void onDelete() {
-		String rowID = getSelectedRowID();
+		Long rowID = getSelectedRowID();
 		if (rowID != null) {
 			AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
 			ape.setMessage(MessageConstants.Message.D_LIST_VIEW_DELETE);
-			ape.setDetails(rowID);
+			ape.setEntityId(rowID);
 			controller.handleAppEvent(ape);
 		}
 	} //END private void onDelete()

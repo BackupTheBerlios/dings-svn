@@ -71,7 +71,9 @@ public class EntryTypesCollection extends AChoiceCollection {
 
 		//set index
 		iter = allKeys.iterator();
-		if (iter.hasNext()) setCurrentItem((String)iter.next());
+		if (iter.hasNext()) {
+			setCurrentItem((Long)iter.next());
+		}
 	} //END protected void setItems(HashMap)
 
 	protected EntryType getCurrentItem() {
@@ -79,7 +81,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 	} //END protected EntryType getCurrentItem()
 
 	//implements ACollection
-	protected void setCurrentItem(String anID) {
+	protected void setCurrentItem(Long anID) {
 		if (null != currentItem) {
 			//release the views of the current
 			currentItem.releaseViews();
@@ -100,7 +102,7 @@ public class EntryTypesCollection extends AChoiceCollection {
 
 	//implements ACollection
 	//the type attribute is not used for EntryTypes
-	protected void newItem(String aType, boolean isDefault) {
+	protected void newItem(Long aType, boolean isDefault) {
 		EntryType newEntryType = null;
 		newEntryType = EntryType.newItem(isDefault);
 		newEntryType.setEntryTypeAttributes(attributes);
@@ -124,13 +126,15 @@ public class EntryTypesCollection extends AChoiceCollection {
 		if (listView != null) {
 			listView.setList(EntryType.getTableDisplayTitles(), data, EntryType.getTableColumnFixedWidth());
 		}
-		if (null != currentItem) listView.setSelected(currentItem.getId());
+		if (null != currentItem) {
+			listView.setSelected(currentItem.getId());
+		}
 	} //END private void resetListView()
 
-	protected EntryType getEntryType(String anID) {
+	protected EntryType getEntryType(Long anID) {
 		EntryType foo = (EntryType)items.get(anID);
 		return foo;
-	} //END protected EntryType getEntryType(String)
+	}
 
 	/*
 	 * Used to show the possible items when about to create  new Entry.

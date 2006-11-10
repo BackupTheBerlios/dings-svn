@@ -886,7 +886,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		}
 	} //END public void setRelation(String)
 
-	public void setAttributeId(String anAttributeId, int aNumber) {
+	public void setAttributeId(Long anAttributeId, int aNumber) {
 		switch (aNumber) {
 			case 1:
 				attributeOneCh.setSelectedIndex(0);
@@ -924,7 +924,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		}
 	} //END public void setAttributeName(String, int)
 
-	public String getAttributeId(int aNumber) {
+	public Long getAttributeId(int aNumber) {
 		switch (aNumber) {
 			case 1:
 				return attributeOneCh.getSelectedID();
@@ -936,7 +936,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 				return attributeFourCh.getSelectedID();
 		}
 		return null;
-	} //END public String getAttributeId(int)
+	}
 
 	public void setStatus(boolean aStatus) {
 		statusCB.setSelected(aStatus);
@@ -950,23 +950,23 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		scoreL.setText(Integer.toString(aScore));
 	} //END public void setScore(int)
 	
-	public String getUnitId() {
+	public Long getUnitId() {
 		return unitsCh.getSelectedID();
-	} //END public String getUnitId()
+	}
 
-	public void setUnitId(String aUnitId) {
+	public void setUnitId(Long aUnitId) {
 		unitsCh.setSelectedIndex(0);
 		unitsCh.setSelectedID(aUnitId);
-	} //END public void setUnitId(String)
+	}
 	
-	public String getCategoryId() {
+	public Long getCategoryId() {
 		return categoriesCh.getSelectedID();
-	} //END public String getCategoryId()
+	}
 
-	public void setCategoryId(String aCategoryId) {
+	public void setCategoryId(Long aCategoryId) {
 		categoriesCh.setSelectedIndex(0);
 		categoriesCh.setSelectedID(aCategoryId);
-	} //END public void setCategoryId(String)
+	}
 
 	public void setUnits(String[][] theUnits) {
 		unitsCh.setItems(theUnits);

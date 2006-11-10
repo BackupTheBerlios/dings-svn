@@ -28,16 +28,14 @@ import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.uiif.IEntryTypeEditView;
+import net.vanosten.dings.utils.Toolbox;
 
 import java.util.logging.Logger;
 
 public class EntryType extends AIdItemModel {
 	private String name;
 
-	private String[] attributeIds;
-
-	/** Defines the maximal number of an item until now */
-	private static int maxId = 0;
+	private Long[] attributeIds;
 
 	/** Defines the number of attributes */
 	public final static int NUMBER_OF_ATTRIBUTES = 4;
@@ -48,43 +46,19 @@ public class EntryType extends AIdItemModel {
 	/** The edit view */
 	private IEntryTypeEditView editView;
 
-	public EntryType(String aName, String anId, String[] theAttributeIds, String aLastUpd) {
+	public EntryType(Long anId, String aName, Long[] theAttributeIds, String aLastUpd) {
 		logger = Logger.getLogger("net.vanosten.dings.model.EntryType");
-		setMaxId(anId);
 		this.id = anId;
 		this.name = aName;
 		this.attributeIds = theAttributeIds;
 		this.setLastUpd(aLastUpd);
 	} //END public EntryType(...)
 
-	/**
-	 * Checks and sets the highest Id
-	 */
-	private static void setMaxId(String thisId) {
-		maxId = Math.max(maxId, Integer.parseInt(thisId.substring(Constants.PREFIX_ENTRYTYPE.length(),thisId.length())));
-	} //END private static void setMaxId(string)
-
-	/**
-	 * Reset the max Id to 0.
-	 * E.g. used when creating a new vocabulary after another vocabulary had been opened.
-	 */
-	protected static void resetMaxId() {
-		maxId = 0;
-	} //END protected static void resetMaxId()
-
-	/**
-	 * Returns a valid id for a new item
-	 */
-	private static String getNewId() {
-		maxId++;
-		return (Constants.PREFIX_ENTRYTYPE + maxId);
-	} //END private static String getNewId()
-
 	protected static EntryType newItem(boolean isDefault) {
 		if (isDefault) {
-			return new EntryType( "Default", getNewId(), new String[NUMBER_OF_ATTRIBUTES], null);
+			return new EntryType(Toolbox.getInstance().nextId(), "Default", new Long[NUMBER_OF_ATTRIBUTES], null);
 		}
-		return new EntryType(Constants.UNDEFINED, getNewId(), new String[NUMBER_OF_ATTRIBUTES], null);
+		return new EntryType(Toolbox.getInstance().nextId(), Constants.UNDEFINED, new Long[NUMBER_OF_ATTRIBUTES], null);
 	} //END protected static EntryType newItem(boolean)
 
 	//Implements AItemModel
@@ -93,20 +67,20 @@ public class EntryType extends AIdItemModel {
 
 		xml.append("<").append(Constants.XML_ENTRYTYPE);
 		//common attributes
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id.toString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_NAME, name));
 		//attributes
 		if (null != attributeIds[0]) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEONE, attributeIds[0]));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEONE, attributeIds[0].toString()));
 		}
 		if (null != attributeIds[1]) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETWO, attributeIds[1]));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETWO, attributeIds[1].toString()));
 		}
 		if (null != attributeIds[2]) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETHREE, attributeIds[2]));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETHREE, attributeIds[2].toString()));
 		}
 		if (null != attributeIds[3]) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEFOUR, attributeIds[3]));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEFOUR, attributeIds[3].toString()));
 		}
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
 		xml.append(">");
@@ -122,7 +96,7 @@ public class EntryType extends AIdItemModel {
 	 * Used to display in a set of choices for EntryTypes. E.g. when the EntryType of a new Entry has to be chosen.
 	 */
 	protected String[] getChoiceProxy() {
-		String choiceProxy[] = {id, name};
+		String choiceProxy[] = {id.toString(), name};
 		return choiceProxy;
 	} //END protected String[] getChoiceProxy()
 
@@ -147,9 +121,9 @@ public class EntryType extends AIdItemModel {
 		if (aNumber < 1 || aNumber > this.getNumberOfAttributes()) {
 			return null;
 		}
-		String anId = attributeIds[aNumber - 1];
+		Long anId = attributeIds[aNumber - 1];
 		return attributes.getEntryTypeAttribute(anId);
-	} //END protected EntryTypeAttribute getAttribute(int)
+	}
 
 	protected static String[] getTableDisplayTitles() {
 		String[] titles = {"Name", "Attribute 1", "Attribute 2", "Attribute 3", "Attribute 4"};
@@ -171,22 +145,20 @@ public class EntryType extends AIdItemModel {
 	 *
 	 * @return List<String< - a list of validation errors. Size() = 0 means valid model.
 	 */
-	public static List<String> validate(String anId, String aName) {
+	public static List<String> validate(String aName) {
 		List<String> errors = new ArrayList<String>();
-		String idError = validateId(Constants.PREFIX_ENTRYTYPE, anId);
-		if (null != idError) errors.add(idError);
 		if (false == validateString(aName,1)) {
 			errors.add("Name may not be empty");
 		}
 		return errors;
-	} //END public static ArrayList validate(String, String)
+	}
 
 	//implements AItemModel
 	protected void updateModel() {
 		//get values from editView and trim them
 		String nameV = editView.getName().trim();
 		//validate where necessary
-		List<String> errors = validate(id, nameV);
+		List<String> errors = validate(nameV);
 		//if validation is ok, save the new values.
 		if (0 ==  errors.size()) {
 			//update all entries
@@ -194,7 +166,7 @@ public class EntryType extends AIdItemModel {
 			name = nameV;
 
 			//not validated values
-			String[] attributeIdsV = editView.getAttributes();
+			Long[] attributeIdsV = editView.getAttributes();
 
 			StringBuffer sb = new StringBuffer();
 			sb.append(id);
@@ -205,19 +177,19 @@ public class EntryType extends AIdItemModel {
 				if (null != attributeIds[i]) {
 					sb.append(attributeIds[i]);
 				}
-				else sb.append(Constants.NULL_STRING);
+				else sb.append(Constants.UNDEFINED_ID);
 			}
 			//rearrange new ids without nulls in the middle
-			List<String> newAttribIds = new ArrayList<String>(NUMBER_OF_ATTRIBUTES);
+			List<Long> newAttribIds = new ArrayList<Long>(NUMBER_OF_ATTRIBUTES);
 			for (i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
 				if (null != attributeIdsV[i]) {
 					newAttribIds.add(attributeIdsV[i]);
 				}
 			}
 			//set the attribute ids
-			attributeIds = new String[NUMBER_OF_ATTRIBUTES];
+			attributeIds = new Long[NUMBER_OF_ATTRIBUTES];
 			for (i = 0; i < newAttribIds.size(); i++) {
-				attributeIds[i] = (String) newAttribIds.get(i);
+				attributeIds[i] = newAttribIds.get(i);
 			}
 			//append new ids
 			for (i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
@@ -225,17 +197,17 @@ public class EntryType extends AIdItemModel {
 				if (null != attributeIds[i]) {
 					sb.append(attributeIds[i]);
 				}
-				else sb.append(Constants.NULL_STRING);
+				else sb.append(Constants.UNDEFINED_ID);
 			}
 			//append default item ids
-			String defaultItemId = null;
+			Long defaultItemId = null;
 			for (i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
 				sb.append(Constants.DELIMITTER_APP_EVENT);
 				if (null != attributeIds[i]) {
 					defaultItemId = attributes.getEntryTypeAttribute(attributeIds[i]).getDefaultItem();
 					sb.append(defaultItemId);
 				}
-				else sb.append(Constants.NULL_STRING);
+				else sb.append(Constants.UNDEFINED_ID);
 			}
 			//send AppEvent to update all Entries
 			AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
@@ -252,7 +224,7 @@ public class EntryType extends AIdItemModel {
 	protected void checkChangeInGUI() {
 		//check for changes in attributes
 		//must check fo null first because null.equals(something) throws NullPointerException
-		String[] theIds = editView.getAttributes();
+		Long[] theIds = editView.getAttributes();
 		boolean attribUnchanged = true;
 		for (int i = 0; i < NUMBER_OF_ATTRIBUTES; i++) {
 			if (null == attributeIds[i]) {

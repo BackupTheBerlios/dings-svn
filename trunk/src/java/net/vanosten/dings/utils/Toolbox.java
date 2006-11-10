@@ -64,6 +64,9 @@ public class Toolbox {
 	private boolean targetAsked = false;
 	
 	private Logger logger = Logger.getLogger("net.vanosten.dings.utils.Toolbox");
+	
+	/** A sequence for all ids in the application */
+	private long sequence = 0;
 
 	/**
 	 * Private constructor to prevent instantiation from outside
@@ -158,11 +161,11 @@ public class Toolbox {
 		return "????";
 	} //END public final String getLocalizedString(String)
 
-	public boolean isTargetAsked() {
+	public final boolean isTargetAsked() {
 		return targetAsked;
 	}
 
-	public void setTargetAsked(boolean targetAsked) {
+	public final void setTargetAsked(boolean targetAsked) {
 		this.targetAsked = targetAsked;
 	}
 
@@ -170,7 +173,30 @@ public class Toolbox {
 		return dings;
 	}
 
-	public void setDings(ADings dings) {
+	public final void setDings(ADings dings) {
 		this.dings = dings;
+	}
+	
+	/**
+	 * Sets the minimal sequence based on an existing id in an entity
+	 * @param anId
+	 */
+	public final void setMinimalSequence(long anId) {
+		sequence = anId;
+	}
+	
+	/**
+	 * @return the next id in the sequence
+	 */
+	public final long nextId() {
+		sequence++;
+		return sequence;
+	}
+	
+	/**
+	 * Resets the sequence to 0 (zero)
+	 */
+	public final void resetSequence() {
+		sequence = 0;
 	}
 } //END public class Toolbox

@@ -43,7 +43,7 @@ public class TextRectangle extends JPanel {
 	private LearnByChoicePane parent;
 	
 	/** The id of the corresponding Entry */
-	private String id = null;
+	private Long id = null;
 	
 	/** Sensitive on user interaction */
 	private boolean sensitive = true;
@@ -212,13 +212,13 @@ public class TextRectangle extends JPanel {
 		this.usesSyllables = usesSyllables;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
-	} //END public String getId()
+	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
-	} //END public void setId(String)
+	}
 
 	public void setSensitive(boolean sensitive) {
 		this.sensitive = sensitive;

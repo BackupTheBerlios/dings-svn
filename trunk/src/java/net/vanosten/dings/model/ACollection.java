@@ -99,21 +99,21 @@ public abstract class ACollection implements IAppEventHandler {
 	/**
 	 * Sets the current item.
 	 *
-	 * @param String anID - the ID of the unit
+	 * @param anID - the ID of the unit
 	 */
-	protected abstract void setCurrentItem(String anID);
+	protected abstract void setCurrentItem(Long anID);
 
 	/*
 	 * Tries to find the neighbour of an item, which is going to be deleted.
 	 *
 	 * @returns String - the id of a neighbour or null if the list will be empty
 	 */
-	protected abstract String selectNewCurrent(String anId);
+	protected abstract Long selectNewCurrent(Long anId);
 
 	/**
 	 * Removes an Id or item from another collection besides the items
 	 */
-	protected abstract void removeInOther(String anId);
+	protected abstract void removeInOther(Long anId);
 
 	/**
 	 * Deletes an item from a request in an edit view.
@@ -125,13 +125,13 @@ public abstract class ACollection implements IAppEventHandler {
 	 * Controls whether it is allowed to delete the item.
 	 * E.g. there has to be at least one unit and the unit may not be used in any Entry.
 	 */
-	protected abstract boolean checkDeleteAllowed(String anId);
+	protected abstract boolean checkDeleteAllowed(Long anId);
 
 	//implements ACollection
-	protected void deleteItem(String anId, boolean inList) {
+	protected void deleteItem(Long anId, boolean inList) {
 		if (checkDeleteAllowed(anId)) {
 			 //Find the category before in List
-			String newCurrent = selectNewCurrent(anId);
+			long newCurrent = selectNewCurrent(anId);
 			//remove
 			items.remove(anId);
 			removeInOther(anId);
@@ -150,18 +150,18 @@ public abstract class ACollection implements IAppEventHandler {
 			}
 		}
 		//else do nothing. The implementation of checkDeleteAllowed() should show error message
-	} //END public deleteItem(String, boolean)
+	}
 
-	protected void editItem(String anID) {
+	protected void editItem(Long anID) {
 		setCurrentItem(anID);
-	} //END protected void editItem(String)
+	}
 
 	/**
 	 * Add a new item.
 	 * @param aType - which type it is (only for Entries, null otherwise)
 	 * @param isDefault - whether this is a default item (only for selection items -> Unit, Category, EntryType)
 	 */
-	protected abstract void newItem(String aType, boolean isDefault);
+	protected abstract void newItem(Long aType, boolean isDefault);
 
 	/**
 	 * Sets the list for the listview

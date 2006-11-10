@@ -64,21 +64,6 @@ public class Constants  {
 	} //END public static String getLineSeparator()
 
 	/**
-	 * Returns a String as a null value, if the input
-	 * String equals to the <code>NULL_STRING</code> constant.
-	 * Otherwise the original String is returned.
-	 *
-	 * @param String aString - the original String
-	 * @return String - null if the original String equals to a specific Constant
-	 */
-	public static String resolveNullString(String aString) {
-		if (aString.equals(NULL_STRING)) {
-			return null;
-		}
-		return aString;
-	} //END public String resolveNullString(String)
-
-	/**
 	 * Makes an XML-tagged string with a string as variable.
 	 *
 	 * @param String tag - the name of the XML-tag
@@ -193,29 +178,11 @@ public class Constants  {
 
 	/*---- IDs RELATED ------------------------------------------------------------*/
 
-	/** The prefix for an Entry id */
-	public final static String PREFIX_ENTRY = "E";
-
-	/** The prefix for a Unit id */
-	public final static String PREFIX_UNIT = "U";
-
-	/** The prefix for a Unit id */
-	public final static String PREFIX_CATEGORY = "C";
-
-	/** The prefix for a EntryType id */
-	public final static String PREFIX_ENTRYTYPE = "ET";
-
-	/** The prefix for a EntryTypeAttribute id */
-	public final static String PREFIX_ENTRTYPE_ATTRIBUTE = "ETA";
-
-	/** The prefix for an EntryTypeAttributeItem id */
-	public final static String PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM = "ETAI";
-
-	/* The id for a new element */
-	public final static String ID_NEW = "-1";
-
-	/* The delimitter between attributes in AppEvents */
+	/** The delimitter between attributes in AppEvents */
 	public final static String DELIMITTER_APP_EVENT = "#";
+	
+	/** The long value if it is not defined */
+	public final static Long UNDEFINED_ID = new Long(-1);
 
 	/*---- XML elements ---------------------------------------------------------*/
 	//common attributes
@@ -224,7 +191,6 @@ public class Constants  {
 	public final static String UNDEFINED = "?!?";
 	public final static String EMPTY_STRING = "";
 	public final static String SPACE_STRING = " ";
-	public final static String NULL_STRING = "(null)";
 	public final static String XML_ATTR_ID = "eid";
 	public final static String XML_ATTR_UNIT = "u";
 	public final static String XML_ATTR_CATEGORY = "c";

@@ -22,12 +22,10 @@
 package net.vanosten.dings.model;
 
 import net.vanosten.dings.consts.Constants;
+import net.vanosten.dings.utils.Toolbox;
 
 public class EntryTypeAttributeItem {
-	private String id;
-
-	/** Defines the maximal number of an item until now */
-	private static int maxId = 0;
+	private Long id;
 
 	/** This item's name */
 	private String name;
@@ -35,8 +33,7 @@ public class EntryTypeAttributeItem {
 	/** Is this default? */
 	private boolean irregular = false; //default is not a valid identifier
 
-	public EntryTypeAttributeItem(String theId, String aName, boolean isIrregular) {
-		setMaxId(theId);
+	public EntryTypeAttributeItem(Long theId, String aName, boolean isIrregular) {
 		this.id = theId;
 		this.name = aName;
 		this.irregular = isIrregular;
@@ -46,49 +43,29 @@ public class EntryTypeAttributeItem {
 	* Construct a new EntryTypeAttributeItem from scratch adding the necessary information.
 	*/
 	public static EntryTypeAttributeItem newItem() {
-		return new EntryTypeAttributeItem(getNewId(), Constants.UNDEFINED, false);
+		return new EntryTypeAttributeItem(Toolbox.getInstance().nextId(), Constants.UNDEFINED, false);
 	} //END public static EntryTypeAttributeItem NewEntryTypeItem()
 
-	protected String getId() {
+	protected Long getId() {
 		return id;
-	} //END protected String getId()
+	}
 
 	protected String getName() {
 		return name;
 	} //END protected String getName()
 
 	/**
-	 * Returns a valid id for a new item
-	 */
-	private static String getNewId() {
-		maxId++;
-		return (Constants.PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM + maxId);
-	} //END private String getNewId()
-
-	private static void setMaxId(String anId) {
-		maxId = Math.max(maxId, Integer.parseInt(anId.substring(Constants.PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM.length(),anId.length())));
-	} //END private void setMaxId(String)
-
-	/**
-	 * Reset the max Id to 0.
-	 * E.g. used when creating a new vocabulary after another vocabulary had been opened.
-	 */
-	protected static void resetMaxId() {
-		maxId = 0;
-	} //END protected static void resetMaxId()
-
-	/**
 	 * @return String[] choiceProxy
 	 */
 	protected String[] getChoiceProxy() {
-		String choiceProxy[] = {id, name};
+		String choiceProxy[] = {id.toString(), name};
 		return choiceProxy;
 	} //END protected String[] getChoiceProxy()
 
 	protected String getXMLString() {
 		StringBuffer xml = new StringBuffer();
 		xml.append("<").append(Constants.XML_ENTRYTYPE_ATTRIBUTE_ITEM);
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id.toString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_IRREGULAR, Boolean.toString(irregular)));
 		xml.append(">");
 		xml.append(name);
@@ -106,11 +83,11 @@ public class EntryTypeAttributeItem {
 	 */
 	protected static EntryTypeAttributeItem translateFromObjectArray(Object theObjectItem[]) {
 		//get the id as String, the name as String and the irregular as Boolean
-		String objId = null;
+		Long objId = null;
 		String objName = null;
 		boolean objIrregular = false;
 		try {
-			objId = ((String)theObjectItem[0]).trim();
+			objId = ((Long)theObjectItem[0]);
 			objName = ((String)theObjectItem[1]).trim();
 			objIrregular = ((Boolean) theObjectItem[2]).booleanValue();
 		}

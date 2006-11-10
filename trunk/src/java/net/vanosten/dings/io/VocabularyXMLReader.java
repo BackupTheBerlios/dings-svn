@@ -43,10 +43,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * This class handels xml-reading for ADings using the pull parser from www.kxml.org.
- *
- * @author Rick Gruber, <a href="mailto:dingsbums@vanosten.net">dingsbums@vanosten.net</a>
- * @version 1.0.0, 2001-03-20
+ * This class handels xml-reading for ADings using the pull parser.
  */
 public class VocabularyXMLReader implements IOHandler {
 
@@ -119,7 +116,7 @@ public class VocabularyXMLReader implements IOHandler {
 	private boolean targetUsesSyllables = false;
 
 	//common attributes
-	private String id;
+	private Long id;
 	private String name;
 	private String description;
 	private String lastUpd; //also used in statistics for timestamp
@@ -135,12 +132,12 @@ public class VocabularyXMLReader implements IOHandler {
 	private String relation = Constants.EMPTY_STRING;
 
 	//attributes EntryType
-	private String[] attributeIds;
+	private Long[] attributeIds;
 
 	//attriubutes for EntryTypeAttribute
-	private String aId; //needed because EntryTypeAttributeItems have also id
+	private Long aId; //needed because EntryTypeAttributeItems have also id
 	private String aLastUpd; //needed because EntryTypeAttributeItems have also lastUpd
-	private String di;
+	private Long di;
 	private ArrayList attributeItems;
 
 	//attributes EntryTypeAttributeItem
@@ -148,13 +145,13 @@ public class VocabularyXMLReader implements IOHandler {
 	//attributes Entry
 	private int score; //also used in statistics to store current score stats
 	private boolean status;
-	private String unit;
-	private String category;
-	private String entryType;
-	private String attributeOne;
-	private String attributeTwo;
-	private String attributeThree;
-	private String attributeFour;
+	private Long unit;
+	private Long category;
+	private Long entryType;
+	private Long attributeOne;
+	private Long attributeTwo;
+	private Long attributeThree;
+	private Long attributeFour;
 
 	//statistics
 	private StatisticSet statSet;
@@ -358,59 +355,59 @@ public class VocabularyXMLReader implements IOHandler {
 
 		//Attributes for Unit
 		if (localName.equals(Constants.XML_UNIT)) {
-			id = xpp.getAttributeValue(namespace, Constants.XML_ATTR_ID);
+			id = Long.valueOf(xpp.getAttributeValue(namespace, Constants.XML_ATTR_ID));
 			lastUpd = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_UPD);
 		}
 
 		//Attributes for Category
 		if (localName.equals(Constants.XML_CATEGORY)) {
-			id = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
+			id = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID));
 			lastUpd = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_UPD);
 		}
 
 		//Attributes for EntryType
 		else if (localName.equals(Constants.XML_ENTRYTYPE)) {
 			name = xpp.getAttributeValue(namespace,Constants.XML_ATTR_NAME);
-			id = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
+			id = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID));
 			lastUpd = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_UPD);
 			//if attribute does not exist then the parser returns null, which is ok
-			attributeIds = new String[EntryType.NUMBER_OF_ATTRIBUTES];
-			attributeIds[0] = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEONE);
-			attributeIds[1] = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO);
-			attributeIds[2] = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETHREE);
-			attributeIds[3] = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEFOUR);
+			attributeIds = new Long[EntryType.NUMBER_OF_ATTRIBUTES];
+			attributeIds[0] = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEONE));
+			attributeIds[1] = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO));
+			attributeIds[2] = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETHREE));
+			attributeIds[3] = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEFOUR));
 		}
 
 		//attributes for EntryTypeAttribute
 		else if (localName.equals(Constants.XML_ENTRYTYPE_ATTRIBUTE)) {
-			aId = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
+			aId = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID));
 			name = xpp.getAttributeValue(namespace,Constants.XML_ATTR_NAME);
-			di = xpp.getAttributeValue(namespace,Constants.XML_ATTR_DEFAULTITEM);
+			di = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_DEFAULTITEM));
 			aLastUpd = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_UPD);
 			attributeItems = new ArrayList();
 		}
 
 		//Attributes for EntryTypeAttributeItem
 		else if (localName.equals(Constants.XML_ENTRYTYPE_ATTRIBUTE_ITEM)) {
-			id = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
+			id = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID));
 			irregular = Boolean.TRUE.equals(xpp.getAttributeValue(namespace,Constants.XML_ATTR_IRREGULAR));
 		}
 
 		//Attributes common to all Entries
 		else if (localName.equals(Constants.XML_ENTRY)) {
-			entryType = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ENTRYTYPE);
-			id = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID);
-			unit = xpp.getAttributeValue(namespace,Constants.XML_ATTR_UNIT);
-			category = xpp.getAttributeValue(namespace,Constants.XML_ATTR_CATEGORY);
+			entryType = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ENTRYTYPE));
+			id = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ID));
+			unit = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_UNIT));
+			category = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_CATEGORY));
 			foo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_SCORE);
 			if (foo != null) score = Integer.parseInt(foo);
 			else score = 0;
 			status = Boolean.parseBoolean(xpp.getAttributeValue(namespace,Constants.XML_ATTR_STATUS));
 			//equals to null if attribute does not exist
-			attributeOne = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEONE);
-			attributeTwo = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO);
-			attributeThree = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETHREE);
-			attributeFour = xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEFOUR);
+			attributeOne = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEONE));
+			attributeTwo = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETWO));
+			attributeThree = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTETHREE));
+			attributeFour = Long.valueOf(xpp.getAttributeValue(namespace,Constants.XML_ATTR_ATTRIBUTEFOUR));
 
 			lastUpd = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_UPD);
 			lastLearned = xpp.getAttributeValue(namespace,Constants.XML_ATTR_LAST_LEARNED);
@@ -445,7 +442,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//EntryTypeAttribute
 		else if (localName.equals(Constants.XML_ENTRYTYPE_ATTRIBUTE)) {
-			List<String> errors = EntryTypeAttribute.validate(aId, name);
+			List<String> errors = EntryTypeAttribute.validate(name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -462,12 +459,12 @@ public class VocabularyXMLReader implements IOHandler {
 
 		//EntryType
 		else if (localName.equals(Constants.XML_ENTRYTYPE)) {
-			List<String> errors = EntryType.validate(id, name);
+			List<String> errors = EntryType.validate(name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
 			else {
-				anEntryType = new EntryType(name, id, attributeIds, lastUpd);
+				anEntryType = new EntryType(id, name, attributeIds, lastUpd);
 				entryTypes.put(id, anEntryType);
 			}
 		}
@@ -476,7 +473,7 @@ public class VocabularyXMLReader implements IOHandler {
 		else if (localName.equals(Constants.XML_DESCRIPTION)) description = currentValue;
 		else if (localName.equals(Constants.XML_COLOR)) color = Util.parseRGBToColor(currentValue);
 		else if (localName.equals(Constants.XML_UNIT)) {
-			List<String> errors = Unit.validate(id, name);
+			List<String> errors = Unit.validate(name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -487,7 +484,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//Category
 		else if (localName.equals(Constants.XML_CATEGORY)) {
-			List<String> errors = Category.validate(id, name); //May not be called from AUnitCategory -> NullPointer
+			List<String> errors = Category.validate(name);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}
@@ -498,7 +495,7 @@ public class VocabularyXMLReader implements IOHandler {
 		}
 		//Entry
 		else if (localName.equals(Constants.XML_ENTRY)) {
-			List<String> errors = Entry.validate(id, base, target);
+			List<String> errors = Entry.validate(base, target);
 			if (errors.size() > 0) {
 				throw new Exception(errors.toString());
 			}

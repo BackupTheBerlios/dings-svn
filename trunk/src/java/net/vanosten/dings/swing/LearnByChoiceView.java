@@ -435,9 +435,9 @@ public class LearnByChoiceView extends AViewWithButtons implements ILearnByChoic
 	 * Get the results of learning stored
 	 * @param results
 	 */
-	protected void processLearningResults(Map<String,Result> results) {
+	protected void processLearningResults(Map<Long,Result> results) {
 		entries.setLearningResults(results);
-	} //END protected void processLearningResults(Map<String,Result>
+	}
 	
 	/**
 	 * Shows the next set of choices for learning

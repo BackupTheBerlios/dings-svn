@@ -69,18 +69,15 @@ public final class Entry extends AIdItemModel {
 	//the attributes;
 	private boolean status = false;
 	private int score;
-	private String unitId;
-	private String categoryId;
-	private String attributeOneId;
-	private String attributeTwoId;
-	private String attributeThreeId;
-	private String attributeFourId;
+	private Long unitId;
+	private Long categoryId;
+	private Long attributeOneId;
+	private Long attributeTwoId;
+	private Long attributeThreeId;
+	private Long attributeFourId;
 
 	/** The date when this Entry has been learned the last time */
 	private Date lastLearned;
-
-	/** Defines the maximal number of an item until now */
-	private static int maxId = 0;
 
 	/** The edit view */
 	private IEntryEditView editView;
@@ -94,7 +91,7 @@ public final class Entry extends AIdItemModel {
 	/** The entry type id.
 	 * In contrast to the entryType pointer this is stored in XML.
 	 * The pointer is for convenience only. */
-	private String entryTypeId;
+	private Long entryTypeId;
 
 	/**
 	 * Whether the view mode is editing or learning.
@@ -103,14 +100,13 @@ public final class Entry extends AIdItemModel {
 	 */
 	private boolean isEditView = false;
 
-	public Entry(String anId, boolean aStatus, int aScore, String aUnitId, String aCategoryId, String anEntryTypeId
-					, String anAttributeOne, String anAttributeTwo, String anAttributeThree, String anAttributeFour
+	public Entry(Long anId, boolean aStatus, int aScore, Long aUnitId, Long aCategoryId, Long anEntryTypeId
+					, Long anAttributeOne, Long anAttributeTwo, Long anAttributeThree, Long anAttributeFour
 					, String aLastUpd, String aLastLearned
 					, String aBase, String aTarget
 					, String aPronunciation, String anExplanation
 					, String anExample, String aRelation) {
 		logger = Logger.getLogger("net.vanosten.dings.model.Entry");
-		setMaxId(anId);
 		this.id = anId;
 		setScore(aScore);
 		this.status = aStatus;
@@ -137,32 +133,9 @@ public final class Entry extends AIdItemModel {
 		else this.relation = aRelation;
 	} //END public Entry(...)
 
-	/**
-	 * Checks and sets the highest Id
-	 */
-	private static void setMaxId(String thisId) {
-		maxId = Math.max(maxId, Integer.parseInt(thisId.substring(Constants.PREFIX_ENTRY.length(),thisId.length())));
-	} //END private static void setMaxId(string)
-
-	/**
-	 * Reset the max Id to 0.
-	 * E.g. used when creating a new vocabulary after another vocabulary had been opened.
-	 */
-	protected static void resetMaxId() {
-		maxId = 0;
-	} //END protected static void resetMaxId()
-
-	/**
-	 * Returns a valid id for a new item
-	 */
-	private static String getNewId() {
-		maxId++;
-		return (Constants.PREFIX_ENTRY + maxId);
-	} //END private static String getNewId()
-
-	protected static Entry newItem(String anEntryTypeID) {
-		return new Entry(getNewId(), false, SCORE_MIN, Constants.UNDEFINED, Constants.UNDEFINED, anEntryTypeID
-									, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING
+	protected static Entry newItem(Long anEntryTypeID) {
+		return new Entry(Toolbox.getInstance().nextId(), false, SCORE_MIN, Constants.UNDEFINED_ID, Constants.UNDEFINED_ID, anEntryTypeID
+									, Constants.UNDEFINED_ID, Constants.UNDEFINED_ID, Constants.UNDEFINED_ID, Constants.UNDEFINED_ID
 									, null, null
 									, Constants.UNDEFINED, Constants.UNDEFINED
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING
@@ -175,25 +148,25 @@ public final class Entry extends AIdItemModel {
 
 		xml.append("<").append(Constants.XML_ENTRY);
 		//common attributes
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ENTRYTYPE, entryTypeId));
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_UNIT, unitId));
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_CATEGORY, categoryId));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ENTRYTYPE, entryTypeId.toString()));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id.toString()));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_UNIT, unitId.toString()));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_CATEGORY, categoryId.toString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_SCORE, Integer.toString(score)));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_STATUS, Boolean.toString(status)));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_LEARNED, Constants.getDateString(lastLearned)));
 		if (entryType.getNumberOfAttributes() > 0) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEONE, attributeOneId));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEONE, attributeOneId.toString()));
 		}
 		if (entryType.getNumberOfAttributes() > 1) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETWO, attributeTwoId));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETWO, attributeTwoId.toString()));
 		}
 		if (entryType.getNumberOfAttributes() > 2) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETHREE, attributeThreeId));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTETHREE, attributeThreeId.toString()));
 		}
 		if (entryType.getNumberOfAttributes() > 3) {
-			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEFOUR, attributeFourId));
+			xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ATTRIBUTEFOUR, attributeFourId.toString()));
 		}
 		xml.append(">");
 		//rest
@@ -301,11 +274,9 @@ public final class Entry extends AIdItemModel {
 	 *
 	 * @return List<String> - a list of validation errors. Size() = 0 means valid model.
 	 */
-	public static List<String> validate(String anId, String anOrigin, String aDestination) {
+	public static List<String> validate(String anOrigin, String aDestination) {
 		//TODO: implement this the right way (score, attributes based on EntryType)
 		List<String> errors = new ArrayList<String>();
-		String idError = validateId(Constants.PREFIX_ENTRY, anId);
-		if (null != idError) errors.add(idError);
 		if (false == validateString(anOrigin, 1)) {
 			errors.add("Base may not be empty");
 		}
@@ -313,7 +284,7 @@ public final class Entry extends AIdItemModel {
 			errors.add("Target may not be empty");
 		}
 		return errors;
-	} //END public static ArrayList validate(...)
+	}
 
 	/**
 	 * Updates the model with data from the edit view.
@@ -326,7 +297,7 @@ public final class Entry extends AIdItemModel {
 			String originV = editView.getBase().trim();
 			String destinationV = editView.getTarget().trim();
 			//validate where necessary
-			List<String> errors = validate(id, originV, destinationV);
+			List<String> errors = validate(originV, destinationV);
 			//if validation is ok, save the new values.
 			if (0 ==  errors.size()) {
 				//validated values
@@ -500,26 +471,26 @@ public final class Entry extends AIdItemModel {
 		boolean isEditing = false;
 		boolean isValid = validateString(editView.getBase(), 1) && validateString(editView.getTarget(), 1);
 
-		if (false == editView.getUnitId().trim().equals(unitId)) {
+		if (false == editView.getUnitId().equals(unitId)) {
 			isEditing = true;
 		}
-		if (false == editView.getCategoryId().trim().equals(categoryId)) {
+		if (false == editView.getCategoryId().equals(categoryId)) {
 			isEditing = true;
 		}
 		if (editView.getStatus() != status) {
 			isEditing = true;
 		}
 		if (entryType.getNumberOfAttributes() > 0) {
-			if (false == editView.getAttributeId(1).trim().equals(attributeOneId)) isEditing = true;
+			if (false == editView.getAttributeId(1).equals(attributeOneId)) isEditing = true;
 		}
 		if (entryType.getNumberOfAttributes() > 1) {
-			if (false == editView.getAttributeId(2).trim().equals(attributeTwoId)) isEditing = true;
+			if (false == editView.getAttributeId(2).equals(attributeTwoId)) isEditing = true;
 		}
 		if (entryType.getNumberOfAttributes() > 2) {
-			if (false == editView.getAttributeId(3).trim().equals(attributeThreeId)) isEditing = true;
+			if (false == editView.getAttributeId(3).equals(attributeThreeId)) isEditing = true;
 		}
 		if (entryType.getNumberOfAttributes() > 3) {
-			if (false == editView.getAttributeId(4).trim().equals(attributeFourId)) isEditing = true;
+			if (false == editView.getAttributeId(4).equals(attributeFourId)) isEditing = true;
 		}
 		if (false == editView.getBase().trim().equals(base)) {
 			isEditing = true;
@@ -593,16 +564,18 @@ public final class Entry extends AIdItemModel {
 	 * Controlls whether a selectable item (Category, Unit, EntryType, EntryTypeAttributeItem) is used in this Entry.
 	 * Whether it is a category, a unit or an entryType is checked based on the prefix of the id.
 	 */
-	protected boolean isItemUsed(String anId) {
-		boolean inUse = false;
-		if (anId.startsWith(Constants.PREFIX_UNIT)) {
-			inUse = anId.equals(unitId);
+	protected boolean isItemUsed(Long anId) {
+		if (anId.equals(unitId)) {
+			return true;
 		}
-		else if (anId.startsWith(Constants.PREFIX_CATEGORY)) {
-			inUse = anId.equals(categoryId);
+		else if (anId.equals(categoryId)) {
+			return true;
 		}
-		else if (anId.startsWith(Constants.PREFIX_ENTRYTYPE_ATTRIBUTE_ITEM)) {
-			List<String> attributeIds = new ArrayList<String>(3);
+		else if (anId.equals(entryTypeId)) {
+			return true;
+		}
+		else {
+			List<Long> attributeIds = new ArrayList<Long>(4);
 			if (null != attributeOneId) {
 				attributeIds.add(attributeOneId);
 				if (null != attributeTwoId) {
@@ -615,13 +588,8 @@ public final class Entry extends AIdItemModel {
 					}
 				}
 			}
-			inUse = attributeIds.contains(anId);
+			return attributeIds.contains(anId);
 		}
-		//EntryType must be after EntryTypeAttributeItem, because the PREFIX contains the ET
-		else if (anId.startsWith(Constants.PREFIX_ENTRYTYPE)) {
-			inUse = anId.equals(entryTypeId);
-		}
-		return inUse;
 	} //END protected boolean isItemUsed(String)
 
 	/**
@@ -631,7 +599,7 @@ public final class Entry extends AIdItemModel {
 	 * @return boolean - whether this entry is part of choice, i.e. passes the criterias
 	 */
 	protected boolean partOfChoice(int theStatus, Date lastLearnedBefore, int[] minMaxScores
-			, String[] theUnitIds, String[] theCategoryIds, String[] theEntryTypeIds) {
+			, Long[] theUnitIds, Long[] theCategoryIds, Long[] theEntryTypeIds) {
 		boolean check;
 		//status
 		check = false;
@@ -716,10 +684,10 @@ public final class Entry extends AIdItemModel {
 		this.entryType = aType;
 		this.entryTypeId = entryType.getId();
 		if (reset) {
-			attributeOneId = Constants.EMPTY_STRING;
-			attributeTwoId = Constants.EMPTY_STRING;
-			attributeThreeId = Constants.EMPTY_STRING;
-			attributeFourId = Constants.EMPTY_STRING;
+			attributeOneId = Constants.UNDEFINED_ID;
+			attributeTwoId = Constants.UNDEFINED_ID;
+			attributeThreeId = Constants.UNDEFINED_ID;
+			attributeFourId = Constants.UNDEFINED_ID;
 		}
 		//set the attributes to default value, if they are EMPTY_STRING
 		if ((entryType.getNumberOfAttributes() > 0)
@@ -743,39 +711,39 @@ public final class Entry extends AIdItemModel {
 	/**
 	 * Used in EntriesCollection so the entryType can be set in Entry.setEntryType(EntryType)
 	 */
-	protected String getEntryTypeId() {
+	protected Long getEntryTypeId() {
 		return entryTypeId;
-	} //END protected String getEntryTypeId()
+	}
 
-	protected String getCategoryId() {
+	protected Long getCategoryId() {
 		return categoryId;
-	} //END protected String getCategoryId()
+	}
 
-	protected String getUnitId() {
+	protected Long getUnitId() {
 		return unitId;
-	} //END protected String getUnitId()
+	}
 
 	/**
 	 * Changes the attributes of the Entry according to the new attributes of the EntryType.
 	 * If an attribute did not exist then a default is applied.
 	 * Else the existing attribute is assigned.
 	 */
-	protected void changeEntryTypeAttributes(String anEntryTypeId
-										  , String oldOneId
-										  , String oldTwoId
-										  , String oldThreeId
-										  , String oldFourId
-										  , String newOneId
-										  , String newTwoId
-										  , String newThreeId
-										  , String newFourId
-										  , String defaultOneId
-										  , String defaultTwoId
-										  , String defaultThreeId
-										  , String defaultFourId) {
+	protected void changeEntryTypeAttributes(Long anEntryTypeId
+										  , Long oldOneId
+										  , Long oldTwoId
+										  , Long oldThreeId
+										  , Long oldFourId
+										  , Long newOneId
+										  , Long newTwoId
+										  , Long newThreeId
+										  , Long newFourId
+										  , Long defaultOneId
+										  , Long defaultTwoId
+										  , Long defaultThreeId
+										  , Long defaultFourId) {
 		if (anEntryTypeId.equals(this.entryTypeId)) {
 			//save the existing attributes
-			Map<String,String> oldRelation = new HashMap<String,String>(EntryType.NUMBER_OF_ATTRIBUTES);
+			Map<Long,Long> oldRelation = new HashMap<Long,Long>(EntryType.NUMBER_OF_ATTRIBUTES);
 			if (null != oldOneId) {
 				oldRelation.put(oldOneId, attributeOneId);
 			}
@@ -790,32 +758,32 @@ public final class Entry extends AIdItemModel {
 			}
 			//set the attributes according to the new attributes and sequence of attributes
 			if (null != newOneId) {
-				attributeOneId = (String) oldRelation.get(oldOneId);
+				attributeOneId = oldRelation.get(oldOneId);
 				if (null == attributeOneId) {
 					attributeOneId = defaultOneId;
 				}
 			}
 			if (null != newTwoId) {
-				attributeTwoId = (String) oldRelation.get(oldTwoId);
+				attributeTwoId = oldRelation.get(oldTwoId);
 				if (null == attributeTwoId) {
 					attributeTwoId = defaultTwoId;
 				}
 			}
 			if (null != newThreeId) {
-				attributeThreeId = (String) oldRelation.get(oldThreeId);
+				attributeThreeId = oldRelation.get(oldThreeId);
 				if (null == attributeThreeId) {
 					attributeThreeId = defaultThreeId;
 				}
 			}
 			if (null != newFourId) {
-				attributeFourId = (String) oldRelation.get(oldFourId);
+				attributeFourId = oldRelation.get(oldFourId);
 				if (null == attributeFourId) {
 					attributeFourId = defaultFourId;
 				}
 			}
 		}
 		//else do nothing
-	} //END protected void changeEntryTypeAttributes(...)
+	}
 
 	public String getBase() {
 		return base;

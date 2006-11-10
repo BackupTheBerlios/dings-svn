@@ -55,27 +55,27 @@ public abstract class AChoiceCollection extends ACollection {
 	} //END protected void setEntries(EntriesCollection)
 
 	//Implements ACollection
-	protected String selectNewCurrent(String anId) {
-		List<String> foo = new ArrayList<String>(items.keySet());
+	protected Long selectNewCurrent(Long anId) {
+		List<Long> foo = new ArrayList<Long>(items.keySet());
 		int pos = foo.indexOf(anId);
 		if (pos > 0) {
-			return (String)foo.get(pos -1);
+			return foo.get(pos -1);
 		}
 		else if ((0 == pos) && (foo.size() > 1)) {
-			return (String)foo.get(1);
+			return foo.get(1);
 		}
 		else {
 			return null;
 		}
-	} //END protected String selectNewCurrent()
+	}
 
 	//Implements ACollection
-	protected void removeInOther(String anId) {
+	protected void removeInOther(Long anId) {
 		//Do nothing for AChoiceCollection subclasses
 	} //END protected void removeInOther(String)
 
 	//Implements ACollection
-	protected boolean checkDeleteAllowed(String anId) {
+	protected boolean checkDeleteAllowed(Long anId) {
 		//there has to be at least one item
 		//this should be handled by ListView.java
 		if (1 >= items.size()) {
@@ -96,7 +96,7 @@ public abstract class AChoiceCollection extends ACollection {
 			return false;
 		}
 		return true;
-	} //END protected boolean checkDeleteAllowed(String)
+	}
 
 	/**
 	 * Set a default item. If there already are one or several items, then nothing happens.
@@ -121,13 +121,13 @@ public abstract class AChoiceCollection extends ACollection {
 				ape.setMessage(msgEditView);
 				parentController.handleAppEvent(ape);
 			}
-			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_DELETE) deleteItem(evt.getDetails(), true);
+			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_DELETE) deleteItem(evt.getEntityId(), true);
 			else if (evt.getMessage() == MessageConstants.Message.D_EDIT_VIEW_DELETE) deleteItem();
 			else if (evt.getMessage() == MessageConstants.Message.D_LIST_VIEW_REFRESH) refreshListView();
 		}
 		else if (evt.isNavEvent()) {
 			if (evt.getMessage().equals(msgEditView)) {
-				editItem(evt.getDetails());
+				editItem(evt.getEntityId());
 			}
 			parentController.handleAppEvent(evt);
 		}

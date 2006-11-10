@@ -42,8 +42,11 @@ public class AppEvent extends EventObject {
 	/** The message header */
 	private Message message;
 
-	/** The details of the message */
+	/** The generic details of the message */
 	private String details;
+	
+	/** A submitted id */
+	private Long entityId;
 
 	/** The type of event */
 	private EventType eventType;
@@ -96,4 +99,12 @@ public class AppEvent extends EventObject {
 	public String getDetails() {
 		return details;
 	} //END public String getDetails()
+
+	public Long getEntityId() {
+		return entityId;
+	}
+
+	public void setEntityId(Long entityId) {
+		this.entityId = entityId;
+	}
 } //END public class AppEvent extends EventObject

@@ -58,7 +58,7 @@ public class UnitsCollection extends AChoiceCollection {
 
 		Set allKeys = items.keySet();
 		Iterator iter = allKeys.iterator();
-		if (iter.hasNext()) setCurrentItem((String)iter.next());
+		if (iter.hasNext()) setCurrentItem((Long)iter.next());
 	} //END protected void setItems(HashMap)
 
 	protected Unit getCurrentItem() {
@@ -66,7 +66,7 @@ public class UnitsCollection extends AChoiceCollection {
 	} //END protected Unit getCurrentItem()
 
 	//implements ACollection
-	protected void setCurrentItem(String anID) {
+	protected void setCurrentItem(Long anID) {
 		if (null != currentItem) {
 			//release the views of the current
 			currentItem.releaseViews();
@@ -87,7 +87,7 @@ public class UnitsCollection extends AChoiceCollection {
 
 	//implements ACollection
 	//the type attribute is not used for Units
-	protected void newItem(String aType, boolean isDefault) {
+	protected void newItem(Long aType, boolean isDefault) {
 		Unit newUnit = null;
 		newUnit = Unit.newItem(isDefault);
 		items.put(newUnit.getId(), newUnit);

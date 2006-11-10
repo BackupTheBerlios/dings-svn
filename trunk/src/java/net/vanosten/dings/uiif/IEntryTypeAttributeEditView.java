@@ -24,12 +24,12 @@ package net.vanosten.dings.uiif;
 public interface IEntryTypeAttributeEditView extends IDetailsView {
 	public void setName(String aName);
 	public String getName();
-	public void setDefaultItem(String anId);
-	public String getDefaultItem();
+	public void setDefaultItem(Long anId);
+	public Long getDefaultItem();
 	public void setItems(Object[][] theItems);
 	public Object[][] getItems();
 	public boolean isItemTableEdited();
 	public void setItemTableNotEdited();
 	public void setNameIsValueValid(boolean valid);
-	public void setItemNameIsValueValid(String invalid);
+	public void setItemNameIsValueValid(Long invalid);
 } //END public interface IEntryTypeAttributeEditView extends IDetailsView

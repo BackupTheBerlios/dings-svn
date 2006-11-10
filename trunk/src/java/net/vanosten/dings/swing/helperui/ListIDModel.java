@@ -49,26 +49,26 @@ public class ListIDModel extends AbstractListModel {
 		return objects[pos][1];
 	} //END public Object getElementAt(int)
 
-	public String getIDAt(int pos) {
-		return objects[pos][0];
+	public Long getIDAt(int pos) {
+		return Long.valueOf(objects[pos][0]);
 	} //END public String getIDAt(int)
 
 	/**
 	 * Returns the index pos of an ID or -1 if ID cannot be found
 	 */
-	public int getIDIndexPos(String anID) {
+	public int getIDIndexPos(Long anID) {
 		for (int i = 0; i < objects.length; i++) {
-			if (anID.equals(objects[i][0])) {
+			if (anID.toString().equals(objects[i][0])) {
 				return i;
 			}
 		}
 		return -1;
 	} //END public int getIDIndexPos(String)
 
-	public String[] getIDsAt(int[] pos) {
-		String IDs[] = new String[pos.length];
+	public Long[] getIDsAt(int[] pos) {
+		Long IDs[] = new Long[pos.length];
 		for (int i = 0; i < pos.length; i++) {
-			IDs[i] = objects[pos[i]][0];
+			IDs[i] = Long.valueOf(objects[pos[i]][0]);
 		}
 		return IDs;
 	} //END public String[] getIDsAt(int[])

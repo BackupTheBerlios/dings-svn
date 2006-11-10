@@ -22,6 +22,6 @@
 package net.vanosten.dings.uiif;
 
 public interface IListView extends IView {
-	public void setSelected(String Id);
+	public void setSelected(Long Id);
 	public void setList(String theTitles[], Object theData[][], boolean[] columnFixedWidth);
 } //END public interface IListView extends IView

@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.vanosten.dings.uiif.IEntryTypeAttributeEditView;
+import net.vanosten.dings.utils.Toolbox;
 import net.vanosten.dings.consts.Constants;
 
 import java.util.logging.Logger;
@@ -37,13 +38,10 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	private String name;
 
 	/** The id of the default item */
-	private String defaultItem;
+	private Long defaultItem;
 
 	/** All related EntryTypeAttributeItems in an Array */
 	private EntryTypeAttributeItem items[];
-
-	/** Defines the maximal number of an EntryTypeAttribute until now */
-	private static int maxId = 0;
 
 	/** A pointer to the entries */
 	private EntriesCollection entries;
@@ -51,9 +49,8 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	/** The edit view */
 	private IEntryTypeAttributeEditView editView;
 
-	public EntryTypeAttribute(String anId, String aName, String aDefaultItem, String aLastUpd
+	public EntryTypeAttribute(Long anId, String aName, Long aDefaultItem, String aLastUpd
 							  , EntryTypeAttributeItem theItems[]) {
-		setMaxId(anId);
 		this.id = anId;
 
 		if (null == aName) this.name = Constants.UNDEFINED;
@@ -90,29 +87,6 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	} //END public EntryTypeAttribute(String, String, EntryTypeAttributeItem[], String)
 
 	/**
-	 * Checks and sets the highest Id
-	 */
-	private static void setMaxId(String thisId) {
-		maxId = Math.max(maxId, Integer.parseInt(thisId.substring(Constants.PREFIX_ENTRTYPE_ATTRIBUTE.length(),thisId.length())));
-	} //END private static void setMaxId(string)
-
-	/**
-	 * Returns a valid id for a new item
-	 */
-	private static String getNewId() {
-		maxId++;
-		return (Constants.PREFIX_ENTRTYPE_ATTRIBUTE + maxId);
-	} //END private static String getNewId()
-
-	/**
-	 * Reset the max Id to 0.
-	 * E.g. used when creating a new vocabulary after another vocabulary had been opened.
-	 */
-	protected static void resetMaxId() {
-		maxId = 0;
-	} //END protected static void resetMaxId()
-
-	/**
 	 * Construct a new EntryTypeAttribute from scratch adding the necessary information.
 	 */
 	protected static EntryTypeAttribute newItem(boolean isDefault) {
@@ -120,10 +94,10 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem();
 		newItems[0] = newItem;
 		if (isDefault) {
-			return new EntryTypeAttribute(getNewId(), "Default", newItem.getId(), null, newItems);
+			return new EntryTypeAttribute(Toolbox.getInstance().nextId(), "Default", newItem.getId(), null, newItems);
 
 		}
-		return new EntryTypeAttribute(getNewId(), Constants.UNDEFINED, newItem.getId(), null, newItems);
+		return new EntryTypeAttribute(Toolbox.getInstance().nextId(), Constants.UNDEFINED, newItem.getId(), null, newItems);
 	} //END protected static EntryTypeAttribute newItem(boolean)
 
 	/**
@@ -132,9 +106,9 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	protected String getXMLString() {
 		StringBuffer xml = new StringBuffer();
 		xml.append("<").append(Constants.XML_ENTRYTYPE_ATTRIBUTE);
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id.toString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_NAME, name));
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_DEFAULTITEM, defaultItem));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_DEFAULTITEM, defaultItem.toString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
 		xml.append(">");
 		for (int i = 0; i < items.length; i++) {
@@ -158,7 +132,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	 * @return String[][] choiceProxy
 	 */
 	protected String[] getChoiceProxy() {
-		String choiceProxy[] = {id, name};
+		String choiceProxy[] = {id.toString(), name};
 		return choiceProxy;
 	} //END protected String[] getChoiceProxy()
 
@@ -209,22 +183,19 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	 *
 	 * @return List<String> - a list of validation errors. Size() = 0 means valid model.
 	 */
-	public static List<String> validate(String anId, String aName) {
+	public static List<String> validate(String aName) {
 		List<String> errors = new ArrayList<String>();
-		String idError = validateId(Constants.PREFIX_ENTRTYPE_ATTRIBUTE, anId);
-		if (null != idError) errors.add(idError);
 		if (1 > aName.length()) {
 			errors.add("Name may not be empty");
 		}
 		return errors;
 	} //END public static List<String> validate(String, String)
 
-	private List<String> validate(String anId
-									, String aName
+	private List<String> validate(String aName
 									, EntryTypeAttributeItem[] someItems
-									, String aDefaultItem) {
+									, Long aDefaultItem) {
 		//initialize errors by testing the id and name
-		List<String> errors = validate(anId, aName);
+		List<String> errors = validate(aName);
 		if (false == validateString(aName, 1)) {
 			errors.add("Name may not be empty");
 		}
@@ -250,7 +221,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	 * @param aDefaultItem
 	 * @return false if the id of the default item is not one of the ids in the items
 	 */
-	private boolean validateItemsHaveDefault(EntryTypeAttributeItem[] someItems, String aDefaultItem) {
+	private boolean validateItemsHaveDefault(EntryTypeAttributeItem[] someItems, Long aDefaultItem) {
 		for (int i = 0; i < someItems.length; i++) {
 			if (aDefaultItem.equals(someItems[i].getId())) {
 				return true;
@@ -264,7 +235,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	 * @param someItems
 	 * @return The ID of an item if its name is null, an empty String or has the same name as another item
 	 */
-	private String validateItemNames(EntryTypeAttributeItem[] someItems) {
+	private Long validateItemNames(EntryTypeAttributeItem[] someItems) {
 		Set<String> theSet = new HashSet<String>(someItems.length);
 		theSet.add(null); //make sure no other name is null
 		theSet.add(Constants.EMPTY_STRING); //make sure no other name is empty
@@ -280,10 +251,10 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	protected void updateModel() {
 		//get values from editView and trim them
 		String nameV = editView.getName().trim();
-		String defaultItemV = editView.getDefaultItem().trim();
+		Long defaultItemV = editView.getDefaultItem();
 		EntryTypeAttributeItem[] itemsV = translateToAttributeItems(editView.getItems());
 		//validate where necessary
-		List<String> errors = validate(id, nameV, itemsV, defaultItemV);
+		List<String> errors = validate(nameV, itemsV, defaultItemV);
 		//check that no items are deleted, that actually are used in entries
 		boolean found = false;
 		for (int i = 0; i < items.length; i++) {
@@ -334,7 +305,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		boolean isValid = validateString(editView.getName(), 1)
 			&& (null == validateItemNames(translateToAttributeItems(editView.getItems())));
 		if ((editView.getName().trim().equals(name))
-			&& (editView.getDefaultItem().trim().equals(defaultItem))
+			&& (editView.getDefaultItem().equals(defaultItem))
 			&& (false == editView.isItemTableEdited())) {
 			editView.setEditing(false, isValid);
 		}
@@ -350,9 +321,9 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		return name;
 	} //END protected String getName()
 
-	protected String getDefaultItem() {
+	protected Long getDefaultItem() {
 		return defaultItem;
-	} //END protected String getDefaultItem()
+	}
 
 	/**
 	 * Constructs EntryTypeAttributeItems from a two-dimensional
@@ -364,7 +335,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 			returnItems[i] = EntryTypeAttributeItem.translateFromObjectArray(theObjectItems[i]);
 		}
 		return returnItems;
-	} //END private EntryTypeAttributeItem[] translateToAttributeItems(String[][])
+	}
 
 	private Object[][] tranlateFromAttributeItems() {
 		Object[][] returnObj = new Object[items.length][];

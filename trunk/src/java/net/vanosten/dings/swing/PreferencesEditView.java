@@ -64,7 +64,7 @@ import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
 import net.vanosten.dings.model.Preferences;
-import net.vanosten.dings.swing.helperui.ChoiceID;
+import net.vanosten.dings.swing.helperui.ChoiceString;
 import net.vanosten.dings.uiif.IPreferencesEditView;
 import net.vanosten.dings.utils.Toolbox;
 
@@ -116,7 +116,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 	private JCheckBox statsOnQuitCB;
 
 	private JPanel localeP;
-	private ChoiceID localeCh;
+	private ChoiceString localeCh;
 
 	private JPanel textLinesP;
 	private JSpinner baseSP;
@@ -648,7 +648,7 @@ public class PreferencesEditView extends JDialog implements IPreferencesEditView
 		localeP.setLayout(gbl);
 
 		JLabel localeL = new JLabel("Locale of the application:");
-		localeCh = new ChoiceID();
+		localeCh = new ChoiceString();
 		localeCh.setItems(Constants.getSupportedLocales(null)); //TODO replace null with real RessourceBundle
 		localeCh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {

@@ -101,7 +101,7 @@ public class HintPanel extends JPanel implements HintObservable {
 		modeCh.setItems(modeItems);
 		modeCh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				if (HintPanel.MODE_LETTER == Integer.parseInt(modeCh.getSelectedID())) {
+				if (HintPanel.MODE_LETTER == Integer.parseInt(modeCh.getSelectedID().toString())) {
 					shownLetters = 0;
 				}
 			}
@@ -265,7 +265,7 @@ public class HintPanel extends JPanel implements HintObservable {
 	private void doHint() {
 		setHintTextColors();
 		try {
-			int helperMode = Integer.parseInt(modeCh.getSelectedID());
+			int helperMode = Integer.parseInt(modeCh.getSelectedID().toString());
 			boolean allShown = false;
 			switch(helperMode) {
 				case HintPanel.MODE_FLASH:

@@ -27,12 +27,12 @@ public interface IEntriesSelectionView extends IView {
 	public void setTypesList(String[][] theEntryTypes);
 	public int getStatusChoice();
 	public void setStatusChoice(int aStatusChoice);
-	public String[] getUnitsChoice();
-	public void setUnitsChoice(String[] theIds);
-	public String[] getCategoriesChoice();
-	public void setCategoriesChoice(String[] theIds);
-	public String[] getTypesChoice();
-	public void setTypesChoice(String[] theIds);
+	public Long[] getUnitsChoice();
+	public void setUnitsChoice(Long[] theIds);
+	public Long[] getCategoriesChoice();
+	public void setCategoriesChoice(Long[] theIds);
+	public Long[] getTypesChoice();
+	public void setTypesChoice(Long[] theIds);
 	public String getLastLearnedBefore();
 	public void setLastLearnedBefore(int aNumberOfDays);
 	public int[] getMinMaxScore();

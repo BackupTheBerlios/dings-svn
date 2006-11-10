@@ -37,31 +37,6 @@ public abstract class AItemModel extends AModel {
 	protected abstract String getXMLString();
 
 	/**
-	 * Validates an Id.
-	 *
-	 * @param aPrefix - the Models prefix
-	 * @return String error - a description of the error, or null if validation successful.
-	 */
-	public static String validateId(String aPrefix, String anId) {
-		boolean isValid = true;
-		int tempId = 0;
-		if (anId.startsWith(aPrefix) == false) {
-			isValid = false;
-		}
-		try {
-			tempId = Integer.parseInt(anId.substring(aPrefix.length(), anId.length()));
-		}
-		catch(NumberFormatException nfe) {
-			isValid = false;
-		}
-		if (tempId <= 0) {
-			isValid = false;
-		}
-		if (isValid) return null;
-		return "The id \"" + anId + "\" is not valid. It must start with \"" + aPrefix + "\"and the number must be > 0.";
-	} //END public static String validateId(String)
-
-	/**
 	 * Sends an AppEvent to set save neded.
 	 */
 	protected void sendSaveNeeded() {

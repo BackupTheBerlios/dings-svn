@@ -296,34 +296,34 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	} //END public void setStatusChoice(int)
 
 	//implements IEntriesSelectionView
-	public String[] getUnitsChoice() {
+	public Long[] getUnitsChoice() {
 		return unitsLi.getSelectedIDs();
 	} //END public String[] getUnitsChoice()
 
 	//implements IEntriesSelectionView
-	public void setUnitsChoice(String[] theIds) {
+	public void setUnitsChoice(Long[] theIds) {
 		unitsLi.clearSelection();
 		unitsLi.setSelectedIDs(theIds);
 	} //END public void setUnitsChoice(String[])
 
 	//implements IEntriesSelectionView
-	public String[] getCategoriesChoice() {
+	public Long[] getCategoriesChoice() {
 		return categoriesLi.getSelectedIDs();
 	} //END public String[] geCategoriesChoice()
 
 	//implements IEntriesSelectionView
-	public void setCategoriesChoice(String[] theIds) {
+	public void setCategoriesChoice(Long[] theIds) {
 		categoriesLi.clearSelection();
 		categoriesLi.setSelectedIDs(theIds);
 	} //END public void setCategoriesChoice(String[])
 
 	//implements IEntriesSelectionView
-	public String[] getTypesChoice() {
+	public Long[] getTypesChoice() {
 		return typesLi.getSelectedIDs();
 	} //END public String[] getTypesChoice()
 
 	//implements IEntriesSelectionView
-	public void setTypesChoice(String[] theIds) {
+	public void setTypesChoice(Long[] theIds) {
 		typesLi.clearSelection();
 		typesLi.setSelectedIDs(theIds);
 	} //END public void setTypesChoice(String[])

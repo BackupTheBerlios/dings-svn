@@ -699,7 +699,7 @@ public abstract class ADings implements IAppEventHandler {
 			reader.setVocabularyFile(currentVocabFileName, Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.FILE_ENCODING));
 			if (reader.readyToExecute()) {
 				//reset the max Ids
-				resetMaxIds();
+				Toolbox.getInstance().resetSequence();
 				//read the vocabulary
 				reader.execute();
 			}
@@ -779,7 +779,7 @@ public abstract class ADings implements IAppEventHandler {
 		vocabOpened = true;
 
 		//reset the max Ids
-		resetMaxIds();
+		Toolbox.getInstance().resetSequence();
 
 		units = new UnitsCollection(this);
 		units.setDefaultItem();
@@ -816,17 +816,6 @@ public abstract class ADings implements IAppEventHandler {
 		ape.setMessage(MessageConstants.Message.N_VIEW_INFOVOCAB_EDIT);
 		this.handleAppEvent(ape);
 	} //END private void makeNewVocabulary()
-
-	/**
-	 * Resets all ID's in the items
-	 */
-	private void resetMaxIds() {
-		Unit.resetMaxId();
-		Category.resetMaxId();
-		EntryType.resetMaxId();
-		EntryTypeAttributeItem.resetMaxId();
-		Entry.resetMaxId();
-	} //END private void resetMaxIds()
 
 	/**
 	 * Writes all vocabulary data to a xml-file.

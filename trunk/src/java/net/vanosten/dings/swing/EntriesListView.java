@@ -35,6 +35,7 @@ public class EntriesListView extends ListView implements IEntriesListView {
 	private final static long serialVersionUID = 1L;
 
 	/** The names of and ids for EntryTypes to be presented in a dialog */
+	//FIXME: would be nicer with Long for ids 
 	private String[][] entryTypes;
 
 	public EntriesListView(ComponentOrientation aComponentOrientation) {
@@ -49,10 +50,11 @@ public class EntriesListView extends ListView implements IEntriesListView {
 	 * Overrides the method in ListView to present a dialog with choice possiblities.
 	 * If there is more than one element in
 	 */
-	protected String getIdTypeForNew() {
+	@Override
+	protected Long getIdTypeForNew() {
 		//if there is only one entry type, then choose that one directly
 		if (1 == entryTypes.length) {
-			return entryTypes[0][0];
+			return Long.valueOf(entryTypes[0][0]);
 		}
 		//else allow the user to choose the appropriate entry type
 		ChoiceID entryTypesCh = new ChoiceID();
@@ -73,8 +75,8 @@ public class EntriesListView extends ListView implements IEntriesListView {
 			return entryTypesCh.getSelectedID();
 		}
 		//else return null
-		return null;
-	} //END protected String getIdTypeForNew()
+		return Constants.UNDEFINED_ID;
+	}
 
 	/**
 	 * Prepares a combobox for choice of entry type, when new is called.

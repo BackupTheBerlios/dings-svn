@@ -22,6 +22,7 @@
 package net.vanosten.dings.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.vanosten.dings.consts.Constants;
@@ -45,7 +46,7 @@ public abstract class AUnitCategory extends AIdItemModel {
 	/** The edit view */
 	protected IUnitEditView editView;
 
-	public AUnitCategory(String anId, String aLastUpd, String aName, String aDescription, Color aColor) {
+	public AUnitCategory(long anId, String aLastUpd, String aName, String aDescription, Color aColor) {
 		this.id = anId;
 		this.setLastUpd(aLastUpd);
 
@@ -70,7 +71,7 @@ public abstract class AUnitCategory extends AIdItemModel {
 	 * @return String[][] choiceProxy
 	 */
 	protected String[] getChoiceProxy() {
-		String choiceProxy[] = {id, name, description};
+		String choiceProxy[] = {id.toString(), name, description};
 		return choiceProxy;
 	} //END protected String[] getChoiceProxy()
 
@@ -104,17 +105,20 @@ public abstract class AUnitCategory extends AIdItemModel {
 		editView = null;
 	} //protected void releaseViews()
 
-	/**
-	 * Hides the static method validate(String, String) in the subcalsses
-	 */
-	protected abstract List<String> validateIt(String anId, String aName);
+	public static List<String> validate(String aName) {
+		List<String> errors = new ArrayList<String>();
+		if (false == validateString(aName, 1)) {
+			errors.add("Name may not be empty");
+		}
+		return errors;
+	} //END public static List<String> validate(String, String)
 
 	//Implements AModel.
 	protected void updateModel() {
 		//get values from editView and trim them
 		String nameV = editView.getName().trim();
 		//validate where necessary
-		List<String> errors = validateIt(id, nameV);
+		List<String> errors = validate(nameV);
 		//if validation is ok, save the new values.
 		if (0 ==  errors.size()) {
 			//validated values
@@ -154,7 +158,7 @@ public abstract class AUnitCategory extends AIdItemModel {
 	protected String constructXMLString(String xmlName) {
 		StringBuffer xml = new StringBuffer();
 		xml.append("<").append(xmlName);
-		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id));
+		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_ID, id.toString()));
 		xml.append(Constants.getXMLFormattedAttribute(Constants.XML_ATTR_LAST_UPD, this.getLastUpdString()));
 		xml.append(">");
 		xml.append(Constants.getXMLTaggedValue(Constants.XML_NAME, name));

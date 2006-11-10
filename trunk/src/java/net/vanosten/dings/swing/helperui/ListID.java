@@ -39,7 +39,7 @@ public class ListID extends JList {
 		setModel(aListModel);
 	} //END public setModel(ListIDModel)
 
-	public void setSelectedIDs(String[] theIDs) {
+	public void setSelectedIDs(Long[] theIDs) {
 		int[] indices = new int[theIDs.length];
 		for (int i = 0; i < theIDs.length; i++) {
 			indices[i] = listModel.getIDIndexPos(theIDs[i]);
@@ -47,7 +47,7 @@ public class ListID extends JList {
 		this.setSelectedIndices(indices);
 	} //END public void setSelectedIDs(String[])
 
-	public void selectID(String anID) {
+	public void selectID(Long anID) {
 		int myPos = listModel.getIDIndexPos(anID) ;
 		if (myPos >= 0) {
 			setSelectedIndex(myPos);
@@ -55,11 +55,11 @@ public class ListID extends JList {
 		//TODO: else ???????
 	} //END public void selectID(String)
 
-	public String getSelectedID() {
+	public Long getSelectedID() {
 		return listModel.getIDAt(getSelectedIndex());
 	} //END public String getSelectedID()
 
-	public String[] getSelectedIDs() {
+	public Long[] getSelectedIDs() {
 		int [] indices = this.getSelectedIndices();
 		return listModel.getIDsAt(indices);
 	} //END public String[] getSelectedIDs()

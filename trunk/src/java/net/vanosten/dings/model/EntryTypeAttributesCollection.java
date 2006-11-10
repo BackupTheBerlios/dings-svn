@@ -58,7 +58,9 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 
 		Set allKeys = items.keySet();
 		Iterator iter = allKeys.iterator();
-		if (iter.hasNext()) setCurrentItem((String)iter.next());
+		if (iter.hasNext()) {
+			setCurrentItem((Long)iter.next());
+		}
 	} //END protected void setItems(HashMap)
 
 	protected EntryTypeAttribute getCurrentItem() {
@@ -66,7 +68,7 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 	} //END protected EntryTypeAttribute getCurrentItem()
 
 	//implements ACollection
-	protected void setCurrentItem(String anID) {
+	protected void setCurrentItem(Long anID) {
 		if (null != currentItem) {
 			//release the views of the current
 			currentItem.releaseViews();
@@ -87,7 +89,7 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 
 	//implements ACollection
 	//the type attribute is not used for EntryTypeAttributes
-	protected void newItem(String aType, boolean isDefault) {
+	protected void newItem(Long aType, boolean isDefault) {
 		EntryTypeAttribute newEntryTypeAttribute = null;
 		newEntryTypeAttribute = EntryTypeAttribute.newItem(isDefault);
 		newEntryTypeAttribute.setEntries(entries);
@@ -111,7 +113,9 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 		if (listView != null) {
 			listView.setList(EntryTypeAttribute.getTableDisplayTitles(), data, EntryTypeAttribute.getTableColumnFixedWidth());
 		}
-		if (null != currentItem) listView.setSelected(currentItem.getId());
+		if (null != currentItem) {
+			listView.setSelected(currentItem.getId());
+		}
 	} //END private void resetListView()
 
 	//implements AChoiceCollection
@@ -131,12 +135,12 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 	 * Get a pointer to a specific EntryTypeAttribute based
 	 * on its id.
 	 *
-	 * @param String anId - the Id of the EntryTypeAttribute
+	 * @param anId - the Id of the EntryTypeAttribute
 	 * @return EntryTypeAttribute
 	 */
-	protected EntryTypeAttribute getEntryTypeAttribute(String anId) {
+	protected EntryTypeAttribute getEntryTypeAttribute(Long anId) {
 		return (EntryTypeAttribute)items.get(anId);
-	} //END protected EntryTypeAttribute getEntryTypeAttribute(String)
+	}
 
 	/**
 	 * Sets the pointer to the EntriesCollection and adds it to all EntryTypeAttributes.
@@ -147,10 +151,10 @@ public class EntryTypeAttributesCollection extends AChoiceCollection {
 		//set pointers in all attributes
 		Set allKeys = items.keySet();
 		Iterator iter = allKeys.iterator();
-		String thisId;
+		Long thisId;
 		EntryTypeAttribute thisItem;
 		while (iter.hasNext()) {
-			thisId = (String)iter.next();
+			thisId = (Long)iter.next();
 			thisItem = (EntryTypeAttribute)items.get(thisId);
 			thisItem.setEntries(entries);
 		}

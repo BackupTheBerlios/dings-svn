@@ -96,7 +96,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	private Timer myTimer;
 	
 	/** The learning results */
-	Map<String,Result> results = null;
+	Map<Long,Result> results = null;
 	
 	LearnByChoiceView controller;
 	
@@ -346,7 +346,7 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	 */
 	public void checkChosen(TextRectangle answer) {
 		if (null == results) {
-			results = new HashMap<String,Result>();
+			results = new HashMap<Long,Result>();
 		}
 		if (ChoiceType.SET == type) {
 			checkChosenForSet(answer);
@@ -565,14 +565,14 @@ public class LearnByChoicePane extends JPanel implements MouseMotionListener {
 	 * @return the index position of the TextRectangle with id = anId within the
 	 *          submitted array of TextRectangles. -1 if not found
 	 */
-	private static int getIndexPos(String anId, TextRectangle[] rectangles) {
+	private static int getIndexPos(Long anId, TextRectangle[] rectangles) {
 		for (int i = 0; i < rectangles.length; i++) {
 			if (null != rectangles[i] && rectangles[i].getId().equals(anId)) {
 				return i;
 			}
 		}
 		return -1;
-	} //END private static int getIndexPos(String, TextRectangle[])
+	}
 	
 	/**
 	 * 

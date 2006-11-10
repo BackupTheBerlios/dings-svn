@@ -25,7 +25,7 @@ public interface IEntryTypeEditView extends IDetailsView {
 	public void setName(String aName);
 	public String getName();
 	public void setAttributeChoices(String[][] theAttributes);
-	public void setAttributes(String[] anId);
-	public String[] getAttributes();
+	public void setAttributes(Long[] anId);
+	public Long[] getAttributes();
 	public void setNameIsValueValid(boolean valid);
 } //END public interface ICategoryEditView extends IDetailsView

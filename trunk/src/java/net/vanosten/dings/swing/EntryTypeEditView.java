@@ -30,6 +30,7 @@ import javax.swing.JLabel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+import net.vanosten.dings.consts.Constants;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.EntryType;
 import net.vanosten.dings.utils.Toolbox;
@@ -239,24 +240,24 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 	} //END public void setAttributeChoices(String[][])
 
 	//	implements IEntryTypeEditView
-	public void setAttributes(String[] anId) {
+	public void setAttributes(Long[] anId) {
 		isUpdating = true;
 
 		attribOneEnabledCB.setSelected(false);
 		attribOneTypeCh.setEnabled(false);
-		attribOneTypeCh.setSelectedID(null);
+		attribOneTypeCh.setSelectedID(Constants.UNDEFINED_ID);
 		attribTwoEnabledCB.setEnabled(false);
 		attribTwoEnabledCB.setSelected(false);
 		attribTwoTypeCh.setEnabled(false);
-		attribTwoTypeCh.setSelectedID(null);
+		attribTwoTypeCh.setSelectedID(Constants.UNDEFINED_ID);
 		attribThreeEnabledCB.setEnabled(false);
 		attribThreeEnabledCB.setSelected(false);
 		attribThreeTypeCh.setEnabled(false);
-		attribThreeTypeCh.setSelectedID(null);
+		attribThreeTypeCh.setSelectedID(Constants.UNDEFINED_ID);
 		attribFourEnabledCB.setEnabled(false);
 		attribFourEnabledCB.setSelected(false);
 		attribFourTypeCh.setEnabled(false);
-		attribFourTypeCh.setSelectedID(null);
+		attribFourTypeCh.setSelectedID(Constants.UNDEFINED_ID);
 
 		if (null != anId[0]) {
 			attribOneEnabledCB.setSelected(true);
@@ -285,8 +286,8 @@ public class EntryTypeEditView extends AEditView implements IEntryTypeEditView {
 	} //END public void setAttributeName(String[])
 
 	// implements IEntryTypeEditView
-	public String[] getAttributes() {
-		String[] theIds = new String[EntryType.NUMBER_OF_ATTRIBUTES];
+	public Long[] getAttributes() {
+		Long[] theIds = new Long[EntryType.NUMBER_OF_ATTRIBUTES];
 		if (attribOneEnabledCB.isSelected()) {
 			theIds[0] = attribOneTypeCh.getSelectedID();
 		}

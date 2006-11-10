@@ -83,7 +83,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 
 	/** Stores the labels and ids of the available enttry types */
 	private String[][] entryTypesList;
-	private String entryTypeId;
+	private Long entryTypeId;
 
 	public EntryEditView(ComponentOrientation aComponentOrientation) {
 		super(Toolbox.getInstance().getLocalizedString("viewtitle.edit_entry"), aComponentOrientation, true, true, MessageConstants.Message.N_VIEW_ENTRIES_LIST);
@@ -692,7 +692,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		if (JOptionPane.OK_OPTION == answer) {
 			AppEvent evt = new AppEvent(AppEvent.EventType.DATA_EVENT);
 			evt.setMessage(MessageConstants.Message.D_EDIT_VIEW_CHANGE_ENTRY_TYPE);
-			evt.setDetails(entryTypesCh.getSelectedID());
+			evt.setEntityId(entryTypesCh.getSelectedID());
 			controller.handleAppEvent(evt);
 		}
 		//else do nothing
@@ -716,7 +716,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		return targetVTA.getText();
 	} //END public String getTarget()
 
-	public void setEntryType(String aLabel, String anId) {
+	public void setEntryType(String aLabel, Long anId) {
 		entryTypeSL.setText(aLabel);
 		entryTypeId = anId;
 	} //END public void setEntryType(String, String)
@@ -757,7 +757,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		return relationTF.getText();
 	} //END public String getRelation()
 
-	public void setAttributeId(String anAttributeId, int aNumber) {
+	public void setAttributeId(Long anAttributeId, int aNumber) {
 		isUpdating = true;
 		switch (aNumber) {
 			case 1:
@@ -797,7 +797,7 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		}
 	} //END public void setAttributeName(String, int)
 
-	public String getAttributeId(int aNumber) {
+	public Long getAttributeId(int aNumber) {
 		switch (aNumber) {
 			case 1:
 				return attributeOneCh.getSelectedID();
@@ -811,25 +811,25 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		return null;
 	} //END public String getAttributeId(int)
 
-	public void setUnitId(String aUnitId) {
+	public void setUnitId(Long aUnitId) {
 		isUpdating = true;
 		unitsCh.setSelectedIndex(0);
 		unitsCh.setSelectedID(aUnitId);
 		isUpdating = false;
 	} //END public void setUnitId(String)
 
-	public String getUnitId() {
+	public Long getUnitId() {
 		return unitsCh.getSelectedID();
 	} //END public String getUnitID()
 
-	public void setCategoryId(String aCategoryId) {
+	public void setCategoryId(Long aCategoryId) {
 		isUpdating = true;
 		categoriesCh.setSelectedIndex(0);
 		categoriesCh.setSelectedID(aCategoryId);
 		isUpdating = false;
 	} //END public void setCategoryId(String)
 
-	public String getCategoryId() {
+	public Long getCategoryId() {
 		return categoriesCh.getSelectedID();
 	} //END public String getCategoryId()
 

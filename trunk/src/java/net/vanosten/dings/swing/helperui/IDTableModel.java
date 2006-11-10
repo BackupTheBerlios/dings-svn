@@ -81,24 +81,25 @@ public class IDTableModel extends AbstractTableModel {
 	 * @param int pos - the position in the table
 	 * @return String - the ID at the position or null if position not found
 	 */
-	public String getIDAt(int pos) {
+	public Long getIDAt(int pos) {
 		if ((0 > pos) ||(data.length <= pos)) {
 			return null;
 		}
-		return (String)data[pos][0];
-	} //END public String getIDAt(int)
+		Long foo = (Long)data[pos][0];
+		return foo;
+	}
 
 	/**
 	 * Returns the index pos of an ID or -1 if ID cannot be found
 	 */
-	public int getIDIndexPos(String anID) {
+	public int getIDIndexPos(Long anID) {
 		for (int i = 0; i < data.length; i++) {
-			if (anID.equals(data[i][0])) {
+			if (anID.toString().equals(data[i][0])) {
 				return i;
 			}
 		}
 		return -1;
-	} //END public int getIDIndexPos(String)
+	}
 
 	public Object[][] getData() {
 		Object[][] copiedData = new Object[data.length][];

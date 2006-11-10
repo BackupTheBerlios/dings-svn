@@ -1,5 +1,5 @@
 /*
- * ChoiceID.java
+ * ChoiceString.java
  * :tabSize=4:indentSize=4:noTabs=false:
  *
  * DingsBums?! A flexible flashcard application written in Java.
@@ -23,14 +23,12 @@ package net.vanosten.dings.swing.helperui;
 
 import javax.swing.JComboBox;
 
-import net.vanosten.dings.consts.Constants;
-
-public class ChoiceID extends JComboBox {
+public class ChoiceString extends JComboBox {
 	private final static long serialVersionUID = 1L;
 
-	private Long itemID[] = {};
+	private String itemID[] = {};
 
-	public ChoiceID () {
+	public ChoiceString () {
 		super();
 	} //END public ChoiceID()
 
@@ -40,9 +38,9 @@ public class ChoiceID extends JComboBox {
 	 */
 	public void setItems(String[][] theItems) {
 		removeAllItems();
-		itemID = new Long[theItems.length];
+		itemID = new String[theItems.length];
 		for (int i = 0; i < theItems.length; i++) {
-			itemID[i] = Long.valueOf(theItems[i][0]);
+			itemID[i] = theItems[i][0];
 			addItem(theItems[i][1]);
 		}
 	} //END public void setItems(String[][])
@@ -52,8 +50,8 @@ public class ChoiceID extends JComboBox {
 	 * If the id is null, then the selection is set to nothing.
 	 * @param anID
 	 */
-	public void setSelectedID(Long anID) {
-		if (null == anID || anID.equals(Constants.UNDEFINED_ID)) {
+	public void setSelectedID(String anID) {
+		if (null == anID) {
 			setSelectedIndex(-1);
 			return;
 		}
@@ -68,12 +66,12 @@ public class ChoiceID extends JComboBox {
 	/**
 	 * Based on the current selected item returns an ID.
 	 *
-	 * @return Long - the ID of the selected item or Constants.UNDEFINED_ID if nothing is slected.
+	 * @return Long - the ID of the selected item or null if nothing is slected.
 	 */
-	public Long getSelectedID() {
+	public String getSelectedID() {
 		//if nothing is selected return null
 		if (0 > getSelectedIndex()) {
-			return Constants.UNDEFINED_ID;
+			return null;
 		}
 		return itemID[getSelectedIndex()];
 	}
@@ -83,7 +81,7 @@ public class ChoiceID extends JComboBox {
 	 * by overriding to method in JComboBox
 	 */
 	public void removeAllItems() {
-		itemID = new Long[0];
+		itemID = new String[0];
 		super.removeAllItems();
 	}
-} //END public class ChoiceID extends JComboBox
+} //END public class ChoiceString extends JComboBox
