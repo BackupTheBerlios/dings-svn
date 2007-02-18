@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004 - 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<status>
+	<developers>
+		<person name="Rick Gruber-Riemer" email="dingsbums@vanosten.net" id="vanosten" />
+	</developers>
+
+	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
+
+	<changes>
+		<release version="0.4.4 (svn 81)" date="2006-10-11">
+			<action type="add" context="feature" dev="vanosten">Support for accent caron in syllables highlighting for e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
+			<action type="add" context="feature" dev="vanosten">Support for character input panel for syllables in learn one by one view.</action>
+			<action type="fix" context="gui" dev="vanosten">Fixed visibility of fields in edit entry and learn one view, when they should not be shown.</action>
+			<action type="update" context="other" dev="vanosten">Parametrized version information in window title and startup information.</action>
+		</release>
+		<release version="0.4.3 (svn 74)" date="2006-09-30">
+			<action type="add" context="feature" dev="vanosten">Added support for syntax highlighting of syllables, e.g. for <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
+			<action type="add" context="feature" dev="vanosten">Simplified installation based on <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology.</a></action>
+		</release>
+		<release version="0.4.2 (svn 55)" date="2006-07-02">
+			<action type="add" context="feature" dev="vanosten">The answer when learning one by one can now be checked by the program according to settings for case sensitivity etc. in the preferences.</action>
+			<action type="update" context="feature" dev="vanosten">Reduced the nmber of visibility options in the learning stack properties.</action>
+			<action type="update" context="gui" dev="vanosten">View title for learn by choice reflects current view type.</action>
+			<action type="update" context="gui" dev="vanosten">Hint button is now aligned with the hint instead of the button panel at the bottom of the screen.</action>
+			<action type="update" context="gui" dev="vanosten">Each correctly matched pair gets a different color in learning by choice for <code>Match</code> and <code>Memory</code>.</action>
+			<action type="update" context="gui" dev="vanosten">The base, target, explanation and example fields in entry can now have multiple lines, the number of which can be configured in preferences.</action>
+			<action type="update" context="code" dev="vanosten">Uses JFreechart 1.0 API</action>
+		</release>
+		<release version="0.4.1 (svn 39)" date="2006-03-19">
+			<action type="add" context="feature" dev="vanosten">New learning game &quot;Memory&quot;</action>
+			<action type="fix" context="code" dev="vanosten">Bug #6823 &quot;Can't create new Learning Stack&quot;.</action>
+			<action type="add" context="documentation" dev="vanosten">References to application architecture</action>
+			<action type="update" context="documentation" dev="vanosten">Windows screenshots for Java information updated to Java 5.</action>
+		</release>
+		<release version="0.4 (svn 36)" date="2006-03-15">
+			<!-- Some action types have associated images. By default, images are defined for 'add', 'fix', 'remove' 'update' and 'hack'. If you add src/documentation/resources/images/<foo>.jpg images, these will automatically be used for entries of type <foo>. -->
+			<action type="add" context="feature" dev="vanosten">Three game like learning modes.</action>
+			<action type="update" context="code" dev="vanosten">Uses JDK 5.0 with Generics. Changed build.xml to force building with 1.5.</action>
+			<action type="add" context="documentation" dev="vanosten">Uses GNU Free Documentation License, Version 1.2</action>
+			<action type="update" context="refactor" dev="vanosten">Use Toolbox singleton for Preferences, Properties and ResourceBundles</action>
+			<action type="update" context="refactor" dev="vanosten">Changed to more accurate check of JVM version</action>
+			<action type="fix" context="gui" dev="vanosten">Use correct labels in statistics</action>
+		</release>
+		<release version="0.3.1" date="2005-02-27">
+			<action type="add" context="feature" dev="vanosten">Use F1 to get help.</action>
+			<action type="add" context="feature" dev="vanosten">Give immediate feedback per field with regards to validity.</action>
+			<action type="fix" context="feature" dev="vanosten">Mnemonic for Edit button in lists changed to &quot;d&quot;.</action>
+			<action type="fix" context="gui" dev="vanosten">Changed the icon of the entry type chooser dialog for new entries.</action>
+			<action type="update" context="refactor" dev="vanosten">Code cleanup for static methods and constants that are only Swing related (moved to DingsSwingConstants).</action>
+		</release>
+		<release version="0.3.0" date="2005-01-29">
+			<action type="fix" context="gui" dev="vanosten">Change of the look and feel happens immediately.</action>
+			<action type="fix" context="gui" dev="vanosten">Rearranged the menus for better grouping.</action>
+			<action type="fix" context="gui" dev="vanosten">Menu item for editing learning stack information renamed from &quot;Properties&quot; to &quot;Edit Information&quot; and moved to menu &quot;Edit&quot;.</action>
+			<action type="update" context="gui" dev="vanosten">Changed icons from <a href="http://www.gtk.org">GTK</a> stock icons to <a href="http://www.icon-king.com/index.php?p=23">Nuvola</a>.</action>
+			<action type="update" context="docs" dev="vanosten">Change the project website and documentation from pure html to <a href="http://forrest.apache.org">Apache Forrest</a>.</action>
+			<action type="update" context="other" dev="vanosten">Changed the name of the application from <code>Dings?!</code> to <code>DingsBums?!</code>.</action>
+			<action type="add" context="feature" dev="vanosten">The direction of learning can now be inversed. E.g. in a French - English learning stack you can test both from French to English and from English to French.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to generate graphs with statistical information.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to change the color of the hint texts to be able to adabt to different user interface themes.</action>
+			<action type="add" context="feature" dev="vanosten">The locale and language of the application can be set in the preferences.</action>
+			<action type="add" context="feature" dev="vanosten">Copyright and licence information can now be added to the information panel.</action>
+			<action type="remove" context="feature" dev="vanosten">Removed possibility to see part of the text covered as a hint.</action>
+		</release>
+		<release version ="0.2.0" date="2004-05-18">
+			<!-- This is the second release of Dings?!. This release adds some more functionality to the existing feature set (see other changes). If you have made a learning stack using a previous version please contact me to fix some update problems -->
+			<action type="fix" context="gui" dev="vanosten">YES_NO_CANCEL and YES_NO dialogs now show the right buttons.</action>
+			<action type="fix" context="code" dev="vanosten">Corrected NullPointerExceptions for New Learning Stack.</action>
+			<action type="fix" context="code" dev="vanosten">Show default item in attributes.</action>
+			<action type="update" context="code" dev="vanosten">Changed "level" to "score" to better reflect the functionality of this feature.</action>
+			<action type="update" context="gui" dev="vanosten">Changed button label &quot;Reset&quot; to &quot;Revert&quot;.</action>
+			<action type="update" context="gui" dev="vanosten">InfoVocabView has tabs now.</action>
+			<action type="update" context="gui" dev="vanosten">Removed dependency on JGoodies forms.</action>
+			<action type="update" context="gui" dev="vanosten">Added field description to category in order to be fully compatible with unit. Aligned GUI such that UnitEditView is used by both Unit and Category..</action>
+			<action type="update" context="feature" dev="vanosten">4 attributes instead of 3.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to reset the score to the minimum for either all entries or the selected entries.</action>
+			<action type="add" context="feature" dev="vanosten">The settings for score influence the way the current selection of entries is applied to updates: immediately or not while editing and learning.</action>
+			<action type="add" context="feature" dev="vanosten">Added possibility to change the entry type of an existing entry.</action>
+			<action type="add" context="feature" dev="vanosten">New bidi options.</action>
+			<action type="add" context="gui" dev="vanosten">Separator for attributes and others can get custom labels.</action>
+		</release>
+	</changes>
+
+	<todo>
+		<actions priority="next release">
+			<action context="code" dev="vanosten">Check answer: documentation</action>
+			<action context="code" dev="vanosten">Use accent caron instead of breve (see http://pinyin.info)</action>
+			<action context="code" dev="vanosten">Learn multi Memory syllables when chosen</action>
+			<action context="other" dev="vanosten">Update berlios.de error todo</action>
+			<action context="feature" dev="vanosten">Import entries from other stack</action>
+			<action context="code" dev="vanosten">Hide hidden fields in edit mode</action>
+		</actions>
+		<actions priority="high">
+			<action context="other" dev="vanosten">Submit to rating in http://www.quingle.com/softarea/flash-su.htm</action>
+			<action context="feature" dev="vanosten">Make sure that learning results (scores) are reflected in the selection for learning by choice</action>
+			<action context="feature" dev="vanosten">LearnByChoiceView should support preferences.</action>
+			<action context="feature" dev="vanosten">LearnByChoicePane should support preference for colors.</action>
+			<action context="i18n" dev="vanosten">Use ResourceBundles for GUI. Externalize all English strings and mnemonics. Begin with PropertiesEditview</action>
+			<action context="gui" dev="vanosten">Use icons in title for those panels that have an associated menu icon</action>
+			<action context="other" dev="vanosten">Correct behavior in Help menu items to contain real information.</action>
+			<action context="feature" dev="vanosten">Enable bidi fields: set component orientation</action><!-- ## Enable orientation in EntryEdit and EntryLearn -->
+			<action context="tools" dev="vanosten">Use XPlanner.org</action>
+			<action context="feature" dev="vanosten">Make ready for Java Webstart</action>
+			<action context="feature" dev="vanosten">Show Window with error text instead of Usage on command line</action>
+			<action context="feature" dev="vanosten">Add possibility to import vocabularies from http://www.fdicts.com/.</action>
+			<action context="documentation" dev="vanosten">Add description about architecture and data architecture.</action>
+			<action context="documentation" dev="vanosten">Add text about support for formulae (e.g. MathML) etc..</action>
+			<action context="code" dev="vanosten">LEARN_ONE_NEXT is called twice.Why?</action>
+		</actions>
+		<actions priority="medium">
+			<action context="feature" dev="vanosten">Show summary of learning session after learn one by one and learn by choice.</action>
+			<action context="feature" dev="vanosten">Add actual statistics to window status field</action>
+			<action context="gui" dev="vanosten">Make empty icon for menu items and resolve alt text for Icons.</action>
+			<action context="documentation" dev="vanosten">Update linking page with more info about applications (e.g. KDE, Java) and test, whether flashcard progs are really flashcard progs.</action>
+			<action context="documentation" dev="vanosten">Add license text in all file headers and add author tag to xdocs.</action>
+			<action context="documentation" dev="vanosten">Add author and revision control to JavaDoc.</action>
+			<action context="datamodel" dev="vanosten">Use an embedded sql-database instead of xml-files to be able to have binary files (images, sound) stored. <a href="http://db.apache.org/derby/">Apache Derby</a></action>
+		</actions>
+		<actions priority="low">
+			<!-- GUI -->
+			<action context="feature" dev="vanosten">Memory should show DingsBums?! logo on hidden cards</action>
+			<action context="gui" dev="vanosten">Show EntryType in EntryEdit or LearnOne only if more than one EntryType.</action>
+			<action context="gui" dev="vanosten">Change the alignment of the column header to match the alignment of the cell contents in ListViews.</action>
+			<action context="gui" dev="vanosten">Adapt Insets to text orientation</action>
+			<action context="gui" dev="vanosten">Editor for pronounciation.</action><!-- Fonts: http://www.joconner.com/javai18n/articles/TextDisplay.html -->
+			<action context="gui" dev="vanosten">Add possibility for Mnemonics to user configurable field labels. Potentially automatically generate mnemonics for those labels, which are configured in the properties/info. The theory is that most people will not be able to do it correctly or even understand it. It could be done by giving a method the label names and the preconfigured mnemonics for the view and menus. The function should then make a pool of remaining letters from the labels and find a distribution, where as many as possible can get a mnemonic, preferably the first letter(s).</action>
+			<action context="gui" dev="vanosten">Preferences for background color of valid/invalid input.</action>
+			<action context="gui" dev="vanosten"><a href="http://java.sun.com/developer/technicalArticles/JavaLP/JavaToMac/">Bringing your Java Application to Mac OS X</a> and <a href="http://community.java.net/mac/">Mac Java community</a>.</action>
+			<!-- FEATURE -->
+			<action context="feature" dev="vanosten">Use a codewrapper for Windows executable. See Heise IX 4/2005: <a href="http://www.ucware.com">Jexecreator</a> and <a href="http://www.duckware.com/jexepack/index.html">Jexepack</a>.</action>
+			<action context="feature" dev="vanosten">Spell checker: E.g. ASPELL for spell checking (see <a href="http://jedit.org">JEdit</a>, <a href="http://vocabulala.sourceforge.net/deutsch/deutsch.html">Vocabulala</a>, <a href="http://linux.org.mt/projects/jtextcheck/index.html">JTextCheck</a>) or the <a href="http://jazzy.sourceforge.net">Jazzy</a> open source Java spell checker <!-- see also http://www-106.ibm.com/developerworks/library/j-jazzy -->.</action>
+			<action context="feature">If file name postfix is ".gz" then assume GZIPped and use java.util.zip.GZIPxStream.</action>
+			<action context="feature" dev="vanosten">Search of words using Levenshtein-Algorithm allowing for unsharp search strings.</action>
+			<!-- REFACTOR -->
+			<action context="refactor" dev="vanosten">Evt. replace IDTableModel, IDEditableTableModel with one, where ID is simply not shown in the table, but there is no need to hold an array of IDs.</action>
+			<action context="refactor" dev="vanosten">Make sure application can be compiled using <a href="http://gcc.gnu.org/java/">GCJ (the GNU compuiler for the Java language)</a>.</action>
+			<!-- gcj - -classpath=/usr/share/gcc-data/i686-pc-linux-gnu/3.3/java:. dings.jar -->
+			<action context="code" dev="vanosten">Try JVM test from JOnAS J2EE container</action>
+			<!--         try {
+            Package p = Package.getPackage("java.lang");
+            if (!p.isCompatibleWith("1.4")) {
+                String implVer = p.getImplementationVersion();
+                String specVer = p.getSpecificationVersion();
+                System.err.println("A 1.4 JVM or higher is required for JOnAS. Current JVM implementation version is '"
+                        + implVer + "' with specification '" + specVer + "'");
+                System.exit(0);
+            }
+        } catch (NumberFormatException nfe) {
+            System.err.println("Cannot detect the running JVM version. Note that JOnAS requires a 1.4 or higher JVM.");
+        }
+ -->
+		</actions>
+		<actions priority="very low">
+			<action context="feature" dev="vanosten">Voice recording/playing</action>
+			<action context="feature" dev="vanosten">Synchronization of files from different sources.</action>
+			<action context="feature" dev="vanosten">Printing of lists for offline learning, statistics, ...</action>
+			<action context="gui" dev="vanosten">Use new JDK 1.5 functionality for placing window first time (i.e. without preferences): <code>gui.setLocationByPlatform(true)</code> and <code>gui.setAlwaysOnTop(true)</code></action>
+			<action context="refactor" dev="vanosten">Use javax.swing import for GroupLayout when switching to JDK 6 instead of external class library</action>
+		</actions>
+	</todo>
+</status>

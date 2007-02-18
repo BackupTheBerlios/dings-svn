@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Links</title>
+	</header>
+	<body>
+		<section id="flashcard">
+			<title>Links to other flashcard programs</title>
+			<p>The following list is a collection of links to other flashcard programs I am a aware of - and which I think are worth mentioning. Some of them have been an inspiration to <code>DingsBums?!</code>.</p>
+			<p>If <code>DingsBums?!</code> cannot provide what you are looking for, try one of those. Or <a href="site:contact">tell me</a> what is missing, so I can improve the application!.</p>
+			<ul>
+				<li>The <a href="http://www.wikipedia.org">Wikipedia</a> entry for <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a> contains a lot of links to both programs and background material.</li>
+				<li><a href="http://www.quingle.com/softarea/flash.htm">Memorization Software Reviewed</a> has over 200 software products</li>
+				<li><a href="http://www.studystack.com/">The Study Stack</a> has a lot of <a href="http://www.studystack.com/FlashCardLinks.jsp">links</a> to flashcard applications</li>
+			</ul>
+		</section>
+		<section id="newsletters">
+			<title>Learning related newsletters and articles</title>
+			<ul>
+				<li><a href="http://llt.msu.edu/">Language, Learning &amp; Technology</a> refereed journal for second and foreign language educators. E.g. the article <a href="http://llt.msu.edu/vol9num1/emerging/default.html">EMERGING TECHNOLOGIES: Messaging, Gaming, Peer-to-Peer Sharing: Language Learning Strategies &amp; Tools for the Millennial Generation</a>.</li>
+				<li><a href="http://www.learningcitizen.net/newsletter.shtml">The Learning Citizen Newsletter</a>.</li>
+			</ul>
+		</section>
+		<section id="other">
+			<title>Other language and learning related software</title>
+			<ul>
+				<li><a href="http://www.babylon.com/">Babylon online dictionary</a></li>
+				<li><a href="http://www.phon.ucl.ac.uk/home/wells/fonts.htm">IPA_SAM phonetic fonts</a></li>
+				<li><a href="http://www-user.tu-chemnitz.de/~fri/ding/">DING dictionary lookup program</a></li>
+				<li><a href="http://www.microsoft.com/typography/ctfonts/WordRecognition.aspx">The Science of Word Recognition</a></li>
+				<li><a href="http://www.linuxlinks.com/Software/Home_and_Education/Tutor/Language/">LinuxLinks.com language tutor links</a></li>
+				<li><a href="http://www.fdicts.com/">The All Free Dictionaries Project</a></li>
+				<li><a href="http://www.moodle.org/">Moodle</a> - A Free, Open Source Course Management System for Online Learning</li>
+				<li><a href="http://www.bbc.co.uk/languages/">The BBC languages homepage</a></li>
+				<li><a href="http://www.m-learning.org/index.shtml">m-learning : learning in the palm of your hand</a>.</li>
+				<li><a href="http://www.mobilearn.org/">the MOBIlearn project website</a></li>
+				<li><a href="tp://webgerman.com/languages/">Foreign language resources</a> and <a href="http://german.about.com/">all about the German language</a>.</li>
+				<li><a href="http://travlang.com/">TravLang: Travel &amp; Language services</a> (includes dictionairies in over 35 languages).</li>
+				<li><a href="http://www.newscientist.com/article.ns?id=dn7054">Software learns to translate by reading up</a></li>
+				<li><a href="http://atutor.ca/">ATutor</a> is an Open Source Web-based Learning Content Management System (LCMS)</li>
+			</ul>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Editing</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>All editing of the contents of your leanring stack is done in the menu <code>Edit</code>. Remarks about editing the information / properties of the current learning stack can be found in <a href="site:preferences">Preferences and Properties</a>.</p>
+		</section>
+		<section id="terminology">
+			<title>Terminology</title>
+			<p>The following gives a brief explanation of the terms and concepts used in DingsBums?!:</p>
+			<ul>
+				<li>An &quot;Entry&quot; is the basic unit of work. Each learning stack has a number of entries, which corresponds to a card in a flashcard stack.</li>
+				<li>Each entry is associated with a &quot;Unit&quot; and a &quot;Category&quot;. Units and categories have precisely the same features / attributes. An example of the usage of units would be lessons in a course. Category can e.g. be used in a vocabulary to distinguish common words from technical terms, or slang from school English, or American English from British English. There is no requirement to use units and categories in a learning stack. A default is defined for both of them and can be hidden in the learning stack properties. Also a label can be given in the learning stack properties to better match the specific use (e.g. &quot;lesson&quot;).</li>
+				<li>An entry is associated with an &quot;Entry Type&quot;. As with units and categories you can change the labels and hide in the learning stack properties. However while unit and category are neutral and can be used across entry types, an entry type influences the detail information of an entry. A typical example is a vocabulary with grammatical information: you have to know the gender and the plural forms of a noun (if any), whereas you need to know the tenses of a verb. Even more specific these forms depend on the language (e.g. there is no gender in English, and there are 3 genders in German as opposed to 2 genders in Roman languages). therefore you could define an entry type for verbs with one set of attributes and another entry type for nouns with a different set of attributes.</li>
+				<li>The &quot;Entry Type Attributes&quot; define the items, which an attribute of an entry tpe can have. Using the example above the plural form of a noun in English cound be &quot;none&quot;, &quot;only plural&quot;, &quot;-s&quot;, or &quot;irregular&quot; (e.g. mouse -&gt; mice).</li>
+			</ul>
+			<p>If you are learning zoology you might define an entry type for terrestrial animals and one for animals living in the water. One of the attributes for terrestrial animals could be the climate zone (arctic, savannah, ...) and the other whether they eat plants (herbivores) or other animals (carnivores) or both. The entry type for animals living in the water could have attributes about their spawning behaviour, whether they live most of the times in the oceans, in rivers or seas etc. Actually you might need more entry types, as zoology is a bit more complex than that - depending on your or your audience's interest in the level of details. But I guess you get the point ...</p>
+		</section>
+		<section id="list">
+			<title>List of Entries</title>
+			<p>From the list of entries new entries can be added to the training stack by pressing the <code>Add</code> button. In the upcoming dialog you are able to choose one of the defined entry types to be assigned to the new entry. (This dialog does not show up, if only one entry type is defined!).</p>
+			<p>The score of each entry is shown with a different color (see <a href="site:learningalgo">learningn algorithm</a>).</p>
+			<figure src="images/entries_new.png" alt="screenshot of DingsBums?! showing the entries list" />
+			<warning>If some of your entries &quot;suddenly are disappeared&quot; chances are that you have made a <a href="site:selection">selection</a>. You can see the number of selected entries vs. the total number of entries at the buttom of the screen.</warning>
+		</section>
+		<section id="edit_entry">
+			<title>Editing an Entry</title>
+			<p>The screenshot shows the possibilities to edit an entry depending on its type. Elsewhere in the program an entry type for a Danish noun has been defined. The same entry type for English nouns would most certainly have other attributes (e.g. no gender). Or you might just ignore language details and work with one generic type.</p>
+			<note>Some of the labels are in Danish to reflect the training stack as defined in the <a href="site:preferences">learning stack properties</a>.</note>
+			<figure src="images/entry_edit.png" alt="screenshot of DingsBums?! showing editing an entry" />
+		</section>
+		<section id="edit_entry_type">
+			<title>Editing an Entry Type</title>
+			<p>The entry types can be defined with a specific name and a set of attributes. The entry type attributes can contain a number of items.</p>
+			<figure src="images/entrytype_edit.png" alt="screenshot of DingBums?! showing editing an entry type" />
+		</section>
+		<section id="edit_eta_items">
+			<title>Editing the Items of an Entry Type Attribute</title>
+			<p>The screenshot shows the same set of attributes as was used for editing a Danish noun in a screenshot above. For each entry type attribute an item is chosen as the default.</p>
+			<p>An Entry Type Attribute can be (re)used in different Entry types (see the <code>eucapitals.xml</code> file in <a href="site:samples">samples</a> for an example of how to do this).</p>
+			<figure src="images/entrytypeattribute_edit.png" alt="screenshot of DingsBums?! showing editing entry type attribute items" />
+		</section>
+		<section id="user_feedback">
+			<title>User Feedback</title>
+			<p>While you are editing something the graphical user interface tries to give you as many hints as possible. If the contents has changed, then the buttoms at the bottom indicate this by allowing you to either apply these changes or revert to the previous values. And you can only go back to the list view if the changes are reverted or applied.</p>
+			<p>Some fields are mandatory and shown with a special backgound color (light yellow in the screenshot below). If the text in these fields does not comply with the validation rules, then the background color is changes (light red in the screenshot below) and the changes cannot be applied. The tooltip text of the filed will indicate the validation rule. In the example below the names of two items are the same, which is not valid.</p>
+			<figure src="images/validation.png" alt="screenshot of DingsBums?! showing validation feedback" />
+		</section>
+	</body>
+</document>

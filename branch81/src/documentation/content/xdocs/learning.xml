@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004 - 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Learning One by One</title>
+	</header>
+	<body>
+		<p>All learning is done in menu <code>Learn</code>. &quot;Learning one by one&quot; means learning one single entry in a learning stack at a time.</p>
+		<p>When starting learning a dialog is presented to allow you to choose the learning direction. E.g. in a vocabulary you do not want to learn always from German to Danish, but also from Danish to German (however the entry type details will alway be of the target.</p>
+		<figure src="images/learn_direction.png" alt="screenshot of DingsBums?! showing the dialog for choosing the direction of learning" />
+		<p>The application shows the entries one by one without showing the solution. A set of different hints can be used, if the solution cannot be remembered. To activate the hints choose a method in the dropdown box to the right of the hint field and press once or several times the <code>Hint</code> button.</p>
+		<p>The letters of the solution shuffled (the solution is <code>Nicosia</code>):</p>
+		<figure src="images/learn_one_shuffle.png" alt="screenshot of DingsBums?! showing learning hint shuffle" />
+		<p>The first letters of the solution (press several times the <code>Hint</code> button to see more letters):</p>
+		<figure src="images/learn_one_letter.png" alt="screenshot of DingsBums?! showing learning hint letter" />
+		<p>The solution is flashed shortly on the screen ...</p>
+		<figure src="images/learn_one_flash.png" alt="screenshot of DingsBums?! showing learning hint shuffle" />
+		<p>... and disappears after the time specified in the <a href="site:preferences">preferences</a> screen:</p>
+		<figure src="images/preferences_hints.png" alt="screenshot of DingsBums?! showing preferences for learning hint flash" />
+		<p>The answer given by the user can be checked. Which fields get checked depends on the current <a href="site:preferences">preferences</a> and the visibility defined in the <a href="site:preferences">learning stack properties</a> (visibility has to be set to &quot;Part of query&quot;). In the screenshot the target is correct, but one of the attributes is wrong.</p>
+		<figure src="images/learn_one_check.png" alt="screenshot of DingsBums?! showing the solution of the current entry" />
+		<p>Pressing the <code>Show</code> button prints the solution of the current entry . The contents of some fields is shown in query mode and of others only when showing the solution. This is defined in the <a href="site:preferences">learning stack properties</a>.</p>
+		<figure src="images/learn_one_show.png" alt="screenshot of DingsBums?! showing the solution of the current entry" />
+	</body>
+</document>

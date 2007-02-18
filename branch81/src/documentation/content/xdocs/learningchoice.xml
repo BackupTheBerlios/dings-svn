@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Learning by Choice</title>
+	</header>
+	<body>
+		<section id="configuration">
+			<title>Configuration</title>
+			<p>All learning is done in menu <code>Learn</code>. &quot;Learning by choice&quot; means learning several entries in a learning stack at the same time by picking or matching a question with an answer. This gives the possibility to learn in three game-like environments.</p>
+
+			<p>When starting learning a dialog presents configuration possibilities. First of all you need to choose beween the four possible learning choice types. As with <a href="site:learning">learning one by one</a> the learning direction can be chosen. The number of choices can also be configured. You will typically set it to 4-5 for picking one in a set, 4-8 for matching, 10-25 for shifting questions and 5 to 15 for the memory learning type.</p>
+			<p>Depending on the type, additional options are enabled, where you e.g. can define the pause interval between the shifting questions and the number of columns.</p>
+			<figure src="images/learn_choice_config.png" alt="screenshot of DingsBums?! showing the configuration of learning based on choices" />
+		</section>
+		<section id="set">
+			<title>Pick one in a set of answes</title>
+			<p>In this learning by choice type you are presented with a question and have then to pick the right answer among a set of choices. If you pick the wrong answer as in the example, then you are presented with the right answer in green and the one you picked is in red due to the error. Only in case of a wrong answer you have to click one the <code>Next</code> button.</p>
+			<figure src="images/learn_choice_set.png" alt="screenshot of DingsBums?! showing learning by picking the right answer among 4 possible answers" />
+		</section>
+		<section id="match">
+			<title>Matching questions with answers</title>
+			<p>Here you have to match an answer with a question by first clicking on a question and then clicking on the answer. If the question and answre do match, then the fields get a green color and a solid line is drawn between them.</p>
+			<figure src="images/learn_choice_match.png" alt="screenshot of DingsBums?! showing learning by matching pairs of questions and answers" />
+		</section>
+		<section id="multi">
+			<title>Shifting questions</title>
+			<p>The third option presents you with questions shifting after a pause interval, which was defined in the configuration (see above). If you pick the right answer within the pause interval then the field gets a green color and the question is removed from the set.</p>
+			<figure src="images/learn_choice_multi.png" alt="screenshot of DingsBums?! showing learning by picking the correct answer among a lot (here 15) og possiblie answers with shifting questions every few seconds" />
+		</section>
+		<section id="memory">
+			<title>Memory</title>
+			<p>Memory is <code>DingsBums?!</code>'s implementation of the popular &quot;Memory&quot; card game, where you have to find matching pairs with cards turned with their face down and a maximum of 2 cards turned up. The option &quot;wait before hide&quot; indicates the number of seconds before not matching cards are hidden again.</p>
+			<p>Each correctly matched pair gets a different color.</p>
+			<figure src="images/learn_choice_memory.png" alt="screenshot of DingsBums?! showing learning by finding matching pairs in the memory card game" />
+		</section>
+	</body>
+</document>

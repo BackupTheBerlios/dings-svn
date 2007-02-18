@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Download and Install</title>
+	</header>
+	<body>
+		<section id="prerequisites">
+			<title>Prerequisites</title>
+			<p>You need a Java Virtual Machine (JVM) 1.5 or higher to run the program.</p>
+			<p>If you are in doubt of what this means, then please read the section <a href="#java">&quot;Testing for and installing a Java Virtual Machine&quot;</a> below.</p>
+		</section>
+		<section id="easyinstallation">
+			<title>Easy Installation</title>
+			<p>The easiest way to install the application and also keeping it up to date is to launch the application by pressing the buttom below. This will automatically download the application, launch it, give you the opportunity to define a desktop or menu shortcut and check for updates each time the application is launched.</p>
+			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
+			<p>Behind the scenes this uses <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology</a>. Using this link you will get</p>
+			<ul>
+				<li>a security warning that the security certificate was issued by a company that is not trusted. This is because I do not have the money to buy an expensive certificate from an official certification authoroty. If you do not trust this, you have always the possibility to do a basic install (as described below) or compile the application from the sources.</li>
+				<li>a dialog asking whether you want to create menu and desktop shortcuts</li>
+			</ul>
+		</section>
+		<section id="basicinstallation">
+			<title>Basic Installation</title>
+			<section id="download">
+				<title>Download</title>
+				<p>The newest version of the program can be downloaded from the <a href="http://developer.berlios.de/project/showfiles.php?group_id=844">files section</a> of the project website.</p>
+				<p>Alternatively you can get access to the newest untested code in the <a href="http://developer.berlios.de/svn/?group_id=844">version control system</a>.</p>
+			</section>
+			<section id="installation">
+				<title>Running and Installation</title>
+				<p>Unfortunately at the moment there is no sophisticated way to install and run <code>DingsBums?!</code>.</p>
+				<p>Unpack the zip-file you downloaded and place the contents into a directory, where you have read/write access.</p>
+				<p>On <a href="http://www.apple.com/macosx">Mac OS X</a> and eventually on <a href="http://www.microsoft.com/windows">Microsoft Windows</a> you can simply double-click the dingsbums.jar file to launch the application. All others have to get a command prompt (see below how to do that), change to the directory containing the application and then type the following: <code>java -jar dingsbums.jar</code>.</p>
+			</section>
+		</section>
+		<!--
+		<section id="sources">
+			<title>Sources</title>
+			<p>The program sources can be obtained from <a href="http://developer.berlios.de/cvs/?group_id=844">CVS</a> on the project website, if you want to compile yourself. Compile the program using the included build.xml file with <a href="http://ant.apache.org/">Ant</a>.</p>
+		</section> -->
+		<section id="java">
+			<title>Testing for and installing a Java Virtual Machine</title>
+			<p>A Java Virtual Machine (JVM) is included in a Java Runtime environment (JRE) for end users, and Java Development Kits (Java SDK or JDK) for programmers. The way to test whether you have a JVM in the right version depends on you operating system (e.g. Microsoft Windows).</p>
+			<p><a href="http://java.com/en/download/help/testvm.jsp">&quot;Test your Java Virtual Machine&quot;</a> lets you do the test in your browser. This web page is part of the official Java site at <a href="http://java.com">java.com</a>, which contains lots of help around Java.</p>
+			<p>If you happen to be the owner of an Apple Macintosh you can find additional information at <a href="http://www.apple.com/macosx/features/java/">Apple&apos;s Java pages</a> and <a href="http://developer.apple.com/java/faq/">Java Frequently Asked Questions</a>. Make sure to install the J2SE 5.0 version. Unfortunately there is no recent JVM for Mac OS 9 and earlier.</p>
+			<p>If you are still in doubt of what to do after reading the documentation in this section you may <a href="contact.html">contact</a> me.</p>
+			<p>Another way test your installation is to do the following:</p>
+			<ol>
+				<li>Open a command prompt</li>
+				<li>Type the following: <code>java -version</code></li>
+			</ol>
+			<p>If you use a Unix or Linux system like me then no explanation is needed, as I believe you know what you are doing :-).</p>
+			<p>On Microsoft Windows (actually the Danish version, but you get the idea ;-):</p>
+			<figure alt="Run in Start menu" src="images/start_run.png"/>
+			<figure alt="Typing cmd into Run dialog" src="images/run_prompt.png"/>
+			<figure alt="Testing for Java in command window" src="images/windows_cmd.png"/>
+			<p>Yet another possibility is to look for a &quot;Java&quot; control panel and if you find one look at the information in the &quot;About&quot; section of the &quot;General&quot; tab.</p>
+			<figure alt="Find the Java plugin control panel" src="images/jre_plugin.png"/>
+			<figure alt="Java version information in the about tab" src="images/jre_ctrl_panel.png"/>
+		</section>
+	</body>
+</document>

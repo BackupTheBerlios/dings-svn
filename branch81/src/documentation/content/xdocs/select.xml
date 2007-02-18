@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Selection</title>
+	</header>
+	<body>
+		<p>You always work with a selection of entries: both when learning and editiong entries.</p>
+		<p>The selection screen allows to make a selection based on the status, last learned, score (see <a href="site:learningalgo">learning algorithm</a>), unit, category and entry type of the entries. The selection is made by pressing the <code>Apply Selection</code> button.</p>
+		<p>In the status bar at the buttom of the application window the number of currently chosen entries is shown: 19 out of a total of 25 entries (i.e. 6 out of 25 members of the European Union are not member of NATO).</p>
+		<figure src="images/selection.png" alt="screenshot of DingsBums?! showing the screen to make selections" />
+		<note>You can influence how the selection is preserved or not after changing an entry in the <a href="site:preferences">Preferences</a>.</note>
+	</body>
+</document>

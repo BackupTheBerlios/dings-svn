@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Project Homepage and Code Repository</title>
+	</header>
+	<body>
+		<p>The project <a href="http://developer.berlios.de/projects/dings">homepage</a> is hosted by <a href="http://www.berlios.de">www.berlios.de</a>.</p>
+		<p>This project's code is stored in a <a href="http://developer.berlios.de/svn/?group_id=844">version controlled repository</a>. You need to be familiar with <a href="http://subversion.tigris.org/">Subversion</a>.</p>
+	</body>
+</document>

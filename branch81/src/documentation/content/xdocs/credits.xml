@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Credits</title>
+	</header>
+	<body>
+		<section id="contributors">
+			<title>Contributions</title>
+			<p>Until now <code>DingsBums?!</code> has mainly been a one man show - unfortunately. Find out how you can <a href="contribute.html">contribute</a>.</p>
+			<ul>
+				<li>Roman Habrik has given the idea and guidelines for <a href="site:syllables">syntax highlighting of syllables</a> (especially for <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a>)</li>
+			</ul>
+		</section>
+		<section id="libraries">
+			<title>External Libraries</title>
+			<p>The program uses the following external libraries:</p>
+			<ul>
+				<li><a href="http://www.extreme.indiana.edu/xgws/xsoap/xpp/">XML Pull Parser (XPP)</a></li>
+				<li><a href="http://www.jfree.org/jfreechart/">JFreeChart</a> for generating statistics charts.</li>
+				<li><a href="http://swing-layout.dev.java.net">Swing Layout Extensions</a> for providing <code>GroupLayout</code>.</li>
+				<li>The icons are taken from <a href="http://icon-king.com/?p=15">Nuvola</a> by David Vignoni.</li>
+			</ul>
+		</section>
+		<section id="tools">
+			<title>Tools</title>
+			<p>Among others the following open source tools are used for documentation and programming</p>
+			<ul>
+				<li><a href="http://forrest.apache.org">Apache Forrest</a> for documentation and rendering this website.</li>
+				<li><a href="http://ant.apache.org">Ant</a> for building the code.</li>
+				<li><a href="http://findbugs.sourceforge.net/">FindBugs</a> - find bugs in Java programs.</li>
+				<!--<li><a href="http://pmd.sourceforge.net/">PMD</a> to scan Java source code and looks for potential problems</li>  -->
+			</ul>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Getting Started</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>This page and the following pages under &quot;Documentation&quot; are not a comprehensive manual for the <code>DingsBums?!</code> application. However it should contain all you need to get started. The details should be pretty much selfexplanatory - otherwise feel free to <a href="site:contact">contact</a> the author.</p>
+			<p>Additionally some of your questions might already be answered in the <a href="site:faq">Frequently Asked Questions</a>.</p>
+		</section>
+		<section id="install">
+			<title>Downloading, Installing and Running</title>
+			<p>Please refer to the <a href="site:download">Download</a> page for instructiona about downloading, installing and running the application.</p>
+		</section>
+		<section id="opening">
+			<title>Opening a Learning Stack</title>
+			<p>Opening an existing learning stack or vocabulary can be done in two ways:</p>
+			<ul>
+				<li>Use the dynamic menu items with recently opened files at the buttom of the <code>File</code> menu.</li>
+				<li>Get a file dialog by using either the &quot;Open&quot; button atg the buttom or the <code>file -&gt; Open</code> menu.</li>
+			</ul>
+			<p>The screenshots in the documentation are all taken from the <a href="site:samples">samples files</a>.</p>
+			<figure src="images/open.png" alt="screenshot of DingsBums?! showing the file menu with recent files" />
+		</section>
+		<section id="new">
+			<title>Starting with a New Learning Stack</title>
+			<p>To start with a new learning stack just use menu <code>file -&gt; New</code> or the button at the bottom right. You can leave everything as defaults and go directly to <code>Edit -&gt; Edit Entries</code> to add a few entries to the learning stack. Only the fields &quot;Base&quot; and &quot;Target&quot; are required. &quot;Target&quot; is what you want to memorize by using the <a href="site:learning">learning</a> features.</p>
+			<note>If &quot;Base&quot; and &quot;Target&quot; is all you are interested in the you can hide the other fields in the &quot;Visibility&quot; tab in the learning stack properties (see <a href="site:preferences">Preferences and Properties</a>).</note>
+			<p>See <a href="site:editing">editing</a> for more information about how to add contents to your learning stack and the terminology used.</p>
+		</section>
+	</body>
+</document>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Contribute</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>The design and implementation of <code>DingsBums?!</code> has been a one man show until now. There are good reasons, why this should change in the future:</p>
+			<ul>
+				<li>I only have so much time. I work on <code>DingsBums?!</code> in my spare time.</li>
+				<li>While I use the application myself, I am not aware of all the features and usage patterns, that real users require. The development of DingsBums?! should be driven what real users need and request.</li>
+				<li>My knowledge of foreign languages is limited when it comes to translations of the graphical user interface and the documentation.</li>
+			</ul>
+		</section>
+		<section id="help">
+			<title>Where you can help</title>
+			<p>The <code>DingsBums?!</code> project is an Open Source volunteer project released under a very liberal <a href="site:licenses">license</a>. There are lots of areas, where <code>DingsBums?!</code> would profit from your help, and where no knowledge of programming is needed: e.g. documenting, proposing ideas, reporting bugs, suggesting bug-fixes, etc ..</p>
+			<ul>
+				<li>Translations</li>
+				<li>Programming</li>
+				<li>Accessibility: is the (graphical) user interface usable for people with disabilities?</li>
+				<li>Look &amp; Feel: icons, program icon, ...</li>
+				<li>Share <a href="site:samples">samples</a> of learning stacks</li>
+				<li>Other feedback</li>
+				<li>End user distribution: If you happen to have an Apple Macintosh with a recent version of the operating system, you could provide other Mac users with a <code>Mac OS X Application Bundle</code> for easier installation and execution.</li>
+				<li>Check need for languages in Middle East (Arabic, Hebrew) and Asia (Japanese, Chinese, Korean, Mongolian).</li>
+			</ul>
+		</section>
+	</body>
+</document>
