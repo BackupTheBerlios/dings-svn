@@ -23,6 +23,7 @@ package net.vanosten.dings.swing;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -35,6 +36,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.event.AppEvent;
@@ -49,6 +52,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	private final static long serialVersionUID = 1L;
 
 	private JButton applyB;
+	private JCheckBox allCB;
 	private ListID unitsLi, categoriesLi, typesLi;
 	private JComboBox statusCB;
 	private JComboBox minScoreCB;
@@ -66,6 +70,14 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 	} //END public EntriesSelectionView(ComponentOrientation)
 
 	private final void initComponents() {
+		allCB = new JCheckBox("Select all");
+		allCB.setMnemonic(("L").charAt(0));
+		allCB.setSelected(true);
+		allCB.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent evt) {
+				onAllChanged();
+			}
+		});
 		statusCB = new JComboBox();
 		statusCB.addItem("All");
 		statusCB.addItem("Only up-to-date entries");
@@ -129,7 +141,25 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		Insets vght = new Insets(DingsSwingConstants.SP_V_G, DingsSwingConstants.SP_H_T, 0, 0);
 		Insets vzhg = new Insets(0, DingsSwingConstants.SP_H_G, 0, 0);
 
+		//----all
+		JLabel emptyL = new JLabel("");
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.LINE_END;
+		gbl.setConstraints(emptyL, gbc);
+		mainP.add(emptyL);
+		//----
+		gbc.gridx = 1;
+		gbc.gridwidth = 3;
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.insets = vzhg;
+		gbl.setConstraints(allCB, gbc);
+		mainP.add(allCB);
 		//----status
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbl.setConstraints(statusL, gbc);
 		mainP.add(statusL);
@@ -142,7 +172,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		mainP.add(statusCB);
 		//----last learned before
 		gbc.gridx = 0;
-		gbc.gridy = 1;
+		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghz;
@@ -157,7 +187,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		mainP.add(lastLearnedBeforeTF);
 		//----score
 		gbc.gridx = 0;
-		gbc.gridy = 2;
+		gbc.gridy = 3;
 		gbc.gridwidth = 1;
 		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.insets = vghz;
@@ -183,7 +213,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		mainP.add(maxScoreCB);
 		//----units
 		gbc.gridx = 0;
-		gbc.gridy = 3;
+		gbc.gridy = 4;
 		gbc.anchor = GridBagConstraints.FIRST_LINE_END;
 		gbc.insets = vghz;
 		gbl.setConstraints(unitsL, gbc);
@@ -198,7 +228,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		mainP.add(unitsLi);
 		//----categories
 		gbc.gridx = 0;
-		gbc.gridy = 4;
+		gbc.gridy = 5;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -215,7 +245,7 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		mainP.add(categoriesLi);
 		//----entry types
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 1;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.FIRST_LINE_END;
@@ -266,6 +296,32 @@ public class EntriesSelectionView extends AViewWithButtons implements IEntriesSe
 		ape.setMessage(MessageConstants.Message.D_ENTRIES_SELECTION_APPLY);
 		controller.handleAppEvent(ape);
 	} //END private final void onApply()
+	
+	private final void onAllChanged() {
+		boolean enabled = true;
+		if (allCB.isSelected()) {
+			enabled = false;
+		}
+		
+		unitsLi.setEnabled(enabled);
+		categoriesLi.setEnabled(enabled);
+		typesLi.setEnabled(enabled);
+		statusCB.setEnabled(enabled);
+		minScoreCB.setEnabled(enabled);;
+		maxScoreCB.setEnabled(enabled);;
+		lastLearnedBeforeTF.setEnabled(enabled);;
+	}
+	
+	//implements IEntriesSelectionView
+	public boolean getAllSelected() {
+		return allCB.isSelected();
+	}
+	
+	//implements IEntriesSelectionView
+	public void setAllSelected(boolean selectAll) {
+		allCB.setSelected(selectAll);
+		onAllChanged();
+	}
 
 	//implements IEntriesSelectionView
 	public void setUnitsList(String[][] theUnits) {

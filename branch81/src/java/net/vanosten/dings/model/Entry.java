@@ -67,7 +67,7 @@ public final class Entry extends AIdItemModel {
 	private String example;
 
 	//the attributes;
-	private boolean status = false;
+	private boolean status = true;
 	private int score;
 	private String unitId;
 	private String categoryId;
@@ -161,7 +161,7 @@ public final class Entry extends AIdItemModel {
 	} //END private static String getNewId()
 
 	protected static Entry newItem(String anEntryTypeID) {
-		return new Entry(getNewId(), false, SCORE_MIN, Constants.UNDEFINED, Constants.UNDEFINED, anEntryTypeID
+		return new Entry(getNewId(), true, SCORE_MIN, Constants.UNDEFINED, Constants.UNDEFINED, anEntryTypeID
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 									, null, null
 									, Constants.UNDEFINED, Constants.UNDEFINED
@@ -630,8 +630,11 @@ public final class Entry extends AIdItemModel {
 	 *
 	 * @return boolean - whether this entry is part of choice, i.e. passes the criterias
 	 */
-	protected boolean partOfChoice(int theStatus, Date lastLearnedBefore, int[] minMaxScores
+	protected boolean partOfChoice(boolean allSelected, int theStatus, Date lastLearnedBefore, int[] minMaxScores
 			, String[] theUnitIds, String[] theCategoryIds, String[] theEntryTypeIds) {
+		if (allSelected) {
+			return true;
+		}
 		boolean check;
 		//status
 		check = false;

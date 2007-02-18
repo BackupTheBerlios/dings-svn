@@ -22,6 +22,8 @@
 package net.vanosten.dings.uiif;
 
 public interface IEntriesSelectionView extends IView {
+	public boolean getAllSelected();
+	public void setAllSelected(boolean selectAll);
 	public void setUnitsList(String[][] theUnits);
 	public void setCategoriesList(String[][] theCategories);
 	public void setTypesList(String[][] theEntryTypes);

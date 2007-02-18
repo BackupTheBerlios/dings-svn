@@ -68,12 +68,13 @@ public class EntriesCollection extends ACollection {
 	private Map<Integer,List<String>> scorePointers;
 
 	//the selections in the IEntriesSelectionView
-	int selStatusChoice;
-	int selDays;
-	int[] selMinMaxScore;
-	String[] selUnitsChoice;
-	String[] selCategoriesChoice;
-	String[] selTypesChoice;
+	private boolean selAll = true;
+	private int selStatusChoice;
+	private int selDays;
+	private int[] selMinMaxScore;
+	private String[] selUnitsChoice;
+	private String[] selCategoriesChoice;
+	private String[] selTypesChoice;
 
 	/** The score of the currentItem when learning */
 	private int currentScore = 0;
@@ -592,6 +593,7 @@ public class EntriesCollection extends ACollection {
 	 * If none had been chosen before, then the defaults (as defined in the view) are left.
 	 */
 	private void refreshSelection() {
+		selectionView.setAllSelected(selAll);
 		selectionView.setStatusChoice(selStatusChoice);
 		selectionView.setLastLearnedBefore(selDays);
 		selectionView.setMinMaxScore(selMinMaxScore);
@@ -602,6 +604,7 @@ public class EntriesCollection extends ACollection {
 
 	private void placeSelection() {
 		if (null != selectionView) {
+			selAll = selectionView.getAllSelected();
 			selStatusChoice = selectionView.getStatusChoice();
 			//Date
 			try {
@@ -624,8 +627,12 @@ public class EntriesCollection extends ACollection {
 			boolean selected = false;
 			while (iter.hasNext()) {
 				thisEntry = (Entry)items.get(iter.next());
-				selected = thisEntry.partOfChoice(selStatusChoice, getLastLearnedBeforeDate(), selMinMaxScore
+				if (selAll) {
+					selected = true;
+				} else {
+					selected = thisEntry.partOfChoice(selAll, selStatusChoice, getLastLearnedBeforeDate(), selMinMaxScore
 						, selUnitsChoice, selCategoriesChoice, selTypesChoice);
+				}
 				if (true == selected) {
 					chosenKeys.add(thisEntry.getId());
 				}
@@ -642,6 +649,10 @@ public class EntriesCollection extends ACollection {
 	 */
 	private List<String> checkSelectionCriteria() {
 		List<String> errors = new ArrayList<String>();
+		//if all is chosen, then there is no need to check the selection
+		if (selectionView.getAllSelected()) {
+			return errors;
+		}
 		//test whether value of lastLearnedBeforeTF is valid
 		try {
 			Integer.parseInt(selectionView.getLastLearnedBefore());
@@ -682,7 +693,7 @@ public class EntriesCollection extends ACollection {
 			propertyS = Preferences.PROP_SEL_UPD_INST_LEARNING;
 		}
 		if (Toolbox.getInstance().getPreferencesPointer().getBooleanProperty(propertyS)) {
-			if (false == currentItem.partOfChoice(selStatusChoice, getLastLearnedBeforeDate(), selMinMaxScore
+			if (false == currentItem.partOfChoice(selAll, selStatusChoice, getLastLearnedBeforeDate(), selMinMaxScore
 					, selUnitsChoice, selCategoriesChoice, selTypesChoice)) {
 				//remove from score list if isLEarning == true
 				if (isLearning) {
