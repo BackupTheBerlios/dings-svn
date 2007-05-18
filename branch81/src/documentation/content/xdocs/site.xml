@@ -27,6 +27,7 @@ entitled "GNU Free Documentation License".
 		<contact label="Contact" href="contact.html" description="Contact the authors" />
 		<credits label="Credits" href="credits.html" description="Credits to others" />
 		<links label="Links" href="links.html" description="Links to related software" />
+		<changes label="Changes" href="changes.html" description="History of Changes" />
 	</about>
 
 	<documentation label="Documentation">
@@ -46,7 +47,6 @@ entitled "GNU Free Documentation License".
 		<project_home label="Project Home" href="project.html" description="Project Homepage and Code Repository" />
 		<!-- <todo label="Todo" href="todo.html" description="Todo List" /> -->
 		<references label="References" href="references.html" description="Links to software, documentation and ideas" />
-		<changes label="Changes" href="changes.html" description="History of Changes" />
 	</project>
 
 </site>

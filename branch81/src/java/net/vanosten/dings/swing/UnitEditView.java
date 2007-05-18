@@ -64,6 +64,7 @@ public class UnitEditView extends AEditView implements IUnitEditView {
 		descriptionTA.setWrapStyleWord(true);
 		descriptionTA.setRows(5);
 		descriptionTA.addKeyListener(this);
+		invertFocusTraversalBehaviour(descriptionTA);
 		descriptionL.setDisplayedMnemonic("S".charAt(0));
 		descriptionL.setLabelFor(descriptionTA);
 		JScrollPane descriptionSP = new JScrollPane(descriptionTA);

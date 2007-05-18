@@ -3,6 +3,7 @@ package net.vanosten.dings.utils;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import net.vanosten.dings.model.Preferences;
 
@@ -10,6 +11,12 @@ import net.vanosten.dings.model.Preferences;
  * Diverse public static utility methods.
  */
 public class Util {
+
+	/**
+	 * The logging logger. The base package structure is chosen as name
+	 * in order to have the other loggers in the divers classes inherit the settings (level).
+	 * */
+	private static Logger logger = Logger.getLogger("net.vanosten.dings.utils.Util");
 
 	/**
 	 * Strip different kinds of excess whitespace from string
@@ -43,6 +50,40 @@ public class Util {
 			tokens.add(parts[i].trim());
 		}
 		return tokens;
+	}
+	
+	/**
+	 * @return true if the version in the resource bundel is newer then the one in properties.
+	 */
+	public final static boolean isNewProgramVersion() {
+		boolean newProgVersion = false;
+		int versionNew = Util.convertVerstionStringToInt(Toolbox.getInstance().getLocalizedString("application.version"));
+		int versionOld = Util.convertVerstionStringToInt(Toolbox.getInstance().getPreferencesPointer().getProperty(Preferences.PROP_PROG_VERSION));
+		newProgVersion = versionNew >= versionOld;
+		return newProgVersion;
+	}
+	
+	/**
+	 * Converts a version in format "x.y.z" to an int: z + 100*y + 10000*x
+	 * @param version
+	 * @return
+	 */
+	public final static int convertVerstionStringToInt(String version) {
+		int intVersion = 0;
+		if (null != version) {
+			String[] versionParts = version.split(".");
+			if (3 == versionParts.length) {
+				try {
+					intVersion = Integer.parseInt(versionParts[2]);
+					intVersion += Integer.parseInt(versionParts[1]) * 100;
+					intVersion += Integer.parseInt(versionParts[0]) * 10000;
+				} catch (NumberFormatException e) {
+					logger.info("The version " + version + " is not parsable");
+					intVersion = 0;
+				}
+			}
+		}
+		return intVersion;
 	}
 
 	

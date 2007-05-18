@@ -21,6 +21,15 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
+		<release version="0.4.6 (svn ??)" date="2007-05-??">
+			<action type="add" context="feature" dev="vanosten">Changed behaviour of traversing fields in JTextArea. Now the TAB key can be used everywhere. CTRL-TAB can be used to insert a TAB character in a text.</action>
+		</release>
+		<release version="0.4.5 (svn ??)" date="2007-02-18">
+			<action type="add" context="feature" dev="vanosten">Possibility to select all entries in entry selection view.</action>
+			<action type="fix" context="other" dev="vanosten">If application is exited without any file having been opened, there is no error.</action>
+			<action type="fix" context="gui" dev="vanosten">Shortcuts can be created now.</action>
+			<action type="fix" context="other" dev="vanosten">Per default a new entry is now .</action>
+		</release>
 		<release version="0.4.4 (svn 81)" date="2006-10-11">
 			<action type="add" context="feature" dev="vanosten">Support for accent caron in syllables highlighting for e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a></action>
 			<action type="add" context="feature" dev="vanosten">Support for character input panel for syllables in learn one by one view.</action>

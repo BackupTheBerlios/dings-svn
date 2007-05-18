@@ -46,6 +46,9 @@ public class Preferences extends AModel{
 
 	/** The comment in the properties file */
 	public final static String PROP_COMMENT = "Properties for DingsBums?!";
+	
+	/** The version of Dings?! used last time the program ran */
+	public final static String PROP_PROG_VERSION = "prog_version";
 
 	/** The history of opened vocabulary files as a delimitted list of paths*/
 	public final static String PROP_FILE_HISTORY = "file_history";
@@ -393,6 +396,9 @@ public class Preferences extends AModel{
 		//assign defaults
 		if (!props.containsKey(FILE_ENCODING)) {
 			props.setProperty(FILE_ENCODING, FILE_ENCODING_DEFAULT);
+		}
+		if (!props.containsKey(PROP_PROG_VERSION)) {
+			props.setProperty(PROP_PROG_VERSION, "0.0.0");
 		}
 		/*
 		if (!props.containsKey(LEARN_HINT_COVER_PERCENT)) {

@@ -25,7 +25,7 @@ entitled "GNU Free Documentation License".
 			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away and try one of the <a href="site:samples">samples</a> right away. If you have <a href="http://java.com/">Java</a> installed just press the launch button below:</p>
 			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
-			<p><code>DingsBums?!</code> is written in Java and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
+			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
 		</section>
 		<section id="evaluating">
 			<title>Is this for you?</title>
@@ -54,14 +54,8 @@ entitled "GNU Free Documentation License".
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="site:links">links</a> page.</p>
 		</section>
 		<section id="released">
-			<title><code>DingsBums?!</code> 0.4.4 released</title>
-			<p>Version 0.4.4 is a minor update in the 0.4.x series. The most important three new changes are:</p>
-				<ol>
-					<li>Added support for accent caron in syllables highlighting for e.g. <a href="http://en.wikipedia.org/wiki/Pin_yin">pinyin</a>.</li>
-					<li>Added support for character input panel for syllables in learn one by one view.</li>
-					<li>Fixed visibility of fields in edit entry and learn one view, when they should not be shown. You might need to correct the visibility settings in the learning stack properties for fields, which should not be displayed.</li>
-				</ol>
-			<p>See <a href="site:changes">changes</a> for a full list over the updates and additions since the last version.</p>
+			<title>Releases</title>
+			<p>See <a href="site:changes">changes</a> for a full list over the updates and additions for each release of <code>DingsBums?!</code>.</p>
 			<p>The next major release will support pictures and figures besides text for the target information.</p>
 			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then please have a look at the <a href="site:features">features</a> list. Feel free to <a href="site:contact">contact</a> me.</p>
 		</section>

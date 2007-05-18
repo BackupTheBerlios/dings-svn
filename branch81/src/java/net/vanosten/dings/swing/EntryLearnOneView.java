@@ -128,6 +128,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		answerTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		answerTA.setWrapStyleWord(true);
 		answerTA.setLineWrap(true);
+		invertFocusTraversalBehaviour(answerTA);
 		textAreaDefaultBgColor = answerTA.getBackground();
 		Document answerDocument = answerTA.getDocument();
 		answerDocument.addDocumentListener(new SyllablesDocumentListener());

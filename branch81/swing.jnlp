@@ -5,16 +5,17 @@
 	codebase="http://www.rikkerick.name/"
 	href="swing.jnlp">
 	<information>
-		<title>DingsBums?!</title>
-		<vendor>vanosten.net</vendor>
+		<title>DingsBums</title>
+		<vendor>Rick Gruber-Riemer</vendor>
 		<homepage href="http://dingsbums.vanosten.net/"/>
-		<description>DingsBums?! flashcard application</description>
+		<description>DingsBums</description>
+		<description kind="short">DingsBums flashcard application</description>
 		<icon href="logo.gif"/>
-		<offline-allowed/>
-		<shortcut online="false">
+		<shortcut>
 			<desktop/>
-			<menu submenu="vanosten"/>
+			<menu submenu="DingsBums"/>
 		</shortcut>
+		<offline-allowed/>
 	</information>
 	<security>
 		<all-permissions/>

@@ -116,11 +116,13 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		//base
 		baseVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_BASE));
 		baseVTA.setToolTipText("May not be empty");
+		invertFocusTraversalBehaviour(baseVTA);
 		Document baseDocument = baseVTA.getDocument();
 		baseDocument.addDocumentListener(new SyllablesDocumentListener());
 		//target
 		targetVTA = new ValidatedTextArea(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_TARGET));
 		targetVTA.setToolTipText("May not be empty");
+		invertFocusTraversalBehaviour(targetVTA);
 		Document targetDocument = targetVTA.getDocument();
 		targetDocument.addDocumentListener(new SyllablesDocumentListener());
 		//entry type
@@ -190,12 +192,14 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		explanationTA.addKeyListener(this);
 		explanationTA.setWrapStyleWord(true);
 		explanationTA.setLineWrap(true);
+		invertFocusTraversalBehaviour(explanationTA);
 		//example
 		exampleTA = new JTextArea();
 		exampleTA.setRows(Toolbox.getInstance().getPreferencesPointer().getIntProperty(Preferences.PROP_LINES_EXAMPLE));
 		exampleTA.addKeyListener(this);
 		exampleTA.setWrapStyleWord(true);
 		exampleTA.setLineWrap(true);
+		invertFocusTraversalBehaviour(exampleTA);
 		//pronunciation
 		pronunciationTF = new JTextField();
 		pronunciationTF.addKeyListener(this);

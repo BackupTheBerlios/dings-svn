@@ -21,24 +21,23 @@
  */
 package net.vanosten.dings.swing;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.consts.MessageConstants.Message;
 import net.vanosten.dings.event.AppEvent;
 import net.vanosten.dings.event.IAppEventHandler;
-import net.vanosten.dings.utils.Toolbox;
-import net.vanosten.dings.swing.DingsSwingConstants;
 import net.vanosten.dings.uiif.IDetailsView;
+import net.vanosten.dings.utils.Toolbox;
 
 public abstract class AEditView extends AViewWithScrollPane implements IDetailsView, KeyListener {
 	private JButton applyB, revertB, deleteB, doneB;
@@ -218,5 +217,4 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 	public void keyPressed(KeyEvent evt) {
 		//nothing to be done
 	} //END public void keyPressed(KeyEvent)
-
 } //END public abstract class AEditView extends AViewWithScrollPane

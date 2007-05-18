@@ -488,6 +488,10 @@ public abstract class ADings implements IAppEventHandler {
 	 * @param boolean - true if successful close
 	 */
 	private boolean closeVocabulary() {
+		//if there is no open vocabulary, then just return directly
+		if (false == vocabOpened) {
+			return true;
+		}
 		boolean writeSuccess = true;
 
 		//eventually save the learning statistics
@@ -544,6 +548,7 @@ public abstract class ADings implements IAppEventHandler {
 		mainWindow.hideMainWindow();
 
 		//safe preferences
+		Toolbox.getInstance().getPreferencesPointer().setProperty(Preferences.PROP_PROG_VERSION, Toolbox.getInstance().getLocalizedString("application.version"));
 		Toolbox.getInstance().getPreferencesPointer().save();
 
 		//exit

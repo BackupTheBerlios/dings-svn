@@ -99,6 +99,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		notesTA.setRows(5);
 		notesTA.setWrapStyleWord(true);
 		notesTA.addKeyListener(this);
+		invertFocusTraversalBehaviour(notesTA);
 		notesSP = new JScrollPane(notesTA);
 		notesSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		licenceTA = new JTextArea();
@@ -106,6 +107,7 @@ public class InfoVocabEditView extends AEditView implements IInfoVocabEditView {
 		licenceTA.setRows(5);
 		licenceTA.setWrapStyleWord(true);
 		licenceTA.addKeyListener(this);
+		invertFocusTraversalBehaviour(licenceTA);
 		licenceSP = new JScrollPane(licenceTA);
 		licenceSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		//labels
