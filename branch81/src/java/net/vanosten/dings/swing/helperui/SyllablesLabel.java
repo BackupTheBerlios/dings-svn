@@ -23,7 +23,7 @@ package net.vanosten.dings.swing.helperui;
 
 import javax.swing.JLabel;
 
-import net.vanosten.dings.utils.Util;
+import net.vanosten.dings.utils.SyllablesUtil;
 
 /**
  * Displays colored syllables 
@@ -33,6 +33,6 @@ public class SyllablesLabel extends JLabel {
 
 	@Override
 	public final void setText(String aText) {
-		super.setText(Util.enrichSyllablesWithColor(aText));
+		super.setText(SyllablesUtil.enrichSyllablesWithColor(aText));
 	}
 }

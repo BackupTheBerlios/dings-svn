@@ -50,8 +50,8 @@ import java.awt.event.ActionListener;
 import net.vanosten.dings.consts.MessageConstants;
 import net.vanosten.dings.model.InfoVocab;
 import net.vanosten.dings.model.Preferences;
+import net.vanosten.dings.utils.SyllablesUtil;
 import net.vanosten.dings.utils.Toolbox;
-import net.vanosten.dings.utils.Util;
 import net.vanosten.dings.swing.helperui.ChoiceID;
 import net.vanosten.dings.swing.helperui.InsertCharacterButtonPanel;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
@@ -208,11 +208,11 @@ public class EntryEditView extends AEditView implements IEntryEditView {
 		relationTF.addKeyListener(this);
 		//characters button panel
 		if (Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables()) {
-			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
+			charactersBaseP = new InsertCharacterButtonPanel(baseVTA, SyllablesUtil.ACCENTS_BY_ACCENTGROUP, SyllablesUtil.TOOLTIPS_BY_ACCENTGROUP);
 			syllablesBaseL = new SyllablesLabel();
 		}
 		if (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables()) {
-			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
+			charactersTargetP = new InsertCharacterButtonPanel(targetVTA, SyllablesUtil.ACCENTS_BY_ACCENTGROUP, SyllablesUtil.TOOLTIPS_BY_ACCENTGROUP);
 			syllablesTargetL = new SyllablesLabel();
 		}
 	} //END private void initComponents()

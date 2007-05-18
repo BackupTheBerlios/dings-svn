@@ -35,6 +35,7 @@ import javax.swing.border.LineBorder;
 import net.vanosten.dings.swing.LearnByChoicePane;
 import net.vanosten.dings.swing.LearnByChoicePane.ChoiceType;
 import net.vanosten.dings.utils.Util;
+import net.vanosten.dings.utils.SyllablesUtil;
 
 public class TextRectangle extends JPanel {
 	private final static long serialVersionUID = 1L;
@@ -195,7 +196,7 @@ public class TextRectangle extends JPanel {
 			this.textInvisible = aText;
 		} else {
 			if (usesSyllables) {
-				this.text = Util.enrichSyllablesWithColor(aText);
+				this.text = SyllablesUtil.enrichSyllablesWithColor(aText);
 			} else {
 				this.text = Util.enrichStringWithHTML(aText.trim());
 			}

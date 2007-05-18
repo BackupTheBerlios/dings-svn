@@ -21,11 +21,10 @@ entitled "GNU Free Documentation License".
 	<body>
 		<section id="prerequisites">
 			<title>Prerequisites</title>
-			<p>You need a Java Virtual Machine (JVM) 1.5 or higher to run the program.</p>
-			<p>If you are in doubt of what this means, then please read the section <a href="#java">&quot;Testing for and installing a Java Virtual Machine&quot;</a> below.</p>
 		</section>
 		<section id="easyinstallation">
 			<title>Easy Installation</title>
+			<note>You need a Java Virtual Machine (JVM) 1.5 or higher to run the program. If you are in doubt of what this means, then please read the section <a href="#java">&quot;Testing for and installing a Java Virtual Machine&quot;</a> below.</note>
 			<p>The easiest way to install the application and also keeping it up to date is to launch the application by pressing the buttom below. This will automatically download the application, launch it, give you the opportunity to define a desktop or menu shortcut and check for updates each time the application is launched.</p>
 			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
 			<p>Behind the scenes this uses <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology</a>. Using this link you will get</p>
@@ -34,25 +33,6 @@ entitled "GNU Free Documentation License".
 				<li>a dialog asking whether you want to create menu and desktop shortcuts</li>
 			</ul>
 		</section>
-		<section id="basicinstallation">
-			<title>Basic Installation</title>
-			<section id="download">
-				<title>Download</title>
-				<p>The newest version of the program can be downloaded from the <a href="http://developer.berlios.de/project/showfiles.php?group_id=844">files section</a> of the project website.</p>
-				<p>Alternatively you can get access to the newest untested code in the <a href="http://developer.berlios.de/svn/?group_id=844">version control system</a>.</p>
-			</section>
-			<section id="installation">
-				<title>Running and Installation</title>
-				<p>Unfortunately at the moment there is no sophisticated way to install and run <code>DingsBums?!</code>.</p>
-				<p>Unpack the zip-file you downloaded and place the contents into a directory, where you have read/write access.</p>
-				<p>On <a href="http://www.apple.com/macosx">Mac OS X</a> and eventually on <a href="http://www.microsoft.com/windows">Microsoft Windows</a> you can simply double-click the dingsbums.jar file to launch the application. All others have to get a command prompt (see below how to do that), change to the directory containing the application and then type the following: <code>java -jar dingsbums.jar</code>.</p>
-			</section>
-		</section>
-		<!--
-		<section id="sources">
-			<title>Sources</title>
-			<p>The program sources can be obtained from <a href="http://developer.berlios.de/cvs/?group_id=844">CVS</a> on the project website, if you want to compile yourself. Compile the program using the included build.xml file with <a href="http://ant.apache.org/">Ant</a>.</p>
-		</section> -->
 		<section id="java">
 			<title>Testing for and installing a Java Virtual Machine</title>
 			<p>A Java Virtual Machine (JVM) is included in a Java Runtime environment (JRE) for end users, and Java Development Kits (Java SDK or JDK) for programmers. The way to test whether you have a JVM in the right version depends on you operating system (e.g. Microsoft Windows).</p>

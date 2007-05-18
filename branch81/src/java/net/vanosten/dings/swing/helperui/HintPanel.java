@@ -38,8 +38,8 @@ import javax.swing.Timer;
 
 import net.vanosten.dings.model.Preferences;
 import net.vanosten.dings.swing.DingsSwingConstants;
+import net.vanosten.dings.utils.SyllablesUtil;
 import net.vanosten.dings.utils.Toolbox;
-import net.vanosten.dings.utils.Util;
 
 /**
  * Shows part of a text to give a hint about the contents to help learning.
@@ -253,7 +253,7 @@ public class HintPanel extends JPanel implements HintObservable {
 		}
 		//only if the text should be visible and the target uses syllables
 		if (isVisible && usesSyllables) {
-			hintL.setText(Util.enrichSyllablesWithColor(aText));
+			hintL.setText(SyllablesUtil.enrichSyllablesWithColor(aText));
 		} else {
 			hintL.setText("<html>" + aText + "</html>");
 		}

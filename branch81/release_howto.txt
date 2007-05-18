@@ -34,10 +34,11 @@ $ jarsigner -keystore dingsbumsKeystore -storepass XXXX -keypass XXXX dingsbums.
 
 Warning: The signer certificate will expire within six months.
 
+$ mv $HOME/dings.properties $HOME/dings.properties_old (to make sure that application can start when never started)
 $ java -jar dingsbums.jar (to see whether it works and all images are copied)
 
-Release-file
-------------
+Release-file (not longer used anymore, now using WebStart)
+----------------------------------------------------------
 # copy dingsbums.jar, CHANGES, README and the folder samples into a
 directory with the name dingsbums-0.x.x.
 # remove .svn subfolders

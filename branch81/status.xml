@@ -21,7 +21,7 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
-		<release version="0.4.6 (svn ??)" date="2007-05-??">
+		<release version="0.4.6 (svn 88)" date="2007-05-16">
 			<action type="add" context="feature" dev="vanosten">Changed behaviour of traversing fields in JTextArea. Now the TAB key can be used everywhere. CTRL-TAB can be used to insert a TAB character in a text.</action>
 		</release>
 		<release version="0.4.5 (svn ??)" date="2007-02-18">

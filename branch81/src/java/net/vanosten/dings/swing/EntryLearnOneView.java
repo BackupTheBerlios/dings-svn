@@ -58,8 +58,8 @@ import net.vanosten.dings.swing.helperui.LabeledSeparator;
 import net.vanosten.dings.swing.helperui.SolutionLabel;
 import net.vanosten.dings.swing.helperui.SyllablesLabel;
 import net.vanosten.dings.uiif.IEntryLearnOneView;
+import net.vanosten.dings.utils.SyllablesUtil;
 import net.vanosten.dings.utils.Toolbox;
-import net.vanosten.dings.utils.Util;
 
 public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLearnOneView, HintObserver {
 	private final static long serialVersionUID = 1L;
@@ -170,7 +170,7 @@ public class EntryLearnOneView extends AViewWithScrollPane implements IEntryLear
 		//syllables characters
 		if ((Toolbox.getInstance().getInfoPointer().isBaseUsesSyllables() && (false == Toolbox.getInstance().isTargetAsked()))
 				|| (Toolbox.getInstance().getInfoPointer().isTargetUsesSyllables() && (Toolbox.getInstance().isTargetAsked()))) {
-			charactersP = new InsertCharacterButtonPanel(answerTA, Util.ACCENTS_BY_ACCENTGROUP, Util.TOOLTIPS_BY_ACCENTGROUP);
+			charactersP = new InsertCharacterButtonPanel(answerTA, SyllablesUtil.ACCENTS_BY_ACCENTGROUP, SyllablesUtil.TOOLTIPS_BY_ACCENTGROUP);
 			syllablesL = new SyllablesLabel();
 		}
 	} //END private void initComponents()
