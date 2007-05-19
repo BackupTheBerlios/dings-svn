@@ -84,7 +84,7 @@ public class EntryType extends AIdItemModel {
 		if (isDefault) {
 			return new EntryType( "Default", getNewId(), new String[NUMBER_OF_ATTRIBUTES], null);
 		}
-		return new EntryType(Constants.UNDEFINED, getNewId(), new String[NUMBER_OF_ATTRIBUTES], null);
+		return new EntryType(Constants.EMPTY_STRING, getNewId(), new String[NUMBER_OF_ATTRIBUTES], null);
 	} //END protected static EntryType newItem(boolean)
 
 	//Implements AItemModel

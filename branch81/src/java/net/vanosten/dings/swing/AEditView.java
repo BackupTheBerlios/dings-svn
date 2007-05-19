@@ -128,9 +128,9 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 			});
 		}
 		if (showDone) {
-			doneB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.back")
+			doneB = new JButton(Toolbox.getInstance().getLocalizedString("label.button.ok")
 					, DingsSwingConstants.createImageIcon(DingsSwingConstants.IMG_BACK_BTN, "FIXME"));
-			doneB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.back").charAt(0));
+			doneB.setMnemonic(Toolbox.getInstance().getLocalizedString("mnemonic.button.ok").charAt(0));
 			doneB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					onDone();
@@ -149,11 +149,7 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 		revertB.setEnabled(isEditing);
 
 		if (showDone) {
-			boolean reverse = true;
-			if (true == isEditing) {
-				reverse = false;
-			}
-			doneB.setEnabled(reverse);
+			doneB.setEnabled(isValid);
 		}
 		//the deleteB is always active!
 	} //END private void setEditing(boolean)
@@ -178,6 +174,8 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 		AppEvent ape = new AppEvent(AppEvent.EventType.DATA_EVENT);
 		ape.setMessage(MessageConstants.Message.D_EDIT_VIEW_REVERT);
 		controller.handleAppEvent(ape);
+		//check if valid
+		onChange();
 	} //END private void onRevert()
 
 	private void onDelete() {
@@ -187,6 +185,10 @@ public abstract class AEditView extends AViewWithScrollPane implements IDetailsV
 	} //END private void onDelete()
 
 	private void onDone() {
+		//first make sure to save changes if there have been changes
+		if (applyB.isEnabled()) {
+			onApply();
+		}
 		AppEvent ape = new AppEvent(AppEvent.EventType.NAV_EVENT);
 		ape.setMessage(msgDone);
 		controller.handleAppEvent(ape);

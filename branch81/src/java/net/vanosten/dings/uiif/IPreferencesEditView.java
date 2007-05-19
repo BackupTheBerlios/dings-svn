@@ -56,7 +56,7 @@ public interface IPreferencesEditView extends IView {
 	public void setLoggingToFile(String isEnabled);
 	public String getLoggingToFile();
 	//look and feel
-	public final static boolean SYSTEM_LAF_DEFAULT = true;
+	public final static boolean SYSTEM_LAF_DEFAULT = false;
 	public void setSystemLookAndFeel(boolean isSystem);
 	public boolean isSystemLookAndFeel();
 	//selection updates

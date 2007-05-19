@@ -70,7 +70,7 @@ public final class Category extends AUnitCategory {
 		if (isDefault) {
 			return new Category(getNewId(), null, "Default", Constants.EMPTY_STRING, null);
 		}
-		return new Category(getNewId(), null, Constants.UNDEFINED, Constants.EMPTY_STRING, null);
+		return new Category(getNewId(), null, Constants.EMPTY_STRING, Constants.EMPTY_STRING, null);
 	} //END protected static Category newItem(boolean)
 
 	//Implements AItemModel

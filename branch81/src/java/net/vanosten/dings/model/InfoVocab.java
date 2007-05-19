@@ -144,7 +144,7 @@ public final class InfoVocab extends AItemModel {
 	 * A constructor without any data to make a default.
 	 */
 	public InfoVocab() {
-		this("Learning stack", "", "", "", ""
+		this(Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 					,"Base", "Target", "Attributes"
 					, "Unit", "Category"
 					, "Others", "Explanation", "Example"
@@ -177,13 +177,13 @@ public final class InfoVocab extends AItemModel {
 		logger = Logger.getLogger("net.vanosten.dings.model.InfoVocab");
 
 		if (null == aTitle || aTitle.equals(Constants.EMPTY_STRING)) {
-			this.title = Constants.UNDEFINED;
+			this.title = Constants.EMPTY_STRING;
 		}
 		else {
 			this.title = aTitle;
 		}
 		if (null == anAuthor || anAuthor.equals(Constants.EMPTY_STRING)) {
-			this.author = Constants.UNDEFINED;
+			this.author = Constants.EMPTY_STRING;
 		}
 		else {
 			this.author = anAuthor;

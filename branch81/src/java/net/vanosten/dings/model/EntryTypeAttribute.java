@@ -63,7 +63,7 @@ public final class EntryTypeAttribute extends AIdItemModel {
 		//check for existing items and set defaultItem
 		if (null == theItems || 0 == theItems.length) {
 			items = new EntryTypeAttributeItem[1];
-			EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem();
+			EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem(true);
 			items[0] = newItem;
 			defaultItem = newItem.getId();
 		}
@@ -117,13 +117,13 @@ public final class EntryTypeAttribute extends AIdItemModel {
 	 */
 	protected static EntryTypeAttribute newItem(boolean isDefault) {
 		EntryTypeAttributeItem newItems[] = new EntryTypeAttributeItem[1];
-		EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem();
+		EntryTypeAttributeItem newItem = EntryTypeAttributeItem.newItem(isDefault);
 		newItems[0] = newItem;
 		if (isDefault) {
 			return new EntryTypeAttribute(getNewId(), "Default", newItem.getId(), null, newItems);
 
 		}
-		return new EntryTypeAttribute(getNewId(), Constants.UNDEFINED, newItem.getId(), null, newItems);
+		return new EntryTypeAttribute(getNewId(), Constants.EMPTY_STRING, newItem.getId(), null, newItems);
 	} //END protected static EntryTypeAttribute newItem(boolean)
 
 	/**

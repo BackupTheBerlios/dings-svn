@@ -71,7 +71,7 @@ public final class Unit extends AUnitCategory {
 		if (isDefault) {
 			return new Unit(getNewId(), null, "Default", Constants.EMPTY_STRING, null);
 		}
-		return new Unit(getNewId(), null, Constants.UNDEFINED, Constants.EMPTY_STRING, null);
+		return new Unit(getNewId(), null, Constants.EMPTY_STRING, Constants.EMPTY_STRING, null);
 	} // END protected static Unit newItem()
 
 	// Implements AItemModel.

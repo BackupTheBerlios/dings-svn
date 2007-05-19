@@ -45,8 +45,12 @@ public class EntryTypeAttributeItem {
 	/**
 	* Construct a new EntryTypeAttributeItem from scratch adding the necessary information.
 	*/
-	public static EntryTypeAttributeItem newItem() {
-		return new EntryTypeAttributeItem(getNewId(), Constants.UNDEFINED, false);
+	public static EntryTypeAttributeItem newItem(boolean isDefault) {
+		String theName = Constants.EMPTY_STRING;
+		if (isDefault) {
+			theName = "Default";
+		}
+		return new EntryTypeAttributeItem(getNewId(), theName, false);
 	} //END public static EntryTypeAttributeItem NewEntryTypeItem()
 
 	protected String getId() {

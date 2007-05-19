@@ -161,10 +161,10 @@ public final class Entry extends AIdItemModel {
 	} //END private static String getNewId()
 
 	protected static Entry newItem(String anEntryTypeID) {
-		return new Entry(getNewId(), true, SCORE_MIN, Constants.UNDEFINED, Constants.UNDEFINED, anEntryTypeID
+		return new Entry(getNewId(), true, SCORE_MIN, Constants.EMPTY_STRING, Constants.EMPTY_STRING, anEntryTypeID
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 									, null, null
-									, Constants.UNDEFINED, Constants.UNDEFINED
+									, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING
 									, Constants.EMPTY_STRING, Constants.EMPTY_STRING);
 	} //END protected static Entry newItem(String)

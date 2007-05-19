@@ -21,10 +21,15 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
-		<release version="0.4.6 (svn 88)" date="2007-05-16">
+		<release version="0.4.7 (svn branch81:xx)" date="2007-XX-1XX">
+			<action type="update" context="gui" dev="vanosten">Changed default look and feel to Metal instead of platform specific.</action>
+			<action type="update" context="gui" dev="vanosten">Changed the back buttons to ok buttons, which take you back to the previous screen (listing) and apply changes, if there have been changes.</action>
+			<action type="update" context="gui" dev="vanosten">New entities no longer have ?!? as default value but an empty string, which makes them invalid by defualt.</action>
+		</release>
+		<release version="0.4.6 (svn branch81:88)" date="2007-05-16">
 			<action type="add" context="feature" dev="vanosten">Changed behaviour of traversing fields in JTextArea. Now the TAB key can be used everywhere. CTRL-TAB can be used to insert a TAB character in a text.</action>
 		</release>
-		<release version="0.4.5 (svn ??)" date="2007-02-18">
+		<release version="0.4.5 (svn branch81:??)" date="2007-02-18">
 			<action type="add" context="feature" dev="vanosten">Possibility to select all entries in entry selection view.</action>
 			<action type="fix" context="other" dev="vanosten">If application is exited without any file having been opened, there is no error.</action>
 			<action type="fix" context="gui" dev="vanosten">Shortcuts can be created now.</action>

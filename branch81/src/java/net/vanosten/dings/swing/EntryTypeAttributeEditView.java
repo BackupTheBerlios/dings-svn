@@ -360,7 +360,7 @@ public class EntryTypeAttributeEditView extends AEditView implements IEntryTypeA
 	} //END private void onDefaultChange()
 
 	private void onNewItem() {
-		Object[] newItem = (EntryTypeAttributeItem.newItem()).getTableDisplay();
+		Object[] newItem = (EntryTypeAttributeItem.newItem(false)).getTableDisplay();
 		itemsModel.addRow(newItem);
 		setSelectedItemRow(itemsModel.getRowCount() - 1);
 
