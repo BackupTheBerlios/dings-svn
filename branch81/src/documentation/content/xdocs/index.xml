@@ -23,7 +23,7 @@ entitled "GNU Free Documentation License".
 			<title>About</title>
 			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning tool that can be used for any kind of content, which can be memorized using flashcards, including vocabularies. <code>Dingsbums?!</code>aims to be an application which makes memorizing both fun and efficient.</p>
 			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away and try one of the <a href="site:samples">samples</a> right away. If you have <a href="http://java.com/">Java</a> installed just press the launch button below:</p>
-			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
+			<p><a href="http://vanosten.hostjava.net/products/dingsbums/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
 			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
 		</section>
@@ -48,7 +48,7 @@ entitled "GNU Free Documentation License".
 				<li>you want to have audio support. <code>DingsBums?!</code> in its current form is only about memorizing visually (reading and eventually writing). Audio support is a feature with low priority, so do not rely on it in the near future.</li>
 				<li>you need extensive support for conjugation</li>
 				<li>you are a teacher and want to have a framework to write exercises and tests.</li>
-				<li>you need PDA or mobile phone support right now. The possibility to use a PDA or the mobile phone to memorize stuff while sitting in the bus, waiting in the restaurant etc. is a high priority for me, too. Due to time restrictions I cannot tell when I will implement this - it won't happen in 2006.</li>
+				<li>you need PDA or mobile phone support right now. The possibility to use a PDA or the mobile phone to memorize stuff while sitting in the bus, waiting in the restaurant etc. is a high priority for me, too. Due to time restrictions I cannot tell when I will implement this.</li>
 				<li>a great looking application is more important to you then functionality. I know that <code>DingsBums?!</code> needs som final touch.</li>
 			</ul>
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="site:links">links</a> page.</p>
@@ -56,7 +56,6 @@ entitled "GNU Free Documentation License".
 		<section id="released">
 			<title>Releases</title>
 			<p>See <a href="site:changes">changes</a> for a full list over the updates and additions for each release of <code>DingsBums?!</code>.</p>
-			<p>The next major release will support pictures and figures besides text for the target information.</p>
 			<p>If you want to influence which features get implemented first, or if you have an idea for a new feature, then please have a look at the <a href="site:features">features</a> list. Feel free to <a href="site:contact">contact</a> me.</p>
 		</section>
 		<p><a href="http://developer.berlios.de"><img src="http://developer.berlios.de/bslogo.php" width="124" height="32" alt="BerliOS Logo" /></a>&nbsp;<a href="http://www.opensource.org/docs/definition.php"><img src="http://opensource.org/trademarks/open_source_button.png" width="88" height="31" alt="OSI logo" /></a></p>

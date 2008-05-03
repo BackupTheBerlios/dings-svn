@@ -19,8 +19,8 @@ entitled "GNU Free Documentation License".
 		<title>Features</title>
 	</header>
 	<body>
-		<section id="current">
-			<title>Current Release</title>
+		<!-- <section id="current">
+			<title>Current Release</title> -->
 			<p>The program does NOT include predefined learning stacks &#8212; making one is considered part of the learning process.</p>
 			<p>A not comprehensive list of features:</p>
 			<ul>
@@ -56,7 +56,7 @@ entitled "GNU Free Documentation License".
 				<li>Window positions and sizes are saved</li>
 				<li>Logging to either the command line or a file can be enabled or disabled in properties.</li>
 			</ul>
-		</section>
+		<!-- </section>
 		<section id="future">
 			<title>Future Releases</title>
 			<p>The next releases of <code>DingsBums?!</code> will provide more functionality and stability. Among others:</p>
@@ -72,6 +72,6 @@ entitled "GNU Free Documentation License".
 				<li>A comprehensive user guide and an FAQ</li>
 				<li>User interface clean ups</li>
 			</ul>
-		</section>
+		</section>  -->
 	</body>
 </document>

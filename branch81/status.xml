@@ -21,7 +21,10 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
-		<release version="0.4.7 (svn branch81:xx)" date="2007-XX-1XX">
+		<release version="0.4.8 (svn branch81:90)" date="2008-05-03">
+			<action type="update" context="documentation" dev="vanosten">Adapted to new project location.</action>
+		</release>
+		<release version="0.4.7 (svn branch81:89)" date="2007-05-19">
 			<action type="update" context="gui" dev="vanosten">Changed default look and feel to Metal instead of platform specific.</action>
 			<action type="update" context="gui" dev="vanosten">Changed the back buttons to ok buttons, which take you back to the previous screen (listing) and apply changes, if there have been changes.</action>
 			<action type="update" context="gui" dev="vanosten">New entities no longer have ?!? as default value but an empty string, which makes them invalid by defualt.</action>

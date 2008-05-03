@@ -19,14 +19,11 @@ entitled "GNU Free Documentation License".
 		<title>Download and Install</title>
 	</header>
 	<body>
-		<section id="prerequisites">
-			<title>Prerequisites</title>
-		</section>
 		<section id="easyinstallation">
-			<title>Easy Installation</title>
+			<title>Installation</title>
 			<note>You need a Java Virtual Machine (JVM) 1.5 or higher to run the program. If you are in doubt of what this means, then please read the section <a href="#java">&quot;Testing for and installing a Java Virtual Machine&quot;</a> below.</note>
 			<p>The easiest way to install the application and also keeping it up to date is to launch the application by pressing the buttom below. This will automatically download the application, launch it, give you the opportunity to define a desktop or menu shortcut and check for updates each time the application is launched.</p>
-			<p><a href="http://www.rikkerick.name/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
+			<p><a href="http://vanosten.hostjava.net/products/dingsbums/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
 			<p>Behind the scenes this uses <a href="http://java.sun.com/products/javawebstart">Java Web Start Technology</a>. Using this link you will get</p>
 			<ul>
 				<li>a security warning that the security certificate was issued by a company that is not trusted. This is because I do not have the money to buy an expensive certificate from an official certification authoroty. If you do not trust this, you have always the possibility to do a basic install (as described below) or compile the application from the sources.</li>

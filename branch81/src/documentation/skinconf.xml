@@ -29,7 +29,7 @@ entitled "GNU Free Documentation License".
 	<!-- Disable the print link? If enabled, invalid HTML 4.0.1 -->
 	<disable-print-link>true</disable-print-link>
 	<!-- Disable the PDF link? -->
-	<disable-pdf-link>false</disable-pdf-link>
+	<disable-pdf-link>true</disable-pdf-link>
 	<!-- Disable the POD link? -->
 	<disable-pod-link>true</disable-pod-link>
 	<!-- Disable the Text link? FIXME: NOT YET IMPLEMENETED. -->
@@ -61,7 +61,7 @@ entitled "GNU Free Documentation License".
 	<!-- mandatory project logo default skin: renders it at the top -->
 	<project-name>DingsBums?!</project-name>
 	<project-description>DingsBums?! is a flashcard trainer originally concepted for vocabularies, but can be used for any kind of content, that can be memorized using flashcards.</project-description>
-	<project-url>http://dingsbums.vanosten.net/</project-url>
+	<project-url>http://vanosten.hostjava.net/products/dingsbums/</project-url>
 	<project-logo>images/logo.gif</project-logo>
 	<!-- Alternative static image:
 	<project-logo>images/project-logo.gif</project-logo> -->
@@ -84,7 +84,7 @@ entitled "GNU Free Documentation License".
 	<favicon-url></favicon-url>
 
 	<!-- The following are used to construct a copyright statement -->
-	<year>2004, 2005, 2006</year>
+	<year>2004, 2005, 2006, 2007, 2008</year>
 	<vendor>vanosten</vendor>
 	<!-- The optional copyright-link URL will be used as a link in the
 	copyright statement
@@ -98,7 +98,7 @@ entitled "GNU Free Documentation License".
 	For some skins just set the attributes to blank.
 	-->
 	<trail>
-		<link1 name="DingsBums?!" href="http://dingsbums.vanosten.net/"/>
+		<link1 name="DingsBums?!" href="http://vanosten.hostjava.net/products/dingsbums/"/>
 		<link2 name="" href=""/>
 		<link3 name="" href=""/>
 	</trail>
