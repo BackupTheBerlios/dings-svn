@@ -21,6 +21,10 @@ entitled "GNU Free Documentation License".
 	<!-- Context: documentation, gui, code, refactor, tools, i18n, feature, datamodel, other, web -->
 
 	<changes>
+		<release version="0.4.9 (svn branch81:91)" date="2009-11-08">
+			<action type="update" context="documentation" dev="vanosten">Notes about discontinuing this project.</action>
+			<action type="update" context="gui" dev="vanosten">Notes about discontinuing this project.</action>
+		</release>
 		<release version="0.4.8 (svn branch81:90)" date="2008-05-03">
 			<action type="update" context="documentation" dev="vanosten">Adapted to new project location.</action>
 		</release>

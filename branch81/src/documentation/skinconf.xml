@@ -61,7 +61,7 @@ entitled "GNU Free Documentation License".
 	<!-- mandatory project logo default skin: renders it at the top -->
 	<project-name>DingsBums?!</project-name>
 	<project-description>DingsBums?! is a flashcard trainer originally concepted for vocabularies, but can be used for any kind of content, that can be memorized using flashcards.</project-description>
-	<project-url>http://vanosten.hostjava.net/products/dingsbums/</project-url>
+	<project-url>http://dingsbums.vanosten.net/</project-url>
 	<project-logo>images/logo.gif</project-logo>
 	<!-- Alternative static image:
 	<project-logo>images/project-logo.gif</project-logo> -->
@@ -98,7 +98,7 @@ entitled "GNU Free Documentation License".
 	For some skins just set the attributes to blank.
 	-->
 	<trail>
-		<link1 name="DingsBums?!" href="http://vanosten.hostjava.net/products/dingsbums/"/>
+		<link1 name="DingsBums?!" href="http://dingsbums.vanosten.net/"/>
 		<link2 name="" href=""/>
 		<link3 name="" href=""/>
 	</trail>

@@ -19,11 +19,18 @@ entitled "GNU Free Documentation License".
 		<title>Welcome to DingsBums?!</title>
 	</header>
 	<body>
+		<section id="anki">
+			<title><code>DingsBums?!</code> is Discontinued - Moving to Anki</title>
+			<warning label="DingsBums?! is discontinued">Some of the ideas will be moved to Anki, which is mature and has support for amongst others mobile devices. Anki is open source, too. You can continue to use DingsBums?! as long as you like and move to Anki, when you are ready.</warning>
+			<figure src="images/anki-logo.png" alt="Anki home page" />
+			<p><a href="http://ichi2.net/anki/">Anki</a> runs on all major operating systems, is in my view slick and nice and has both many users and contributors. I have decided to discontinue <code>DingsBums?!</code> due to lack of time to implement synchronisation with web, mobile devices etc. - something which <a href="http://ichi2.net/anki/">Anki</a> already has.</p>
+			<p>Instead I will contribute to <a href="http://ichi2.net/anki/">Anki</a> and port some of the more <a href="site:learningchoice">game-like features</a> of <code>DingsBums?!</code>.</p>
+			<p>See <a href="site:anki">Moving to Anki</a> for how to automatically transform your <code>DingsBums?!</code> learning stacks to the <a href="http://ichi2.net/anki/">Anki</a> format. <a href="site:anki">Moving to Anki</a> also explains the main differences in concept and vocabulary between <code>DingsBums?!</code> and Anki.</p>
+		</section>
 		<section id="about">
 			<title>About</title>
 			<p><code>DingsBums?!</code> is a <a href="http://en.wikipedia.org/wiki/Flashcard">flashcard</a>-like learning tool that can be used for any kind of content, which can be memorized using flashcards, including vocabularies. <code>Dingsbums?!</code>aims to be an application which makes memorizing both fun and efficient.</p>
-			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away and try one of the <a href="site:samples">samples</a> right away. If you have <a href="http://java.com/">Java</a> installed just press the launch button below:</p>
-			<p><a href="http://vanosten.hostjava.net/products/dingsbums/swing.jnlp"><icon src="images/webstart.small2.gif" alt="Launch the application without installation using Java Web Start Technology" /></a></p>
+			<p>See <a href="site:features">features</a> for an extensive overview, take a look at the <a href="site:screenshots">screenshots</a>, or <a href="site:download">download</a> it right away and try one of the <a href="site:samples">samples</a>.</p>
 			<p><code>DingsBums?!</code> is an <a href="http://www.opensource.org/">open source</a> development project, released under the <a href="http://www.gnu.org/copyleft/gpl.html">GPL license</a>.</p>
 			<p><code>DingsBums?!</code> is written in <a href="http://java.com/">Java</a> and runs therefore on the most popular operating systems including Linux, MacOS X, Windows and Solaris.</p>
 		</section>
@@ -48,7 +55,7 @@ entitled "GNU Free Documentation License".
 				<li>you want to have audio support. <code>DingsBums?!</code> in its current form is only about memorizing visually (reading and eventually writing). Audio support is a feature with low priority, so do not rely on it in the near future.</li>
 				<li>you need extensive support for conjugation</li>
 				<li>you are a teacher and want to have a framework to write exercises and tests.</li>
-				<li>you need PDA or mobile phone support right now. The possibility to use a PDA or the mobile phone to memorize stuff while sitting in the bus, waiting in the restaurant etc. is a high priority for me, too. Due to time restrictions I cannot tell when I will implement this.</li>
+				<li>you need PDA or mobile phone support right now. </li>
 				<li>a great looking application is more important to you then functionality. I know that <code>DingsBums?!</code> needs som final touch.</li>
 			</ul>
 			<p>If <code>DingsBums?!</code> is not for you, you might find a better suited software on the <a href="site:links">links</a> page.</p>

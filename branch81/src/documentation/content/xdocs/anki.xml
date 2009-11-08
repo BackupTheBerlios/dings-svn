@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<!--
+COPYRIGHT AND WARRANTY
+
+DingsBums?! A flexible flashcard application written in Java.
+
+Copyright (c)  2004, 05, 2006  Rick Gruber-Riemer (dingsbums@vanosten.net).
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the file COPYING in the section
+entitled "GNU Free Documentation License".
+-->
+<document>
+	<header>
+		<title>Moving to Anki</title>
+	</header>
+	<body>
+		<section id="introduction">
+			<title>Introduction</title>
+			<p>This section describes how to migrate your <code>DingsBums?!</code> stacks to <a href="http://ichi2.net/anki/">Anki</a> I have discontinued <code>DingsBums?!</code> and therefore provide this migration path.</p>
+			<note label="Problems or Version Not Available">If you experience problems or the newest version of <code>Anki</code> is not yet available on your platform, then please write me an <a href="site:contact">email</a> and attach your stack to it. I will run it through the importer and send you the converted file back.</note>
+		</section>
+		<section id="migration">
+			<title>Migraton Procedure</title>
+			<p>The overall migration path and pre-requisites are as follows:</p>
+			<ul>
+				<li><a href="http://ichi2.net/anki/download/index.html">Download</a> the newest version of <code>Anki</code>. You need at least a version, which is newer than 0.9.9.8.5. If in doubt choose menu Help -&gt; About in <code>Anki</code>.</li>
+				<li>There is no need to do anything in <code>DingsBums?!</code>. Just make sure that the filename of the stack ends with ".xml"</li>
+				<li>Start <code>Anki</code>, choose &quot;Import&quot;, pick the right file, press &quot;Import&quot;. Done.</li>
+			</ul>
+			<p>You need to start the <code>Anki</code> graphical user interface. When started, either choose the &quot;Import&quot; button or choose the &quot;Import...&quot; menu item in menu &quot;File&quot;.</p>
+			<figure src="images/main_import.png" alt="Main window with import menu item respectively import button" />
+			<p>A file chooser dialog opens. Make sure to choose &quot;DingsBums?! Deck (*.xml)&quot; as the file type at the buttom of the dialog and then choose the original <code>DingsBums?!</code> file to import (your filename might be different from <code>dingsbums.xml</code> shown in the example).</p>
+			<p>When done press the &quot;Open&quot; button.</p>
+			<figure src="images/file_dialog.png" alt="File dialog to choose file and file format" />
+			<p>A new dialog opens. If you want you can add tags, which are added to each item imported from the original <code>DingsBums?!</code> stack. In most cases you will leave the tags field just blank and then press the &quot;Import&quot; button.</p>
+			<figure src="images/import_button.png" alt="Dialog with final import button" />
+			<p>The import can take a while. If everything goes right the import status shows the number of <code>DingsBums?!</code> entries created as facts in <code>Anki</code>.</p>
+			<p>If there was an error and you cannot resolve it, then please copy the error description from the status field into an email, attach the DingsBums?! file and send it to <a href="site:contact">me</a>.</p>
+			<p>Press the &quot;Close&quot; button.</p>
+			<figure src="images/imported.png" alt="Dialog with the result of the import procedure" />
+			<p>The process is finished and you can begin reviewing in <code>Anki</code>. Before that you might want to save :-).</p>
+			<figure src="images/done.png" alt="Final window showing the result and ready to learn" />
+		</section>
+		<section id="concepts">
+			<title>Difference between DingsBums?! and Anki</title>
+			<p>Please be aware that there are some differences between the wording and concepts in <code>DingsBums?!</code> and <code>Anki</code>:</p>
+			<ul>
+				<li>A stack in DingsBums?! is a deck in Anki.</li>
+				<li>An entry type in DingsBums?! is a model in Anki.</li>
+				<li>An entry type attribute in DingsBums?! is a field in Anki</li>
+				<li>An entry type attribute item in DingsBums?! does not exist in Anki. It is just the contents of a field denormalized.</li>
+				<li>There is not concept of units and categories in Anki. Instead Anki supports tags.</li>
+				<li>An entry in DingsBums?! is basically a fact in Anki. There are no cards in DingsBums?!.</li>
+			</ul>
+			<p>I suggest that you watch the introduction videos on the <a href="http://ichi2.net/anki/">homepage</a> of Anki. And then have a look at <a href="http://ichi2.net/anki/wiki/KeyTermsAndConcepts">key terms and concepts</a>.</p>
+			<p>Please be aware of the following consequences of the difference between Anki and DingsBums?!:</p>
+			<ul>
+				<li>There is a special plugin in Anki for Pinyin. Therefore syllable settings from DingsBums?! are ignored.</li>
+				<li>All statistics will get lost - i.e. no historic information about progress will be migrated to Anki.</li>
+				<li>The DingsBums?! stack needs to end with *.xml in order to be recognizable in Anki import.</li>
+				<li>The learning levels from DingsBums?! are not taken into account because they do not really match spaced repetition.</li>
+				<li>The contents of units and categories are transferred as tags to Anki.</li>
+				<li>The fields &quot;base&quot;, &quot;target&quot;, &quot;explanation&quot;, &quot;example&quot;, &quot;pronounciation&quot; and &quot;relation&quot; are created as fields in Anki. The fields are only created and used in Anki, if they were visible in DingsBums?!.</li>
+				<li>The name of the fields in Anki is taken from the labels defined in the stack properties.</li>
+				<li>The description field of Anki is not used/displayed. Therefore there is not much sense to transfer the contents of title, author, notes, copyright and license.</li>
+			</ul>
+		</section>
+	</body>
+</document>

@@ -27,7 +27,7 @@ specified
 
 Jar-file:
 ---------
-$ ant dingsbums.xml
+$ ant -f dingsbums.xml
 $ \rm dingsbumsKeystore
 $ keytool -genkey -alias vanosten -keypass XXXX -keystore /home/vanosten/develop/dingsbums/dingsbumsKeystore -dname "cn=Rick Gruber-Riemer, ou=private, o=vanosten.net" -storepass XXXX
 $ jarsigner -keystore dingsbumsKeystore -storepass XXXX -keypass XXXX dingsbums.jar vanosten
